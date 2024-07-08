@@ -16,7 +16,6 @@ class ProfileViewModel: ObservableObject {
         ProfileItem(icon: "5.circle", text: "Help"),
         ProfileItem(icon: "6.circle", text: "Privacy"),
         ProfileItem(icon: "7.circle", text: "Learn"),
-        ProfileItem(icon: "8.circle", text: "Sign Out")
     ]
 }
 

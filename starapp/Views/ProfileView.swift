@@ -1,14 +1,9 @@
-//
-//  ProfileView.swift
-//  starapp
-//
-//  Created by Peter Tran on 07/07/2024.
-//
-
 import SwiftUI
 
 struct ProfileView: View {
     @StateObject private var viewModel = ProfileViewModel()
+    @State private var selectedTab: Int = 0
+    @State private var showingSheet: Bool = false
     
     var body: some View {
         ZStack {
@@ -16,43 +11,63 @@ struct ProfileView: View {
             VStack {
                 Image(systemName: "1.circle")
                     .padding(8)
-                    .font(.system(size: 98))
+                    .font(.system(size: 74))
                     .foregroundStyle(.starMain)
                 Text("Name")
-                    .font(.system(size: 24, weight: .bold))
+                    .font(.system(size: 32, weight: .bold))
                     .foregroundStyle(.whiteTwo)
                 Text("@Tag")
                     .font(.system(size: 18))
                     .foregroundStyle(.whiteOne)
                 
-                ForEach(viewModel.profileItems) { item in
-                    VStack {
-                        HStack {
-                            Image(systemName: item.icon)
-                                .padding(8)
-                                .font(.system(size: 38))
-                                .foregroundStyle(.starMain)
-                            VStack(alignment: .leading) {
-                                Text(item.text)
-                                    .font(.system(size: 24, weight: .bold))
-                                    .foregroundStyle(.whiteTwo)
-                            }
-                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                            
-                            Image(systemName: "chevron.right")
-                                .font(.system(size: 32, weight: .bold))
-                                .foregroundStyle(.starMain)
+                VStack {
+                    HStack {
+                        Image(systemName: "1.circle")
+                            .padding(8)
+                            .font(.system(size: 38))
+                            .foregroundStyle(.starMain)
+                        VStack(alignment: .leading) {
+                            Text("Account")
+                                .font(.system(size: 24, weight: .bold))
+                                .foregroundStyle(.whiteTwo)
                         }
                     }
-                    .padding(.horizontal)
+                    HStack {
+                        Image(systemName: "1.circle")
+                            .padding(8)
+                            .font(.system(size: 38))
+                            .foregroundStyle(.starMain)
+                        VStack(alignment: .leading) {
+                            Text("item.text")
+                                .font(.system(size: 24, weight: .bold))
+                                .foregroundStyle(.whiteTwo)
+                        }
+                    }
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                .padding(.horizontal)
             }
             .padding(.bottom, 16)
-            .padding(.top)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        // Action for button
+                        print("Edit button tapped")
+                    }) {
+                        VStack{
+                            Image(systemName: "rectangle.portrait.and.arrow.right")
+                            Text("Logout")
+                        }
+                        
+                    }
+                }
+            }
         }
     }
 }
 
 #Preview {
-    ProfileView()
+    NavigationView {
+        ProfileView()
+    }
 }

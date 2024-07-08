@@ -19,7 +19,7 @@ struct starappApp: App {
 
     var body: some Scene {
         WindowGroup {
-            InitialView()
+            ContentView()
                 .environment(\.modelContext, sharedModelContainer.mainContext)
         }
         .modelContainer(sharedModelContainer)

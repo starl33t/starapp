@@ -52,7 +52,6 @@
 		BF4A819D2C3B0D9300D4CAF1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A819C2C3B0D9300D4CAF1 /* User.swift */; };
 		BF4A819F2C3B0F2700D4CAF1 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A819E2C3B0F2700D4CAF1 /* RegisterView.swift */; };
 		BF4A81A22C3B0F4100D4CAF1 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81A12C3B0F4100D4CAF1 /* RegisterViewModel.swift */; };
-		BF4A81A82C3B14EE00D4CAF1 /* InitialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81A72C3B14EE00D4CAF1 /* InitialView.swift */; };
 		BF7342072C3AE74A00911375 /* starappApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7342062C3AE74A00911375 /* starappApp.swift */; };
 		BF7342092C3AE74A00911375 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7342082C3AE74A00911375 /* ContentView.swift */; };
 		BF73420B2C3AE74A00911375 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF73420A2C3AE74A00911375 /* Item.swift */; };
@@ -126,7 +125,6 @@
 		BF4A819C2C3B0D9300D4CAF1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BF4A819E2C3B0F2700D4CAF1 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		BF4A81A12C3B0F4100D4CAF1 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
-		BF4A81A72C3B14EE00D4CAF1 /* InitialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialView.swift; sourceTree = "<group>"; };
 		BF7342032C3AE74A00911375 /* starapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = starapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF7342062C3AE74A00911375 /* starappApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = starappApp.swift; sourceTree = "<group>"; };
 		BF7342082C3AE74A00911375 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -265,7 +263,6 @@
 				BF4A81962C3B065500D4CAF1 /* Toolbars */,
 				BF73420A2C3AE74A00911375 /* Item.swift */,
 				BF7342082C3AE74A00911375 /* ContentView.swift */,
-				BF4A81A72C3B14EE00D4CAF1 /* InitialView.swift */,
 				BF4A81982C3B09C300D4CAF1 /* LoginView.swift */,
 				BF4A819E2C3B0F2700D4CAF1 /* RegisterView.swift */,
 				BF4A819C2C3B0D9300D4CAF1 /* User.swift */,
@@ -479,7 +476,6 @@
 				BF4A813F2C3AEE0900D4CAF1 /* DateHelper.swift in Sources */,
 				BF4A81472C3AEE8800D4CAF1 /* LactateViewModel.swift in Sources */,
 				BF4A816D2C3AF83700D4CAF1 /* CalendarViewModel.swift in Sources */,
-				BF4A81A82C3B14EE00D4CAF1 /* InitialView.swift in Sources */,
 				BF4A81772C3AFA1700D4CAF1 /* ChatToolBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
