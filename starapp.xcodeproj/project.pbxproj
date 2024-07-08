@@ -192,6 +192,8 @@
 		BF4A81942C3B05F200D4CAF1 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				BF4A81A12C3B0F4100D4CAF1 /* RegisterViewModel.swift */,
+				BF4A819A2C3B0A5C00D4CAF1 /* UserViewModel.swift */,
 				BF4A81642C3AF53F00D4CAF1 /* ProfileViewModel.swift */,
 				BF4A81862C3AFD9900D4CAF1 /* SubscriptionViewModel.swift */,
 				BF4A81902C3B010E00D4CAF1 /* HomeViewModel.swift */,
@@ -265,10 +267,8 @@
 				BF7342082C3AE74A00911375 /* ContentView.swift */,
 				BF4A81A72C3B14EE00D4CAF1 /* InitialView.swift */,
 				BF4A81982C3B09C300D4CAF1 /* LoginView.swift */,
-				BF4A81A12C3B0F4100D4CAF1 /* RegisterViewModel.swift */,
 				BF4A819E2C3B0F2700D4CAF1 /* RegisterView.swift */,
 				BF4A819C2C3B0D9300D4CAF1 /* User.swift */,
-				BF4A819A2C3B0A5C00D4CAF1 /* UserViewModel.swift */,
 				BF7342062C3AE74A00911375 /* starappApp.swift */,
 				BF73420C2C3AE74C00911375 /* Assets.xcassets */,
 				BF73420E2C3AE74C00911375 /* starapp.entitlements */,

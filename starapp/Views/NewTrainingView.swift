@@ -24,8 +24,6 @@ struct NewTrainingView: View {
                             .keyboardType(.numberPad)
                     }
                     .padding()
-                    .background(Color.starBlack)
-                    .cornerRadius(5)
                     .overlay(
                         RoundedRectangle(cornerRadius: 5)
                             .stroke(Color.gray, lineWidth: 1)
@@ -42,8 +40,6 @@ struct NewTrainingView: View {
                             .keyboardType(.numberPad)
                     }
                     .padding()
-                    .background(Color.starBlack)
-                    .cornerRadius(5)
                     .overlay(
                         RoundedRectangle(cornerRadius: 5)
                             .stroke(Color.gray, lineWidth: 1)

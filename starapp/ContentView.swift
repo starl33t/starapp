@@ -5,7 +5,7 @@ struct ContentView: View {
     @State private var selectedTab: Int = 0
     @State private var searchText: String = ""
     @State private var showingSheet: Bool = false
-
+    
     var body: some View {
         NavigationStack {
             TabView(selection: $selectedTab) {
@@ -65,6 +65,7 @@ struct ContentView: View {
                     }
                 }
             }
+            
         }
     }
 }

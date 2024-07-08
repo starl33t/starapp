@@ -33,6 +33,6 @@ struct SearchBarView_Previews: PreviewProvider {
         SearchBarView(searchText: $searchText)
             .previewLayout(.sizeThatFits)
             .padding()
-            .background(Color.black)
+            .background(.starBlack)
     }
 }
