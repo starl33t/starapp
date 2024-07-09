@@ -47,7 +47,7 @@ struct MetricView: View {
                                 }
                                 .foregroundStyle(.whiteOne)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                                Text("\(metric.lactateLevel, specifier: "%.2f") mM")
+                                Text("\(metric.lactateLevel, specifier: "%.1f") mM")
                                     .font(.system(size: 32, weight: .bold))
                                     .foregroundStyle(.starMain)
                             }

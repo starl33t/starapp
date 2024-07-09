@@ -1,20 +1,16 @@
-//
-//  Item.swift
-//  starapp
-//
-//  Created by Peter Tran on 07/07/2024.
-//
-
 import Foundation
 import SwiftData
+import CloudKit
 
 @Model
 final class Item: Identifiable {
     @Attribute(.unique) var id: UUID
-    @Attribute var timestamp: Date
+    @Attribute var name: String
+    @Attribute var ckRecordID: String? // To store the CloudKit record ID
     
-    init(id: UUID = UUID(), timestamp: Date) {
+    init(id: UUID = UUID(), name: String, ckRecordID: String? = nil) {
         self.id = id
-        self.timestamp = timestamp
+        self.name = name
+        self.ckRecordID = ckRecordID
     }
 }

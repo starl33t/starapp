@@ -29,11 +29,12 @@ struct ProfileView: View {
                     }) {
                         VStack {
                             Image(systemName: "rectangle.portrait.and.arrow.right")
-                            Text("Logout")
+                            Text("Quit")
                         }
                     }
                 }
             }
+            .tint(.whiteTwo)
             .sheet(isPresented: $viewModel.isPresented) {
                 if let option = viewModel.selectedOption {
                     viewModel.getSheetView(option: option)

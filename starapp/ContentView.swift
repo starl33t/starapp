@@ -5,7 +5,6 @@ struct ContentView: View {
     @State private var selectedTab: Int = 0
     @State private var searchText: String = ""
     @State private var showingSheet: Bool = false
-    
     var body: some View {
         NavigationStack {
             TabView(selection: $selectedTab) {
@@ -40,6 +39,7 @@ struct ContentView: View {
                     }
                     .tag(4)
             }
+            .tint(.starMain)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
@@ -64,13 +64,16 @@ struct ContentView: View {
                         HomeToolBar(showingSheet: $showingSheet)
                     }
                 }
+                
             }
+            .tint(.whiteTwo)
+           
             
         }
+        
     }
 }
 
 #Preview {
     ContentView()
-        .environment(\.modelContext, try! ModelContainer(for: User.self, Item.self).mainContext)
 }

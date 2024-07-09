@@ -47,11 +47,6 @@
 		BF4A818D2C3AFF0700D4CAF1 /* HomeToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A818C2C3AFF0700D4CAF1 /* HomeToolBar.swift */; };
 		BF4A818F2C3AFFDD00D4CAF1 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A818E2C3AFFDD00D4CAF1 /* HomeView.swift */; };
 		BF4A81912C3B010F00D4CAF1 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81902C3B010E00D4CAF1 /* HomeViewModel.swift */; };
-		BF4A81992C3B09C300D4CAF1 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81982C3B09C300D4CAF1 /* LoginView.swift */; };
-		BF4A819B2C3B0A5C00D4CAF1 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A819A2C3B0A5C00D4CAF1 /* UserViewModel.swift */; };
-		BF4A819D2C3B0D9300D4CAF1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A819C2C3B0D9300D4CAF1 /* User.swift */; };
-		BF4A819F2C3B0F2700D4CAF1 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A819E2C3B0F2700D4CAF1 /* RegisterView.swift */; };
-		BF4A81A22C3B0F4100D4CAF1 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81A12C3B0F4100D4CAF1 /* RegisterViewModel.swift */; };
 		BF6C840E2C3C5E8100032E93 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C840D2C3C5E8100032E93 /* AccountView.swift */; };
 		BF6C84102C3C5EF200032E93 /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C840F2C3C5EF200032E93 /* AccountViewModel.swift */; };
 		BF6C84122C3D16D600032E93 /* IntegrationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C84112C3D16D600032E93 /* IntegrationsView.swift */; };
@@ -126,11 +121,6 @@
 		BF4A818C2C3AFF0700D4CAF1 /* HomeToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeToolBar.swift; sourceTree = "<group>"; };
 		BF4A818E2C3AFFDD00D4CAF1 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		BF4A81902C3B010E00D4CAF1 /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
-		BF4A81982C3B09C300D4CAF1 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		BF4A819A2C3B0A5C00D4CAF1 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
-		BF4A819C2C3B0D9300D4CAF1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		BF4A819E2C3B0F2700D4CAF1 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
-		BF4A81A12C3B0F4100D4CAF1 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		BF6C840D2C3C5E8100032E93 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		BF6C840F2C3C5EF200032E93 /* AccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
 		BF6C84112C3D16D600032E93 /* IntegrationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationsView.swift; sourceTree = "<group>"; };
@@ -206,11 +196,9 @@
 		BF4A81942C3B05F200D4CAF1 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				BF4A81A12C3B0F4100D4CAF1 /* RegisterViewModel.swift */,
 				BF4A81642C3AF53F00D4CAF1 /* ProfileViewModel.swift */,
 				BF6C840F2C3C5EF200032E93 /* AccountViewModel.swift */,
 				BF6C84152C3D179F00032E93 /* IntegrationsViewModel.swift */,
-				BF4A819A2C3B0A5C00D4CAF1 /* UserViewModel.swift */,
 				BF4A81862C3AFD9900D4CAF1 /* SubscriptionViewModel.swift */,
 				BF4A81902C3B010E00D4CAF1 /* HomeViewModel.swift */,
 				BF4A816C2C3AF83700D4CAF1 /* CalendarViewModel.swift */,
@@ -281,9 +269,6 @@
 				BF4A81962C3B065500D4CAF1 /* Toolbars */,
 				BF73420A2C3AE74A00911375 /* Item.swift */,
 				BF7342082C3AE74A00911375 /* ContentView.swift */,
-				BF4A81982C3B09C300D4CAF1 /* LoginView.swift */,
-				BF4A819E2C3B0F2700D4CAF1 /* RegisterView.swift */,
-				BF4A819C2C3B0D9300D4CAF1 /* User.swift */,
 				BF7342062C3AE74A00911375 /* starappApp.swift */,
 				BF73420C2C3AE74C00911375 /* Assets.xcassets */,
 				BF73420E2C3AE74C00911375 /* starapp.entitlements */,
@@ -456,7 +441,6 @@
 				BF6C84102C3C5EF200032E93 /* AccountViewModel.swift in Sources */,
 				BF4A81612C3AF3FF00D4CAF1 /* SearchBarView.swift in Sources */,
 				BF4A81512C3AF12000D4CAF1 /* LineChartView.swift in Sources */,
-				BF4A819B2C3B0A5C00D4CAF1 /* UserViewModel.swift in Sources */,
 				BF4A815F2C3AF31800D4CAF1 /* PieChartView.swift in Sources */,
 				BF4A81632C3AF53200D4CAF1 /* ProfileView.swift in Sources */,
 				BF4A81592C3AF2A300D4CAF1 /* BarChartViewModel.swift in Sources */,
@@ -467,12 +451,9 @@
 				BF4A816F2C3AF8DA00D4CAF1 /* LactateToolBar.swift in Sources */,
 				BF4A818F2C3AFFDD00D4CAF1 /* HomeView.swift in Sources */,
 				BF4A81832C3AFC9200D4CAF1 /* PlotMetricView.swift in Sources */,
-				BF4A81A22C3B0F4100D4CAF1 /* RegisterViewModel.swift in Sources */,
 				BF4A81652C3AF53F00D4CAF1 /* ProfileViewModel.swift in Sources */,
 				BF4A817B2C3AFAB200D4CAF1 /* NewMessageViewModel.swift in Sources */,
 				BF4A81872C3AFD9A00D4CAF1 /* SubscriptionViewModel.swift in Sources */,
-				BF4A819D2C3B0D9300D4CAF1 /* User.swift in Sources */,
-				BF4A819F2C3B0F2700D4CAF1 /* RegisterView.swift in Sources */,
 				BF73420B2C3AE74A00911375 /* Item.swift in Sources */,
 				BF6C84122C3D16D600032E93 /* IntegrationsView.swift in Sources */,
 				BF4A816B2C3AF7E900D4CAF1 /* CalendarEventViewModel.swift in Sources */,
@@ -484,7 +465,6 @@
 				BF4A81492C3AEFCE00D4CAF1 /* ChatView.swift in Sources */,
 				BF4A815B2C3AF2B100D4CAF1 /* BarChartView.swift in Sources */,
 				BF4A815D2C3AF30F00D4CAF1 /* PieChartViewModel.swift in Sources */,
-				BF4A81992C3B09C300D4CAF1 /* LoginView.swift in Sources */,
 				BF4A81352C3AEC4D00D4CAF1 /* CalendarView.swift in Sources */,
 				BF4A81532C3AF15200D4CAF1 /* LineChartViewModel.swift in Sources */,
 				BF7342072C3AE74A00911375 /* starappApp.swift in Sources */,
@@ -679,7 +659,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = nill.starapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -718,7 +698,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = nill.starapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
