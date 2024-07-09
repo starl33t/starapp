@@ -1,26 +1,79 @@
-//
-//  ProfileViewModel.swift
-//  starleet
-//
-//  Created by Peter Tran on 06/07/2024.
-//
-
 import SwiftUI
 
 class ProfileViewModel: ObservableObject {
-    @Published var profileItems: [ProfileItem] = [
-        ProfileItem(icon: "1.circle", text: "Account"),
-        ProfileItem(icon: "2.circle", text: "Subscription"),
-        ProfileItem(icon: "3.circle", text: "Integrations"),
-        ProfileItem(icon: "4.circle", text: "Notification"),
-        ProfileItem(icon: "5.circle", text: "Help"),
-        ProfileItem(icon: "6.circle", text: "Privacy"),
-        ProfileItem(icon: "7.circle", text: "Learn"),
-    ]
-}
-
-struct ProfileItem: Identifiable {
-    let id = UUID()
-    let icon: String
-    let text: String
+    @Published var selectedOption: Int? = nil
+    @Published var isPresented: Bool = false
+    
+    func present(option: Int) {
+        selectedOption = option
+        isPresented = true
+    }
+    
+    func dismiss() {
+        isPresented = false
+    }
+    
+    func profileButton(imageName: String, text: String, tag: Int) -> some View {
+        Button(action: {
+            if self.isPresented {
+                self.dismiss()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    self.present(option: tag)
+                }
+            } else {
+                self.present(option: tag)
+            }
+        }) {
+            HStack {
+                Image(systemName: imageName)
+                    .padding(8)
+                    .font(.system(size: 28))
+                    .foregroundStyle(.whiteOne)
+                    .frame(width: 44, alignment: .leading)
+                VStack(alignment: .leading) {
+                    Text(text)
+                        .font(.system(size: 24, weight: .bold))
+                        .foregroundStyle(.whiteOne)
+                }
+                .padding(.leading, 10)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func getSheetView(option: Int) -> some View {
+        switch option {
+        case 0:
+            AccountView()
+        case 1:
+            SubscriptionView()
+        case 2:
+            IntegrationsView()
+        case 3:
+            NewMessageView()
+        case 4:
+            LearnView()
+        case 5:
+            PrivacyView()
+        default:
+            EmptyView()
+        }
+    }
+    
+    @ViewBuilder
+    var profileHeader: some View {
+        VStack {
+            Image(systemName: "1.circle")
+                .padding(8)
+                .font(.system(size: 74))
+                .foregroundStyle(.whiteOne)
+            Text("Name")
+                .font(.system(size: 32, weight: .bold))
+                .foregroundStyle(.whiteTwo)
+            Text("@Tag")
+                .font(.system(size: 18))
+                .foregroundStyle(.whiteOne)
+                .padding(.bottom, 10) // Adjust padding as needed
+        }
+    }
 }

@@ -52,6 +52,12 @@
 		BF4A819D2C3B0D9300D4CAF1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A819C2C3B0D9300D4CAF1 /* User.swift */; };
 		BF4A819F2C3B0F2700D4CAF1 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A819E2C3B0F2700D4CAF1 /* RegisterView.swift */; };
 		BF4A81A22C3B0F4100D4CAF1 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81A12C3B0F4100D4CAF1 /* RegisterViewModel.swift */; };
+		BF6C840E2C3C5E8100032E93 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C840D2C3C5E8100032E93 /* AccountView.swift */; };
+		BF6C84102C3C5EF200032E93 /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C840F2C3C5EF200032E93 /* AccountViewModel.swift */; };
+		BF6C84122C3D16D600032E93 /* IntegrationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C84112C3D16D600032E93 /* IntegrationsView.swift */; };
+		BF6C84162C3D179F00032E93 /* IntegrationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C84152C3D179F00032E93 /* IntegrationsViewModel.swift */; };
+		BF6C84182C3D1C6D00032E93 /* LearnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C84172C3D1C6D00032E93 /* LearnView.swift */; };
+		BF6C841A2C3D1E5200032E93 /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C84192C3D1E5200032E93 /* PrivacyView.swift */; };
 		BF7342072C3AE74A00911375 /* starappApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7342062C3AE74A00911375 /* starappApp.swift */; };
 		BF7342092C3AE74A00911375 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7342082C3AE74A00911375 /* ContentView.swift */; };
 		BF73420B2C3AE74A00911375 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF73420A2C3AE74A00911375 /* Item.swift */; };
@@ -125,6 +131,12 @@
 		BF4A819C2C3B0D9300D4CAF1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BF4A819E2C3B0F2700D4CAF1 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		BF4A81A12C3B0F4100D4CAF1 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
+		BF6C840D2C3C5E8100032E93 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		BF6C840F2C3C5EF200032E93 /* AccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
+		BF6C84112C3D16D600032E93 /* IntegrationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationsView.swift; sourceTree = "<group>"; };
+		BF6C84152C3D179F00032E93 /* IntegrationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationsViewModel.swift; sourceTree = "<group>"; };
+		BF6C84172C3D1C6D00032E93 /* LearnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnView.swift; sourceTree = "<group>"; };
+		BF6C84192C3D1E5200032E93 /* PrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyView.swift; sourceTree = "<group>"; };
 		BF7342032C3AE74A00911375 /* starapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = starapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF7342062C3AE74A00911375 /* starappApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = starappApp.swift; sourceTree = "<group>"; };
 		BF7342082C3AE74A00911375 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -170,8 +182,12 @@
 				BF4A81622C3AF53200D4CAF1 /* ProfileView.swift */,
 				BF4A81882C3AFDDE00D4CAF1 /* SubscriptionView.swift */,
 				BF4A81602C3AF3FF00D4CAF1 /* SearchBarView.swift */,
+				BF6C840D2C3C5E8100032E93 /* AccountView.swift */,
+				BF6C84112C3D16D600032E93 /* IntegrationsView.swift */,
 				BF4A818E2C3AFFDD00D4CAF1 /* HomeView.swift */,
 				BF4A81342C3AEC4D00D4CAF1 /* CalendarView.swift */,
+				BF6C84172C3D1C6D00032E93 /* LearnView.swift */,
+				BF6C84192C3D1E5200032E93 /* PrivacyView.swift */,
 				BF4A81682C3AF79200D4CAF1 /* CalendarEventView.swift */,
 				BF4A81442C3AEE6C00D4CAF1 /* LactateView.swift */,
 				BF4A81722C3AF94F00D4CAF1 /* NewTrainingView.swift */,
@@ -191,8 +207,10 @@
 			isa = PBXGroup;
 			children = (
 				BF4A81A12C3B0F4100D4CAF1 /* RegisterViewModel.swift */,
-				BF4A819A2C3B0A5C00D4CAF1 /* UserViewModel.swift */,
 				BF4A81642C3AF53F00D4CAF1 /* ProfileViewModel.swift */,
+				BF6C840F2C3C5EF200032E93 /* AccountViewModel.swift */,
+				BF6C84152C3D179F00032E93 /* IntegrationsViewModel.swift */,
+				BF4A819A2C3B0A5C00D4CAF1 /* UserViewModel.swift */,
 				BF4A81862C3AFD9900D4CAF1 /* SubscriptionViewModel.swift */,
 				BF4A81902C3B010E00D4CAF1 /* HomeViewModel.swift */,
 				BF4A816C2C3AF83700D4CAF1 /* CalendarViewModel.swift */,
@@ -435,6 +453,7 @@
 				BF4A818B2C3AFDF500D4CAF1 /* ColorOptionView.swift in Sources */,
 				BF4A81572C3AF25900D4CAF1 /* PointChartView.swift in Sources */,
 				BF4A814D2C3AF03B00D4CAF1 /* MetricView.swift in Sources */,
+				BF6C84102C3C5EF200032E93 /* AccountViewModel.swift in Sources */,
 				BF4A81612C3AF3FF00D4CAF1 /* SearchBarView.swift in Sources */,
 				BF4A81512C3AF12000D4CAF1 /* LineChartView.swift in Sources */,
 				BF4A819B2C3B0A5C00D4CAF1 /* UserViewModel.swift in Sources */,
@@ -455,9 +474,11 @@
 				BF4A819D2C3B0D9300D4CAF1 /* User.swift in Sources */,
 				BF4A819F2C3B0F2700D4CAF1 /* RegisterView.swift in Sources */,
 				BF73420B2C3AE74A00911375 /* Item.swift in Sources */,
+				BF6C84122C3D16D600032E93 /* IntegrationsView.swift in Sources */,
 				BF4A816B2C3AF7E900D4CAF1 /* CalendarEventViewModel.swift in Sources */,
 				BF4A81912C3B010F00D4CAF1 /* HomeViewModel.swift in Sources */,
 				BF4A81432C3AEE1900D4CAF1 /* Message.swift in Sources */,
+				BF6C84182C3D1C6D00032E93 /* LearnView.swift in Sources */,
 				BF4A81732C3AF94F00D4CAF1 /* NewTrainingView.swift in Sources */,
 				BF4A818D2C3AFF0700D4CAF1 /* HomeToolBar.swift in Sources */,
 				BF4A81492C3AEFCE00D4CAF1 /* ChatView.swift in Sources */,
@@ -468,13 +489,16 @@
 				BF4A81532C3AF15200D4CAF1 /* LineChartViewModel.swift in Sources */,
 				BF7342072C3AE74A00911375 /* starappApp.swift in Sources */,
 				BF4A814F2C3AF06200D4CAF1 /* MetricViewModel.swift in Sources */,
+				BF6C840E2C3C5E8100032E93 /* AccountView.swift in Sources */,
 				BF4A817D2C3AFAD100D4CAF1 /* NewMessageView.swift in Sources */,
 				BF4A817F2C3AFB8600D4CAF1 /* MetricToolBar.swift in Sources */,
 				BF4A81892C3AFDDE00D4CAF1 /* SubscriptionView.swift in Sources */,
 				BF4A81412C3AEE1500D4CAF1 /* HackerTextView.swift in Sources */,
+				BF6C841A2C3D1E5200032E93 /* PrivacyView.swift in Sources */,
 				BF4A81452C3AEE6C00D4CAF1 /* LactateView.swift in Sources */,
 				BF4A813F2C3AEE0900D4CAF1 /* DateHelper.swift in Sources */,
 				BF4A81472C3AEE8800D4CAF1 /* LactateViewModel.swift in Sources */,
+				BF6C84162C3D179F00032E93 /* IntegrationsViewModel.swift in Sources */,
 				BF4A816D2C3AF83700D4CAF1 /* CalendarViewModel.swift in Sources */,
 				BF4A81772C3AFA1700D4CAF1 /* ChatToolBar.swift in Sources */,
 			);
