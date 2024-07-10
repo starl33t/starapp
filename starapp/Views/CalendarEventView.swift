@@ -14,13 +14,6 @@ struct CalendarEventView: View {
             ZStack {
                 Color.starBlack.ignoresSafeArea()
                 VStack {
-                    DatePicker("", selection: $viewModel.selectedDate, displayedComponents: .date)
-                        .colorScheme(.dark)
-                        .padding()
-                        .background(Color.starBlack)
-                        .cornerRadius(5)
-          
-                    // Distance in meters
                     ZStack(alignment: .leading) {
                         if viewModel.distanceInMeters.isEmpty {
                             Text("Distance (m)")

@@ -35,12 +35,14 @@ struct ProfileView: View {
                 }
             }
             .tint(.whiteTwo)
+           
             .sheet(isPresented: $viewModel.isPresented) {
                 if let option = viewModel.selectedOption {
                     viewModel.getSheetView(option: option)
                 }
             }
         }
+        
     }
 }
 

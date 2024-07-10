@@ -64,13 +64,9 @@ struct ContentView: View {
                         HomeToolBar(showingSheet: $showingSheet)
                     }
                 }
-                
             }
-            .tint(.whiteTwo)
-           
-            
         }
-        
+        .tint(.whiteTwo)
     }
 }
 

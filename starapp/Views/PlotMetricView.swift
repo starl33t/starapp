@@ -1,55 +1,60 @@
-//
-//  PlotMetricView.swift
-//  starapp
-//
-//  Created by Peter Tran on 07/07/2024.
-//
-
 import SwiftUI
 
 struct PlotMetricView: View {
     @StateObject private var viewModel = PlotMetricViewModel()
 
-        var body: some View {
-            ZStack {
-                Color.starBlack.ignoresSafeArea()
+    var body: some View {
+        ZStack {
+            Color.starBlack.ignoresSafeArea()
+            VStack {
                 VStack {
-                    VStack {
-                        HStack {
-                            Toggle("Power", isOn: $viewModel.yValuesSelected)
+                    HStack {
+                        Toggle(isOn: $viewModel.yValuesSelected) {
+                            Text("Power")
+                                .foregroundColor(.whiteOne)
                         }
-                        .padding()
-                        .foregroundColor(.whiteOne)
-                        
-                        HStack {
-                            Toggle("Pace", isOn: $viewModel.zValuesSelected)
-                        }
-                        .padding()
-                        .foregroundColor(.whiteOne)
-                        
-                        HStack {
-                            Toggle("Temperature", isOn: $viewModel.bValuesSelected)
-                        }
-                        .padding()
-                        .foregroundColor(.whiteOne)
-                        
-                        HStack {
-                            Toggle("Heart rate", isOn: $viewModel.cValuesSelected)
-                        }
-                        .padding()
-                        .foregroundColor(.whiteOne)
+                        .tint(.green) 
                     }
                     .padding()
-                    .background(Color.starBlack)
-                    .cornerRadius(16)
-                    .presentationDetents([.fraction(0.35)])
+                    
+                    HStack {
+                        Toggle(isOn: $viewModel.zValuesSelected) {
+                            Text("Pace")
+                                .foregroundColor(.whiteOne)
+                        }
+                        .tint(.green)
+                    }
+                    .padding()
+                    
+                    HStack {
+                        Toggle(isOn: $viewModel.bValuesSelected) {
+                            Text("Temperature")
+                                .foregroundColor(.whiteOne)
+                        }
+                        .tint(.green)
+                    }
+                    .padding()
+                    
+                    HStack {
+                        Toggle(isOn: $viewModel.cValuesSelected) {
+                            Text("Heart rate")
+                                .foregroundColor(.whiteOne)
+                        }
+                        .tint(.green)
+                    }
+                    .padding()
                 }
-                .onAppear {
-                    viewModel.showingSheet = true
-                }
+                .padding()
+                .background(Color.starBlack)
+                .cornerRadius(16)
+                .presentationDetents([.fraction(0.35)])
+            }
+            .onAppear {
+                viewModel.showingSheet = true
             }
         }
     }
+}
 
 #Preview {
     PlotMetricView()
