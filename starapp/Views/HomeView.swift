@@ -22,14 +22,14 @@ struct HomeView: View {
                 HStack(spacing: 16) {
                     HStack(spacing: 0) {
                         HackerTextView(text: textForButton(selectedButton, index: 0), trigger: trigger)
-                        Image(systemName: "bolt.fill")
-                            .foregroundColor(.yellow)
+                        Image(systemName: "hare.fill")
+                            .foregroundColor(.green)
                     }
                     
                     HStack(spacing: 0) {
                         HackerTextView(text: textForButton(selectedButton, index: 1), trigger: trigger)
-                        Image(systemName: "hare.fill")
-                            .foregroundColor(.green)
+                        Image(systemName: "bolt.fill")
+                            .foregroundColor(.yellow)
                     }
                     
                     HStack(spacing: 0) {
@@ -181,11 +181,11 @@ struct HomeView: View {
     func textForButton(_ button: String, index: Int) -> String {
         switch button {
         case "LT 1":
-            return ["1.8", "4:10", "145"][index]
+            return ["4:10", "1.8", "145"][index]
         case "Sweet spot":
-            return ["2.8", "3:50", "160"][index]
+            return ["3:50", "2.8", "160"][index]
         case "LT 2":
-            return ["3.8", "3:38", "175"][index]
+            return ["3:38", "3.8", "175"][index]
         default:
             return ["", "", ""][index]
         }
