@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LactateView: View {
     @StateObject private var viewModel = LactateViewModel()
+    @State private var createNewSession = false
     
     var body: some View {
         ZStack {

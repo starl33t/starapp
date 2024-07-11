@@ -6,7 +6,7 @@ class NewTrainingViewModel: ObservableObject {
     @Published var duration: String = ""
     @Published var heartRate: String = ""
     @Published var temperature: String = ""
-    @Published var lactateLevel: String = ""
+    @Published var lactate: String = ""
     @Published var title: String = ""
     
     func saveForm(context: ModelContext) {
@@ -15,7 +15,7 @@ class NewTrainingViewModel: ObservableObject {
             duration: Double(duration) ?? 0.0,
             heartRate: Int(heartRate) ?? 0,
             temperature: Double(temperature),
-            lactateLevels: Double(lactateLevel),
+            lactate: Double(lactate),
             date: Date(),
             title: title.isEmpty ? nil : title
         )

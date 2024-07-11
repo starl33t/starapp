@@ -54,7 +54,6 @@
 		BF6C84162C3D179F00032E93 /* IntegrationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C84152C3D179F00032E93 /* IntegrationsViewModel.swift */; };
 		BF6C84182C3D1C6D00032E93 /* LearnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C84172C3D1C6D00032E93 /* LearnView.swift */; };
 		BF6C841A2C3D1E5200032E93 /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C84192C3D1E5200032E93 /* PrivacyView.swift */; };
-		BF714DE42C400A5600551B67 /* testertraining.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF714DE32C400A5600551B67 /* testertraining.swift */; };
 		BF7342072C3AE74A00911375 /* starappApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7342062C3AE74A00911375 /* starappApp.swift */; };
 		BF7342092C3AE74A00911375 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7342082C3AE74A00911375 /* ContentView.swift */; };
 		BF73420D2C3AE74C00911375 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF73420C2C3AE74C00911375 /* Assets.xcassets */; };
@@ -130,7 +129,6 @@
 		BF6C84152C3D179F00032E93 /* IntegrationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationsViewModel.swift; sourceTree = "<group>"; };
 		BF6C84172C3D1C6D00032E93 /* LearnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnView.swift; sourceTree = "<group>"; };
 		BF6C84192C3D1E5200032E93 /* PrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyView.swift; sourceTree = "<group>"; };
-		BF714DE32C400A5600551B67 /* testertraining.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testertraining.swift; sourceTree = "<group>"; };
 		BF7342032C3AE74A00911375 /* starapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = starapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF7342062C3AE74A00911375 /* starappApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = starappApp.swift; sourceTree = "<group>"; };
 		BF7342082C3AE74A00911375 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -282,7 +280,6 @@
 				BF6744CF2C3FCA5A00A23D76 /* Models */,
 				BF7342082C3AE74A00911375 /* ContentView.swift */,
 				BF7342062C3AE74A00911375 /* starappApp.swift */,
-				BF714DE32C400A5600551B67 /* testertraining.swift */,
 				BF73420C2C3AE74C00911375 /* Assets.xcassets */,
 				BF73420E2C3AE74C00911375 /* starapp.entitlements */,
 				BF73420F2C3AE74C00911375 /* Preview Content */,
@@ -445,7 +442,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF714DE42C400A5600551B67 /* testertraining.swift in Sources */,
 				BF4A814B2C3AF00400D4CAF1 /* ChatViewModel.swift in Sources */,
 				BF7342092C3AE74A00911375 /* ContentView.swift in Sources */,
 				BF4A81752C3AF98F00D4CAF1 /* NewTrainingViewModel.swift in Sources */,

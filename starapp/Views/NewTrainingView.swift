@@ -8,19 +8,20 @@
 import SwiftUI
 
 struct NewTrainingView: View {
-    @Environment(\.modelContext) private var modelContext
-    @StateObject private var viewModel = NewTrainingViewModel()
+    @Environment(\.dismiss) var dismiss
+    @Environment(\.modelContext) var context
+    @State private var distance: Double = 0.0
+    @State private var duration: Double = 0.0
+    @State private var lactate: Double = 0.0
+    @State private var heartRate: Int = 0
+    //@StateObject private var viewModel = NewTrainingViewModel()
         
         var body: some View {
             ZStack {
                 Color.starBlack.ignoresSafeArea()
                 VStack {
                     ZStack(alignment: .leading) {
-                        if viewModel.distanceInMeters.isEmpty {
-                            Text("Distance (m)")
-                                .foregroundColor(.gray)
-                        }
-                        TextField("", text: $viewModel.distanceInMeters)
+                        TextField("Distance", value: $distance, formatter: NumberFormatter())
                             .foregroundColor(.white)
                             .keyboardType(.numberPad)
                     }
@@ -32,11 +33,7 @@ struct NewTrainingView: View {
                     
                     // Duration
                     ZStack(alignment: .leading) {
-                        if viewModel.duration.isEmpty {
-                            Text("Duration")
-                                .foregroundColor(.gray)
-                        }
-                        TextField("", text: $viewModel.duration)
+                        TextField("Duration", value: $duration, formatter: NumberFormatter())
                             .foregroundColor(.white)
                             .keyboardType(.numberPad)
                     }
@@ -48,11 +45,7 @@ struct NewTrainingView: View {
                     
                     // Lactate
                     ZStack(alignment: .leading) {
-                        if viewModel.lactateLevel.isEmpty {
-                            Text("Lactate")
-                                .foregroundColor(.gray)
-                        }
-                        TextField("", text: $viewModel.lactateLevel)
+                        TextField("Lactate", value: $lactate, formatter: NumberFormatter())
                             .foregroundColor(.white)
                             .keyboardType(.decimalPad)
                     }
@@ -63,17 +56,21 @@ struct NewTrainingView: View {
                         RoundedRectangle(cornerRadius: 5)
                             .stroke(Color.gray, lineWidth: 1)
                     )
-                    Button(action: {
-                        viewModel.saveForm(context: modelContext)
-                    }) {
-                        Text("Save")
-                            .foregroundColor(.starMain)
+                    Button("Save") {
+                        let newSession = Session(
+                            distance: distance,
+                            duration: duration,
+                            heartRate: heartRate,
+                            lactate: lactate
+                        )
+                        context.insert(newSession)
+                        dismiss()
                     }
                     .padding()
                 }
                 .background(Color.starBlack)
                 .padding()
-                .presentationDetents([.fraction(0.40)])
+                .presentationDetents([.medium])
             }
         }
     }
