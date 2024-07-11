@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct NewTrainingView: View {
+    @Environment(\.modelContext) private var modelContext
     @StateObject private var viewModel = NewTrainingViewModel()
         
         var body: some View {
@@ -63,7 +64,7 @@ struct NewTrainingView: View {
                             .stroke(Color.gray, lineWidth: 1)
                     )
                     Button(action: {
-                        viewModel.saveForm()
+                        viewModel.saveForm(context: modelContext)
                     }) {
                         Text("Save")
                             .foregroundColor(.starMain)

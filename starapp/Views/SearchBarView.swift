@@ -9,23 +9,23 @@ import SwiftUI
 
 struct SearchBarView: View {
     @Binding var searchText: String
-
-        var body: some View {
-            ZStack(alignment: .leading) {
-                if searchText.isEmpty {
-                    Text("Ask Coach")
-                        .foregroundColor(.gray)
-                        .padding(.leading, 10)
-                }
-                TextField("", text: $searchText)
-                    .foregroundColor(.whiteOne)
+    var body: some View {
+        ZStack(alignment: .leading) {
+            if searchText.isEmpty {
+                Text("Ask Coach")
+                    .foregroundColor(.gray)
                     .padding(.leading, 10)
             }
-            .padding(5)
-            .background(Color.darkOne)
-            .cornerRadius(24)
+            TextField("", text: $searchText)
+                .foregroundColor(.whiteOne)
+                .padding(.leading, 10)
         }
+        .padding(5)
+        .background(Color.darkOne)
+        .cornerRadius(24)
+        .frame(width: 250)
     }
+}
 
 struct SearchBarView_Previews: PreviewProvider {
     @State static var searchText = ""

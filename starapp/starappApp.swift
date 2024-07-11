@@ -6,6 +6,8 @@ struct starappApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .modelContainer(for: [Session.self])
         }
+        
     }
 }

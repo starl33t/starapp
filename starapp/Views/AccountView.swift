@@ -29,8 +29,11 @@ struct AccountView: View {
     private var settingsToggles: some View {
         VStack {
             ToggleView(title: "US units", isOn: $viewModel.yUsSelected)
+                .tint(.green)
             ToggleView(title: "Notifications", isOn: $viewModel.zNotSelected)
+                .tint(.green)
             ToggleView(title: "Incognito mode", isOn: $viewModel.bIncogSelected)
+                .tint(.green)
         }
         .padding()
         .background(Color.starBlack)

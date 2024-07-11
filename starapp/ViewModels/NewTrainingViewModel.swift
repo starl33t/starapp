@@ -1,21 +1,29 @@
-//
-//  NewTrainingViewModel.swift
-//  starapp
-//
-//  Created by Peter Tran on 07/07/2024.
-//
-
 import SwiftUI
+import SwiftData
 
 class NewTrainingViewModel: ObservableObject {
-    @Published var showingForm: Bool = false
-    @Published var selectedDate: Date = Date()
     @Published var distanceInMeters: String = ""
     @Published var duration: String = ""
+    @Published var heartRate: String = ""
+    @Published var temperature: String = ""
     @Published var lactateLevel: String = ""
+    @Published var title: String = ""
     
-    func saveForm() {
-        // Add logic to save the form
-        showingForm = false
+    func saveForm(context: ModelContext) {
+        let newSession = Session(
+            distance: Double(distanceInMeters) ?? 0.0,
+            duration: Double(duration) ?? 0.0,
+            heartRate: Int(heartRate) ?? 0,
+            temperature: Double(temperature),
+            lactateLevels: Double(lactateLevel),
+            date: Date(),
+            title: title.isEmpty ? nil : title
+        )
+        context.insert(newSession)
+        do {
+            try context.save()
+        } catch {
+            print("Error saving session: \(error.localizedDescription)")
+        }
     }
 }

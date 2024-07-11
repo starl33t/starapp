@@ -194,4 +194,5 @@ struct HomeView: View {
 
 #Preview {
     HomeView()
+        .modelContainer(for: [Session.self])
 }
