@@ -8,6 +8,7 @@
 import SwiftUI
 
 class LactateViewModel: ObservableObject {
+    //LactateViewModel has been deprecated untill further notice
     @Published var lactateEntries: [LactateEntry] = []
     
     init() {

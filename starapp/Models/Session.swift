@@ -3,23 +3,23 @@ import SwiftData
 
 @Model
 class Session: Identifiable {
-    @Attribute var distance: Double = 0.0 // Provide default value
-    @Attribute var duration: Double = 0.0 // Provide default value
-    @Attribute var heartRate: Int = 0 // Provide default value
+    @Attribute var distance: Double? = nil // Optional
+    @Attribute var duration: Double? = nil // Optional
+    @Attribute var heartRate: Int? = nil // Optional
     @Attribute var temperature: Double? = nil // Optional
     @Attribute var lactate: Double? = nil // Optional
-    @Attribute var lapSplits: Double? = nil // Optional
-    @Attribute var date: Date = Date.now // Provide default value
+    @Attribute var lapSplits: Int? = nil // Optional and changed to Int
+    @Attribute var date: Date? = nil // Optional
     @Attribute var title: String? = nil // Optional
 
     init(
-        distance: Double = 0.0,
-        duration: Double = 0.0,
-        heartRate: Int = 0,
+        distance: Double? = nil,
+        duration: Double? = nil,
+        heartRate: Int? = nil,
         temperature: Double? = nil,
         lactate: Double? = nil,
-        lapSplits: Double? = nil, // Optional
-        date: Date = Date(),
+        lapSplits: Int? = nil, // Optional and changed to Int
+        date: Date? = nil,
         title: String? = nil
     ) {
         self.distance = distance
