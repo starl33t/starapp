@@ -20,57 +20,61 @@ struct NewTrainingView: View {
             Color.starBlack.ignoresSafeArea()
             VStack {
                 // Distance
-                ZStack(alignment: .leading) {
-                    if distance == nil {
-                        Text("Distance (m)")
-                            .foregroundColor(.gray)
-                            .padding(.leading, 5)
+                HStack{
+                    Text("Distance")
+                        .foregroundStyle(.whiteTwo)
+                    Spacer()
+                    ZStack(alignment: .leading) {
+                        TextField("Kilometer", value: $distance, formatter: numberFormatter)
+                            .keyboardType(.decimalPad)
+                            .foregroundStyle(.whiteTwo)
                     }
-                    TextField("", value: $distance, formatter: numberFormatter)
-                        .foregroundColor(.white)
-                        .keyboardType(.decimalPad)
+                    .padding()
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 5)
+                            .stroke(Color.gray, lineWidth: 1)
+                    )
+                    .frame(maxWidth: 150)
                 }
                 .padding()
-                .overlay(
-                    RoundedRectangle(cornerRadius: 5)
-                        .stroke(Color.gray, lineWidth: 1)
-                )
                 
                 // Duration
-                ZStack(alignment: .leading) {
-                    if duration == nil {
-                        Text("Duration")
-                            .foregroundColor(.gray)
-                            .padding(.leading, 5)
+                HStack{
+                    Text("Duration")
+                        .foregroundStyle(.whiteTwo)
+                    Spacer()
+                    ZStack(alignment: .leading) {
+                        TextField("Minutes", value: $duration, formatter: numberFormatter)
+                            .keyboardType(.decimalPad)
+                            .foregroundStyle(.whiteTwo)
                     }
-                    TextField("", value: $duration, formatter: numberFormatter)
-                        .foregroundColor(.white)
-                        .keyboardType(.decimalPad)
+                    .padding()
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 5)
+                            .stroke(Color.gray, lineWidth: 1)
+                    )
+                    .frame(maxWidth: 150) // Adjust the width as needed
                 }
                 .padding()
-                .overlay(
-                    RoundedRectangle(cornerRadius: 5)
-                        .stroke(Color.gray, lineWidth: 1)
-                )
                 
                 // Lactate
-                ZStack(alignment: .leading) {
-                    if lactate == nil {
-                        Text("Lactate")
-                            .foregroundColor(.gray)
-                            .padding(.leading, 5)
+                HStack{
+                    Text("Lactate")
+                        .foregroundStyle(.whiteTwo)
+                    Spacer()
+                    ZStack(alignment: .leading) {
+                        TextField("mM", value: $lactate, formatter: numberFormatter)
+                            .keyboardType(.decimalPad)
+                            .foregroundStyle(.whiteTwo)
                     }
-                    TextField("", value: $lactate, formatter: numberFormatter)
-                        .foregroundColor(.white)
-                        .keyboardType(.decimalPad)
+                    .padding()
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 5)
+                            .stroke(Color.gray, lineWidth: 1)
+                    )
+                    .frame(maxWidth: 150) // Adjust the width as needed
                 }
                 .padding()
-                .background(Color.starBlack)
-                .cornerRadius(5)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 5)
-                        .stroke(Color.gray, lineWidth: 1)
-                )
                 
                 Button("Save") {
                     let newSession = Session(

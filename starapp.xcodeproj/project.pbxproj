@@ -61,6 +61,7 @@
 		BF73421B2C3AE74C00911375 /* starappTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF73421A2C3AE74C00911375 /* starappTests.swift */; };
 		BF7342252C3AE74C00911375 /* starappUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7342242C3AE74C00911375 /* starappUITests.swift */; };
 		BF7342272C3AE74C00911375 /* starappUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7342262C3AE74C00911375 /* starappUITestsLaunchTests.swift */; };
+		BF8D6ADC2C41A9DF000269F1 /* TrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -140,6 +141,7 @@
 		BF7342202C3AE74C00911375 /* starappUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = starappUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF7342242C3AE74C00911375 /* starappUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = starappUITests.swift; sourceTree = "<group>"; };
 		BF7342262C3AE74C00911375 /* starappUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = starappUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +183,7 @@
 				BF6C84192C3D1E5200032E93 /* PrivacyView.swift */,
 				BF4A81682C3AF79200D4CAF1 /* CalendarEventView.swift */,
 				BF4A81442C3AEE6C00D4CAF1 /* LactateView.swift */,
+				BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */,
 				BF4A81722C3AF94F00D4CAF1 /* NewTrainingView.swift */,
 				BF4A81482C3AEFCE00D4CAF1 /* ChatView.swift */,
 				BF4A817C2C3AFAD100D4CAF1 /* NewMessageView.swift */,
@@ -474,6 +477,7 @@
 				BF4A818D2C3AFF0700D4CAF1 /* HomeToolBar.swift in Sources */,
 				BF4A81492C3AEFCE00D4CAF1 /* ChatView.swift in Sources */,
 				BF4A815B2C3AF2B100D4CAF1 /* BarChartView.swift in Sources */,
+				BF8D6ADC2C41A9DF000269F1 /* TrainingView.swift in Sources */,
 				BF4A815D2C3AF30F00D4CAF1 /* PieChartViewModel.swift in Sources */,
 				BF4A81352C3AEC4D00D4CAF1 /* CalendarView.swift in Sources */,
 				BF4A81532C3AF15200D4CAF1 /* LineChartViewModel.swift in Sources */,

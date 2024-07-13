@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+//may be deprecated
 class CalendarEventViewModel: ObservableObject {
     @Published var showingForm: Bool = false
     @Published var selectedDate: Date = Date()
