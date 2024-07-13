@@ -14,7 +14,6 @@ struct TrainingView: View {
     @State private var duration: Double?
     @State private var lactate: Double?
     @State private var heartRate: Int?
-    @State private var temperature: Double?
     @State private var lapSplits: Int?
     @State private var date: Date = Date.distantPast
     @State private var title: String = ""
@@ -129,24 +128,6 @@ struct TrainingView: View {
                 }
                 .padding()
                 
-                HStack {
-                    Text("Temperature")
-                        .foregroundStyle(.whiteTwo)
-                    Spacer()
-                    ZStack(alignment: .leading) {
-                        TextField("°C", value: $temperature, formatter: numberFormatter)
-                            .keyboardType(.decimalPad)
-                            .foregroundStyle(.whiteTwo)
-                    }
-                    .padding()
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 5)
-                            .stroke(Color.gray, lineWidth: 1)
-                    )
-                    .frame(maxWidth: 150) // Adjust the width as needed
-                }
-                .padding()
-                
                 if changed {
                     Button("Save") {
                         // Assuming session is a class and these properties are mutable
@@ -156,7 +137,6 @@ struct TrainingView: View {
                         session.duration = duration
                         session.lactate = lactate
                         session.heartRate = heartRate
-                        session.temperature = temperature
                         dismiss()
                     }
                     .foregroundColor(.starMain)
@@ -173,7 +153,6 @@ struct TrainingView: View {
                 duration = session.duration
                 lactate = session.lactate
                 heartRate = session.heartRate
-                temperature = session.temperature
             }
         }
     }
@@ -185,10 +164,5 @@ struct TrainingView: View {
         || duration != session.duration
         || lactate != session.lactate
         || heartRate != session.heartRate
-        || temperature != session.temperature
     }
-}
-
-#Preview {
-    TrainingView(session: Session(distance: nil, duration: nil, heartRate: nil, temperature: nil,lactate: nil, date: Date(), title: ""))
 }

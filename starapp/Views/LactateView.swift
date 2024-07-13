@@ -10,10 +10,9 @@ import SwiftData
 
 struct LactateView: View {
     @Environment(\.modelContext) private var context
-    @Query(sort: \Session.date) private var sessions: [Session]
+    @Query(sort: \Session.date, order: .reverse) private var sessions: [Session]
     @State private var selectedSession: Session?
     @State private var showingSheet: Bool = false
-    
     var body: some View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
@@ -27,42 +26,54 @@ struct LactateView: View {
                             selectedSession = session
                             showingSheet = true
                         }) {
-                            HStack(spacing: 20) {
-                                Image(systemName: "figure.run")
-                                    .font(.system(size: 38))
-                                    .padding(8)
-                                    .foregroundStyle(.starMain)
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text("\(session.distance ?? 0.0, specifier: "%.0f")K@\(session.duration ?? 0.0, specifier: "%.0f")'")
+                            HStack {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(Color.whiteOne, lineWidth: 2)
+                                        .frame(width: 100, height: 48)
+                                    Text("\(session.distance ?? 0.0, specifier: "%.0f") km")
                                         .font(.system(size: 24, weight: .bold))
-                                        .foregroundStyle(.whiteTwo)
-                                    HStack {
+                                        .foregroundColor(.whiteOne)
+                                        .multilineTextAlignment(.center)
+                                        
+                                }
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text("\(session.duration ?? 0.0, specifier: "%.0f") min")
+                                        .font(.system(size: 24, weight: .bold))
+                                        .foregroundStyle(.whiteOne)
+                                    HStack(spacing: 0) {
+                                        Text(calculatePace(distance: session.distance, duration: session.duration))
+                                        Image(systemName: "hare.fill")
+                                        Text(" ")
                                         Text("\(session.heartRate ?? 0)")
                                         Image(systemName: "heart.fill")
-                                        Text(" | ")
-                                        if let temperature = session.temperature {
-                                            Text("\(temperature, specifier: "%.1f")°C")
-                                        } else {
-                                            Text("N/A")
-                                        }
+                                        
                                     }
                                     .font(.system(size: 14))
                                     .foregroundStyle(.gray)
                                 }
+                                .padding(.leading, 20)
                                 .foregroundStyle(.whiteOne)
-                                Spacer()
-                                if let lactate = session.lactate {
-                                    Text("\(lactate, specifier: "%.1f") mM")
-                                        .font(.system(size: 32, weight: .bold))
-                                        .foregroundStyle(.starMain)
-                                } else {
-                                    Text("N/A mM")
-                                        .font(.system(size: 32, weight: .bold))
-                                        .foregroundStyle(.starMain)
+                                HStack(spacing: 0) {
+                                    if let lactate = session.lactate {
+                                        Text("\(lactate, specifier: "%.1f")")
+                                            .font(.system(size: 32, weight: .bold))
+                                            .foregroundStyle(.starMain)
+                                        Image(systemName: "bolt.fill")
+                                            .font(.system(size: 32, weight: .bold))
+                                            .foregroundStyle(.yellow)
+                                    } else {
+                                        Text("N/A")
+                                            .font(.system(size: 32, weight: .bold))
+                                            .foregroundStyle(.starMain)
+                                    }
                                 }
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                                
                             }
+                            
                         }
-                        .padding(.vertical, 10)
+                        .padding()
                         .background(Color.starBlack)
                         .listRowInsets(EdgeInsets())
                     }
@@ -80,24 +91,9 @@ struct LactateView: View {
                 }
             }
         }
-        .onAppear {
-            //delete after finished layout
-            if sessions.isEmpty {
-                let mockSessions = [
-                    Session(distance: 5.0, duration: 30.0, heartRate: 140, temperature: 38.2, lactate: 1.2, date: Date()),
-                    Session(distance: 10.0, duration: 60.0, heartRate: 160, temperature: 39.0, lactate: 2.3, date: Date().addingTimeInterval(-86400)), // 1 day ago
-                    Session(distance: 7.5, duration: 45.0, heartRate: 145, temperature: 39.6, lactate: 1.8, date: Date().addingTimeInterval(-172800)) // 2 days ago
-                ]
-                
-                for session in mockSessions {
-                    context.insert(session)
-                }
-            }
-        }
     }
 }
 
 #Preview {
     LactateView()
-        .modelContainer(for: Session.self, inMemory: true)
 }

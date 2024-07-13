@@ -181,11 +181,11 @@ struct HomeView: View {
     func textForButton(_ button: String, index: Int) -> String {
         switch button {
         case "LT 1":
-            return ["4:10", "1.8", "145"][index]
+            return ["4:10", "1,8", "145"][index]
         case "Sweet spot":
-            return ["3:50", "2.8", "160"][index]
+            return ["3:50", "2,8", "160"][index]
         case "LT 2":
-            return ["3:38", "3.8", "175"][index]
+            return ["3:38", "3,8", "175"][index]
         default:
             return ["", "", ""][index]
         }

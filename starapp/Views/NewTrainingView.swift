@@ -6,6 +6,7 @@ struct NewTrainingView: View {
     @State private var distance: Double?
     @State private var duration: Double?
     @State private var lactate: Double?
+    @State private var date: Date = Date()
     
     private var numberFormatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -80,7 +81,8 @@ struct NewTrainingView: View {
                     let newSession = Session(
                         distance: distance ?? 0.0,
                         duration: duration ?? 0.0,
-                        lactate: lactate ?? 0.0
+                        lactate: lactate ?? 0.0,
+                        date: date
                     )
                     context.insert(newSession)
                     dismiss()
