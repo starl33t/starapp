@@ -92,6 +92,7 @@ struct LactateView: View {
             }
         }
     }
+    
 }
 
 #Preview {
