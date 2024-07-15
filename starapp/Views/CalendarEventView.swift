@@ -8,11 +8,9 @@
 import SwiftUI
 
 struct CalendarEventView: View {
-    //@StateObject private var viewModel = CalendarEventViewModel()
     
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) var context
-    @State private var distance: Double?
     @State private var duration: Double?
     @State private var lactate: Double?
     @State private var selectedDate = Date()
@@ -34,26 +32,6 @@ struct CalendarEventView: View {
                     .padding()
                     .background(Color.starBlack)
                     .cornerRadius(5)
-                // Distance
-                HStack{
-                    Text("Distance")
-                        .foregroundStyle(.whiteOne)
-                    Spacer()
-                    ZStack(alignment: .leading) {
-                        TextField("Kilometer", value: $distance, formatter: numberFormatter)
-                            .keyboardType(.decimalPad)
-                            .foregroundStyle(.whiteTwo)
-                        
-                    }
-                    .padding()
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 5)
-                            .stroke(Color.gray, lineWidth: 1)
-                    )
-                    .frame(maxWidth: 150)
-                }
-                .padding()
-                
                 // Duration
                 HStack{
                     Text("Duration")
@@ -94,7 +72,6 @@ struct CalendarEventView: View {
                 
                 Button("Save") {
                     let newSession = Session(
-                        distance: distance ?? 0.0,
                         duration: duration ?? 0.0,
                         lactate: lactate ?? 0.0
                     )

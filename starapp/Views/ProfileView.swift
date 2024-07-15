@@ -8,41 +8,24 @@ struct ProfileView: View {
             Color.starBlack.ignoresSafeArea()
             VStack {
                 viewModel.profileHeader
-                    .padding(.bottom, 100)
+                    .padding()
                 
                 VStack(alignment: .leading) {
-                    viewModel.profileButton(imageName: "gearshape", text: "Account", tag: 0)
-                    viewModel.profileButton(imageName: "cpu", text: "Subscriptions", tag: 1)
-                    viewModel.profileButton(imageName: "sensor", text: "Integrations", tag: 2)
-                    viewModel.profileButton(imageName: "questionmark.circle", text: "Support", tag: 3)
-                    viewModel.profileButton(imageName: "book", text: "Learn", tag: 4)
-                    viewModel.profileButton(imageName: "shield", text: "Privacy", tag: 5)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal)
-                .padding(.bottom, 50)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        // Action for button logout
-                    }) {
-                        VStack {
-                            Image(systemName: "rectangle.portrait.and.arrow.right")
-                            Text("Quit")
-                        }
+                    ForEach(viewModel.profileOptions, id: \.tag) { option in
+                        viewModel.profileButton(imageName: option.imageName, text: option.text, tag: option.tag)
                     }
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding()
             }
+            .padding()
             .tint(.whiteTwo)
-           
             .sheet(isPresented: $viewModel.isPresented) {
                 if let option = viewModel.selectedOption {
                     viewModel.getSheetView(option: option)
                 }
             }
         }
-        
     }
 }
 

@@ -49,7 +49,7 @@ struct SubscriptionView: View {
                     }
                     .padding(.horizontal, 20)
                     .padding(.top, 20)
-                    .presentationDetents([.medium])
+                    .presentationDetents([.large])
                 }
                 
             }

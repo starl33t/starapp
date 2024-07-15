@@ -20,9 +20,9 @@ struct BarChartView: View {
                     y: .value("Value", item.value)
                 )
             }
+            .scaledToFit()
             .chartXAxis(.hidden)
             .chartYAxis(.hidden)
-            .frame(height: 500)
         }
     }
 }

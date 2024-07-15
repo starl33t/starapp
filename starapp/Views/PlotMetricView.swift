@@ -47,7 +47,7 @@ struct PlotMetricView: View {
                 .padding()
                 .background(Color.starBlack)
                 .cornerRadius(16)
-                .presentationDetents([.fraction(0.35)])
+                .presentationDetents([.medium])
             }
             .onAppear {
                 viewModel.showingSheet = true

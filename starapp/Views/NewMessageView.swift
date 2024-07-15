@@ -21,7 +21,6 @@ struct NewMessageView: View {
                     }
                     TextField("", text: $viewModel.receiver)
                         .foregroundColor(.white)
-                        .keyboardType(.numberPad)
                 }
                 .padding()
                 .cornerRadius(5)
@@ -40,7 +39,7 @@ struct NewMessageView: View {
                     TextEditor(text: $viewModel.message)
                         .foregroundColor(.white)
                         .background(Color.clear)
-                        .frame(height: 150) // Adjust the height as needed
+                        .frame(height: 150)
                 }
                 .padding()
                 .cornerRadius(5)
@@ -57,10 +56,10 @@ struct NewMessageView: View {
                 }
                 .padding()
             }
+            .padding()
             .background(Color.starBlack)
             .scrollContentBackground(.hidden)
             .accentColor(.starMain)
-            .fontWeight(.bold)
             .presentationDetents([.medium])
             .onAppear {
                 viewModel.showingSheet = true

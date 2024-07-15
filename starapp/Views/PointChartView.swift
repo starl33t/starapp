@@ -28,9 +28,9 @@ struct PointChartView: View {
                                 .padding(.leading)
                         }
                 }
+                .scaledToFit()
                 .chartXAxis(.hidden)
                 .chartYAxis(.hidden)
-                .frame(height: 500)
             }
         }
     }

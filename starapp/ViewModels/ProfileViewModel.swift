@@ -4,6 +4,15 @@ class ProfileViewModel: ObservableObject {
     @Published var selectedOption: Int? = nil
     @Published var isPresented: Bool = false
     
+    let profileOptions = [
+        (imageName: "gearshape", text: "Account", tag: 0),
+        (imageName: "cpu", text: "Subscriptions", tag: 1),
+        (imageName: "sensor", text: "Integrations", tag: 2),
+        (imageName: "questionmark.circle", text: "Support", tag: 3),
+        (imageName: "book", text: "Learn", tag: 4),
+        (imageName: "shield", text: "Privacy", tag: 5)
+    ]
+    
     func present(option: Int) {
         selectedOption = option
         isPresented = true
@@ -37,6 +46,8 @@ class ProfileViewModel: ObservableObject {
                 }
                 .padding(.leading, 10)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .contentShape(Rectangle()) // Make the entire HStack tappable
         }
     }
     

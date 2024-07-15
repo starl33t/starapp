@@ -25,9 +25,9 @@ struct LineChartView: View {
                        y: .value("Value", item.value)
                    )
                }
+               .scaledToFit()
                .chartXAxis(.hidden)
                .chartYAxis(.hidden)
-               .frame(height: 500)
                Text("2.8 mM")
                    .fontWeight(.black)
                    .foregroundStyle(.whiteTwo)

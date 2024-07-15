@@ -3,7 +3,6 @@ import SwiftUI
 struct NewTrainingView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) var context
-    @State private var distance: Double?
     @State private var duration: Double?
     @State private var lactate: Double?
     @State private var date: Date = Date()
@@ -20,25 +19,6 @@ struct NewTrainingView: View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
             VStack {
-                // Distance
-                HStack{
-                    Text("Distance")
-                        .foregroundStyle(.whiteTwo)
-                    Spacer()
-                    ZStack(alignment: .leading) {
-                        TextField("Kilometer", value: $distance, formatter: numberFormatter)
-                            .keyboardType(.decimalPad)
-                            .foregroundStyle(.whiteTwo)
-                    }
-                    .padding()
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 5)
-                            .stroke(Color.gray, lineWidth: 1)
-                    )
-                    .frame(maxWidth: 150)
-                }
-                .padding()
-                
                 // Duration
                 HStack{
                     Text("Duration")
@@ -73,13 +53,12 @@ struct NewTrainingView: View {
                         RoundedRectangle(cornerRadius: 5)
                             .stroke(Color.gray, lineWidth: 1)
                     )
-                    .frame(maxWidth: 150) // Adjust the width as needed
+                    .frame(maxWidth: 150) 
                 }
                 .padding()
                 
                 Button("Save") {
                     let newSession = Session(
-                        distance: distance ?? 0.0,
                         duration: duration ?? 0.0,
                         lactate: lactate ?? 0.0,
                         date: date

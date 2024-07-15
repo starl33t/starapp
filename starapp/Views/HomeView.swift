@@ -17,7 +17,6 @@ struct HomeView: View {
     var body: some View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
-            
             VStack {
                 HStack(spacing: 16) {
                     HStack(spacing: 0) {
@@ -142,38 +141,6 @@ struct HomeView: View {
                 .chartYAxis(.hidden)
                 .frame(height: 100)
                 .padding(.bottom)
-                VStack {
-                    HStack(spacing: 16) {
-                        Image(systemName: "1.circle")
-                            .font(.system(size: 38))
-                            .padding(8)
-                            .foregroundStyle(.starMain)
-                        VStack(alignment: .leading) {
-                            HStack {
-                                Text("10 min")
-                                    .font(.system(size: 24, weight: .bold))
-                                    .foregroundStyle(.whiteTwo)
-                            }
-                            HStack {
-                                Text("10")
-                                Image(systemName: "heart.fill")
-                                Text(" | ")
-                                Text("38°C")
-                            }
-                            .font(.system(size: 14))
-                            .foregroundStyle(.gray)
-                        }
-                        .foregroundStyle(.whiteOne)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        Text("10 mM")
-                            .font(.system(size: 32, weight: .bold))
-                            .foregroundStyle(.starMain)
-                    }
-                    Divider()
-                        .padding(.vertical, 8)
-                }
-                .padding(.horizontal)
-       
             }
         }
     }
