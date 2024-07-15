@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF2732E62C4593A100E16ACD /* Split.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2732E52C45939E00E16ACD /* Split.swift */; };
 		BF4A81352C3AEC4D00D4CAF1 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81342C3AEC4D00D4CAF1 /* CalendarView.swift */; };
 		BF4A813F2C3AEE0900D4CAF1 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A813E2C3AEE0900D4CAF1 /* DateHelper.swift */; };
 		BF4A81412C3AEE1500D4CAF1 /* HackerTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81402C3AEE1500D4CAF1 /* HackerTextView.swift */; };
@@ -81,6 +82,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BF2732E52C45939E00E16ACD /* Split.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Split.swift; sourceTree = "<group>"; };
 		BF3F6CAD2C3F23280087DF5A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		BF4A81342C3AEC4D00D4CAF1 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		BF4A813E2C3AEE0900D4CAF1 /* DateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
@@ -244,6 +246,7 @@
 		BF6744CF2C3FCA5A00A23D76 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				BF2732E52C45939E00E16ACD /* Split.swift */,
 				BF6744D02C3FCAE400A23D76 /* Session.swift */,
 			);
 			path = Models;
@@ -475,6 +478,7 @@
 				BF4A815B2C3AF2B100D4CAF1 /* BarChartView.swift in Sources */,
 				BF8D6ADC2C41A9DF000269F1 /* TrainingView.swift in Sources */,
 				BF4A815D2C3AF30F00D4CAF1 /* PieChartViewModel.swift in Sources */,
+				BF2732E62C4593A100E16ACD /* Split.swift in Sources */,
 				BF4A81352C3AEC4D00D4CAF1 /* CalendarView.swift in Sources */,
 				BF4A81532C3AF15200D4CAF1 /* LineChartViewModel.swift in Sources */,
 				BF7342072C3AE74A00911375 /* starappApp.swift in Sources */,

@@ -2,28 +2,20 @@ import SwiftUI
 import SwiftData
 
 @Model
-class Session {
+class Split {
+    var splitNumber: Int?
     var distance: Double?
     var duration: Double?
-    var pace: Int?
+    var pace: Double?
     var power: Int?
     var heartRate: Int?
     var lactate: Double?
     var date: Date?
     var title: String?
-    @Relationship(deleteRule: .cascade) var splits: [Split]?
+    @Relationship var sessions: [Session]?
 
-    init(
-        distance: Double? = nil,
-        duration: Double? = nil,
-        pace: Int? = nil,
-        power: Int? = nil,
-        heartRate: Int? = nil,
-        lactate: Double? = nil,
-        date: Date? = nil,
-        title: String? = nil,
-        splits: [Split]? = nil
-    ) {
+    init(splitNumber: Int? = nil, distance: Double? = nil, duration: Double? = nil, pace: Double? = nil, power: Int? = nil, heartRate: Int? = nil, lactate: Double? = nil, date: Date? = nil, title: String? = nil) {
+        self.splitNumber = splitNumber
         self.distance = distance
         self.duration = duration
         self.pace = pace
@@ -32,6 +24,5 @@ class Session {
         self.lactate = lactate
         self.date = date
         self.title = title
-        self.splits = splits
     }
 }

@@ -114,7 +114,6 @@ struct TrainingView: View {
                 power = session.power != nil ? String(session.power!) : ""
                 lactate = session.lactate != nil ? String(format: "%.2f", session.lactate!) : ""
                 heartRate = session.heartRate != nil ? String(session.heartRate!) : ""
-                lap = session.lap != nil ? String(session.lap!) : ""
             }
         }
         .navigationBarTitleDisplayMode(.inline)
@@ -134,7 +133,6 @@ struct TrainingView: View {
                     session.power = Int(power)
                     session.lactate = Double(lactate)
                     session.heartRate = Int(heartRate)
-                    session.lap = Int(lap)
                     dismiss()
                 }
                 .foregroundColor(.starMain)
@@ -144,5 +142,5 @@ struct TrainingView: View {
 }
 
 #Preview {
-    TrainingView(session: Session(distance: nil, duration: nil, pace: nil, power: nil, heartRate: nil, lactate: nil, lap: nil, date: nil, title: ""))
+    TrainingView(session: Session(distance: nil, duration: nil, pace: nil, power: nil, heartRate: nil, lactate: nil, date: nil, title: "Sample Session"))
 }

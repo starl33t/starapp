@@ -5,7 +5,6 @@ struct NewTrainingView: View {
     @Environment(\.modelContext) var context
     @State private var duration: Double?
     @State private var lactate: Double?
-    @State private var date: Date = Date()
     
     private var numberFormatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -60,8 +59,7 @@ struct NewTrainingView: View {
                 Button("Save") {
                     let newSession = Session(
                         duration: duration ?? 0.0,
-                        lactate: lactate ?? 0.0,
-                        date: date
+                        lactate: lactate ?? 0.0
                     )
                     context.insert(newSession)
                     dismiss()

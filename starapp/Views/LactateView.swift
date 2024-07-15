@@ -80,6 +80,7 @@ struct LactateView: View {
                     }
                     .listStyle(PlainListStyle())
                     .scrollContentBackground(.hidden)
+                    .padding(.top)
                 }
             }
             
