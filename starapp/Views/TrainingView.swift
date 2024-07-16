@@ -12,81 +12,65 @@ struct TrainingView: View {
     @State private var lap: String = ""
     @State private var date: Date = Date.distantPast
     @State private var title: String = ""
-    let columns = Array(repeating: GridItem(.flexible(), spacing: 10), count: 3)
     
     var body: some View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
-            LazyVGrid(columns: columns, spacing: 20) {
+            VStack {
                 Section {
-                    ZStack(alignment: .leading) {
-                        if distance.isEmpty {
-                            Text("Distance (km)")
-                                .foregroundColor(.whiteOne)
-                        }
-                        TextField("", text: $distance)
+                    HStack{
+                        Text("Distance:")
+                            .foregroundColor(.whiteTwo)
+                        TextField("km", text: $distance)
                             .foregroundColor(.whiteOne)
                             .keyboardType(.decimalPad)
                     }
+                    .padding()
                     
-                    Text("@")
-                        .foregroundStyle(.whiteTwo)
+                    HStack {
+                        Text("Duration:")
+                            .foregroundColor(.whiteTwo)
+                        TextField("min", text: $duration)
+                            .foregroundColor(.whiteTwo)
+                            .keyboardType(.decimalPad)
+    
+                    }
+                    .padding()
                     
-                    ZStack(alignment: .leading) {
-                        if duration.isEmpty {
-                            Text("Time (min)")
-                                .foregroundColor(.whiteOne)
-                        }
-                        TextField("", text: $duration)
+                    HStack{
+                        Text("Pace:")
+                            .foregroundColor(.whiteTwo)
+                        TextField("min/km", text: $pace)
+                            .foregroundColor(.whiteTwo)
+                            .keyboardType(.decimalPad)
+                        
+                            .foregroundColor(.whiteTwo)
+                        Text("Power:")
+                            .foregroundColor(.whiteTwo)
+                        TextField("W", text: $power)
                             .foregroundColor(.whiteTwo)
                             .keyboardType(.decimalPad)
                     }
+                    .padding()
                     
-                    ZStack(alignment: .leading) {
-                        if pace.isEmpty {
-                            Text("Pace (km/min)")
-                                .foregroundColor(.whiteOne)
-                        }
-                        TextField("", text: $pace)
+                    HStack{
+                        Text("Lactate:")
+                            .foregroundColor(.whiteTwo)
+                        TextField("mM", text: $lactate)
                             .foregroundColor(.whiteTwo)
                             .keyboardType(.decimalPad)
+                            
                     }
+                    .padding()
                     
-                    Text("Speed")
-                        .foregroundStyle(.whiteTwo)
-                    
-                    ZStack(alignment: .leading) {
-                        if power.isEmpty {
-                            Text("Power (W)")
-                                .foregroundColor(.whiteOne)
-                        }
-                        TextField("", text: $power)
+                    HStack{
+                        Text("Heart rate:")
                             .foregroundColor(.whiteTwo)
-                            .keyboardType(.decimalPad)
-                    }
-                    
-                    ZStack(alignment: .leading) {
-                        if lactate.isEmpty {
-                            Text("Lactate (mM)")
-                                .foregroundColor(.whiteOne)
-                        }
-                        TextField("", text: $lactate)
-                            .foregroundColor(.whiteTwo)
-                            .keyboardType(.decimalPad)
-                    }
-                    
-                    Text("Load")
-                        .foregroundStyle(.whiteTwo)
-                    
-                    ZStack(alignment: .leading) {
-                        if heartRate.isEmpty {
-                            Text("Heart rate")
-                                .foregroundColor(.whiteOne)
-                        }
-                        TextField("", text: $heartRate)
+                        TextField("BPM", text: $heartRate)
                             .foregroundColor(.whiteTwo)
                             .keyboardType(.numberPad)
                     }
+                    .padding()
                     
                 } header: {
                     ZStack {
@@ -119,9 +103,9 @@ struct TrainingView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {
-                    DatePicker("Date", selection: $date, displayedComponents: .date)
-                        .foregroundStyle(.whiteTwo)
-                        .labelsHidden()
+                DatePicker("Date", selection: $date, displayedComponents: .date)
+                    .foregroundStyle(.whiteTwo)
+                    .labelsHidden()
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Save") {
@@ -142,5 +126,5 @@ struct TrainingView: View {
 }
 
 #Preview {
-    TrainingView(session: Session(distance: nil, duration: nil, pace: nil, power: nil, heartRate: nil, lactate: nil, date: nil, title: "Sample Session"))
+    TrainingView(session: Session(distance: nil, duration: nil, pace: nil, power: nil, heartRate: nil, lactate: nil, date: nil, title: ""))
 }
