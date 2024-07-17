@@ -12,9 +12,10 @@ class Split {
     var lactate: Double?
     var date: Date?
     var title: String?
-    @Relationship var sessions: [Session]?
+    @Relationship(inverse: \Session.splits)
+    var session: Session?
 
-    init(splitNumber: Int? = nil, distance: Double? = nil, duration: Double? = nil, pace: Double? = nil, power: Int? = nil, heartRate: Int? = nil, lactate: Double? = nil, date: Date? = nil, title: String? = nil) {
+    init(splitNumber: Int? = nil, distance: Double? = nil, duration: Double? = nil, pace: Double? = nil, power: Int? = nil, heartRate: Int? = nil, lactate: Double? = nil, date: Date? = nil, title: String? = nil, session: Session? = nil) {
         self.splitNumber = splitNumber
         self.distance = distance
         self.duration = duration
@@ -24,5 +25,6 @@ class Split {
         self.lactate = lactate
         self.date = date
         self.title = title
+        self.session = session
     }
 }

@@ -61,7 +61,7 @@ class ProfileViewModel: ObservableObject {
         case 2:
             IntegrationsView()
         case 3:
-            NewMessageView()
+            EmptyView()
         case 4:
             LearnView()
         case 5:

@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		BF2732E62C4593A100E16ACD /* Split.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2732E52C45939E00E16ACD /* Split.swift */; };
+		BF3700862C47A12800CF255D /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3700852C47A12600CF255D /* Message.swift */; };
+		BF3700882C47B60900CF255D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3700872C47B60600CF255D /* User.swift */; };
 		BF4A81352C3AEC4D00D4CAF1 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81342C3AEC4D00D4CAF1 /* CalendarView.swift */; };
 		BF4A813F2C3AEE0900D4CAF1 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A813E2C3AEE0900D4CAF1 /* DateHelper.swift */; };
 		BF4A81412C3AEE1500D4CAF1 /* HackerTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81402C3AEE1500D4CAF1 /* HackerTextView.swift */; };
-		BF4A81432C3AEE1900D4CAF1 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81422C3AEE1900D4CAF1 /* Message.swift */; };
 		BF4A81452C3AEE6C00D4CAF1 /* LactateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81442C3AEE6C00D4CAF1 /* LactateView.swift */; };
 		BF4A81492C3AEFCE00D4CAF1 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81482C3AEFCE00D4CAF1 /* ChatView.swift */; };
-		BF4A814B2C3AF00400D4CAF1 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A814A2C3AF00400D4CAF1 /* ChatViewModel.swift */; };
 		BF4A814D2C3AF03B00D4CAF1 /* MetricView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A814C2C3AF03B00D4CAF1 /* MetricView.swift */; };
 		BF4A814F2C3AF06200D4CAF1 /* MetricViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A814E2C3AF06200D4CAF1 /* MetricViewModel.swift */; };
 		BF4A81512C3AF12000D4CAF1 /* LineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81502C3AF12000D4CAF1 /* LineChartView.swift */; };
@@ -34,8 +34,6 @@
 		BF4A816F2C3AF8DA00D4CAF1 /* LactateToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A816E2C3AF8DA00D4CAF1 /* LactateToolBar.swift */; };
 		BF4A81732C3AF94F00D4CAF1 /* NewTrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81722C3AF94F00D4CAF1 /* NewTrainingView.swift */; };
 		BF4A81772C3AFA1700D4CAF1 /* ChatToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81762C3AFA1700D4CAF1 /* ChatToolBar.swift */; };
-		BF4A817B2C3AFAB200D4CAF1 /* NewMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A817A2C3AFAB200D4CAF1 /* NewMessageViewModel.swift */; };
-		BF4A817D2C3AFAD100D4CAF1 /* NewMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A817C2C3AFAD100D4CAF1 /* NewMessageView.swift */; };
 		BF4A817F2C3AFB8600D4CAF1 /* MetricToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A817E2C3AFB8600D4CAF1 /* MetricToolBar.swift */; };
 		BF4A81812C3AFBBB00D4CAF1 /* PlotMetricViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81802C3AFBBB00D4CAF1 /* PlotMetricViewModel.swift */; };
 		BF4A81832C3AFC9200D4CAF1 /* PlotMetricView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81822C3AFC9200D4CAF1 /* PlotMetricView.swift */; };
@@ -83,14 +81,14 @@
 
 /* Begin PBXFileReference section */
 		BF2732E52C45939E00E16ACD /* Split.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Split.swift; sourceTree = "<group>"; };
+		BF3700852C47A12600CF255D /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		BF3700872C47B60600CF255D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BF3F6CAD2C3F23280087DF5A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		BF4A81342C3AEC4D00D4CAF1 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		BF4A813E2C3AEE0900D4CAF1 /* DateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		BF4A81402C3AEE1500D4CAF1 /* HackerTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HackerTextView.swift; sourceTree = "<group>"; };
-		BF4A81422C3AEE1900D4CAF1 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		BF4A81442C3AEE6C00D4CAF1 /* LactateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LactateView.swift; sourceTree = "<group>"; };
 		BF4A81482C3AEFCE00D4CAF1 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
-		BF4A814A2C3AF00400D4CAF1 /* ChatViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		BF4A814C2C3AF03B00D4CAF1 /* MetricView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricView.swift; sourceTree = "<group>"; };
 		BF4A814E2C3AF06200D4CAF1 /* MetricViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetricViewModel.swift; sourceTree = "<group>"; };
 		BF4A81502C3AF12000D4CAF1 /* LineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartView.swift; sourceTree = "<group>"; };
@@ -110,8 +108,6 @@
 		BF4A816E2C3AF8DA00D4CAF1 /* LactateToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LactateToolBar.swift; sourceTree = "<group>"; };
 		BF4A81722C3AF94F00D4CAF1 /* NewTrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTrainingView.swift; sourceTree = "<group>"; };
 		BF4A81762C3AFA1700D4CAF1 /* ChatToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatToolBar.swift; sourceTree = "<group>"; };
-		BF4A817A2C3AFAB200D4CAF1 /* NewMessageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMessageViewModel.swift; sourceTree = "<group>"; };
-		BF4A817C2C3AFAD100D4CAF1 /* NewMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageView.swift; sourceTree = "<group>"; };
 		BF4A817E2C3AFB8600D4CAF1 /* MetricToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricToolBar.swift; sourceTree = "<group>"; };
 		BF4A81802C3AFBBB00D4CAF1 /* PlotMetricViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlotMetricViewModel.swift; sourceTree = "<group>"; };
 		BF4A81822C3AFC9200D4CAF1 /* PlotMetricView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotMetricView.swift; sourceTree = "<group>"; };
@@ -186,7 +182,6 @@
 				BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */,
 				BF4A81722C3AF94F00D4CAF1 /* NewTrainingView.swift */,
 				BF4A81482C3AEFCE00D4CAF1 /* ChatView.swift */,
-				BF4A817C2C3AFAD100D4CAF1 /* NewMessageView.swift */,
 				BF4A814C2C3AF03B00D4CAF1 /* MetricView.swift */,
 				BF4A81502C3AF12000D4CAF1 /* LineChartView.swift */,
 				BF4A815A2C3AF2B100D4CAF1 /* BarChartView.swift */,
@@ -206,8 +201,6 @@
 				BF4A81862C3AFD9900D4CAF1 /* SubscriptionViewModel.swift */,
 				BF4A81902C3B010E00D4CAF1 /* HomeViewModel.swift */,
 				BF4A816C2C3AF83700D4CAF1 /* CalendarViewModel.swift */,
-				BF4A814A2C3AF00400D4CAF1 /* ChatViewModel.swift */,
-				BF4A817A2C3AFAB200D4CAF1 /* NewMessageViewModel.swift */,
 				BF4A814E2C3AF06200D4CAF1 /* MetricViewModel.swift */,
 				BF4A81802C3AFBBB00D4CAF1 /* PlotMetricViewModel.swift */,
 				BF4A81522C3AF15200D4CAF1 /* LineChartViewModel.swift */,
@@ -234,7 +227,6 @@
 			isa = PBXGroup;
 			children = (
 				BF91AC6D2C4540530028BC41 /* NumberFormatter.swift */,
-				BF4A81422C3AEE1900D4CAF1 /* Message.swift */,
 				BF4A818A2C3AFDF500D4CAF1 /* ColorOptionView.swift */,
 				BFAD15F92C42F5C80043D23F /* minperkm.swift */,
 				BF4A813E2C3AEE0900D4CAF1 /* DateHelper.swift */,
@@ -246,8 +238,10 @@
 		BF6744CF2C3FCA5A00A23D76 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				BF2732E52C45939E00E16ACD /* Split.swift */,
+				BF3700872C47B60600CF255D /* User.swift */,
+				BF3700852C47A12600CF255D /* Message.swift */,
 				BF6744D02C3FCAE400A23D76 /* Session.swift */,
+				BF2732E52C45939E00E16ACD /* Split.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -445,7 +439,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF4A814B2C3AF00400D4CAF1 /* ChatViewModel.swift in Sources */,
 				BF7342092C3AE74A00911375 /* ContentView.swift in Sources */,
 				BF4A818B2C3AFDF500D4CAF1 /* ColorOptionView.swift in Sources */,
 				BF4A81572C3AF25900D4CAF1 /* PointChartView.swift in Sources */,
@@ -454,6 +447,7 @@
 				BF4A81612C3AF3FF00D4CAF1 /* SearchBarView.swift in Sources */,
 				BF4A81512C3AF12000D4CAF1 /* LineChartView.swift in Sources */,
 				BF4A815F2C3AF31800D4CAF1 /* PieChartView.swift in Sources */,
+				BF3700862C47A12800CF255D /* Message.swift in Sources */,
 				BF6744D12C3FCAE900A23D76 /* Session.swift in Sources */,
 				BF4A81632C3AF53200D4CAF1 /* ProfileView.swift in Sources */,
 				BF4A81592C3AF2A300D4CAF1 /* BarChartViewModel.swift in Sources */,
@@ -465,12 +459,11 @@
 				BF4A816F2C3AF8DA00D4CAF1 /* LactateToolBar.swift in Sources */,
 				BF4A818F2C3AFFDD00D4CAF1 /* HomeView.swift in Sources */,
 				BF4A81832C3AFC9200D4CAF1 /* PlotMetricView.swift in Sources */,
+				BF3700882C47B60900CF255D /* User.swift in Sources */,
 				BF4A81652C3AF53F00D4CAF1 /* ProfileViewModel.swift in Sources */,
-				BF4A817B2C3AFAB200D4CAF1 /* NewMessageViewModel.swift in Sources */,
 				BF4A81872C3AFD9A00D4CAF1 /* SubscriptionViewModel.swift in Sources */,
 				BF6C84122C3D16D600032E93 /* IntegrationsView.swift in Sources */,
 				BF4A81912C3B010F00D4CAF1 /* HomeViewModel.swift in Sources */,
-				BF4A81432C3AEE1900D4CAF1 /* Message.swift in Sources */,
 				BF6C84182C3D1C6D00032E93 /* LearnView.swift in Sources */,
 				BF4A81732C3AF94F00D4CAF1 /* NewTrainingView.swift in Sources */,
 				BF4A818D2C3AFF0700D4CAF1 /* HomeToolBar.swift in Sources */,
@@ -484,7 +477,6 @@
 				BF7342072C3AE74A00911375 /* starappApp.swift in Sources */,
 				BF4A814F2C3AF06200D4CAF1 /* MetricViewModel.swift in Sources */,
 				BF6C840E2C3C5E8100032E93 /* AccountView.swift in Sources */,
-				BF4A817D2C3AFAD100D4CAF1 /* NewMessageView.swift in Sources */,
 				BF4A817F2C3AFB8600D4CAF1 /* MetricToolBar.swift in Sources */,
 				BF4A81892C3AFDDE00D4CAF1 /* SubscriptionView.swift in Sources */,
 				BF4A81412C3AEE1500D4CAF1 /* HackerTextView.swift in Sources */,

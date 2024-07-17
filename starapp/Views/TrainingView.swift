@@ -10,7 +10,7 @@ struct TrainingView: View {
     @State private var lactate: String = ""
     @State private var heartRate: String = ""
     @State private var lap: String = ""
-    @State private var date: Date = Date.distantPast
+    @State private var date: Date = Date()
     @State private var title: String = ""
     
     var body: some View {

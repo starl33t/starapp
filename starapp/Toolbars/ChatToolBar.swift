@@ -5,33 +5,22 @@ struct ChatToolbar: View {
 
     var body: some View {
         HStack {
-            Menu {
-                Button(action: {
-                    // Action 1
-                }) {
-                    Text("Group 1")
-                }
-                Button(action: {
-                    // Action 2
-                }) {
-                    Text("Group 2")
-                }
-                Button(action: {
-                    // Action 3
-                }) {
-                    Text("Group 3")
-                }
-            } label: {
-                Label("Notifications", systemImage: "rectangle.3.group.bubble.fill")
+            Button(action: {
+                showingSheet.toggle()
+            }) {
+                Label("AI", systemImage: "square.and.pencil")
+            }
+            .sheet(isPresented: $showingSheet) {
+
             }
             
             Button(action: {
                 showingSheet.toggle()
             }) {
-                Label("Message", systemImage: "square.and.pencil")
+                Label("Group", systemImage: "bubble.left.and.text.bubble.right")
             }
             .sheet(isPresented: $showingSheet) {
-                NewMessageView()
+
             }
         }
     }

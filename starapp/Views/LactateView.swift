@@ -54,7 +54,7 @@ struct LactateView: View {
                                                     Text("Recovery")
                                                         .foregroundStyle(.blue)
                                                         .font(.system(size: 14))
-                                                } else if lactate <= 2.5 {
+                                                } else if lactate <= 2.0 {
                                                     Image(systemName: "leaf.fill")
                                                         .font(.system(size: 24, weight: .bold))
                                                         .foregroundStyle(.green)

@@ -29,7 +29,7 @@ struct ContentView: View {
                             Text("Lactate")
                         }
                         .tag(2)
-                    ChatView()
+                    ChatView(user: User(username: "User", tagName: "Tag"))
                         .tabItem {
                             Image(systemName: "person.2")
                             Text("Chat")
@@ -77,5 +77,4 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: [Session.self])
 }

@@ -7,7 +7,7 @@ struct starappApp: App {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(for: [Session.self])
+        .modelContainer(for: [User.self])
     }
     init() {
             print(URL.applicationSupportDirectory.path(percentEncoded: false))

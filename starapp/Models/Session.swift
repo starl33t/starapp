@@ -11,7 +11,10 @@ class Session {
     var lactate: Double?
     var date: Date?
     var title: String?
+    @Relationship(inverse: \User.sessions)
+    var user: User?
     @Relationship(deleteRule: .cascade) var splits: [Split]?
+    
 
     init(
         distance: Double? = nil,
@@ -22,6 +25,7 @@ class Session {
         lactate: Double? = nil,
         date: Date? = nil,
         title: String? = nil,
+        user: User? = nil,
         splits: [Split]? = nil
     ) {
         self.distance = distance
@@ -32,6 +36,7 @@ class Session {
         self.lactate = lactate
         self.date = date
         self.title = title
+        self.user = user
         self.splits = splits
     }
 }

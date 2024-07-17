@@ -5,7 +5,7 @@ struct NewTrainingView: View {
     @Environment(\.modelContext) var context
     @State private var duration: Double?
     @State private var lactate: Double?
-    @State private var date: Date = Date.distantPast
+    @State private var date: Date = Date()
     
     private var numberFormatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -34,7 +34,7 @@ struct NewTrainingView: View {
                         RoundedRectangle(cornerRadius: 5)
                             .stroke(Color.gray, lineWidth: 1)
                     )
-                    .frame(maxWidth: 150) // Adjust the width as needed
+                    .frame(maxWidth: 150) 
                 }
                 .padding()
                 
