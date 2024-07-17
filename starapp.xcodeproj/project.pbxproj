@@ -60,6 +60,8 @@
 		BF8D6ADC2C41A9DF000269F1 /* TrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */; };
 		BF91AC6E2C45405C0028BC41 /* NumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF91AC6D2C4540530028BC41 /* NumberFormatter.swift */; };
 		BFAD15FA2C42F5CB0043D23F /* minperkm.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD15F92C42F5C80043D23F /* minperkm.swift */; };
+		BFEDD12B2C483A7400E8E11C /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEDD12A2C483A6E00E8E11C /* ChatViewModel.swift */; };
+		BFEDD12D2C484A4500E8E11C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEDD12C2C484A3E00E8E11C /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,6 +140,8 @@
 		BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingView.swift; sourceTree = "<group>"; };
 		BF91AC6D2C4540530028BC41 /* NumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFormatter.swift; sourceTree = "<group>"; };
 		BFAD15F92C42F5C80043D23F /* minperkm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = minperkm.swift; sourceTree = "<group>"; };
+		BFEDD12A2C483A6E00E8E11C /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		BFEDD12C2C484A3E00E8E11C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +199,7 @@
 		BF4A81942C3B05F200D4CAF1 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				BFEDD12A2C483A6E00E8E11C /* ChatViewModel.swift */,
 				BF4A81642C3AF53F00D4CAF1 /* ProfileViewModel.swift */,
 				BF6C840F2C3C5EF200032E93 /* AccountViewModel.swift */,
 				BF6C84152C3D179F00032E93 /* IntegrationsViewModel.swift */,
@@ -226,6 +231,7 @@
 		BF4A81972C3B07C800D4CAF1 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				BFEDD12C2C484A3E00E8E11C /* Constants.swift */,
 				BF91AC6D2C4540530028BC41 /* NumberFormatter.swift */,
 				BF4A818A2C3AFDF500D4CAF1 /* ColorOptionView.swift */,
 				BFAD15F92C42F5C80043D23F /* minperkm.swift */,
@@ -464,6 +470,7 @@
 				BF4A81872C3AFD9A00D4CAF1 /* SubscriptionViewModel.swift in Sources */,
 				BF6C84122C3D16D600032E93 /* IntegrationsView.swift in Sources */,
 				BF4A81912C3B010F00D4CAF1 /* HomeViewModel.swift in Sources */,
+				BFEDD12D2C484A4500E8E11C /* Constants.swift in Sources */,
 				BF6C84182C3D1C6D00032E93 /* LearnView.swift in Sources */,
 				BF4A81732C3AF94F00D4CAF1 /* NewTrainingView.swift in Sources */,
 				BF4A818D2C3AFF0700D4CAF1 /* HomeToolBar.swift in Sources */,
@@ -482,6 +489,7 @@
 				BF4A81412C3AEE1500D4CAF1 /* HackerTextView.swift in Sources */,
 				BF6C841A2C3D1E5200032E93 /* PrivacyView.swift in Sources */,
 				BF4A81452C3AEE6C00D4CAF1 /* LactateView.swift in Sources */,
+				BFEDD12B2C483A7400E8E11C /* ChatViewModel.swift in Sources */,
 				BFAD15FA2C42F5CB0043D23F /* minperkm.swift in Sources */,
 				BF4A813F2C3AEE0900D4CAF1 /* DateHelper.swift in Sources */,
 				BF6C84162C3D179F00032E93 /* IntegrationsViewModel.swift in Sources */,

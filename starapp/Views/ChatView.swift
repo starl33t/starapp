@@ -1,82 +1,90 @@
 import SwiftUI
-import SwiftData
 
 struct ChatView: View {
-    @Query(sort: \Message.timestamp) private var messages: [Message]
-    @Environment(\.modelContext) private var context
+    @StateObject private var viewModel: ChatViewModel
     @State private var newMessageContent: String = ""
-    @State private var sender: String = "User" // Assuming the current user's username
-    let user: User
-    
+
+    init(user: User) {
+        _viewModel = StateObject(wrappedValue: ChatViewModel(user: user))
+    }
+
     var body: some View {
         ZStack {
-            Color.starBlack.ignoresSafeArea()
+            Color.black.ignoresSafeArea()
             VStack {
-                List {
-                    ForEach(messages) { message in
-                        HStack {
-                            if message.user?.username == user.username {
-                                Spacer()
-                                VStack(alignment: .trailing) {
-                                    Text(message.user?.tagName ?? "Unknown")
-                                        .font(.headline)
-                                        .foregroundColor(.white)
-                                    Text(message.content ?? "")
-                                        .foregroundColor(.white)
-                                        .padding(10)
-                                        .background(Color.blue)
-                                        .cornerRadius(10)
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        VStack {
+                            ForEach(viewModel.messages.indices, id: \.self) { index in
+                                let message = viewModel.messages[index]
+                                HStack(alignment: .top) {
+                                    if message.isUser == true {
+                                        Spacer()
+                                        VStack(alignment: .trailing) {
+                                            Text(message.user?.tagName ?? "Unknown")
+                                                .font(.headline)
+                                                .foregroundStyle(.whiteOne)
+                                            Text(message.content ?? "")
+                                                .foregroundColor(.whiteOne)
+                                                .padding(10)
+                                                .background(Color.starMain)
+                                                .cornerRadius(10)
+                                        }
+                                        .padding([.leading, .vertical])
+                                        Image(systemName: "person.circle.fill")
+                                            .resizable()
+                                            .foregroundStyle(.whiteOne)
+                                            .frame(width: 40, height: 40)
+                                            .clipShape(Circle())
+                                            .padding(.trailing)
+                                    } else {
+                                        Image(systemName: "person.circle.fill")
+                                            .resizable()
+                                            .foregroundStyle(.whiteOne)
+                                            .frame(width: 40, height: 40)
+                                            .clipShape(Circle())
+                                            .padding(.leading)
+                                        VStack(alignment: .leading) {
+                                            Text(message.user?.tagName ?? "Boten Anna")
+                                                .font(.headline)
+                                                .foregroundStyle(.whiteOne)
+                                            Text(message.content ?? "")
+                                                .padding(10)
+                                                .background(Color.darkOne)
+                                                .cornerRadius(10)
+                                                .foregroundStyle(.whiteOne)
+                                        }
+                                        .padding([.trailing, .vertical])
+                                        Spacer()
+                                    }
                                 }
-                                .padding()
-                                Image(systemName: "person.circle.fill")
-                                    .resizable()
-                                    .frame(width: 40, height: 40)
-                                    .clipShape(Circle())
-                            } else {
-                                Image(systemName: "person.circle.fill")
-                                    .resizable()
-                                    .frame(width: 40, height: 40)
-                                    .clipShape(Circle())
-                                VStack(alignment: .leading) {
-                                    Text(message.user?.tagName ?? "Unknown")
-                                        .font(.headline)
-                                        .foregroundColor(.white)
-                                    Text(message.content ?? "")
-                                        .foregroundColor(.white)
-                                        .padding(10)
-                                        .background(Color.gray)
-                                        .cornerRadius(10)
-                                }
-                                .padding()
-                                Spacer()
+                                .id(index)
                             }
                         }
-                        .listRowSeparator(.hidden)
-                        .listRowBackground(Color.clear)
+                    }
+                    .onChange(of: viewModel.messages) {
+                        if !viewModel.messages.isEmpty {
+                            withAnimation {
+                                proxy.scrollTo(viewModel.messages.count - 1)
+                            }
+                        }
                     }
                 }
-                .padding(.top)
-                .listStyle(PlainListStyle())
-                .scrollContentBackground(.hidden)
                 HStack {
                     TextField("Enter message", text: $newMessageContent)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
                     Button("Send") {
-                        let newMessage = Message(
-                            content: newMessageContent,
-                            timestamp: Date(),
-                            user: user
-                        )
-                        context.insert(newMessage)
+                        viewModel.userInput = newMessageContent
+                        viewModel.sendMessage()
                         newMessageContent = ""
                     }
                     .padding()
                     .disabled(newMessageContent.isEmpty)
                 }
                 .padding()
-                
             }
+            .padding(.top)
             .navigationTitle("Chat Room")
         }
     }

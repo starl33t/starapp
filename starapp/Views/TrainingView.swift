@@ -20,7 +20,7 @@ struct TrainingView: View {
                 Section {
                     HStack{
                         Text("Distance:")
-                            .foregroundColor(.whiteTwo)
+                            .foregroundColor(.whiteOne)
                         TextField("km", text: $distance)
                             .foregroundColor(.whiteOne)
                             .keyboardType(.decimalPad)
@@ -29,9 +29,9 @@ struct TrainingView: View {
                     
                     HStack {
                         Text("Duration:")
-                            .foregroundColor(.whiteTwo)
+                            .foregroundColor(.whiteOne)
                         TextField("min", text: $duration)
-                            .foregroundColor(.whiteTwo)
+                            .foregroundColor(.whiteOne)
                             .keyboardType(.decimalPad)
     
                     }
@@ -39,25 +39,25 @@ struct TrainingView: View {
                     
                     HStack{
                         Text("Pace:")
-                            .foregroundColor(.whiteTwo)
+                            .foregroundColor(.whiteOne)
                         TextField("min/km", text: $pace)
-                            .foregroundColor(.whiteTwo)
+                            .foregroundColor(.whiteOne)
                             .keyboardType(.decimalPad)
                         
-                            .foregroundColor(.whiteTwo)
+                            .foregroundColor(.whiteOne)
                         Text("Power:")
-                            .foregroundColor(.whiteTwo)
+                            .foregroundColor(.whiteOne)
                         TextField("W", text: $power)
-                            .foregroundColor(.whiteTwo)
+                            .foregroundColor(.whiteOne)
                             .keyboardType(.decimalPad)
                     }
                     .padding()
                     
                     HStack{
                         Text("Lactate:")
-                            .foregroundColor(.whiteTwo)
+                            .foregroundColor(.whiteOne)
                         TextField("mM", text: $lactate)
-                            .foregroundColor(.whiteTwo)
+                            .foregroundColor(.whiteOne)
                             .keyboardType(.decimalPad)
                             
                     }
@@ -65,9 +65,9 @@ struct TrainingView: View {
                     
                     HStack{
                         Text("Heart rate:")
-                            .foregroundColor(.whiteTwo)
+                            .foregroundColor(.whiteOne)
                         TextField("BPM", text: $heartRate)
-                            .foregroundColor(.whiteTwo)
+                            .foregroundColor(.whiteOne)
                             .keyboardType(.numberPad)
                     }
                     .padding()
@@ -76,12 +76,12 @@ struct TrainingView: View {
                     ZStack {
                         if title.isEmpty {
                             Text("Title")
-                                .foregroundColor(.whiteOne)
+                                .foregroundColor(.whiteTwo)
                                 .frame(maxWidth: .infinity)
                                 .multilineTextAlignment(.center)
                         }
                         TextField("", text: $title)
-                            .foregroundColor(.whiteOne)
+                            .foregroundColor(.whiteTwo)
                             .multilineTextAlignment(.center)
                     }
                     .frame(maxWidth: .infinity)

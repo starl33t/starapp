@@ -8,7 +8,7 @@ struct ChatToolbar: View {
             Button(action: {
                 showingSheet.toggle()
             }) {
-                Label("AI", systemImage: "square.and.pencil")
+                Label("AI", systemImage: "brain.head.profile")
             }
             .sheet(isPresented: $showingSheet) {
 
