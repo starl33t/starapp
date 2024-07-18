@@ -45,9 +45,6 @@ struct ContentView: View {
                 .tint(.starMain)
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
-                    ToolbarItem(placement: .principal) {
-                        SearchBarView(searchText: $searchText)
-                    }
                     ToolbarItem(placement: .topBarLeading) {
                         NavigationLink(destination: ProfileView()) {
                             Label("Profile", systemImage: "person.fill")

@@ -3,14 +3,14 @@ import SwiftUI
 struct ChatView: View {
     @StateObject private var viewModel: ChatViewModel
     @State private var newMessageContent: String = ""
-
+    
     init(user: User) {
         _viewModel = StateObject(wrappedValue: ChatViewModel(user: user))
     }
-
+    
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea()
+            Color.starBlack.ignoresSafeArea()
             VStack {
                 ScrollViewReader { proxy in
                     ScrollView {
@@ -36,16 +36,16 @@ struct ChatView: View {
                                             .foregroundStyle(.whiteOne)
                                             .frame(width: 40, height: 40)
                                             .clipShape(Circle())
-                                            .padding(.trailing)
+                                            .padding([.trailing, .vertical])
                                     } else {
                                         Image(systemName: "person.circle.fill")
                                             .resizable()
                                             .foregroundStyle(.whiteOne)
                                             .frame(width: 40, height: 40)
                                             .clipShape(Circle())
-                                            .padding(.leading)
+                                            .padding([.leading, .vertical])
                                         VStack(alignment: .leading) {
-                                            Text(message.user?.tagName ?? "Boten Anna")
+                                            Text(message.user?.tagName ?? "Renato")
                                                 .font(.headline)
                                                 .foregroundStyle(.whiteOne)
                                             Text(message.content ?? "")
@@ -71,15 +71,16 @@ struct ChatView: View {
                     }
                 }
                 HStack {
-                    TextField("Enter message", text: $newMessageContent)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding()
-                    Button("Send") {
+                    SearchBarView(searchText: $newMessageContent)
+                    Button(action: {
                         viewModel.userInput = newMessageContent
                         viewModel.sendMessage()
                         newMessageContent = ""
+                    }) {
+                        Image(systemName: "arrow.up.circle.fill")
+                            .foregroundColor(newMessageContent.isEmpty ? .gray : .starMain)
+                            .font(.system(size: 30))
                     }
-                    .padding()
                     .disabled(newMessageContent.isEmpty)
                 }
                 .padding()

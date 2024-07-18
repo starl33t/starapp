@@ -5,22 +5,30 @@ struct ChatToolbar: View {
 
     var body: some View {
         HStack {
-            Button(action: {
-                showingSheet.toggle()
-            }) {
-                Label("AI", systemImage: "brain.head.profile")
-            }
-            .sheet(isPresented: $showingSheet) {
-
+            Menu {
+                Button(action: {
+                    // Action 1
+                }) {
+                    Text("Give me a training plan")
+                }
+                Button(action: {
+                    // Action 2
+                }) {
+                    Text("Maximize my recovery")
+                }
+                Button(action: {
+                    // Action 3
+                }) {
+                    Text("Help me prevent injuries")
+                }
+            } label: {
+                Label("AI", systemImage: "icloud.and.arrow.up.fill")
             }
             
             Button(action: {
-                showingSheet.toggle()
+                EmailHelper.sendEmail(to: "pt@starleet.com")
             }) {
-                Label("Group", systemImage: "bubble.left.and.text.bubble.right")
-            }
-            .sheet(isPresented: $showingSheet) {
-
+                Label("Email", systemImage: "envelope")
             }
         }
     }
