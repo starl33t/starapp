@@ -12,9 +12,6 @@ struct ChatView: View {
     var body: some View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
-                .onTapGesture {
-                    self.hideKeyboard()
-                }
             VStack {
                 ScrollViewReader { proxy in
                     ScrollView {
@@ -65,6 +62,9 @@ struct ChatView: View {
                                 .id(index)
                             }
                         }
+                    }
+                    .onTapGesture {
+                        self.hideKeyboard()
                     }
                     .onChange(of: viewModel.messages) {
                         if !viewModel.messages.isEmpty {
