@@ -121,5 +121,5 @@ struct ChatView: View {
 }
 
 #Preview {
-    ChatView(user: User(username: "User", tagName: "Tag"))
+    ChatView(user: User())
 }

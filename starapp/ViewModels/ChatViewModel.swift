@@ -34,7 +34,7 @@ class ChatViewModel: ObservableObject {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let parameters: [String: Any] = [
-            "model": "gpt-3.5-turbo",
+            "model": "gpt-4-turbo",
             "messages": [["role": "user", "content": message]]
         ]
 

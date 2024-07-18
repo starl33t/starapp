@@ -20,12 +20,6 @@ struct HomeView: View {
             VStack {
                 HStack(spacing: 16) {
                     HStack(spacing: 0) {
-                        HackerTextView(text: textForButton(selectedButton, index: 0), trigger: trigger)
-                        Image(systemName: "hare.fill")
-                            .foregroundColor(.green)
-                    }
-                    
-                    HStack(spacing: 0) {
                         HackerTextView(text: textForButton(selectedButton, index: 1), trigger: trigger)
                         Image(systemName: "bolt.fill")
                             .foregroundColor(.yellow)

@@ -28,8 +28,6 @@ struct AccountView: View {
 
     private var settingsToggles: some View {
         VStack {
-            ToggleView(title: "US units", isOn: $viewModel.yUsSelected)
-                .tint(.green)
             ToggleView(title: "Notifications", isOn: $viewModel.zNotSelected)
                 .tint(.green)
             ToggleView(title: "Incognito mode", isOn: $viewModel.bIncogSelected)
@@ -47,7 +45,7 @@ struct AccountView: View {
                     .fill(capsuleColor(for: deleteOffset))
                     .frame(height: 60)
 
-                Text("Slide to delete account")
+                Text("Slide to delete all data")
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .multilineTextAlignment(.center)
@@ -89,8 +87,8 @@ struct AccountView: View {
 
     private var deleteAlert: Alert {
         Alert(
-            title: Text("Delete Account"),
-            message: Text("Are you sure you want to delete your account? This action cannot be undone."),
+            title: Text("Delete All Data"),
+            message: Text("Are you sure you want to delete all data? This action cannot be undone."),
             primaryButton: .destructive(Text("Delete")) {
                 // Handle delete action
             },

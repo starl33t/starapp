@@ -44,7 +44,7 @@ struct LactateView: View {
                                     }
                                     .foregroundStyle(.whiteOne)
                                     .padding(.leading, 20)
-                                    .frame(minWidth: 120)
+                                    .frame(minWidth: 110)
                                     HStack {
                                         if let lactate = session.lactate {
                                             VStack {
@@ -55,14 +55,14 @@ struct LactateView: View {
                                                     Text("Recovery")
                                                         .foregroundStyle(.blue)
                                                         .font(.system(size: 14))
-                                                } else if lactate <= 2.0 {
+                                                } else if lactate <= 1.5 {
                                                     Image(systemName: "leaf.fill")
                                                         .font(.system(size: 24, weight: .bold))
                                                         .foregroundStyle(.green)
                                                     Text("Light")
                                                         .foregroundStyle(.green)
                                                         .font(.system(size: 14))
-                                                } else if lactate <= 3.5 {
+                                                } else if lactate <= 3.0 {
                                                     Image(systemName: "wind")
                                                         .font(.system(size: 24, weight: .bold))
                                                         .foregroundStyle(.yellow)

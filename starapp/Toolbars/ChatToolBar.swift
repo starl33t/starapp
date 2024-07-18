@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ChatToolbar: View {
     @Binding var showingSheet: Bool
-
+    
     var body: some View {
         HStack {
             Menu {
@@ -25,9 +25,7 @@ struct ChatToolbar: View {
                 Label("AI", systemImage: "icloud.and.arrow.up.fill")
             }
             
-            Button(action: {
-                EmailHelper.sendEmail(to: "pt@starleet.com")
-            }) {
+            NavigationLink(destination: SupportView()) {
                 Label("Email", systemImage: "envelope")
             }
         }

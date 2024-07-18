@@ -9,17 +9,7 @@ struct LactateToolbar: View {
                 Button(action: {
                     // Action 1
                 }) {
-                    Text("Signal Health")
-                }
-                Button(action: {
-                    // Action 2
-                }) {
-                    Text("Device Health")
-                }
-                Button(action: {
-                    // Action 3
-                }) {
-                    Text("Device Number")
+                    Text("Device coming soon!")
                 }
             } label: {
                 Label("Notifications", systemImage: "gear")
