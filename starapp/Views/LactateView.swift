@@ -44,6 +44,7 @@ struct LactateView: View {
                                     }
                                     .foregroundStyle(.whiteOne)
                                     .padding(.leading, 20)
+                                    .frame(minWidth: 120)
                                     HStack {
                                         if let lactate = session.lactate {
                                             VStack {

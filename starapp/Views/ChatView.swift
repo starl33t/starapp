@@ -3,6 +3,7 @@ import SwiftUI
 struct ChatView: View {
     @StateObject private var viewModel: ChatViewModel
     @State private var newMessageContent: String = ""
+    @FocusState private var isFocused: Bool
     
     init(user: User) {
         _viewModel = StateObject(wrappedValue: ChatViewModel(user: user))
@@ -11,6 +12,9 @@ struct ChatView: View {
     var body: some View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
+                .onTapGesture {
+                    self.hideKeyboard()
+                }
             VStack {
                 ScrollViewReader { proxy in
                     ScrollView {
@@ -71,14 +75,36 @@ struct ChatView: View {
                     }
                 }
                 HStack {
-                    SearchBarView(searchText: $newMessageContent)
+                    Button(action: {
+                        newMessageContent = ""
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    }) {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.system(size: 30))
+                            .foregroundStyle(newMessageContent.isEmpty ? .gray : .whiteOne)
+                            .padding(.trailing, 5)
+                    }
+                    ZStack(alignment: .leading) {
+                        if newMessageContent.isEmpty {
+                            Text("Ask Renato CanovAI")
+                                .foregroundColor(.gray)
+                                .padding()
+                        }
+                        TextField("", text: $newMessageContent)
+                            .foregroundColor(.whiteOne)
+                            .focused($isFocused)
+                            .padding()
+                    }
+                    .frame(height: 32)
+                    .background(Color.darkOne)
+                    .cornerRadius(24)
                     Button(action: {
                         viewModel.userInput = newMessageContent
                         viewModel.sendMessage()
                         newMessageContent = ""
                     }) {
                         Image(systemName: "arrow.up.circle.fill")
-                            .foregroundColor(newMessageContent.isEmpty ? .gray : .starMain)
+                            .foregroundStyle(newMessageContent.isEmpty ? .gray : .starMain)
                             .font(.system(size: 30))
                     }
                     .disabled(newMessageContent.isEmpty)
@@ -88,6 +114,9 @@ struct ChatView: View {
             .padding(.top)
             .navigationTitle("Chat Room")
         }
+    }
+    private func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
 
