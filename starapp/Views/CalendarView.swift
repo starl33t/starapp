@@ -65,14 +65,14 @@ struct CalendarView: View {
                                         .id(day)
                                         .background(
                                             GeometryReader { innerGeo in
-                                                Color.clear.preference(key: DateOffsetKey.self, value: [DateOffset(id: day, offset: innerGeo.frame(in: .global).midY)])
+                                                Color.clear.preference(key: CalendarViewModel.DateOffsetKey.self, value: [CalendarViewModel.DateOffset(id: day, offset: innerGeo.frame(in: .global).midY)])
                                             }
                                         )
                                 }
                                 .frame(height: 70)
                             }
                         }
-                        .onPreferenceChange(DateOffsetKey.self) { offsets in
+                        .onPreferenceChange(CalendarViewModel.DateOffsetKey.self) { offsets in
                             guard !offsets.isEmpty else { return }
                             if !isDatePickerChanging, let closestDate = offsets.min(by: { abs($0.offset - middleY) < abs($1.offset - middleY) })?.id {
                                 let now = Date()
@@ -153,19 +153,6 @@ struct CalendarView: View {
                 viewModel.scrollToDate(proxy: proxy, date: viewModel.date)
             }
         }
-    }
-}
-
-struct DateOffset: Identifiable, Equatable {
-    var id: Date
-    var offset: CGFloat
-}
-
-struct DateOffsetKey: PreferenceKey {
-    typealias Value = [DateOffset]
-    static var defaultValue: [DateOffset] = []
-    static func reduce(value: inout [DateOffset], nextValue: () -> [DateOffset]) {
-        value.append(contentsOf: nextValue())
     }
 }
 

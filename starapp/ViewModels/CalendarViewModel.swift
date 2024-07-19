@@ -20,4 +20,25 @@ class CalendarViewModel: ObservableObject {
             proxy.scrollTo(selectedDate, anchor: .center)
         }
     }
+
+    func scrollToToday(proxy: ScrollViewProxy?) {
+        DispatchQueue.main.async {
+            if let proxy = proxy {
+                self.scrollToDate(proxy: proxy, date: self.date)
+            }
+        }
+    }
+    
+    struct DateOffset: Identifiable, Equatable {
+        var id: Date
+        var offset: CGFloat
+    }
+
+    struct DateOffsetKey: PreferenceKey {
+        typealias Value = [DateOffset]
+        static var defaultValue: [DateOffset] = []
+        static func reduce(value: inout [DateOffset], nextValue: () -> [DateOffset]) {
+            value.append(contentsOf: nextValue())
+        }
+    }
 }
