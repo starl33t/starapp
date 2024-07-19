@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 
 struct CalendarView: View {
     @StateObject private var viewModel = CalendarViewModel()
@@ -6,7 +7,9 @@ struct CalendarView: View {
     @State private var middleY: CGFloat = UIScreen.main.bounds.height / 2
     @State private var initialScrollDone = false
     @State private var lastUpdate = Date()
-    
+    @State private var isDatePickerChanging = false
+    @State private var scrollViewProxy: ScrollViewProxy? = nil
+
     var body: some View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
@@ -19,6 +22,7 @@ struct CalendarView: View {
                     Button(action: {
                         viewModel.date = Date()
                         viewModel.updateDates()
+                        scrollToToday()
                         showDatePicker = false
                     }) {
                         Text("Today")
@@ -34,7 +38,7 @@ struct CalendarView: View {
                         .frame(maxWidth: .infinity)
                 }
                 .padding(.bottom, 16)
-                
+
                 HStack {
                     ForEach(viewModel.daysOfWeek, id: \.self) { dayOfWeek in
                         Text(dayOfWeek)
@@ -43,30 +47,57 @@ struct CalendarView: View {
                 }
                 .fontWeight(.black)
                 .padding(.bottom, 8)
-                
+
                 ScrollViewReader { proxy in
                     ScrollView {
                         LazyVGrid(columns: viewModel.columns, spacing: 16) {
                             ForEach(viewModel.days, id: \.self) { day in
-                                Text(day.formatted(.dateTime.day()))
-                                    .fontWeight(.bold)
-                                    .frame(maxWidth: .infinity, minHeight: 70)
-                                    .background(
-                                        Circle()
-                                            .foregroundStyle(
-                                                Calendar.current.isDateInToday(day) ? .starMain : .starMain.opacity(0.3)
-                                            )
-                                    )
-                                    .id(day)
-                                
+                                GeometryReader { geo in
+                                    Text(day.formatted(.dateTime.day()))
+                                        .fontWeight(.bold)
+                                        .frame(maxWidth: .infinity, minHeight: 70)
+                                        .background(
+                                            Circle()
+                                                .foregroundStyle(
+                                                    Calendar.current.isDateInToday(day) ? .starMain : .starMain.opacity(0.3)
+                                                )
+                                        )
+                                        .id(day)
+                                        .background(
+                                            GeometryReader { innerGeo in
+                                                Color.clear.preference(key: DateOffsetKey.self, value: [DateOffset(id: day, offset: innerGeo.frame(in: .global).midY)])
+                                            }
+                                        )
+                                }
+                                .frame(height: 70)
+                            }
+                        }
+                        .onPreferenceChange(DateOffsetKey.self) { offsets in
+                            guard !offsets.isEmpty else { return }
+                            if !isDatePickerChanging, let closestDate = offsets.min(by: { abs($0.offset - middleY) < abs($1.offset - middleY) })?.id {
+                                let now = Date()
+                                if now.timeIntervalSince(lastUpdate) > 0.2 { // Debounce time interval
+                                    DispatchQueue.main.async {
+                                        viewModel.date = closestDate
+                                        lastUpdate = now
+                                    }
+                                }
                             }
                         }
                     }
                     .onAppear {
-                        viewModel.scrollToDate(proxy: proxy, date: viewModel.date)
+                        scrollViewProxy = proxy
+                        if !initialScrollDone {
+                            DispatchQueue.main.async {
+                                viewModel.scrollToDate(proxy: proxy, date: viewModel.date)
+                                initialScrollDone = true
+                            }
+                        }
                     }
-                    .onChange(of: viewModel.date) {
-                        viewModel.scrollToDate(proxy: proxy, date: viewModel.date)
+                    .onChange(of: viewModel.date) { oldDate, newDate in
+                        if initialScrollDone && !isDatePickerChanging {
+                            viewModel.scrollToDate(proxy: proxy, date: newDate)
+                        }
                     }
                 }
             }
@@ -75,6 +106,7 @@ struct CalendarView: View {
             .onAppear {
                 viewModel.updateDates()
             }
+            
             if showDatePicker {
                 VStack {
                     Spacer()
@@ -82,19 +114,29 @@ struct CalendarView: View {
                         DatePicker("Select Date", selection: $viewModel.date, displayedComponents: [.date])
                             .datePickerStyle(WheelDatePickerStyle())
                             .labelsHidden()
-                            .onChange(of: viewModel.date) {
+                            .onChange(of: viewModel.date) { oldDate, newDate in
+                                isDatePickerChanging = true
                                 viewModel.updateDates()
+                                DispatchQueue.main.async {
+                                    if let proxy = scrollViewProxy {
+                                        viewModel.scrollToDate(proxy: proxy, date: newDate)
+                                    }
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                        isDatePickerChanging = false
+                                    }
+                                }
                             }
                             .environment(\.colorScheme, .dark)
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(.starBlack)
-                    
+                    .background(Color.starBlack)
+                    .cornerRadius(10)
+                    .shadow(radius: 20)
                 }
                 .background(
-                    Color.starBlack.opacity(0.1)
-                    
+                    Color.black.opacity(0.3)
+                        .edgesIgnoringSafeArea(.all)
                         .onTapGesture {
                             withAnimation {
                                 showDatePicker.toggle()
@@ -104,7 +146,29 @@ struct CalendarView: View {
             }
         }
     }
+    
+    private func scrollToToday() {
+        DispatchQueue.main.async {
+            if let proxy = scrollViewProxy {
+                viewModel.scrollToDate(proxy: proxy, date: viewModel.date)
+            }
+        }
+    }
 }
+
+struct DateOffset: Identifiable, Equatable {
+    var id: Date
+    var offset: CGFloat
+}
+
+struct DateOffsetKey: PreferenceKey {
+    typealias Value = [DateOffset]
+    static var defaultValue: [DateOffset] = []
+    static func reduce(value: inout [DateOffset], nextValue: () -> [DateOffset]) {
+        value.append(contentsOf: nextValue())
+    }
+}
+
 #Preview {
     CalendarView()
 }
