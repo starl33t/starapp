@@ -10,6 +10,9 @@ struct CalendarView: View {
     @State private var lastUpdate = Date()
     @State private var isDatePickerChanging = false
     @State private var scrollViewProxy: ScrollViewProxy? = nil
+    @State private var currentMidY: CGFloat = 0
+    private let debounceInterval = 0.2
+    @State private var debounceTimer: Timer?
 
     @Environment(\.modelContext) private var context
     @Query(sort: \Session.date, order: .reverse) private var sessions: [Session]
@@ -27,6 +30,7 @@ struct CalendarView: View {
             .onAppear {
                 viewModel.updateDates()
                 viewModel.setSessions(sessions)
+                scrollToToday()
             }
             
             if showDatePicker {
@@ -83,7 +87,7 @@ struct CalendarView: View {
                                 Text(day.formatted(.dateTime.month(.abbreviated)))
                                     .fontWeight(.bold)
                                     .frame(maxWidth: .infinity)
-                                    .offset(y: 5) // Adjust the offset to align better
+                                     // Adjust the offset as needed
                             }
                             VStack {
                                 ZStack {
@@ -96,7 +100,7 @@ struct CalendarView: View {
                                             )
                                             .background(
                                                 Color.clear.onAppear {
-                                                    updateVisibleDate(geo: geo, day: day)
+                                                    debounceMidYUpdate(newValue: geo.frame(in: .global).midY, day: day)
                                                 }
                                             )
                                         
@@ -120,6 +124,9 @@ struct CalendarView: View {
                             .frame(height: 70)
                         }
                     }
+                }
+                .onPreferenceChange(CalendarViewModel.DateOffsetKey.self) { offsets in
+                    handlePreferenceChange(offsets: offsets)
                 }
             }
             .onAppear {
@@ -170,12 +177,23 @@ struct CalendarView: View {
         )
     }
 
-    private func updateVisibleDate(geo: GeometryProxy, day: Date) {
-        let midY = geo.frame(in: .global).midY
+    private func updateVisibleDate(midY: CGFloat, day: Date) {
         if abs(midY - middleY) < 35 {
-            DispatchQueue.main.async {
-                viewModel.updateDateIfNeeded(to: day)
+            let now = Date()
+            if now.timeIntervalSince(lastUpdate) > debounceInterval { // Debounce time interval
+                DispatchQueue.main.async {
+                    print("Updating visible date to: \(day)")
+                    viewModel.updateDateIfNeeded(to: day)
+                    lastUpdate = now
+                }
             }
+        }
+    }
+
+    private func debounceMidYUpdate(newValue: CGFloat, day: Date) {
+        debounceTimer?.invalidate()
+        debounceTimer = Timer.scheduledTimer(withTimeInterval: debounceInterval, repeats: false) { _ in
+            updateVisibleDate(midY: newValue, day: day)
         }
     }
 
@@ -199,7 +217,7 @@ struct CalendarView: View {
         DispatchQueue.main.async {
             isDatePickerChanging = true
             if let proxy = scrollViewProxy {
-                viewModel.scrollToDate(proxy: proxy, date: viewModel.date)
+                viewModel.scrollToDate(proxy: proxy, date: Date())
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 isDatePickerChanging = false
@@ -224,7 +242,8 @@ struct CalendarView: View {
         guard !offsets.isEmpty else { return }
         if !isDatePickerChanging, let closestDate = offsets.min(by: { abs($0.offset - middleY) < abs($1.offset - middleY) })?.id {
             let now = Date()
-            if now.timeIntervalSince(lastUpdate) > 0.2 { // Debounce time interval
+            print("Offsets: \(offsets), ClosestDate: \(closestDate), LastUpdate: \(lastUpdate), Now: \(now)")
+            if now.timeIntervalSince(lastUpdate) > debounceInterval { // Debounce time interval
                 DispatchQueue.main.async {
                     viewModel.updateDateIfNeeded(to: closestDate)
                     lastUpdate = now
