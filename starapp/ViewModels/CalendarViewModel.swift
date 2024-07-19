@@ -22,10 +22,10 @@ class CalendarViewModel: ObservableObject {
     }
 
     func scrollToToday(proxy: ScrollViewProxy?) {
-        DispatchQueue.main.async {
-            if let proxy = proxy {
-                self.scrollToDate(proxy: proxy, date: self.date)
-            }
+        date = Date()
+        updateDates()
+        if let proxy = proxy {
+            scrollToDate(proxy: proxy, date: date)
         }
     }
     

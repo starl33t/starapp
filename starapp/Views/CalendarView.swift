@@ -117,13 +117,11 @@ struct CalendarView: View {
                             .onChange(of: viewModel.date) { oldDate, newDate in
                                 isDatePickerChanging = true
                                 viewModel.updateDates()
-                                DispatchQueue.main.async {
-                                    if let proxy = scrollViewProxy {
-                                        viewModel.scrollToDate(proxy: proxy, date: newDate)
-                                    }
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                        isDatePickerChanging = false
-                                    }
+                                if let proxy = scrollViewProxy {
+                                    viewModel.scrollToDate(proxy: proxy, date: newDate)
+                                }
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                    isDatePickerChanging = false
                                 }
                             }
                             .environment(\.colorScheme, .dark)
@@ -149,8 +147,12 @@ struct CalendarView: View {
     
     private func scrollToToday() {
         DispatchQueue.main.async {
+            isDatePickerChanging = true
             if let proxy = scrollViewProxy {
                 viewModel.scrollToDate(proxy: proxy, date: viewModel.date)
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                isDatePickerChanging = false
             }
         }
     }
