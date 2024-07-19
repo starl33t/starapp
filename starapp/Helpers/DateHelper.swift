@@ -65,4 +65,9 @@ extension Date {
             return "N/A"
         }
     }
+    func formattedMonthYear() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM yyyy"
+        return formatter.string(from: self)
+    }
 }

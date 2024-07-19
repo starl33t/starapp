@@ -2,6 +2,10 @@ import SwiftUI
 
 struct CalendarView: View {
     @StateObject private var viewModel = CalendarViewModel()
+    @State private var showDatePicker = false
+    @State private var middleY: CGFloat = UIScreen.main.bounds.height / 2
+    @State private var initialScrollDone = false
+    @State private var lastUpdate = Date()
     
     var body: some View {
         ZStack {
@@ -10,28 +14,25 @@ struct CalendarView: View {
                 HStack {
                     Text("Filter")
                         .padding()
-                        .foregroundColor(.whiteOne)
+                        .foregroundStyle(.whiteOne)
                         .frame(maxWidth: .infinity)
                     Button(action: {
                         viewModel.date = Date()
                         viewModel.updateDates()
+                        showDatePicker = false
                     }) {
                         Text("Today")
                             .foregroundColor(.whiteOne)
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
-                    DatePicker(
-                        "",
-                        selection: $viewModel.date,
-                        displayedComponents: [.date]
-                    )
-                    .frame(maxWidth: .infinity)
-                    .onChange(of: viewModel.date) {
-                        viewModel.updateDates()
-                    }
+                    Text(viewModel.date.formattedMonthYear())
+                        .foregroundStyle(.whiteOne)
+                        .onTapGesture {
+                            showDatePicker.toggle()
+                        }
+                        .frame(maxWidth: .infinity)
                 }
-                
                 .padding(.bottom, 16)
                 
                 HStack {
@@ -52,19 +53,20 @@ struct CalendarView: View {
                                     .frame(maxWidth: .infinity, minHeight: 70)
                                     .background(
                                         Circle()
-                                            .foregroundColor(
+                                            .foregroundStyle(
                                                 Calendar.current.isDateInToday(day) ? .starMain : .starMain.opacity(0.3)
                                             )
                                     )
                                     .id(day)
+                                
                             }
                         }
                     }
                     .onAppear {
-                        scrollToToday(proxy: proxy)
+                        viewModel.scrollToDate(proxy: proxy, date: viewModel.date)
                     }
                     .onChange(of: viewModel.date) {
-                        scrollToToday(proxy: proxy)
+                        viewModel.scrollToDate(proxy: proxy, date: viewModel.date)
                     }
                 }
             }
@@ -73,19 +75,36 @@ struct CalendarView: View {
             .onAppear {
                 viewModel.updateDates()
             }
-        }
-    }
-    
-    private func scrollToToday(proxy: ScrollViewProxy) {
-        DispatchQueue.main.async {
-            if let todayIndex = viewModel.days.firstIndex(where: { Calendar.current.isDateInToday($0) }) {
-                let today = viewModel.days[todayIndex]
-                proxy.scrollTo(today, anchor: .center)
+            if showDatePicker {
+                VStack {
+                    Spacer()
+                    VStack {
+                        DatePicker("Select Date", selection: $viewModel.date, displayedComponents: [.date])
+                            .datePickerStyle(WheelDatePickerStyle())
+                            .labelsHidden()
+                            .onChange(of: viewModel.date) {
+                                viewModel.updateDates()
+                            }
+                            .environment(\.colorScheme, .dark)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(.starBlack)
+                    
+                }
+                .background(
+                    Color.starBlack.opacity(0.1)
+                    
+                        .onTapGesture {
+                            withAnimation {
+                                showDatePicker.toggle()
+                            }
+                        }
+                )
             }
         }
     }
 }
-
 #Preview {
     CalendarView()
 }
