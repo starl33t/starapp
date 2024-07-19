@@ -45,8 +45,15 @@ extension Date {
             }
         }
         
+        // Adding a full week to cover the edge cases
+        for _ in 0..<7 {
+            current = Date.calendar.date(byAdding: .day, value: 1, to: current)!
+            days.append(current)
+        }
+        
         return days
     }
+    
     func formattedAsRelative() -> String {
         let calendar = Calendar.current
         if calendar.isDateInToday(self) {
@@ -65,6 +72,7 @@ extension Date {
             return "N/A"
         }
     }
+    
     func formattedMonthYear() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM yyyy"
