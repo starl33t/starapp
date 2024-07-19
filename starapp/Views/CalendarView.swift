@@ -83,31 +83,33 @@ struct CalendarView: View {
                                 Text(day.formatted(.dateTime.month(.abbreviated)))
                                     .fontWeight(.bold)
                                     .frame(maxWidth: .infinity)
-                                     // Adjust the offset as needed
+                                    .offset(y: 5) // Adjust the offset to align better
                             }
                             VStack {
                                 ZStack {
-                                    Text(day.formatted(.dateTime.day()))
-                                        .fontWeight(.bold)
-                                        .frame(maxWidth: .infinity, minHeight: 70)
-                                        .foregroundColor(
-                                            Calendar.current.isDateInToday(day) ? .starMain : .whiteOne
-                                        )
-                                        .background(
-                                            GeometryReader { innerGeo in
-                                                Color.clear.preference(key: CalendarViewModel.DateOffsetKey.self, value: [CalendarViewModel.DateOffset(id: day, offset: innerGeo.frame(in: .global).midY)])
-                                            }
-                                        )
-                                    
-                                    // Display dots for sessions
-                                    if !viewModel.sessions(for: day).isEmpty {
-                                        VStack(spacing: 2) {
-                                            Spacer()
-                                            HStack(spacing: 4) {
-                                                ForEach(viewModel.sessions(for: day), id: \.self) { session in
-                                                    Circle()
-                                                        .frame(width: 6, height: 6)
-                                                        .foregroundColor(colorForLactate(session.lactate))
+                                    GeometryReader { geo in
+                                        Text(day.formatted(.dateTime.day()))
+                                            .fontWeight(.bold)
+                                            .frame(maxWidth: .infinity, minHeight: 70)
+                                            .foregroundColor(
+                                                Calendar.current.isDateInToday(day) ? .starMain : .whiteOne
+                                            )
+                                            .background(
+                                                Color.clear.onAppear {
+                                                    updateVisibleDate(geo: geo, day: day)
+                                                }
+                                            )
+                                        
+                                        // Display dots for sessions
+                                        if !viewModel.sessions(for: day).isEmpty {
+                                            VStack(spacing: 2) {
+                                                Spacer()
+                                                HStack(spacing: 4) {
+                                                    ForEach(viewModel.sessions(for: day), id: \.self) { session in
+                                                        Circle()
+                                                            .frame(width: 6, height: 6)
+                                                            .foregroundColor(colorForLactate(session.lactate))
+                                                    }
                                                 }
                                             }
                                         }
@@ -119,9 +121,6 @@ struct CalendarView: View {
                         }
                     }
                 }
-                .onPreferenceChange(CalendarViewModel.DateOffsetKey.self) { offsets in
-                    handlePreferenceChange(offsets: offsets)
-                }
             }
             .onAppear {
                 scrollViewProxy = proxy
@@ -132,7 +131,7 @@ struct CalendarView: View {
                     }
                 }
             }
-            .onChange(of: viewModel.date) { oldDate, newDate in
+            .onChange(of: viewModel.date) { newDate in
                 if initialScrollDone && !isDatePickerChanging {
                     DispatchQueue.main.async {
                         viewModel.scrollToDate(proxy: proxy, date: newDate)
@@ -149,17 +148,8 @@ struct CalendarView: View {
                 DatePicker("Select Date", selection: $viewModel.date, displayedComponents: [.date])
                     .datePickerStyle(WheelDatePickerStyle())
                     .labelsHidden()
-                    .onChange(of: viewModel.date) { oldDate, newDate in
-                        isDatePickerChanging = true
-                        viewModel.updateDates()
-                        DispatchQueue.main.async {
-                            if let proxy = scrollViewProxy {
-                                viewModel.scrollToDate(proxy: proxy, date: newDate)
-                            }
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                isDatePickerChanging = false
-                            }
-                        }
+                    .onChange(of: viewModel.date) { newDate in
+                        handleDatePickerChange(newDate)
                     }
                     .environment(\.colorScheme, .dark)
             }
@@ -180,15 +170,11 @@ struct CalendarView: View {
         )
     }
 
-    private func handlePreferenceChange(offsets: [CalendarViewModel.DateOffset]) {
-        guard !offsets.isEmpty else { return }
-        if !isDatePickerChanging, let closestDate = offsets.min(by: { abs($0.offset - middleY) < abs($1.offset - middleY) })?.id {
-            let now = Date()
-            if now.timeIntervalSince(lastUpdate) > 0.2 { // Debounce time interval
-                DispatchQueue.main.async {
-                    viewModel.updateDateIfNeeded(to: closestDate)
-                    lastUpdate = now
-                }
+    private func updateVisibleDate(geo: GeometryProxy, day: Date) {
+        let midY = geo.frame(in: .global).midY
+        if abs(midY - middleY) < 35 {
+            DispatchQueue.main.async {
+                viewModel.updateDateIfNeeded(to: day)
             }
         }
     }
@@ -217,6 +203,32 @@ struct CalendarView: View {
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 isDatePickerChanging = false
+            }
+        }
+    }
+
+    private func handleDatePickerChange(_ newDate: Date) {
+        isDatePickerChanging = true
+        viewModel.updateDates()
+        DispatchQueue.main.async {
+            if let proxy = scrollViewProxy {
+                viewModel.scrollToDate(proxy: proxy, date: newDate)
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                isDatePickerChanging = false
+            }
+        }
+    }
+
+    private func handlePreferenceChange(offsets: [CalendarViewModel.DateOffset]) {
+        guard !offsets.isEmpty else { return }
+        if !isDatePickerChanging, let closestDate = offsets.min(by: { abs($0.offset - middleY) < abs($1.offset - middleY) })?.id {
+            let now = Date()
+            if now.timeIntervalSince(lastUpdate) > 0.2 { // Debounce time interval
+                DispatchQueue.main.async {
+                    viewModel.updateDateIfNeeded(to: closestDate)
+                    lastUpdate = now
+                }
             }
         }
     }
