@@ -83,7 +83,7 @@ struct CalendarView: View {
                                 Text(day.formatted(.dateTime.month(.abbreviated)))
                                     .fontWeight(.bold)
                                     .frame(maxWidth: .infinity)
-                                    .offset(y: -35) // Adjust the offset as needed
+                                     // Adjust the offset as needed
                             }
                             VStack {
                                 ZStack {
@@ -132,7 +132,7 @@ struct CalendarView: View {
                     }
                 }
             }
-            .onChange(of: viewModel.date) { newDate in
+            .onChange(of: viewModel.date) { oldDate, newDate in
                 if initialScrollDone && !isDatePickerChanging {
                     DispatchQueue.main.async {
                         viewModel.scrollToDate(proxy: proxy, date: newDate)
@@ -149,7 +149,7 @@ struct CalendarView: View {
                 DatePicker("Select Date", selection: $viewModel.date, displayedComponents: [.date])
                     .datePickerStyle(WheelDatePickerStyle())
                     .labelsHidden()
-                    .onChange(of: viewModel.date) { newDate in
+                    .onChange(of: viewModel.date) { oldDate, newDate in
                         isDatePickerChanging = true
                         viewModel.updateDates()
                         DispatchQueue.main.async {
