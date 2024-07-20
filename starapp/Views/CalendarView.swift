@@ -27,7 +27,9 @@ struct CalendarView: View {
             .onAppear {
                 viewModel.updateDates()
                 viewModel.setSessions(sessions)
-                scrollToToday() // Ensure initial scroll to today's date
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    scrollToToday()
+                }
             }
             
             if showDatePicker {
@@ -43,12 +45,8 @@ struct CalendarView: View {
                 .foregroundStyle(.whiteOne)
                 .frame(maxWidth: .infinity)
             Button(action: {
-                viewModel.date = Date()
-                viewModel.updateDates()
                 showDatePicker = false
-                DispatchQueue.main.async {
-                    scrollToToday()
-                }
+                updateToTodayAndScroll()
             }) {
                 Text("Today")
                     .foregroundColor(.whiteOne)
@@ -128,11 +126,6 @@ struct CalendarView: View {
             }
             .onAppear {
                 scrollViewProxy = proxy
-                if !initialScrollDone {
-                    DispatchQueue.main.async {
-                        scrollToToday()
-                    }
-                }
             }
             .onChange(of: viewModel.date) { newDate in
                 if initialScrollDone && !isDatePickerChanging {
@@ -204,14 +197,23 @@ struct CalendarView: View {
         }
     }
 
-    private func scrollToToday() {
+    private func updateToTodayAndScroll() {
         isDatePickerChanging = true
+        viewModel.date = Date()
+        viewModel.updateDates()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            scrollToToday()
+        }
+    }
+
+    private func scrollToToday(completion: (() -> Void)? = nil) {
         if let proxy = scrollViewProxy {
-            viewModel.scrollToDate(proxy: proxy, date: viewModel.date)
+            viewModel.scrollToDate(proxy: proxy, date: Date())
         }
         initialScrollDone = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             isDatePickerChanging = false
+            completion?()
         }
     }
 
