@@ -6,9 +6,6 @@ struct CalendarView: View {
     @StateObject private var viewModel = CalendarViewModel()
     @State private var showDatePicker = false
     @State private var middleY: CGFloat = UIScreen.main.bounds.height / 2
-    @State private var initialScrollDone = false
-    @State private var lastUpdate = Date()
-    @State private var isDatePickerChanging = false
     @State private var scrollViewProxy: ScrollViewProxy? = nil
     @State private var isScrollingToDate = false
 
@@ -25,26 +22,8 @@ struct CalendarView: View {
             }
             .padding()
             .foregroundStyle(.whiteTwo)
-            .onAppear {
-                viewModel.updateDates()
-                viewModel.setSessions(sessions)
-                viewModel.date = Date() // Set the date to today on appear
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    
-                    scrollToToday {
-                        viewModel.date = Date()
-                        updateVisibleDate(for: Date())
-                    }
-                }
-            }
-            
             if showDatePicker {
                 datePickerOverlay
-            }
-        }
-        .onPreferenceChange(CalendarViewModel.DateOffsetKey.self) { offsets in
-            if !isScrollingToDate {
-                handlePreferenceChange(offsets: offsets)
             }
         }
     }
@@ -56,8 +35,8 @@ struct CalendarView: View {
                 .foregroundStyle(.whiteOne)
                 .frame(maxWidth: .infinity)
             Button(action: {
-                showDatePicker = false
-                updateToTodayAndScroll()
+                viewModel.date = Date()
+                handleDatePickerChange(Date())
             }) {
                 Text("Today")
                     .foregroundColor(.whiteOne)
@@ -112,7 +91,7 @@ struct CalendarView: View {
                                                 ForEach(viewModel.sessions(for: day), id: \.self) { session in
                                                     Circle()
                                                         .frame(width: 6, height: 6)
-                                                        .foregroundColor(colorForLactate(session.lactate))
+                                                        .foregroundColor(ColorLactate.color(for: session.lactate))
                                                 }
                                             }
                                         }
@@ -123,7 +102,7 @@ struct CalendarView: View {
                                     GeometryReader { geo in
                                         Color.clear
                                             .preference(key: CalendarViewModel.DateOffsetKey.self, value: [CalendarViewModel.DateOffset(id: day, offset: geo.frame(in: .global).midY)])
-                                            .onChange(of: geo.frame(in: .global).midY) { newValue in
+                                            .onChange(of: geo.frame(in: .global).midY) { oldValue, newValue in
                                                 if !isScrollingToDate {
                                                     updateVisibleDate(geo: geo, day: day)
                                                 }
@@ -138,12 +117,9 @@ struct CalendarView: View {
             }
             .onAppear {
                 scrollViewProxy = proxy
-                if !initialScrollDone {
-                    scrollToToday {
-                        initialScrollDone = true
-                        updateVisibleDate(for: Date())
-                    }
-                }
+                viewModel.updateDates()
+                viewModel.setSessions(sessions)
+                updateVisibleDate(for: Date())
             }
         }
     }
@@ -155,7 +131,7 @@ struct CalendarView: View {
                 DatePicker("Select Date", selection: $viewModel.date, displayedComponents: [.date])
                     .datePickerStyle(WheelDatePickerStyle())
                     .labelsHidden()
-                    .onChange(of: viewModel.date) { newDate in
+                    .onChange(of: viewModel.date) { oldDate, newDate in
                         handleDatePickerChange(newDate)
                     }
                     .environment(\.colorScheme, .dark)
@@ -177,103 +153,32 @@ struct CalendarView: View {
         )
     }
 
-    private func handlePreferenceChange(offsets: [CalendarViewModel.DateOffset]) {
-        guard !offsets.isEmpty else { return }
-        if let closestDate = offsets.min(by: { abs($0.offset - middleY) < abs($1.offset - middleY) })?.id {
-            let now = Date()
-            if now.timeIntervalSince(lastUpdate) > 0.2 { // Debounce time interval
-                lastUpdate = now
-                DispatchQueue.main.async {
-                    viewModel.updateDateIfNeeded(to: closestDate)
-                }
-            }
-        }
-    }
-
-    private func colorForLactate(_ lactate: Double?) -> Color {
-        guard let lactate = lactate else { return .whiteOne }
-        
-        if lactate < 1.0 {
-            return .blue
-        } else if lactate <= 1.5 {
-            return .green
-        } else if lactate <= 3.0 {
-            return .yellow
-        } else if lactate <= 4.9 {
-            return .orange
-        } else {
-            return .red
-        }
-    }
-
     private func updateVisibleDate(geo: GeometryProxy, day: Date) {
         let midY = geo.frame(in: .global).midY
         if abs(midY - middleY) < 35 {
             if viewModel.date != day {
                 viewModel.updateDateIfNeeded(to: day)
-                print("updateVisibleDate: Updated date to \(day) based on position \(midY)")
-            } else {
-                print("updateVisibleDate: Date \(day) already set as current date")
-            }
-        } else {
-            print("updateVisibleDate: Date \(day) at position \(midY) is not within the middle Y range")
-        }
-    }
-
-    private func updateToTodayAndScroll() {
-        isDatePickerChanging = true
-        isScrollingToDate = true
-        viewModel.date = Date()
-        viewModel.updateDates()
-        scrollToToday {
-            isDatePickerChanging = false
-            isScrollingToDate = false
-        }
-    }
-
-    private func scrollToToday(completion: (() -> Void)? = nil) {
-        if let proxy = scrollViewProxy {
-            isScrollingToDate = true
-            viewModel.scrollToDate(proxy: proxy, date: Date())
-            initialScrollDone = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                isScrollingToDate = false
-                isDatePickerChanging = false
-                completion?()
-                DispatchQueue.main.async {
-                    updateVisibleDate(for: Date())
-                }
             }
         }
     }
-
-    private func scrollToDate(_ date: Date, completion: (() -> Void)? = nil) {
+    
+    private func scrollToDate(_ date: Date) {
         if let proxy = self.scrollViewProxy {
             self.isScrollingToDate = true
             self.viewModel.scrollToDate(proxy: proxy, date: date)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 self.isScrollingToDate = false
-                completion?()
-                DispatchQueue.main.async {
-                    updateVisibleDate(for: date)
-                }
+                updateVisibleDate(for: date)
             }
-        } else {
-            completion?()
         }
     }
 
     private func handleDatePickerChange(_ newDate: Date) {
-        print("DatePicker changed to: \(newDate)")
-        isDatePickerChanging = true
         viewModel.updateDates()
-        scrollToDate(newDate) {
-            isDatePickerChanging = false
-        }
+        scrollToDate(newDate)
     }
 
     private func updateVisibleDate(for date: Date) {
-        // Ensure that the date is correctly centered in the visible range
         for day in viewModel.days {
             if Calendar.current.isDate(day, inSameDayAs: date) {
                 if let proxy = scrollViewProxy {

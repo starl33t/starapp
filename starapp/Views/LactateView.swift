@@ -1,10 +1,3 @@
-//
-//  LactateView.swift
-//  starapp
-//
-//  Created by Peter Tran on 07/07/2024.
-//
-
 import SwiftUI
 import SwiftData
 
@@ -51,37 +44,37 @@ struct LactateView: View {
                                                 if lactate < 1.0 {
                                                     Image(systemName: "tortoise.fill")
                                                         .font(.system(size: 24, weight: .bold))
-                                                        .foregroundStyle(.blue)
+                                                        .foregroundStyle(ColorLactate.color(for: lactate))
                                                     Text("Recovery")
-                                                        .foregroundStyle(.blue)
+                                                        .foregroundStyle(ColorLactate.color(for: lactate))
                                                         .font(.system(size: 14))
                                                 } else if lactate <= 1.5 {
                                                     Image(systemName: "leaf.fill")
                                                         .font(.system(size: 24, weight: .bold))
-                                                        .foregroundStyle(.green)
+                                                        .foregroundStyle(ColorLactate.color(for: lactate))
                                                     Text("Light")
-                                                        .foregroundStyle(.green)
+                                                        .foregroundStyle(ColorLactate.color(for: lactate))
                                                         .font(.system(size: 14))
                                                 } else if lactate <= 3.0 {
                                                     Image(systemName: "wind")
                                                         .font(.system(size: 24, weight: .bold))
-                                                        .foregroundStyle(.yellow)
+                                                        .foregroundStyle(ColorLactate.color(for: lactate))
                                                     Text("Moderate")
-                                                        .foregroundStyle(.yellow)
+                                                        .foregroundStyle(ColorLactate.color(for: lactate))
                                                         .font(.system(size: 14))
                                                 } else if lactate <= 4.9 {
                                                     Image(systemName: "flame.fill")
                                                         .font(.system(size: 24, weight: .bold))
-                                                        .foregroundStyle(.orange)
+                                                        .foregroundStyle(ColorLactate.color(for: lactate))
                                                     Text("Hard")
-                                                        .foregroundStyle(.orange)
+                                                        .foregroundStyle(ColorLactate.color(for: lactate))
                                                         .font(.system(size: 14))
                                                 } else {
                                                     Image(systemName: "exclamationmark.triangle.fill")
                                                         .font(.system(size: 24, weight: .bold))
-                                                        .foregroundStyle(.red)
+                                                        .foregroundStyle(ColorLactate.color(for: lactate))
                                                     Text("Very Hard")
-                                                        .foregroundStyle(.red)
+                                                        .foregroundStyle(ColorLactate.color(for: lactate))
                                                         .font(.system(size: 14))
                                                 }
                                             }
