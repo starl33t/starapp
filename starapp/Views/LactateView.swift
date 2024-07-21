@@ -4,7 +4,6 @@ import SwiftData
 struct LactateView: View {
     @Environment(\.modelContext) private var context
     @Query(sort: \Session.date, order: .reverse) private var sessions: [Session]
-    @State private var selectedSession: Session?
     
     var body: some View {
         NavigationView {
