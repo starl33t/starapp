@@ -4,6 +4,7 @@ import Combine
 class CalendarViewModel: ObservableObject {
     @Published var date = Date()
     @Published var days: [Date] = []
+    @State private var visibleDates: Set<Date> = []
     @Published var isScrollingToDate = false
     let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     let columns = Array(repeating: GridItem(.flexible()), count: 7)
@@ -40,19 +41,18 @@ class CalendarViewModel: ObservableObject {
         }
     }
     
-
     func handleDatePickerChange(_ newDate: Date, proxy: ScrollViewProxy?) {
         setDate(newDate)
         scrollToDate(date: newDate, proxy: proxy, anchor: .center)
     }
-    
+
     func setDate(_ newDate: Date, completion: @escaping () -> Void = {}) {
-            date = newDate
-            updateDates()
-            DispatchQueue.main.async {
-                completion()
-            }
+        date = newDate
+        updateDates()
+        DispatchQueue.main.async {
+            completion()
         }
+    }
     
     func updateCurrentMonth(_ day: Date) {
         if !isScrollingToDate && !Calendar.current.isDate(date, equalTo: day, toGranularity: .month) {

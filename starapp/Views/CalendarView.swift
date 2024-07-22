@@ -22,6 +22,7 @@ struct CalendarView: View {
                     Button(action: {
                         viewModel.scrollToToday(proxy: scrollViewProxy)
                         viewModel.handleDatePickerChange(Date(), proxy: scrollViewProxy)
+                        
                     }) {
                         Text("Today")
                             .foregroundColor(.whiteOne)
