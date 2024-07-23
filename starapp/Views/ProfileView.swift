@@ -6,6 +6,14 @@ struct ProfileView: View {
     @State private var tagName: String
     let user: User
     
+    // Add state variables for sheet presentation
+    @State private var showAccountSheet = false
+    @State private var showSubscriptionSheet = false
+    @State private var showIntegrationsSheet = false
+    @State private var showSupportSheet = false
+    @State private var showLearnSheet = false
+    @State private var showPrivacySheet = false
+    
     init(user: User) {
         self.user = user
         _userName = State(initialValue: user.userName ?? "")
@@ -13,65 +21,82 @@ struct ProfileView: View {
     }
 
     var body: some View {
-        NavigationView {
-            ZStack {
-                Color.starBlack.ignoresSafeArea()
+        ZStack {
+            Color.starBlack.ignoresSafeArea()
+            VStack {
                 VStack {
-                    VStack {
-                        Image(systemName: "1.circle")
-                            .padding(8)
-                            .font(.system(size: 74))
-                            .foregroundStyle(.whiteOne)
-                        TextField("Name", text: $userName, onCommit: saveUserName)
-                            .font(.system(size: 32, weight: .bold))
-                            .foregroundStyle(.whiteTwo)
-                            .multilineTextAlignment(.center)
-                            .onChange(of: userName) {saveUserName() }
-                        TextField("Tag", text: $tagName, onCommit: saveTagName)
-                            .font(.system(size: 18))
-                            .foregroundStyle(.whiteOne)
-                            .padding(.bottom, 10)
-                            .multilineTextAlignment(.center)
-                            .onChange(of: tagName) {saveTagName() }
-                    }
-                    .padding()
-                    
-                    List {
-                        NavigationLink(destination: AccountView()) {
-                            profileRow(imageName: "gearshape", text: "Account")
-                        }
-                        .listRowBackground(Color.starBlack)
-
-                        NavigationLink(destination: SubscriptionView()) {
-                            profileRow(imageName: "cpu", text: "Subscriptions")
-                        }
-                        .listRowBackground(Color.starBlack)
-
-                        NavigationLink(destination: IntegrationsView()) {
-                            profileRow(imageName: "sensor", text: "Integrations")
-                        }
-                        .listRowBackground(Color.starBlack)
-
-                        NavigationLink(destination: SupportView()) {
-                            profileRow(imageName: "questionmark.circle", text: "Support")
-                        }
-                        .listRowBackground(Color.starBlack)
-
-                        NavigationLink(destination: LearnView()) {
-                            profileRow(imageName: "book", text: "Learn")
-                        }
-                        .listRowBackground(Color.starBlack)
-
-                        NavigationLink(destination: PrivacyView()) {
-                            profileRow(imageName: "shield", text: "Privacy")
-                        }
-                        .listRowBackground(Color.starBlack)
-                    }
-                    .listStyle(PlainListStyle())
+                    Image(systemName: "1.circle")
+                        .padding(8)
+                        .font(.system(size: 74))
+                        .foregroundStyle(.whiteOne)
+                    TextField("Name", text: $userName, onCommit: saveUserName)
+                        .font(.system(size: 32, weight: .bold))
+                        .foregroundStyle(.whiteTwo)
+                        .multilineTextAlignment(.center)
+                        .onChange(of: userName) { saveUserName() }
+                    TextField("Tag", text: $tagName, onCommit: saveTagName)
+                        .font(.system(size: 18))
+                        .foregroundStyle(.whiteOne)
+                        .padding(.bottom, 10)
+                        .multilineTextAlignment(.center)
+                        .onChange(of: tagName) { saveTagName() }
                 }
                 .padding()
-                .tint(.whiteTwo)
+                
+                VStack(spacing: 20) {
+                    VStack {
+                        Button(action: { showAccountSheet = true }) {
+                            profileRow(imageName: "gearshape", text: "Account")
+                        }
+
+                        Button(action: { showSubscriptionSheet = true }) {
+                            profileRow(imageName: "cpu", text: "Subscriptions")
+                        }
+
+                        Button(action: { showIntegrationsSheet = true }) {
+                            profileRow(imageName: "sensor", text: "Integrations")
+                        }
+                    }
+                    .padding()
+                    .background(RoundedRectangle(cornerRadius: 16).fill(Color.darkOne))
+
+                    VStack {
+                        Button(action: { showSupportSheet = true }) {
+                            profileRow(imageName: "questionmark.circle", text: "Support")
+                        }
+
+                        Button(action: { showLearnSheet = true }) {
+                            profileRow(imageName: "book", text: "Learn")
+                        }
+
+                        Button(action: { showPrivacySheet = true }) {
+                            profileRow(imageName: "shield", text: "Privacy")
+                        }
+                    }
+                    .padding()
+                    .background(RoundedRectangle(cornerRadius: 16).fill(Color.darkOne))
+                }
             }
+            .padding()
+            .tint(.whiteTwo)
+        }
+        .sheet(isPresented: $showAccountSheet) {
+            AccountView()
+        }
+        .sheet(isPresented: $showSubscriptionSheet) {
+            SubscriptionView()
+        }
+        .sheet(isPresented: $showIntegrationsSheet) {
+            IntegrationsView()
+        }
+        .sheet(isPresented: $showSupportSheet) {
+            SupportView()
+        }
+        .sheet(isPresented: $showLearnSheet) {
+            LearnView()
+        }
+        .sheet(isPresented: $showPrivacySheet) {
+            PrivacyView()
         }
     }
 
@@ -109,7 +134,5 @@ struct ProfileView: View {
 }
 
 #Preview {
-    NavigationView {
-        ProfileView(user: User())
-    }
+    ProfileView(user: User())
 }

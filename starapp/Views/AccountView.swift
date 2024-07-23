@@ -4,7 +4,7 @@ struct AccountView: View {
     @StateObject private var viewModel = AccountViewModel()
     @State private var deleteOffset: CGFloat = 0
     @State private var showDeleteAlert = false
-    private let maxOffset: CGFloat = 238 // Maximum offset for the slider
+    @State private var startPositionPercentage: CGFloat = 0.025 // 0.0 means far left, 1.0 means far right
 
     var body: some View {
         ZStack {
@@ -30,8 +30,6 @@ struct AccountView: View {
         VStack {
             ToggleView(title: "Notifications", isOn: $viewModel.zNotSelected)
                 .tint(.green)
-            ToggleView(title: "Incognito mode", isOn: $viewModel.bIncogSelected)
-                .tint(.green)
         }
         .padding()
         .background(Color.starBlack)
@@ -39,52 +37,62 @@ struct AccountView: View {
     }
 
     private var deleteSlider: some View {
-        VStack {
-            ZStack(alignment: .leading) {
-                Capsule()
-                    .fill(capsuleColor(for: deleteOffset))
-                    .frame(height: 60)
+        GeometryReader { geometry in
+            let width = geometry.size.width
+            let sliderWidth = width - 40 // Adjust for padding
+            let ballDiameter: CGFloat = 50
+            let maxOffsetPercentage: CGFloat = 0.86 // 85% of the slider width
+            let maxOffset = (sliderWidth - ballDiameter) * maxOffsetPercentage
 
-                Text("Slide to delete all data")
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 20)
+            // Calculate the initial offset based on the start position percentage
+            let initialOffset = (sliderWidth - ballDiameter) * startPositionPercentage
 
-                Circle()
-                    .fill(Color.white)
-                    .frame(width: 50, height: 50)
-                    .offset(x: deleteOffset)
-                    .gesture(
-                        DragGesture()
-                            .onChanged { value in
-                                if value.translation.width >= 0 && value.translation.width <= maxOffset {
-                                    deleteOffset = value.translation.width
+            VStack {
+                ZStack(alignment: .leading) {
+                    Capsule()
+                        .fill(capsuleColor(for: deleteOffset, maxOffset: maxOffset))
+                        .frame(height: 60)
+
+                    Text("Slide to delete all data")
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 20)
+
+                    Circle()
+                        .fill(Color.white)
+                        .frame(width: ballDiameter, height: ballDiameter)
+                        .offset(x: min(max(initialOffset, deleteOffset), maxOffset))
+                        .gesture(
+                            DragGesture()
+                                .onChanged { value in
+                                    let newOffset = min(max(initialOffset, initialOffset + value.translation.width), maxOffset)
+                                    deleteOffset = newOffset
                                 }
-                            }
-                            .onEnded { value in
-                                if deleteOffset > maxOffset - 10 { // Adjust threshold for triggering the alert
-                                    withAnimation {
-                                        viewModel.cDeleteSelected = true
-                                        deleteOffset = maxOffset // Snap to the end
-                                        showDeleteAlert = true
-                                    }
-                                } else {
-                                    withAnimation {
-                                        deleteOffset = 0
+                                .onEnded { value in
+                                    if deleteOffset > maxOffset * 0.95 {
+                                        withAnimation {
+                                            viewModel.cDeleteSelected = true
+                                            deleteOffset = maxOffset // Snap to the end
+                                            showDeleteAlert = true
+                                        }
+                                    } else {
+                                        withAnimation {
+                                            deleteOffset = initialOffset
+                                        }
                                     }
                                 }
-                            }
-                    )
-                    .padding(5)
+                        )
+                }
+                .frame(height: 60)
+                .padding(.horizontal, 20)
             }
-            .padding(.horizontal)
+            .padding()
+            .background(Color.starBlack)
+            .cornerRadius(16)
         }
-        .padding()
-        .background(Color.starBlack)
-        .cornerRadius(16)
+        .frame(height: 100) // Fixed height for the slider
     }
-
     private var deleteAlert: Alert {
         Alert(
             title: Text("Delete All Data"),
@@ -100,9 +108,9 @@ struct AccountView: View {
         )
     }
 
-    private func capsuleColor(for offset: CGFloat) -> Color {
+    private func capsuleColor(for offset: CGFloat, maxOffset: CGFloat) -> Color {
         let progress = offset / maxOffset
-        return Color.red.opacity(0.1 + progress * 0.9) // Start at 10% opacity and move to 100% opacity
+        return Color.red.opacity(0.2 + progress * 0.9) // Start at 10% opacity and move to 100% opacity
     }
 }
 

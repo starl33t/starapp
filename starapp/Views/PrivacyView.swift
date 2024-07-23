@@ -75,7 +75,6 @@ struct PrivacyView: View {
                 }
                 .foregroundStyle(.whiteOne)
                 .tabViewStyle(PageTabViewStyle())
-                .presentationDetents([.large])
             }
             .background(.starBlack)
         }

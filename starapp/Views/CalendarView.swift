@@ -138,3 +138,6 @@ struct CalendarView: View {
         }
     }
 }
+#Preview {
+    CalendarView()
+}

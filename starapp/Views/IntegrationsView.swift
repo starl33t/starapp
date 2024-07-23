@@ -15,27 +15,6 @@ struct IntegrationsView: View {
             Color.starBlack.ignoresSafeArea()
             VStack {
                 HStack {
-                    Toggle("Garmin", isOn: $viewModel.yGarminSelected)
-                }
-                .padding()
-                .foregroundColor(.whiteOne)
-                .tint(.green)
-                
-                HStack {
-                    Toggle("Suunto", isOn: $viewModel.zSuuntoSelected)
-                }
-                .padding()
-                .foregroundColor(.whiteOne)
-                .tint(.green)
-                
-                HStack {
-                    Toggle("Coros", isOn: $viewModel.bCorosSelected)
-                }
-                .padding()
-                .foregroundColor(.whiteOne)
-                .tint(.green)
-                
-                HStack {
                     Toggle("Polar", isOn: $viewModel.cPolarSelected)
                 }
                 .padding()
