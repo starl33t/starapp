@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BF2732E62C4593A100E16ACD /* Split.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2732E52C45939E00E16ACD /* Split.swift */; };
 		BF31F0AB2C48FDAD000C005C /* EmailHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF31F0AA2C48FDA9000C005C /* EmailHelper.swift */; };
-		BF3700862C47A12800CF255D /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3700852C47A12600CF255D /* Message.swift */; };
 		BF3700882C47B60900CF255D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3700872C47B60600CF255D /* User.swift */; };
 		BF4A81352C3AEC4D00D4CAF1 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81342C3AEC4D00D4CAF1 /* CalendarView.swift */; };
 		BF4A813F2C3AEE0900D4CAF1 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A813E2C3AEE0900D4CAF1 /* DateHelper.swift */; };
@@ -85,9 +83,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		BF2732E52C45939E00E16ACD /* Split.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Split.swift; sourceTree = "<group>"; };
 		BF31F0AA2C48FDA9000C005C /* EmailHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailHelper.swift; sourceTree = "<group>"; };
-		BF3700852C47A12600CF255D /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		BF3700872C47B60600CF255D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BF3F6CAD2C3F23280087DF5A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		BF4A81342C3AEC4D00D4CAF1 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
@@ -254,9 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				BF3700872C47B60600CF255D /* User.swift */,
-				BF3700852C47A12600CF255D /* Message.swift */,
 				BF6744D02C3FCAE400A23D76 /* Session.swift */,
-				BF2732E52C45939E00E16ACD /* Split.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -461,7 +455,6 @@
 				BF6C84102C3C5EF200032E93 /* AccountViewModel.swift in Sources */,
 				BF4A81512C3AF12000D4CAF1 /* LineChartView.swift in Sources */,
 				BF4A815F2C3AF31800D4CAF1 /* PieChartView.swift in Sources */,
-				BF3700862C47A12800CF255D /* Message.swift in Sources */,
 				BF6744D12C3FCAE900A23D76 /* Session.swift in Sources */,
 				BF4A81632C3AF53200D4CAF1 /* ProfileView.swift in Sources */,
 				BF91AA332C4CEAD8009FE03E /* ColorLactate.swift in Sources */,
@@ -490,7 +483,6 @@
 				BF4A815B2C3AF2B100D4CAF1 /* BarChartView.swift in Sources */,
 				BF8D6ADC2C41A9DF000269F1 /* TrainingView.swift in Sources */,
 				BF4A815D2C3AF30F00D4CAF1 /* PieChartViewModel.swift in Sources */,
-				BF2732E62C4593A100E16ACD /* Split.swift in Sources */,
 				BF4A81352C3AEC4D00D4CAF1 /* CalendarView.swift in Sources */,
 				BF4A81532C3AF15200D4CAF1 /* LineChartViewModel.swift in Sources */,
 				BF7342072C3AE74A00911375 /* starappApp.swift in Sources */,

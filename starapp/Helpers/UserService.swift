@@ -8,7 +8,7 @@ class UserService {
         if let user = users.first {
             return user
         } else {
-            let newUser = User(id: UUID(), userName: "NewUser", tagName: "NewTag")
+            let newUser = User(userName: "NewUser", tagName: "NewTag")
             context.insert(newUser)
             saveContext(context)
             return newUser

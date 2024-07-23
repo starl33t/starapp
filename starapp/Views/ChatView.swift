@@ -16,60 +16,59 @@ struct ChatView: View {
                 ScrollViewReader { proxy in
                     ScrollView {
                         VStack {
-                            ForEach(viewModel.messages.indices, id: \.self) { index in
-                                let message = viewModel.messages[index]
+                            ForEach(viewModel.messages) { message in
                                 HStack(alignment: .top) {
-                                    if message.isUser == true {
+                                    if message.isUser {
                                         Spacer()
                                         VStack(alignment: .trailing) {
-                                            Text(message.user?.tagName ?? "Unknown")
+                                            Text(viewModel.user.tagName ?? "Unknown")
                                                 .font(.headline)
-                                                .foregroundStyle(.whiteOne)
-                                            Text(message.content ?? "")
-                                                .foregroundColor(.whiteOne)
+                                                .foregroundColor(.white)
+                                            Text(message.content)
+                                                .foregroundColor(.white)
                                                 .padding(10)
-                                                .background(Color.starMain)
+                                                .background(.starMain)
                                                 .cornerRadius(10)
                                         }
                                         .padding([.leading, .vertical])
                                         Image(systemName: "person.circle.fill")
                                             .resizable()
-                                            .foregroundStyle(.whiteOne)
+                                            .foregroundColor(.white)
                                             .frame(width: 40, height: 40)
                                             .clipShape(Circle())
                                             .padding([.trailing, .vertical])
                                     } else {
                                         Image(systemName: "person.circle.fill")
                                             .resizable()
-                                            .foregroundStyle(.whiteOne)
+                                            .foregroundColor(.white)
                                             .frame(width: 40, height: 40)
                                             .clipShape(Circle())
                                             .padding([.leading, .vertical])
                                         VStack(alignment: .leading) {
-                                            Text(message.user?.tagName ?? "Renato")
+                                            Text("Renato")
                                                 .font(.headline)
-                                                .foregroundStyle(.whiteOne)
-                                            Text(message.content ?? "")
+                                                .foregroundColor(.white)
+                                            Text(message.content)
+                                                .foregroundColor(.white)
                                                 .padding(10)
-                                                .background(Color.darkOne)
+                                                .background(.darkTwo)
                                                 .cornerRadius(10)
-                                                .foregroundStyle(.whiteOne)
                                         }
                                         .padding([.trailing, .vertical])
-                                        Spacer()
+                                       
                                     }
                                 }
-                                .id(index)
+                                .id(message.id)
                             }
                         }
                     }
                     .onTapGesture {
-                        self.hideKeyboard()
+                        hideKeyboard()
                     }
                     .onChange(of: viewModel.messages) {
-                        if !viewModel.messages.isEmpty {
+                        if let lastMessage = viewModel.messages.last {
                             withAnimation {
-                                proxy.scrollTo(viewModel.messages.count - 1)
+                                proxy.scrollTo(lastMessage.id)
                             }
                         }
                     }
@@ -77,26 +76,26 @@ struct ChatView: View {
                 HStack {
                     Button(action: {
                         newMessageContent = ""
-                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                        hideKeyboard()
                     }) {
                         Image(systemName: "xmark.circle.fill")
                             .font(.system(size: 30))
-                            .foregroundStyle(newMessageContent.isEmpty ? .gray : .whiteOne)
+                            .foregroundColor(newMessageContent.isEmpty ? .gray : .whiteOne)
                             .padding(.trailing, 5)
                     }
                     ZStack(alignment: .leading) {
                         if newMessageContent.isEmpty {
                             Text("Ask Renato CanovAI")
-                                .foregroundColor(.gray)
+                                .foregroundStyle(.gray)
                                 .padding()
                         }
                         TextField("", text: $newMessageContent)
-                            .foregroundColor(.whiteOne)
+                            .foregroundStyle(.whiteOne)
                             .focused($isFocused)
                             .padding()
                     }
                     .frame(height: 32)
-                    .background(Color.darkOne)
+                    .background(.darkOne)
                     .cornerRadius(24)
                     Button(action: {
                         viewModel.userInput = newMessageContent
@@ -104,7 +103,7 @@ struct ChatView: View {
                         newMessageContent = ""
                     }) {
                         Image(systemName: "arrow.up.circle.fill")
-                            .foregroundStyle(newMessageContent.isEmpty ? .gray : .starMain)
+                            .foregroundColor(newMessageContent.isEmpty ? .gray : .starMain)
                             .font(.system(size: 30))
                     }
                     .disabled(newMessageContent.isEmpty)
@@ -112,9 +111,9 @@ struct ChatView: View {
                 .padding()
             }
             .padding(.top)
-            .navigationTitle("Chat Room")
         }
     }
+    
     private func hideKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }

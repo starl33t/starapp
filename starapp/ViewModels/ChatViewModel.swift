@@ -1,7 +1,8 @@
 import Foundation
+import SwiftUI
 
 class ChatViewModel: ObservableObject {
-    @Published var messages: [Message] = []
+    @Published var messages: [ChatMessage] = []
     @Published var userInput: String = ""
     
     private let apiKey = Constants.openAIAPIKey
@@ -19,7 +20,7 @@ class ChatViewModel: ObservableObject {
     }
 
     private func addMessage(content: String, isUser: Bool) {
-        let newMessage = Message(content: content, timestamp: Date(), isUser: isUser, user: isUser ? user : nil)
+        let newMessage = ChatMessage(id: UUID(), content: content, timestamp: Date(), isUser: isUser)
         DispatchQueue.main.async {
             self.messages.append(newMessage)
         }
@@ -50,4 +51,11 @@ class ChatViewModel: ObservableObject {
             self.addMessage(content: content.trimmingCharacters(in: .whitespacesAndNewlines), isUser: false)
         }.resume()
     }
+}
+
+struct ChatMessage: Identifiable, Equatable {
+    let id: UUID
+    let content: String
+    let timestamp: Date
+    let isUser: Bool
 }

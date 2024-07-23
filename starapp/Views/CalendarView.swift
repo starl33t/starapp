@@ -6,7 +6,7 @@ struct CalendarView: View {
     @State private var showDatePicker = false
     @State private var scrollViewProxy: ScrollViewProxy?
     
-    @Query(sort: \Session.date, order: .reverse) private var sessions: [Session]
+    @Query private var sessions: [Session]
     
     var body: some View {
         ZStack {
