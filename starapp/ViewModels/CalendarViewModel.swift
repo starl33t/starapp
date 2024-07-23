@@ -2,10 +2,11 @@ import SwiftUI
 import Combine
 
 class CalendarViewModel: ObservableObject {
-    @Published var date = Date()
-    @Published var days: [Date] = []
-    @State private var visibleDates: Set<Date> = []
-    @Published var isScrollingToDate = false
+    @Published private(set) var date = Date()
+    @Published private(set) var days: [Date] = []
+    @Published private(set) var isScrollingToDate = false
+    @Published private(set) var visibleDates: Set<Date> = []
+    
     let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     let columns = Array(repeating: GridItem(.flexible()), count: 7)
     
@@ -19,7 +20,7 @@ class CalendarViewModel: ObservableObject {
         days = date.daysInYear
     }
      
-    func scrollToDate(date: Date, proxy: ScrollViewProxy?, anchor: UnitPoint = .top) {
+    func scrollToDate(_ date: Date, proxy: ScrollViewProxy?, anchor: UnitPoint = .top) {
         guard let proxy = proxy else { return }
         
         isScrollingToDate = true
@@ -36,14 +37,14 @@ class CalendarViewModel: ObservableObject {
         let today = Date()
         setDate(today) {
             DispatchQueue.main.async {
-                self.scrollToDate(date: today, proxy: proxy, anchor: .center)
+                self.scrollToDate(today, proxy: proxy, anchor: .center)
             }
         }
     }
     
     func handleDatePickerChange(_ newDate: Date, proxy: ScrollViewProxy?) {
         setDate(newDate)
-        scrollToDate(date: newDate, proxy: proxy, anchor: .center)
+        scrollToDate(newDate, proxy: proxy, anchor: .center)
     }
 
     func setDate(_ newDate: Date, completion: @escaping () -> Void = {}) {
@@ -55,14 +56,37 @@ class CalendarViewModel: ObservableObject {
     }
     
     func updateCurrentMonth(_ day: Date) {
-        if !isScrollingToDate && !Calendar.current.isDate(date, equalTo: day, toGranularity: .month) {
-            isUpdatingFromScroll = true
-            date = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: day))!
-            isUpdatingFromScroll = false
-        }
+        guard !isScrollingToDate && !Calendar.current.isDate(date, equalTo: day, toGranularity: .month) else { return }
+        
+        isUpdatingFromScroll = true
+        date = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: day)) ?? date
+        isUpdatingFromScroll = false
     }
     
     func shouldUpdateDate(_ newDate: Date) -> Bool {
-        return !isUpdatingFromScroll
+        !isUpdatingFromScroll
+    }
+    
+    func handleDateAppear(day: Date, frame: CGRect, screenHeight: CGFloat) {
+        if frame.minY >= 0 && frame.maxY <= screenHeight {
+            visibleDates.insert(day)
+            updateDatePickerIfNeeded()
+        }
+    }
+
+    func handleDateDisappear(day: Date) {
+        visibleDates.remove(day)
+        updateDatePickerIfNeeded()
+    }
+
+    private func updateDatePickerIfNeeded() {
+        guard let middleDate = visibleDates.sorted()[safe: visibleDates.count / 2] else { return }
+        updateCurrentMonth(middleDate)
+    }
+}
+
+extension Collection {
+    subscript(safe index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
     }
 }
