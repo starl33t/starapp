@@ -44,7 +44,7 @@ struct CalendarView: View {
                     ScrollView {
                         LazyVGrid(columns: viewModel.columns) {
                             ForEach(viewModel.days, id: \.self) { day in
-                                let daySessions = sessions.filter { Calendar.current.isDate($0.date ?? Date(), inSameDayAs: day) }
+                                let daySessions = sessions.filter { Calendar.current.isDate($0.date ?? Date(), inSameDayAs: day) } //causing memory leak
                                 
                                 ZStack(alignment: .top) {
                                     if Calendar.current.component(.day, from: day) == 1 {
