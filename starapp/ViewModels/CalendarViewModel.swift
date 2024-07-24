@@ -19,7 +19,7 @@ class CalendarViewModel: ObservableObject {
     func updateDates() {
         days = date.daysInYear
     }
-     
+    
     func scrollToDate(_ date: Date, proxy: ScrollViewProxy?, anchor: UnitPoint = .top) {
         guard let proxy = proxy else { return }
         
@@ -34,11 +34,9 @@ class CalendarViewModel: ObservableObject {
     }
     
     func scrollToToday(proxy: ScrollViewProxy?) {
-        let today = Date()
-        setDate(today) {
-            DispatchQueue.main.async {
-                self.scrollToDate(today, proxy: proxy, anchor: .center)
-            }
+        setDate(Date())
+        DispatchQueue.main.async {
+            self.scrollToDate(Date(), proxy: proxy, anchor: .center)
         }
     }
     
@@ -46,21 +44,15 @@ class CalendarViewModel: ObservableObject {
         setDate(newDate)
         scrollToDate(newDate, proxy: proxy, anchor: .center)
     }
-
-    func setDate(_ newDate: Date, completion: @escaping () -> Void = {}) {
+    
+    func setDate(_ newDate: Date) {
         date = newDate
         updateDates()
-        DispatchQueue.main.async {
-            completion()
-        }
     }
     
     func updateCurrentMonth(_ day: Date) {
         guard !isScrollingToDate && !Calendar.current.isDate(date, equalTo: day, toGranularity: .month) else { return }
-        
-        isUpdatingFromScroll = true
         date = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: day)) ?? date
-        isUpdatingFromScroll = false
     }
     
     func shouldUpdateDate(_ newDate: Date) -> Bool {
@@ -68,20 +60,11 @@ class CalendarViewModel: ObservableObject {
     }
     
     func handleDateAppear(day: Date, frame: CGRect, screenHeight: CGFloat) {
-        if frame.minY >= 0 && frame.maxY <= screenHeight {
-            visibleDates.insert(day)
-            guard let middleDate = visibleDates.sorted()[safe: visibleDates.count / 2] else { return }
-            updateCurrentMonth(middleDate)
-        }
+        visibleDates.insert(day)
+        updateCurrentMonth(visibleDates.sorted()[visibleDates.count / 2])
     }
-
+    
     func handleDateDisappear(day: Date) {
         visibleDates.remove(day)
-    }
-}
-
-extension Collection {
-    subscript(safe index: Index) -> Element? {
-        return indices.contains(index) ? self[index] : nil
     }
 }
