@@ -59,7 +59,7 @@ class CalendarViewModel: ObservableObject {
         !isUpdatingFromScroll
     }
     
-    func handleDateAppear(day: Date, frame: CGRect, screenHeight: CGFloat) {
+    func handleDateAppear(day: Date, screenHeight: CGFloat) {
         visibleDates.insert(day)
         updateCurrentMonth(visibleDates.sorted()[visibleDates.count / 2])
     }

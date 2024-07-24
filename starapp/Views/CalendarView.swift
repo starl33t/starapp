@@ -6,6 +6,7 @@ struct CalendarView: View {
     @State private var showDatePicker = false
     @State private var scrollViewProxy: ScrollViewProxy?
     
+    
     @Query private var sessions: [Session]
     
     var body: some View {
@@ -19,8 +20,6 @@ struct CalendarView: View {
                         .frame(maxWidth: .infinity)
                     Button(action: {
                         viewModel.scrollToToday(proxy: scrollViewProxy)
-                        print("Today")
-                        print("Today is \(viewModel.date)")
                         viewModel.handleDatePickerChange(Date(), proxy: scrollViewProxy)
                     }) {
                         Text("Today")
@@ -47,7 +46,7 @@ struct CalendarView: View {
                         LazyVGrid(columns: viewModel.columns) {
                             ForEach(viewModel.days, id: \.self) { day in
                                 let daySessions = sessions.filter { Calendar.current.isDate($0.date ?? Date(), inSameDayAs: day) }
-                    
+                                
                                 ZStack(alignment: .top) {
                                     if Calendar.current.component(.day, from: day) == 1 {
                                         Text(day.formatted(.dateTime.month(.abbreviated)))
@@ -81,28 +80,22 @@ struct CalendarView: View {
                                 }
                                 .id(day)
                                 .frame(height: 70)
-                                .background(
-                                    GeometryReader { geometry in
-                                        let frame = geometry.frame(in: .global)
-                                        Color.clear
-                                            .onAppear {
-                                                viewModel.handleDateAppear(day: day, frame: frame, screenHeight: UIScreen.main.bounds.height)
-                                                print("today appeared is \(day)")
-                                            }
-                                            .onDisappear {
-                                                viewModel.handleDateDisappear(day: day)
-                                                print("today disappeared is \(day)")
-                                            }
-                                    }
-                                )
+                                .onAppear {
+                                    viewModel.handleDateAppear(day: day, screenHeight: UIScreen.main.bounds.height)
+                                }
+                                .onDisappear {
+                                    viewModel.handleDateDisappear(day: day)
+                                }
                             }
+                            
                         }
                     }
                     .onAppear {
                         scrollViewProxy = proxy
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            viewModel.scrollToToday(proxy: scrollViewProxy)
+                            viewModel.handleDatePickerChange(Date(), proxy: scrollViewProxy)
                         }
+                        
                     }
                 }
             }
@@ -118,7 +111,6 @@ struct CalendarView: View {
                                 if viewModel.shouldUpdateDate(newDate) {
                                     viewModel.setDate(newDate)
                                     viewModel.handleDatePickerChange(newDate, proxy: scrollViewProxy)
-                                    print("Datepicker is \(newDate)")
                                 }
                             }
                         ), displayedComponents: [.date])
