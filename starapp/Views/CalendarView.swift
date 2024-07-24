@@ -19,6 +19,8 @@ struct CalendarView: View {
                         .frame(maxWidth: .infinity)
                     Button(action: {
                         viewModel.scrollToToday(proxy: scrollViewProxy)
+                        print("Today")
+                        print("Today is \(viewModel.date)")
                         viewModel.handleDatePickerChange(Date(), proxy: scrollViewProxy)
                     }) {
                         Text("Today")
@@ -44,8 +46,8 @@ struct CalendarView: View {
                     ScrollView {
                         LazyVGrid(columns: viewModel.columns) {
                             ForEach(viewModel.days, id: \.self) { day in
-                                let daySessions = sessions.filter { Calendar.current.isDate($0.date ?? Date(), inSameDayAs: day) } //causing memory leak
-                                
+                                let daySessions = sessions.filter { Calendar.current.isDate($0.date ?? Date(), inSameDayAs: day) }
+                    
                                 ZStack(alignment: .top) {
                                     if Calendar.current.component(.day, from: day) == 1 {
                                         Text(day.formatted(.dateTime.month(.abbreviated)))
@@ -85,7 +87,11 @@ struct CalendarView: View {
                                         Color.clear
                                             .onAppear {
                                                 viewModel.handleDateAppear(day: day, frame: frame, screenHeight: UIScreen.main.bounds.height)
+                                                print("today appeared is \(day)")
+                                            }
+                                            .onDisappear {
                                                 viewModel.handleDateDisappear(day: day)
+                                                print("today disappeared is \(day)")
                                             }
                                     }
                                 )
@@ -112,6 +118,7 @@ struct CalendarView: View {
                                 if viewModel.shouldUpdateDate(newDate) {
                                     viewModel.setDate(newDate)
                                     viewModel.handleDatePickerChange(newDate, proxy: scrollViewProxy)
+                                    print("Datepicker is \(newDate)")
                                 }
                             }
                         ), displayedComponents: [.date])
@@ -136,6 +143,7 @@ struct CalendarView: View {
         }
     }
 }
+
 #Preview {
     CalendarView()
 }
