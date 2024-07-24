@@ -85,8 +85,6 @@ struct CalendarView: View {
                                         Color.clear
                                             .onAppear {
                                                 viewModel.handleDateAppear(day: day, frame: frame, screenHeight: UIScreen.main.bounds.height)
-                                            }
-                                            .onDisappear {
                                                 viewModel.handleDateDisappear(day: day)
                                             }
                                     }

@@ -68,15 +68,12 @@ class CalendarViewModel: ObservableObject {
     }
     
     func handleDateAppear(day: Date, frame: CGRect, screenHeight: CGFloat) {
-        if frame.minY >= 0 && frame.maxY <= screenHeight {
             visibleDates.insert(day)
             updateDatePickerIfNeeded()
-        }
     }
 
     func handleDateDisappear(day: Date) {
         visibleDates.remove(day)
-        updateDatePickerIfNeeded()
     }
 
     private func updateDatePickerIfNeeded() {
