@@ -2,13 +2,22 @@ import SwiftUI
 import SwiftData
 
 struct CalendarView: View {
-    @StateObject private var viewModel = CalendarViewModel()
     @State private var showDatePicker = false
     @State private var scrollViewProxy: ScrollViewProxy?
     @State private var visibleDates: Set<Date> = []
-    
-    
+    let columns = Array(repeating: GridItem(.flexible()), count: 7)
+    let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     @Query private var sessions: [Session]
+    @State private var selectedDate = Date()
+    @State private var date = Date()
+    @State private var days: [Date] = []
+    @State private var isScrollingToDate = false
+    
+    init() {
+        let initialDate = Date()
+        _date = State(initialValue: initialDate)
+        _days = State(initialValue: initialDate.daysInYear)
+    }
     
     var body: some View {
         ZStack {
@@ -20,22 +29,24 @@ struct CalendarView: View {
                         .foregroundStyle(.whiteOne)
                         .frame(maxWidth: .infinity)
                     Button(action: {
-                        viewModel.scrollToToday(proxy: scrollViewProxy)
-                        viewModel.handleDatePickerChange(Date(), proxy: scrollViewProxy)
+                        setDate(Date())
+                        DispatchQueue.main.async {
+                            scrollToDate(Date(), proxy: scrollViewProxy, anchor: .center)
+                        }
                     }) {
                         Text("Today")
                             .foregroundColor(.whiteOne)
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
-                    Text(viewModel.date.formattedMonthYear())
+                    Text(date.formattedMonthYear())
                         .foregroundStyle(.whiteOne)
                         .onTapGesture { showDatePicker.toggle() }
                         .frame(maxWidth: .infinity)
                 }
                 .padding(.bottom, 16)
                 HStack {
-                    ForEach(viewModel.daysOfWeek, id: \.self) { dayOfWeek in
+                    ForEach(daysOfWeek, id: \.self) { dayOfWeek in
                         Text(dayOfWeek)
                             .frame(maxWidth: .infinity)
                     }
@@ -44,8 +55,8 @@ struct CalendarView: View {
                 .padding(.bottom, 8)
                 ScrollViewReader { proxy in
                     ScrollView {
-                        LazyVGrid(columns: viewModel.columns) {
-                            ForEach(viewModel.days, id: \.self) { day in
+                        LazyVGrid(columns: columns) {
+                            ForEach(days, id: \.self) { day in
                                 let daySessions = sessions.filter { Calendar.current.isDate($0.date ?? Date(), inSameDayAs: day) }
                                 
                                 ZStack(alignment: .top) {
@@ -83,21 +94,19 @@ struct CalendarView: View {
                                 .frame(height: 70)
                                 .onAppear {
                                     visibleDates.insert(day)
-                                    viewModel.updateCurrentMonth(visibleDates.sorted()[visibleDates.count / 2])
+                                    updateCurrentMonth(visibleDates.sorted()[visibleDates.count / 2])
                                 }
                                 .onDisappear {
                                     visibleDates.remove(day)
                                 }
                             }
-                            
                         }
                     }
                     .onAppear {
                         scrollViewProxy = proxy
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            viewModel.handleDatePickerChange(Date(), proxy: scrollViewProxy)
+                            scrollToDate(Date(), proxy: scrollViewProxy, anchor: .center)
                         }
-                        
                     }
                 }
             }
@@ -107,18 +116,10 @@ struct CalendarView: View {
                 VStack {
                     Spacer()
                     VStack {
-                        DatePicker("Select Date", selection: Binding(
-                            get: { viewModel.date },
-                            set: { newDate in
-                                if viewModel.shouldUpdateDate(newDate) {
-                                    viewModel.setDate(newDate)
-                                    viewModel.handleDatePickerChange(newDate, proxy: scrollViewProxy)
-                                }
-                            }
-                        ), displayedComponents: [.date])
-                        .datePickerStyle(WheelDatePickerStyle())
-                        .labelsHidden()
-                        .environment(\.colorScheme, .dark)
+                        DatePicker("Select Date", selection: $selectedDate, displayedComponents: [.date])
+                            .datePickerStyle(WheelDatePickerStyle())
+                            .labelsHidden()
+                            .environment(\.colorScheme, .dark)
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -135,6 +136,33 @@ struct CalendarView: View {
                 )
             }
         }
+        .onChange(of: selectedDate) { oldDate, newDate in
+            setDate(newDate)
+            scrollToDate(newDate, proxy: scrollViewProxy, anchor: .center)
+        }
+    }
+    
+    private func scrollToDate(_ date: Date, proxy: ScrollViewProxy?, anchor: UnitPoint = .top) {
+        guard let proxy = proxy else { return }
+        
+        isScrollingToDate = true
+        if let selectedIndex = days.firstIndex(where: { Calendar.current.isDate($0, inSameDayAs: date) }) {
+            let selectedDate = days[selectedIndex]
+            proxy.scrollTo(selectedDate, anchor: anchor)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.isScrollingToDate = false
+        }
+    }
+    
+    private func setDate(_ newDate: Date) {
+        date = newDate
+        days = date.daysInYear
+    }
+    
+    private func updateCurrentMonth(_ day: Date) {
+        guard !isScrollingToDate && !Calendar.current.isDate(date, equalTo: day, toGranularity: .month) else { return }
+        date = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: day)) ?? date
     }
 }
 
