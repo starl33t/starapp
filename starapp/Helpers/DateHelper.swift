@@ -44,13 +44,6 @@ extension Date {
                 current = Date.calendar.date(byAdding: .day, value: 1, to: current)!
             }
         }
-        
-        // Adding a full week to cover the edge cases
-        for _ in 0..<7 {
-            current = Date.calendar.date(byAdding: .day, value: 1, to: current)!
-            days.append(current)
-        }
-        
         return days
     }
     

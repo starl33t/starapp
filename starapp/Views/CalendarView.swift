@@ -10,13 +10,8 @@ struct CalendarView: View {
     @Query private var sessions: [Session]
     @State private var selectedDate = Date()
     @State private var date = Date()
-    @State private var days: [Date] = []
-    @State private var isScrollingToDate = false
+    @State private var days: [Date] = Date().daysInYear
     
-    init() {
-        _date = State(initialValue: Date())
-        _days = State(initialValue: Date().daysInYear)
-    }
     
     var body: some View {
         ZStack {
@@ -28,9 +23,12 @@ struct CalendarView: View {
                         .foregroundStyle(.whiteOne)
                         .frame(maxWidth: .infinity)
                     Button(action: {
-                        selectedDate = Date.now
-                        DispatchQueue.main.async {
-                            scrollToDate(Date.now, proxy: scrollViewProxy, anchor: .center)
+                        let today = Date.now
+                        selectedDate = today
+                        date = today
+                        days = today.daysInYear
+                        if let proxy = scrollViewProxy {
+                            proxy.scrollTo(days.first(where: { Calendar.current.isDate($0, inSameDayAs: Date.now) }), anchor: .center)
                         }
                     }) {
                         Text("Today")
@@ -78,7 +76,7 @@ struct CalendarView: View {
                                                         ForEach(daySessions, id: \.self) { session in
                                                             Circle()
                                                                 .frame(width: 6, height: 6)
-                                                                .foregroundColor(ColorLactate.color(for: session.lactate))
+                                                                .foregroundStyle(ColorLactate.color(for: session.lactate))
                                                         }
                                                     }
                                                     .padding(.top, 28)
@@ -93,7 +91,7 @@ struct CalendarView: View {
                                 .frame(height: 70)
                                 .onAppear {
                                     visibleDates.insert(day)
-                                    updateCurrentMonth(visibleDates.sorted()[visibleDates.count / 2])
+                                    date = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: visibleDates.sorted()[visibleDates.count / 2])) ?? date
                                 }
                                 .onDisappear {
                                     visibleDates.remove(day)
@@ -103,7 +101,8 @@ struct CalendarView: View {
                     }
                     .onAppear {
                         scrollViewProxy = proxy
-                        scrollToDate(Date(), proxy: scrollViewProxy, anchor: .center)
+                        proxy.scrollTo(days.first(where: { Calendar.current.isDate($0, inSameDayAs: Date.now) }), anchor: .center)
+                        
                     }
                 }
             }
@@ -136,27 +135,12 @@ struct CalendarView: View {
         .onChange(of: selectedDate) { oldDate, newDate in
             date = newDate
             days = date.daysInYear
-            scrollToDate(newDate, proxy: scrollViewProxy, anchor: .center)
+            if let proxy = scrollViewProxy {
+                proxy.scrollTo(days.first(where: { Calendar.current.isDate($0, inSameDayAs: newDate) }), anchor: .center)
+            }
         }
     }
-    
-    private func scrollToDate(_ date: Date, proxy: ScrollViewProxy?, anchor: UnitPoint = .top) {
-        guard let proxy = proxy else { return }
-        
-        isScrollingToDate = true
-        if let selectedIndex = days.firstIndex(where: { Calendar.current.isDate($0, inSameDayAs: date) }) {
-            let selectedDate = days[selectedIndex]
-            proxy.scrollTo(selectedDate, anchor: anchor)
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.isScrollingToDate = false
-        }
-    }
-    
-    private func updateCurrentMonth(_ day: Date) {
-        guard !isScrollingToDate && !Calendar.current.isDate(date, equalTo: day, toGranularity: .month) else { return }
-        date = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: day)) ?? date
-    }
+ 
 }
 
 #Preview {
