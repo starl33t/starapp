@@ -5,6 +5,7 @@ struct CalendarView: View {
     @StateObject private var viewModel = CalendarViewModel()
     @State private var showDatePicker = false
     @State private var scrollViewProxy: ScrollViewProxy?
+    @State private var visibleDates: Set<Date> = []
     
     
     @Query private var sessions: [Session]
@@ -81,10 +82,11 @@ struct CalendarView: View {
                                 .id(day)
                                 .frame(height: 70)
                                 .onAppear {
-                                    viewModel.handleDateAppear(day: day, screenHeight: UIScreen.main.bounds.height)
+                                    visibleDates.insert(day)
+                                    viewModel.updateCurrentMonth(visibleDates.sorted()[visibleDates.count / 2])
                                 }
                                 .onDisappear {
-                                    viewModel.handleDateDisappear(day: day)
+                                    visibleDates.remove(day)
                                 }
                             }
                             
