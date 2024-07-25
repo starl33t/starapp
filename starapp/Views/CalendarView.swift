@@ -14,9 +14,8 @@ struct CalendarView: View {
     @State private var isScrollingToDate = false
     
     init() {
-        let initialDate = Date()
-        _date = State(initialValue: initialDate)
-        _days = State(initialValue: initialDate.daysInYear)
+        _date = State(initialValue: Date())
+        _days = State(initialValue: Date().daysInYear)
     }
     
     var body: some View {
@@ -29,9 +28,9 @@ struct CalendarView: View {
                         .foregroundStyle(.whiteOne)
                         .frame(maxWidth: .infinity)
                     Button(action: {
-                        setDate(Date())
+                        selectedDate = Date.now
                         DispatchQueue.main.async {
-                            scrollToDate(Date(), proxy: scrollViewProxy, anchor: .center)
+                            scrollToDate(Date.now, proxy: scrollViewProxy, anchor: .center)
                         }
                     }) {
                         Text("Today")
@@ -104,9 +103,7 @@ struct CalendarView: View {
                     }
                     .onAppear {
                         scrollViewProxy = proxy
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            scrollToDate(Date(), proxy: scrollViewProxy, anchor: .center)
-                        }
+                        scrollToDate(Date(), proxy: scrollViewProxy, anchor: .center)
                     }
                 }
             }
@@ -137,7 +134,8 @@ struct CalendarView: View {
             }
         }
         .onChange(of: selectedDate) { oldDate, newDate in
-            setDate(newDate)
+            date = newDate
+            days = date.daysInYear
             scrollToDate(newDate, proxy: scrollViewProxy, anchor: .center)
         }
     }
@@ -153,11 +151,6 @@ struct CalendarView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.isScrollingToDate = false
         }
-    }
-    
-    private func setDate(_ newDate: Date) {
-        date = newDate
-        days = date.daysInYear
     }
     
     private func updateCurrentMonth(_ day: Date) {
