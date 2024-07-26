@@ -2,7 +2,7 @@ import SwiftUI
 
 struct HomeToolBar: View {
     @Binding var showingSheet: Bool
-    @AppStorage("zNotSelected") private var zNotSelected = false
+    @AppStorage("Notifications") private var Notifications = false
         
     var body: some View {
         HStack {
@@ -21,7 +21,7 @@ struct HomeToolBar: View {
                     Text("No Notifications!")
                 }
             } label: {
-                Label("Notifications", systemImage: zNotSelected ? "bell" : "bell.slash")
+                Label("Notifictations", systemImage: Notifications ? "bell" : "bell.slash")
             }
         }
     }

@@ -30,7 +30,7 @@ struct SubscriptionView: View {
                                         .foregroundStyle(.whiteTwo)
                                         .font(.largeTitle)
                                         .bold()
-                                    VStack(alignment: .leading, spacing: 10) {
+                                    VStack(alignment: .leading, spacing: 24) {
                                         HStack(alignment: .center) {
                                             Image(systemName: "brain.head.profile.fill")
                                                 .resizable()
@@ -38,6 +38,7 @@ struct SubscriptionView: View {
                                                 .frame(width: 20, height: 20)
                                             Text("Access to the latest AI model for peak performance")
                                         }
+                                        
                                         HStack(alignment: .center) {
                                             Image(systemName: "aqi.medium")
                                                 .resizable()

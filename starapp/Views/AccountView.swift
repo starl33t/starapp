@@ -6,7 +6,11 @@ struct AccountView: View {
     @State private var showingSheet = false
     @State private var startPositionPercentage: CGFloat = 0.025
     @State private var cDeleteSelected = false
-    @AppStorage("zNotSelected") var zNotSelected: Bool = false
+    @AppStorage("Notifications") var Notifications: Bool = false
+    @AppStorage("Pace") var Pace: Bool = false
+    @AppStorage("Power") var Power: Bool = false
+    @AppStorage("Heartrate") var Heartrate: Bool = false
+    @AppStorage("Distance") var Distance: Bool = false
 
     var body: some View {
         ZStack {
@@ -14,11 +18,36 @@ struct AccountView: View {
             VStack {
                 VStack {
                     HStack {
-                        Toggle("Notifications", isOn: $zNotSelected)
+                        Toggle("Duration", isOn: $Distance)
                     }
                     .padding()
                     .foregroundColor(.whiteOne)
                     .tint(.green)
+                    HStack {
+                        Toggle("Heartrate", isOn: $Heartrate)
+                    }
+                    .padding()
+                    .foregroundColor(.whiteOne)
+                    .tint(.green)
+                    HStack {
+                        Toggle("Pace", isOn: $Pace)
+                    }
+                    .padding()
+                    .foregroundColor(.whiteOne)
+                    .tint(.green)
+                    HStack {
+                        Toggle("Power", isOn: $Power)
+                    }
+                    .padding()
+                    .foregroundColor(.whiteOne)
+                    .tint(.green)
+                    HStack {
+                        Toggle("Notifications", isOn: $Notifications)
+                    }
+                    .padding()
+                    .foregroundColor(.whiteOne)
+                    .tint(.green)
+                    
                 }
                 .padding()
                 .background(Color.starBlack)
@@ -84,7 +113,6 @@ struct AccountView: View {
             .padding()
             .background(Color.starBlack)
             .cornerRadius(16)
-            .presentationDetents([.medium])
             .onAppear {
                 showingSheet = true
             }

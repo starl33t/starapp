@@ -122,12 +122,10 @@ struct ProfileView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .padding(8)
-                .font(.system(size: 28))
                 .foregroundStyle(.whiteOne)
                 .frame(width: 44, alignment: .leading)
             VStack(alignment: .leading) {
                 Text(text)
-                    .font(.system(size: 22, weight: .bold))
                     .foregroundStyle(.whiteOne)
             }
             .padding(.leading, 10)
