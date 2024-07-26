@@ -13,13 +13,14 @@ struct ProfileView: View {
     @State private var showSupportSheet = false
     @State private var showLearnSheet = false
     @State private var showPrivacySheet = false
+
     
     init(user: User) {
         self.user = user
         _userName = State(initialValue: user.userName ?? "")
         _tagName = State(initialValue: user.tagName ?? "")
     }
-
+    
     var body: some View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
@@ -29,52 +30,61 @@ struct ProfileView: View {
                         .padding(8)
                         .font(.system(size: 74))
                         .foregroundStyle(.whiteOne)
-                    TextField("Name", text: $userName, onCommit: saveUserName)
-                        .font(.system(size: 32, weight: .bold))
+                    TextField("Name", text: $userName)
+                        .font(.system(size: 24, weight: .bold))
                         .foregroundStyle(.whiteTwo)
                         .multilineTextAlignment(.center)
-                        .onChange(of: userName) { saveUserName() }
-                    TextField("Tag", text: $tagName, onCommit: saveTagName)
-                        .font(.system(size: 18))
-                        .foregroundStyle(.whiteOne)
+                        .onChange(of: userName) { user.userName = userName
+                            UserService.saveContext(context) }
+                    TextField("Tag", text: $tagName)
+                        .font(.system(size: 14))
+                        .foregroundStyle(.gray)
                         .padding(.bottom, 10)
                         .multilineTextAlignment(.center)
-                        .onChange(of: tagName) { saveTagName() }
+                        .onChange(of: tagName) { user.tagName = tagName
+                            UserService.saveContext(context) }
                 }
                 .padding()
                 
-                VStack(spacing: 20) {
-                    VStack {
+                VStack (spacing: 20) {
+                    VStack (spacing:8){
                         Button(action: { showAccountSheet = true }) {
                             profileRow(imageName: "gearshape", text: "Account")
                         }
-
+                        
+                        
                         Button(action: { showSubscriptionSheet = true }) {
                             profileRow(imageName: "cpu", text: "Subscriptions")
                         }
-
+                        
+                        
                         Button(action: { showIntegrationsSheet = true }) {
                             profileRow(imageName: "sensor", text: "Integrations")
                         }
                     }
                     .padding()
-                    .background(RoundedRectangle(cornerRadius: 16).fill(Color.darkOne))
-
-                    VStack {
+                    .background(Color.darkOne.opacity(0.25))
+                    .cornerRadius(16)
+                    
+                    VStack (spacing:8) {
                         Button(action: { showSupportSheet = true }) {
                             profileRow(imageName: "questionmark.circle", text: "Support")
                         }
-
+                        
+                        
                         Button(action: { showLearnSheet = true }) {
                             profileRow(imageName: "book", text: "Learn")
                         }
-
+                        
+                        
                         Button(action: { showPrivacySheet = true }) {
                             profileRow(imageName: "shield", text: "Privacy")
                         }
                     }
                     .padding()
-                    .background(RoundedRectangle(cornerRadius: 16).fill(Color.darkOne))
+                    .background(Color.darkOne.opacity(0.25))
+                    .cornerRadius(16)
+                    
                 }
             }
             .padding()
@@ -82,34 +92,42 @@ struct ProfileView: View {
         }
         .sheet(isPresented: $showAccountSheet) {
             AccountView()
+                .modifier(CloseButtonModifier(isPresented: $showAccountSheet))
         }
         .sheet(isPresented: $showSubscriptionSheet) {
             SubscriptionView()
+                .modifier(CloseButtonModifier(isPresented: $showSubscriptionSheet))
         }
         .sheet(isPresented: $showIntegrationsSheet) {
             IntegrationsView()
+                .modifier(CloseButtonModifier(isPresented: $showIntegrationsSheet))
         }
         .sheet(isPresented: $showSupportSheet) {
             SupportView()
+                .modifier(CloseButtonModifier(isPresented: $showSupportSheet))
         }
         .sheet(isPresented: $showLearnSheet) {
             LearnView()
+                .modifier(CloseButtonModifier(isPresented: $showLearnSheet))
         }
         .sheet(isPresented: $showPrivacySheet) {
             PrivacyView()
+                .modifier(CloseButtonModifier(isPresented: $showPrivacySheet))
         }
     }
-
+    
     private func profileRow(imageName: String, text: String) -> some View {
         HStack {
             Image(systemName: imageName)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
                 .padding(8)
                 .font(.system(size: 28))
                 .foregroundStyle(.whiteOne)
                 .frame(width: 44, alignment: .leading)
             VStack(alignment: .leading) {
                 Text(text)
-                    .font(.system(size: 24, weight: .bold))
+                    .font(.system(size: 22, weight: .bold))
                     .foregroundStyle(.whiteOne)
             }
             .padding(.leading, 10)
@@ -117,22 +135,27 @@ struct ProfileView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .contentShape(Rectangle())
     }
-
-    private func saveUserName() {
-        user.userName = userName
-        saveContext()
-    }
-
-    private func saveTagName() {
-        user.tagName = tagName
-        saveContext()
-    }
-
-    private func saveContext() {
-        UserService.saveContext(context)
+    
+}
+struct CloseButtonModifier: ViewModifier {
+    @Binding var isPresented: Bool
+    
+    func body(content: Content) -> some View {
+        ZStack(alignment: .topLeading) {
+            content
+            
+            Button(action: { isPresented = false }) {
+                Image(systemName: "xmark")
+                    .font(.system(size: 22, weight: .bold))
+                    .foregroundStyle(.whiteOne)
+                    .padding()
+            }
+        }
+        .edgesIgnoringSafeArea(.all)
     }
 }
 
 #Preview {
     ProfileView(user: User())
 }
+

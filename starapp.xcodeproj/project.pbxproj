@@ -33,7 +33,6 @@
 		BF4A817F2C3AFB8600D4CAF1 /* MetricToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A817E2C3AFB8600D4CAF1 /* MetricToolBar.swift */; };
 		BF4A81812C3AFBBB00D4CAF1 /* PlotMetricViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81802C3AFBBB00D4CAF1 /* PlotMetricViewModel.swift */; };
 		BF4A81832C3AFC9200D4CAF1 /* PlotMetricView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81822C3AFC9200D4CAF1 /* PlotMetricView.swift */; };
-		BF4A81872C3AFD9A00D4CAF1 /* SubscriptionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81862C3AFD9900D4CAF1 /* SubscriptionViewModel.swift */; };
 		BF4A81892C3AFDDE00D4CAF1 /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81882C3AFDDE00D4CAF1 /* SubscriptionView.swift */; };
 		BF4A818B2C3AFDF500D4CAF1 /* ColorOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A818A2C3AFDF500D4CAF1 /* ColorOptionView.swift */; };
 		BF4A818D2C3AFF0700D4CAF1 /* HomeToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A818C2C3AFF0700D4CAF1 /* HomeToolBar.swift */; };
@@ -107,7 +106,6 @@
 		BF4A817E2C3AFB8600D4CAF1 /* MetricToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricToolBar.swift; sourceTree = "<group>"; };
 		BF4A81802C3AFBBB00D4CAF1 /* PlotMetricViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlotMetricViewModel.swift; sourceTree = "<group>"; };
 		BF4A81822C3AFC9200D4CAF1 /* PlotMetricView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotMetricView.swift; sourceTree = "<group>"; };
-		BF4A81862C3AFD9900D4CAF1 /* SubscriptionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionViewModel.swift; sourceTree = "<group>"; };
 		BF4A81882C3AFDDE00D4CAF1 /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
 		BF4A818A2C3AFDF500D4CAF1 /* ColorOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorOptionView.swift; sourceTree = "<group>"; };
 		BF4A818C2C3AFF0700D4CAF1 /* HomeToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeToolBar.swift; sourceTree = "<group>"; };
@@ -197,7 +195,6 @@
 			children = (
 				BFEDD12A2C483A6E00E8E11C /* ChatViewModel.swift */,
 				BF6C84152C3D179F00032E93 /* IntegrationsViewModel.swift */,
-				BF4A81862C3AFD9900D4CAF1 /* SubscriptionViewModel.swift */,
 				BF4A81902C3B010E00D4CAF1 /* HomeViewModel.swift */,
 				BF4A814E2C3AF06200D4CAF1 /* MetricViewModel.swift */,
 				BF4A81802C3AFBBB00D4CAF1 /* PlotMetricViewModel.swift */,
@@ -459,7 +456,6 @@
 				BF4A818F2C3AFFDD00D4CAF1 /* HomeView.swift in Sources */,
 				BF4A81832C3AFC9200D4CAF1 /* PlotMetricView.swift in Sources */,
 				BF3700882C47B60900CF255D /* User.swift in Sources */,
-				BF4A81872C3AFD9A00D4CAF1 /* SubscriptionViewModel.swift in Sources */,
 				BFDEB5FE2C497D3900D32736 /* UserService.swift in Sources */,
 				BF6C84122C3D16D600032E93 /* IntegrationsView.swift in Sources */,
 				BF4A81912C3B010F00D4CAF1 /* HomeViewModel.swift in Sources */,
@@ -646,7 +642,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = starapp/starapp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 14;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"starapp/Preview Content\"";
 				DEVELOPMENT_TEAM = 7F33N9HZ63;
@@ -668,7 +664,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.2.3;
+				MARKETING_VERSION = 1.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starappv01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -687,7 +683,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = starapp/starapp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 14;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"starapp/Preview Content\"";
 				DEVELOPMENT_TEAM = 7F33N9HZ63;
@@ -709,7 +705,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.2.3;
+				MARKETING_VERSION = 1.2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starappv01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;

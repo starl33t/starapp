@@ -92,7 +92,9 @@ struct CalendarView: View {
                                 .onDisappear {
                                     visibleDates.remove(day)
                                 }
+                                
                             }
+                            
                         }
                     }
                     .onAppear {
@@ -106,6 +108,7 @@ struct CalendarView: View {
                         
                     }
                 }
+                
             }
             .padding()
             .foregroundStyle(.whiteTwo)
