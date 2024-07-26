@@ -3,7 +3,7 @@ import SwiftData
 
 struct CalendarView: View {
     @State private var showDatePicker = false
-//    @State private var visibleDates: Set<Date> = []
+    @State private var visibleDates: Set<Date> = []
     let columns = Array(repeating: GridItem(.flexible()), count: 7)
     let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     @Query private var sessions: [Session]
@@ -85,13 +85,13 @@ struct CalendarView: View {
                                 }
                                 .id(day)
                                 .frame(height: 70)
-//                                .onAppear {
-//                                    visibleDates.insert(day)
-//                                    date = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: visibleDates.sorted()[visibleDates.count / 2])) ?? date
-//                                }
-//                                .onDisappear {
-//                                    visibleDates.remove(day)
-//                                }
+                                .onAppear {
+                                    visibleDates.insert(day)
+                                    date = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: visibleDates.sorted()[visibleDates.count / 2])) ?? date
+                                }
+                                .onDisappear {
+                                    visibleDates.remove(day)
+                                }
                                 
                             }
                             
