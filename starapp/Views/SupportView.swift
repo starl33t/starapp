@@ -12,9 +12,15 @@ struct SupportView: View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
             VStack {
-                Text("The app is still under development. If you need support, please contact us at pt@starleet.com.")
-                    .foregroundStyle(.whiteOne)
-                    .padding()
+                Text("""
+                **Under Development**
+                
+                The app is still under development. If you need support, please contact us at
+                
+                pt@starleet.com
+                """)
+                .multilineTextAlignment(.center)
+                .padding()
                 Button(action: {
                     EmailHelper.sendEmail(to: "pt@starleet.com")
                 }) {
@@ -25,7 +31,9 @@ struct SupportView: View {
                         .cornerRadius(8)
                 }
             }
+            .foregroundStyle(.whiteOne)
             .padding()
+            
         }
     }
 }

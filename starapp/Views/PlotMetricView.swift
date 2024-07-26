@@ -18,7 +18,6 @@ struct PlotMetricView: View {
                     .padding()
                 }
                 .padding()
-                .background(Color.starBlack)
                 .cornerRadius(16)
                 .presentationDetents([.medium])
             }

@@ -38,51 +38,17 @@ struct LactateView: View {
                                     .padding(.leading, 20)
                                     .frame(minWidth: 110)
                                     HStack {
-                                        if let lactate = session.lactate {
-                                            VStack {
-                                                if lactate < 1.0 {
-                                                    Image(systemName: "tortoise.fill")
-                                                        .font(.system(size: 24, weight: .bold))
-                                                        .foregroundStyle(ColorLactate.color(for: lactate))
-                                                    Text("Recovery")
-                                                        .foregroundStyle(ColorLactate.color(for: lactate))
-                                                        .font(.system(size: 14))
-                                                } else if lactate <= 1.5 {
-                                                    Image(systemName: "leaf.fill")
-                                                        .font(.system(size: 24, weight: .bold))
-                                                        .foregroundStyle(ColorLactate.color(for: lactate))
-                                                    Text("Light")
-                                                        .foregroundStyle(ColorLactate.color(for: lactate))
-                                                        .font(.system(size: 14))
-                                                } else if lactate <= 3.0 {
-                                                    Image(systemName: "wind")
-                                                        .font(.system(size: 24, weight: .bold))
-                                                        .foregroundStyle(ColorLactate.color(for: lactate))
-                                                    Text("Moderate")
-                                                        .foregroundStyle(ColorLactate.color(for: lactate))
-                                                        .font(.system(size: 14))
-                                                } else if lactate <= 4.9 {
-                                                    Image(systemName: "flame.fill")
-                                                        .font(.system(size: 24, weight: .bold))
-                                                        .foregroundStyle(ColorLactate.color(for: lactate))
-                                                    Text("Hard")
-                                                        .foregroundStyle(ColorLactate.color(for: lactate))
-                                                        .font(.system(size: 14))
-                                                } else {
-                                                    Image(systemName: "exclamationmark.triangle.fill")
-                                                        .font(.system(size: 24, weight: .bold))
-                                                        .foregroundStyle(ColorLactate.color(for: lactate))
-                                                    Text("Very Hard")
-                                                        .foregroundStyle(ColorLactate.color(for: lactate))
-                                                        .font(.system(size: 14))
-                                                }
-                                            }
-                                            .padding(.leading, 20)
-                                        } else {
-                                            Text("N/A")
+                                        let intensity = LactateHelper.intensity(for: session.lactate)
+                                        VStack {
+                                            Image(systemName: intensity.icon)
                                                 .font(.system(size: 24, weight: .bold))
-                                                .foregroundStyle(.whiteOne)
+                                                .foregroundStyle(intensity.color)
+                                            Text(intensity.rawValue)
+                                                .foregroundStyle(intensity.color)
+                                                .font(.system(size: 14))
                                         }
+                                        .padding(.leading, 20)
+                                        
                                     }
                                     .frame(maxWidth: .infinity, alignment: .center)
                                 }
@@ -99,6 +65,7 @@ struct LactateView: View {
                         }
                     }
                     .listStyle(PlainListStyle())
+                    .scrollIndicators(.hidden) 
                     .scrollContentBackground(.hidden)
                     .padding(.top)
                 }

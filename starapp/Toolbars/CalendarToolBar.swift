@@ -5,6 +5,10 @@ struct CalendarToolbar: View {
 
     var body: some View {
         HStack {
+            Button(action: {
+            }) {
+                Label("Search", systemImage: "magnifyingglass")
+            }
             Menu {
                 Button(action: {
                     // Action 1
@@ -22,18 +26,10 @@ struct CalendarToolbar: View {
                     Text("Date")
                 }
             } label: {
-                Label("Notifications", systemImage: "calendar")
+                Label("Filter", systemImage: "line.3.horizontal.decrease.circle")
             }
-            Button(action: {
-                showingSheet.toggle()
-            }) {
-                Label("Calendar", systemImage: "plus")
-            }
-            .sheet(isPresented: $showingSheet) {
-                CalendarEventView()
-            }
+       
         }
-        
     }
 }
 

@@ -9,15 +9,16 @@ import SwiftUI
 
 struct MetricToolBar: View {
     @Binding var showingSheet: Bool
+    @State var plotSheet: Bool = false
 
         var body: some View {
             HStack {
                 Button(action: {
-                    showingSheet.toggle()
+                    plotSheet.toggle()
                 }) {
                     Label("Plotvalues", systemImage: "chart.dots.scatter")
                 }
-                .sheet(isPresented: $showingSheet) {
+                .sheet(isPresented: $plotSheet) {
                     PlotMetricView()
                 }
                 Menu {

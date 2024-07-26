@@ -16,7 +16,7 @@ struct IntegrationsView: View {
             HStack {
                 RoundedRectangle(cornerRadius: 10)
                     .fill(.starMain.opacity(0.2))
-                    .frame(width: 300, height: 400)
+                    .frame(width: 300, height: 300)
                     .overlay(
                         VStack {
                             Image(systemName: "shippingbox")

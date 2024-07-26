@@ -13,7 +13,7 @@ struct ProfileView: View {
     @State private var showSupportSheet = false
     @State private var showLearnSheet = false
     @State private var showPrivacySheet = false
-
+    
     
     init(user: User) {
         self.user = user
@@ -27,24 +27,42 @@ struct ProfileView: View {
             VStack {
                 VStack {
                     Image(systemName: "1.circle")
-                        .padding(8)
                         .font(.system(size: 74))
                         .foregroundStyle(.whiteOne)
-                    TextField("Name", text: $userName)
-                        .font(.system(size: 24, weight: .bold))
-                        .foregroundStyle(.whiteTwo)
-                        .multilineTextAlignment(.center)
-                        .onChange(of: userName) { user.userName = userName
-                            UserService.saveContext(context) }
-                    TextField("Tag", text: $tagName)
-                        .font(.system(size: 14))
-                        .foregroundStyle(.gray)
-                        .padding(.bottom, 10)
-                        .multilineTextAlignment(.center)
-                        .onChange(of: tagName) { user.tagName = tagName
-                            UserService.saveContext(context) }
+                        .padding(.bottom, 8)
+                    
+                    ZStack {
+                        if userName.isEmpty {
+                            Text("Name")
+                                .foregroundColor(.whiteOne)
+                                .frame(maxWidth: .infinity)
+                                .multilineTextAlignment(.center)
+                        }
+                        TextField("", text: $userName)
+                            .foregroundColor(.whiteOne)
+                            .multilineTextAlignment(.center)
+                            .onChange(of: userName) { user.userName = userName
+                                UserService.saveContext(context) }
+                    }
+                    .font(.system(size: 24, weight: .bold))
+                    .frame(maxWidth: .infinity)
+                    ZStack {
+                        if tagName.isEmpty {
+                            Text("@Tag")
+                                .foregroundColor(.gray)
+                                .frame(maxWidth: .infinity)
+                                .multilineTextAlignment(.center)
+                        }
+                        TextField("", text: $tagName)
+                            .foregroundColor(.gray)
+                            .multilineTextAlignment(.center)
+                            .onChange(of: tagName) { user.tagName = tagName
+                                UserService.saveContext(context) }
+                    }
+                    .font(.system(size: 14))
+                    .frame(maxWidth: .infinity)
                 }
-                .padding()
+                .padding(.bottom)
                 
                 VStack (spacing: 20) {
                     VStack (spacing:8){
@@ -59,7 +77,7 @@ struct ProfileView: View {
                         
                         
                         Button(action: { showIntegrationsSheet = true }) {
-                            profileRow(imageName: "sensor", text: "Integrations")
+                            profileRow(imageName: "dot.radiowaves.left.and.right", text: "Integrations")
                         }
                     }
                     .padding()
@@ -123,7 +141,7 @@ struct ProfileView: View {
                 .aspectRatio(contentMode: .fit)
                 .padding(8)
                 .foregroundStyle(.whiteOne)
-                .frame(width: 44, alignment: .leading)
+                .frame(width: 38, alignment: .center)
             VStack(alignment: .leading) {
                 Text(text)
                     .foregroundStyle(.whiteOne)
@@ -144,7 +162,7 @@ struct CloseButtonModifier: ViewModifier {
             
             Button(action: { isPresented = false }) {
                 Image(systemName: "xmark")
-                    .font(.system(size: 22, weight: .bold))
+                    .font(.system(size: 22))
                     .foregroundStyle(.whiteOne)
                     .padding()
             }

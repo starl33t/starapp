@@ -7,153 +7,135 @@
 
 import SwiftUI
 import Charts
+import SwiftData
+
 
 struct HomeView: View {
-    @StateObject private var viewModel = HomeViewModel()
     @StateObject private var barChartViewModel = BarChartViewModel()
-    @State private var trigger: Bool = false
+    @State private var trigger = false
     @State private var selectedButton: String = "Sweet spot"
+    @Query(sort: \Session.date, order: .reverse) private var sessions: [Session]
     
     var body: some View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
             VStack {
-                HStack(spacing: 16) {
-                    HStack(spacing: 0) {
-                        HackerTextView(text: textForButton(selectedButton, index: 1), trigger: trigger)
-                        Image(systemName: "bolt.fill")
-                            .foregroundColor(.yellow)
+                // Row 1: Text and Buttons
+                VStack {
+                    HStack(spacing: 16) {
+                        HStack {
+                            HackerTextView(text: {
+                                switch selectedButton {
+                                case "LT 1": return "1,8 mM"
+                                case "Sweet spot": return "2,8 mM"
+                                case "LT 2": return "3,8 mM"
+                                default: return ""
+                                }
+                            }(), trigger: trigger)
+                        }
+                        
+                        HStack {
+                            HackerTextView(text: {
+                                switch selectedButton {
+                                case "LT 1": return "145 BPM"
+                                case "Sweet spot": return "160 BPM"
+                                case "LT 2": return "175 BPM"
+                                default: return ""
+                                }
+                            }(), trigger: trigger)
+                        }
                     }
+                    .font(.system(size: 32, weight: .bold))
+                    .foregroundStyle(.whiteTwo)
                     
-                    HStack(spacing: 0) {
-                        HackerTextView(text: textForButton(selectedButton, index: 2), trigger: trigger)
-                        Image(systemName: "heart.fill")
-                            .foregroundColor(.red)
+                    HStack (spacing: 20){
+                        Button("LT 1") {
+                            selectedButton = "LT 1"
+                            trigger.toggle()
+                        }
+                        .foregroundColor(selectedButton == "LT 1" ? .starMain : .gray)
+                        
+                        Button("Sweet spot") {
+                            selectedButton = "Sweet spot"
+                            trigger.toggle()
+                        }
+                        .foregroundColor(selectedButton == "Sweet spot" ? .starMain : .gray)
+                        
+                        Button("LT 2") {
+                            selectedButton = "LT 2"
+                            trigger.toggle()
+                        }
+                        .foregroundColor(selectedButton == "LT 2" ? .starMain : .gray)
                     }
+                    .padding(.vertical)
                 }
-                .font(.system(size: 32, weight: .bold))
-                .foregroundStyle(.whiteTwo)
+                .padding(.top)
                 
-                HStack {
-                    Button(action: {
-                        selectedButton = "LT 1"
-                        trigger.toggle()
-                    }, label: {
-                        Text("LT 1")
-                            .foregroundColor(selectedButton == "LT 1" ? .starMain : .gray)
-                    })
-                    .padding()
-                    
-                    Button(action: {
-                        selectedButton = "Sweet spot"
-                        trigger.toggle()
-                    }, label: {
-                        Text("Sweet spot")
-                            .foregroundColor(selectedButton == "Sweet spot" ? .starMain : .gray)
-                    })
-                    .padding()
-                    
-                    Button(action: {
-                        selectedButton = "LT 2"
-                        trigger.toggle()
-                    }, label: {
-                        Text("LT 2")
-                            .foregroundColor(selectedButton == "LT 2" ? .starMain : .gray)
-                    })
-                    .padding()
-                }
-                .padding(.bottom)
-                VStack {
-                    HStack(spacing: 16) {
-                        Image(systemName: "1.circle")
-                            .font(.system(size: 38))
-                            .padding(8)
-                            .foregroundStyle(.starMain)
-                        VStack(alignment: .leading) {
+                // Row 2: LazyHStack with session icons
+                List {
+                    ForEach(sessions) { session in
+                        NavigationLink(destination: TrainingView(session: session)) {
                             HStack {
-                                Text("10 min")
-                                    .font(.system(size: 24, weight: .bold))
-                                    .foregroundStyle(.whiteTwo)
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(Color.whiteOne, lineWidth: 2)
+                                        .frame(width: 100, height: 48)
+                                    Text("\(session.duration ?? 0.0, specifier: "%.0f") min")
+                                        .font(.system(size: 22, weight: .bold))
+                                        .foregroundColor(.whiteOne)
+                                        .multilineTextAlignment(.center)
+                                }
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text("\(session.lactate ?? 0.0, specifier: "%.1f") mM")
+                                        .font(.system(size: 22, weight: .bold))
+                                        .foregroundStyle(.whiteOne)
+                                    Text("\(session.date?.formattedAsRelative() ?? "N/A")")
+                                        .font(.system(size: 14))
+                                        .foregroundStyle(.gray)
+                                }
+                                .foregroundStyle(.whiteOne)
+                                .padding(.leading, 20)
+                                .frame(minWidth: 110)
+                                HStack {
+                                    let intensity = LactateHelper.intensity(for: session.lactate)
+                                    VStack {
+                                        Image(systemName: intensity.icon)
+                                            .font(.system(size: 24, weight: .bold))
+                                            .foregroundStyle(intensity.color)
+                                        Text(intensity.rawValue)
+                                            .foregroundStyle(intensity.color)
+                                            .font(.system(size: 14))
+                                    }
+                                    .padding(.leading, 20)
+                                    
+                                }
+                                .frame(maxWidth: .infinity, alignment: .center)
                             }
-                            HStack {
-                                Text("10")
-                                Image(systemName: "heart.fill")
-                                Text(" | ")
-                                Text("38°C")
-                            }
-                            .font(.system(size: 14))
-                            .foregroundStyle(.gray)
                         }
-                        .foregroundStyle(.whiteOne)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        Text("10 mM")
-                            .font(.system(size: 32, weight: .bold))
-                            .foregroundStyle(.starMain)
+                        .padding()
+                        .background(Color.starBlack)
+                        .listRowInsets(EdgeInsets())
                     }
-                    Divider()
-                        .padding(.vertical, 8)
                 }
-                .padding(.horizontal)
+                .listStyle(PlainListStyle())
+                .scrollIndicators(.hidden) 
+                .scrollContentBackground(.hidden)
+                .padding(.top)
+                
+                //3 chart
                 VStack {
-                    HStack(spacing: 16) {
-                        Image(systemName: "1.circle")
-                            .font(.system(size: 38))
-                            .padding(8)
-                            .foregroundStyle(.starMain)
-                        VStack(alignment: .leading) {
-                            HStack {
-                                Text("10 min")
-                                    .font(.system(size: 24, weight: .bold))
-                                    .foregroundStyle(.whiteTwo)
-                            }
-                            HStack {
-                                Text("10")
-                                Image(systemName: "heart.fill")
-                                Text(" | ")
-                                Text("38°C")
-                            }
-                            .font(.system(size: 14))
-                            .foregroundStyle(.gray)
-                        }
-                        .foregroundStyle(.whiteOne)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        Text("10 mM")
-                            .font(.system(size: 32, weight: .bold))
-                            .foregroundStyle(.starMain)
-                    }
-                    Divider()
-                        .padding(.vertical, 8)
+                    BarChartView()
                 }
-                .padding(.horizontal)
-                Chart(barChartViewModel.data) { item in
-                    BarMark(
-                        x: .value("Category", item.category),
-                        y: .value("Value", item.value)
-                    )
-                }
-                .chartXAxis(.hidden)
-                .chartYAxis(.hidden)
-                .frame(height: 100)
-                .padding(.bottom)
+                
+         
             }
+            .padding(.bottom)
         }
+        
     }
     
-    func textForButton(_ button: String, index: Int) -> String {
-        switch button {
-        case "LT 1":
-            return ["4:10", "1,8", "145"][index]
-        case "Sweet spot":
-            return ["3:50", "2,8", "160"][index]
-        case "LT 2":
-            return ["3:38", "3,8", "175"][index]
-        default:
-            return ["", "", ""][index]
-        }
-    }
 }
 
 #Preview {
     HomeView()
-        .modelContainer(for: [Session.self])
 }

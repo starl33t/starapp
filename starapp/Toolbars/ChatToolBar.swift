@@ -5,6 +5,10 @@ struct ChatToolbar: View {
     
     var body: some View {
         HStack {
+            Button(action: {
+            }) {
+                Label("Search", systemImage: "magnifyingglass")
+            }
             Menu {
                 Button(action: {
                     // Action 1
@@ -23,10 +27,6 @@ struct ChatToolbar: View {
                 }
             } label: {
                 Label("AI", systemImage: "icloud.and.arrow.up.fill")
-            }
-            
-            NavigationLink(destination: SupportView()) {
-                Label("Email", systemImage: "envelope")
             }
         }
     }

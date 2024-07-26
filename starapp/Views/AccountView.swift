@@ -5,12 +5,12 @@ struct AccountView: View {
     @State private var showDeleteAlert = false
     @State private var showingSheet = false
     @State private var startPositionPercentage: CGFloat = 0.025
-    @State private var cDeleteSelected = false
-    @AppStorage("Notifications") var Notifications: Bool = false
-    @AppStorage("Pace") var Pace: Bool = false
-    @AppStorage("Power") var Power: Bool = false
-    @AppStorage("Heartrate") var Heartrate: Bool = false
-    @AppStorage("Distance") var Distance: Bool = false
+    @State private var deleteUser = false
+    @AppStorage("Notifications") var notificationsToggle: Bool = false
+    @AppStorage("Pace") var paceToggle: Bool = false
+    @AppStorage("Power") var powerToggle: Bool = false
+    @AppStorage("Heartrate") var heartRateToggle: Bool = false
+    @AppStorage("Distance") var distanceToggle: Bool = false
 
     var body: some View {
         ZStack {
@@ -18,31 +18,31 @@ struct AccountView: View {
             VStack {
                 VStack {
                     HStack {
-                        Toggle("Duration", isOn: $Distance)
+                        Toggle("Duration", isOn: $distanceToggle)
                     }
                     .padding()
                     .foregroundColor(.whiteOne)
                     .tint(.green)
                     HStack {
-                        Toggle("Heartrate", isOn: $Heartrate)
+                        Toggle("Heartrate", isOn: $heartRateToggle)
                     }
                     .padding()
                     .foregroundColor(.whiteOne)
                     .tint(.green)
                     HStack {
-                        Toggle("Pace", isOn: $Pace)
+                        Toggle("Pace", isOn: $paceToggle)
                     }
                     .padding()
                     .foregroundColor(.whiteOne)
                     .tint(.green)
                     HStack {
-                        Toggle("Power", isOn: $Power)
+                        Toggle("Power", isOn: $powerToggle)
                     }
                     .padding()
                     .foregroundColor(.whiteOne)
                     .tint(.green)
                     HStack {
-                        Toggle("Notifications", isOn: $Notifications)
+                        Toggle("Notifications", isOn: $notificationsToggle)
                     }
                     .padding()
                     .foregroundColor(.whiteOne)
@@ -89,7 +89,7 @@ struct AccountView: View {
                                         .onEnded { value in
                                             if deleteOffset > maxOffset * 0.95 {
                                                 withAnimation {
-                                                    cDeleteSelected = true
+                                                    deleteUser = true
                                                     deleteOffset = maxOffset
                                                     showDeleteAlert = true
                                                 }

@@ -3,16 +3,12 @@ import SwiftUI
 struct HomeToolBar: View {
     @Binding var showingSheet: Bool
     @AppStorage("Notifications") private var Notifications = false
-        
     var body: some View {
         HStack {
             Button(action: {
-                showingSheet.toggle()
+
             }) {
-                Label("Subscription", systemImage: "cpu")
-            }
-            .sheet(isPresented: $showingSheet) {
-                SubscriptionView()
+                Label("Search", systemImage: "magnifyingglass")
             }
             Menu {
                 Button(action: {
@@ -21,7 +17,7 @@ struct HomeToolBar: View {
                     Text("No Notifications!")
                 }
             } label: {
-                Label("Notifictations", systemImage: Notifications ? "bell" : "bell.slash")
+                Label("Notifications", systemImage: Notifications ? "bell" : "bell.slash")
             }
         }
     }

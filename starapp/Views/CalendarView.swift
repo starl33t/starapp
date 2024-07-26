@@ -72,7 +72,7 @@ struct CalendarView: View {
                                                         ForEach(daySessions, id: \.self) { session in
                                                             Circle()
                                                                 .frame(width: 6, height: 6)
-                                                                .foregroundStyle(ColorLactate.color(for: session.lactate))
+                                                                .foregroundStyle(LactateHelper.color(for: session.lactate))
                                                         }
                                                     }
                                                     .padding(.top, 28)

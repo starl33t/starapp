@@ -2,24 +2,25 @@ import SwiftUI
 
 struct LactateToolbar: View {
     @Binding var showingSheet: Bool
+    @State var trainingSheet: Bool = false
 
     var body: some View {
         HStack {
             Menu {
                 Button(action: {
-                    // Action 1
+                  
                 }) {
-                    Text("Device coming soon!")
+                    Text("No wearables detected!")
                 }
             } label: {
                 Label("Notifications", systemImage: "gear")
             }
             Button(action: {
-                showingSheet.toggle()
+                trainingSheet.toggle()
             }) {
                 Label("New Training", systemImage: "plus")
             }
-            .sheet(isPresented: $showingSheet) {
+            .sheet(isPresented: $trainingSheet) {
                 NewTrainingView()
             }
         }
