@@ -12,48 +12,58 @@ struct ContentView: View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
             NavigationStack {
-                if let user = currentUser {
-                    TabView(selection: $selectedTab) {
-                        HomeView()
-                            .tabItem {
-                                Image(systemName: "sum")
-                                Text("Home")
+                Group {
+                    if let user = currentUser {
+                        TabView(selection: $selectedTab) {
+                            HomeView()
+                                .tabItem {
+                                    Image(systemName: "sum")
+                                    Text("Home")
+                                }
+                                .tag(0)
+                            CalendarView()
+                                .tabItem {
+                                    Image(systemName: "calendar")
+                                    Text("Calendar")
+                                }
+                                .tag(1)
+                            LactateView()
+                                .tabItem {
+                                    Image(systemName: "dot.radiowaves.left.and.right")
+                                    Text("Lactate")
+                                }
+                                .tag(2)
+                            ChatView(user: user)
+                                .tabItem {
+                                    Image(systemName: "person.2")
+                                    Text("Chat")
+                                }
+                                .tag(3)
+                            MetricView()
+                                .tabItem {
+                                    Image(systemName: "chart.xyaxis.line")
+                                    Text("Metrics")
+                                }
+                                .tag(4)
+                        }
+                        .tint(.starMain)
+                    } else {
+                        Text("Loading...")
+                            .onAppear {
+                                currentUser = UserService.fetchOrCreateUser(context: context)
                             }
-                            .tag(0)
-                        CalendarView()
-                            .tabItem {
-                                Image(systemName: "calendar")
-                                Text("Calendar")
-                            }
-                            .tag(1)
-                        LactateView()
-                            .tabItem {
-                                Image(systemName: "dot.radiowaves.left.and.right")
-                                Text("Lactate")
-                            }
-                            .tag(2)
-                        ChatView(user: user)
-                            .tabItem {
-                                Image(systemName: "person.2")
-                                Text("Chat")
-                            }
-                            .tag(3)
-                        MetricView()
-                            .tabItem {
-                                Image(systemName: "chart.xyaxis.line")
-                                Text("Metrics")
-                            }
-                            .tag(4)
                     }
-                    .tint(.starMain)
-                    .navigationBarTitleDisplayMode(.inline)
-                    .toolbar {
-                        ToolbarItem(placement: .topBarLeading) {
+                }
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        if let user = currentUser {
                             NavigationLink(destination: ProfileView(user: user)) {
                                 Label("Profile", systemImage: "person.fill")
                             }
                         }
-                        ToolbarItemGroup(placement: .topBarTrailing) {
+                    }
+                    ToolbarItemGroup(placement: .topBarTrailing) {
+                        if let _ = currentUser {
                             switch selectedTab {
                             case 1:
                                 CalendarToolbar(showingSheet: $showingSheet)
@@ -68,13 +78,8 @@ struct ContentView: View {
                             }
                         }
                     }
-                    .tint(.whiteTwo)
-                } else {
-                    Text("Loading...")
-                        .onAppear {
-                            currentUser = UserService.fetchOrCreateUser(context: context)
-                        }
                 }
+                .tint(.whiteTwo)
             }
         }
     }

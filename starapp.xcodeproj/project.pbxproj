@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF1A81532C542C280057D87D /* HomeToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1A81522C542C280057D87D /* HomeToolBar.swift */; };
 		BF31F0AB2C48FDAD000C005C /* EmailHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF31F0AA2C48FDA9000C005C /* EmailHelper.swift */; };
 		BF3700882C47B60900CF255D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3700872C47B60600CF255D /* User.swift */; };
 		BF4A81352C3AEC4D00D4CAF1 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81342C3AEC4D00D4CAF1 /* CalendarView.swift */; };
@@ -34,7 +35,6 @@
 		BF4A81832C3AFC9200D4CAF1 /* PlotMetricView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81822C3AFC9200D4CAF1 /* PlotMetricView.swift */; };
 		BF4A81892C3AFDDE00D4CAF1 /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81882C3AFDDE00D4CAF1 /* SubscriptionView.swift */; };
 		BF4A818B2C3AFDF500D4CAF1 /* ColorOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A818A2C3AFDF500D4CAF1 /* ColorOptionView.swift */; };
-		BF4A818D2C3AFF0700D4CAF1 /* HomeToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A818C2C3AFF0700D4CAF1 /* HomeToolBar.swift */; };
 		BF4A818F2C3AFFDD00D4CAF1 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A818E2C3AFFDD00D4CAF1 /* HomeView.swift */; };
 		BF57B8A92C541365000F24BB /* LactateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF57B8A82C541360000F24BB /* LactateHelper.swift */; };
 		BF6744D12C3FCAE900A23D76 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6744D02C3FCAE400A23D76 /* Session.swift */; };
@@ -77,6 +77,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BF1A81522C542C280057D87D /* HomeToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeToolBar.swift; sourceTree = "<group>"; };
 		BF31F0AA2C48FDA9000C005C /* EmailHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailHelper.swift; sourceTree = "<group>"; };
 		BF3700872C47B60600CF255D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BF3F6CAD2C3F23280087DF5A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -105,7 +106,6 @@
 		BF4A81822C3AFC9200D4CAF1 /* PlotMetricView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotMetricView.swift; sourceTree = "<group>"; };
 		BF4A81882C3AFDDE00D4CAF1 /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
 		BF4A818A2C3AFDF500D4CAF1 /* ColorOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorOptionView.swift; sourceTree = "<group>"; };
-		BF4A818C2C3AFF0700D4CAF1 /* HomeToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeToolBar.swift; sourceTree = "<group>"; };
 		BF4A818E2C3AFFDD00D4CAF1 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		BF57B8A82C541360000F24BB /* LactateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LactateHelper.swift; sourceTree = "<group>"; };
 		BF6744D02C3FCAE400A23D76 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
@@ -203,8 +203,8 @@
 		BF4A81962C3B065500D4CAF1 /* Toolbars */ = {
 			isa = PBXGroup;
 			children = (
-				BF4A818C2C3AFF0700D4CAF1 /* HomeToolBar.swift */,
 				BF4A81662C3AF5D500D4CAF1 /* CalendarToolBar.swift */,
+				BF1A81522C542C280057D87D /* HomeToolBar.swift */,
 				BF4A816E2C3AF8DA00D4CAF1 /* LactateToolBar.swift */,
 				BF4A81762C3AFA1700D4CAF1 /* ChatToolBar.swift */,
 				BF4A817E2C3AFB8600D4CAF1 /* MetricToolBar.swift */,
@@ -453,11 +453,11 @@
 				BFEDD12D2C484A4500E8E11C /* Constants.swift in Sources */,
 				BF6C84182C3D1C6D00032E93 /* LearnView.swift in Sources */,
 				BF4A81732C3AF94F00D4CAF1 /* NewTrainingView.swift in Sources */,
-				BF4A818D2C3AFF0700D4CAF1 /* HomeToolBar.swift in Sources */,
 				BF4A81492C3AEFCE00D4CAF1 /* ChatView.swift in Sources */,
 				BFDEB6042C49994C00D32736 /* SupportView.swift in Sources */,
 				BF4A815B2C3AF2B100D4CAF1 /* BarChartView.swift in Sources */,
 				BF8D6ADC2C41A9DF000269F1 /* TrainingView.swift in Sources */,
+				BF1A81532C542C280057D87D /* HomeToolBar.swift in Sources */,
 				BF4A815D2C3AF30F00D4CAF1 /* PieChartViewModel.swift in Sources */,
 				BF4A81352C3AEC4D00D4CAF1 /* CalendarView.swift in Sources */,
 				BF4A81532C3AF15200D4CAF1 /* LineChartViewModel.swift in Sources */,
