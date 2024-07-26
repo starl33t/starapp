@@ -3,7 +3,6 @@ import SwiftData
 
 struct CalendarView: View {
     @State private var showDatePicker = false
-    @State private var scrollViewProxy: ScrollViewProxy?
     @State private var visibleDates: Set<Date> = []
     let columns = Array(repeating: GridItem(.flexible()), count: 7)
     let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
@@ -27,9 +26,6 @@ struct CalendarView: View {
                         selectedDate = today
                         date = today
                         days = today.daysInYear
-                        if let proxy = scrollViewProxy {
-                            proxy.scrollTo(days.first(where: { Calendar.current.isDate($0, inSameDayAs: Date.now) }), anchor: .center)
-                        }
                     }) {
                         Text("Today")
                             .foregroundColor(.whiteOne)
@@ -100,8 +96,13 @@ struct CalendarView: View {
                         }
                     }
                     .onAppear {
-                        scrollViewProxy = proxy
                         proxy.scrollTo(days.first(where: { Calendar.current.isDate($0, inSameDayAs: Date.now) }), anchor: .center)
+                        
+                    }
+                    .onChange(of: selectedDate) { oldDate, newDate in
+                        date = newDate
+                        days = date.daysInYear
+                        proxy.scrollTo(days.first(where: { Calendar.current.isDate($0, inSameDayAs: newDate) }), anchor: .center)
                         
                     }
                 }
@@ -132,15 +133,9 @@ struct CalendarView: View {
                 )
             }
         }
-        .onChange(of: selectedDate) { oldDate, newDate in
-            date = newDate
-            days = date.daysInYear
-            if let proxy = scrollViewProxy {
-                proxy.scrollTo(days.first(where: { Calendar.current.isDate($0, inSameDayAs: newDate) }), anchor: .center)
-            }
-        }
+        
     }
- 
+    
 }
 
 #Preview {
