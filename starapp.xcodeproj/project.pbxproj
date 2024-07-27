@@ -53,9 +53,9 @@
 		BF8D6ADC2C41A9DF000269F1 /* TrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */; };
 		BF91AC6E2C45405C0028BC41 /* NumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF91AC6D2C4540530028BC41 /* NumberFormatter.swift */; };
 		BFAD15FA2C42F5CB0043D23F /* minperkm.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD15F92C42F5C80043D23F /* minperkm.swift */; };
+		BFBBD9582C55869200671197 /* MessageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBBD9572C55868F00671197 /* MessageHelper.swift */; };
 		BFDEB5FE2C497D3900D32736 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDEB5FD2C497D3100D32736 /* UserService.swift */; };
 		BFDEB6042C49994C00D32736 /* SupportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDEB6032C49994900D32736 /* SupportView.swift */; };
-		BFEDD12B2C483A7400E8E11C /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEDD12A2C483A6E00E8E11C /* ChatViewModel.swift */; };
 		BFEDD12D2C484A4500E8E11C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEDD12C2C484A3E00E8E11C /* Constants.swift */; };
 /* End PBXBuildFile section */
 
@@ -128,9 +128,9 @@
 		BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingView.swift; sourceTree = "<group>"; };
 		BF91AC6D2C4540530028BC41 /* NumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFormatter.swift; sourceTree = "<group>"; };
 		BFAD15F92C42F5C80043D23F /* minperkm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = minperkm.swift; sourceTree = "<group>"; };
+		BFBBD9572C55868F00671197 /* MessageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHelper.swift; sourceTree = "<group>"; };
 		BFDEB5FD2C497D3100D32736 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		BFDEB6032C49994900D32736 /* SupportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportView.swift; sourceTree = "<group>"; };
-		BFEDD12A2C483A6E00E8E11C /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		BFEDD12C2C484A3E00E8E11C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -188,7 +188,6 @@
 		BF4A81942C3B05F200D4CAF1 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				BFEDD12A2C483A6E00E8E11C /* ChatViewModel.swift */,
 				BF6C84152C3D179F00032E93 /* IntegrationsViewModel.swift */,
 				BF4A814E2C3AF06200D4CAF1 /* MetricViewModel.swift */,
 				BF4A81802C3AFBBB00D4CAF1 /* PlotMetricViewModel.swift */,
@@ -215,6 +214,7 @@
 		BF4A81972C3B07C800D4CAF1 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				BFBBD9572C55868F00671197 /* MessageHelper.swift */,
 				BF57B8A82C541360000F24BB /* LactateHelper.swift */,
 				BFDEB5FD2C497D3100D32736 /* UserService.swift */,
 				BF31F0AA2C48FDA9000C005C /* EmailHelper.swift */,
@@ -467,9 +467,9 @@
 				BF4A817F2C3AFB8600D4CAF1 /* MetricToolBar.swift in Sources */,
 				BF4A81892C3AFDDE00D4CAF1 /* SubscriptionView.swift in Sources */,
 				BF4A81412C3AEE1500D4CAF1 /* HackerTextView.swift in Sources */,
+				BFBBD9582C55869200671197 /* MessageHelper.swift in Sources */,
 				BF6C841A2C3D1E5200032E93 /* PrivacyView.swift in Sources */,
 				BF4A81452C3AEE6C00D4CAF1 /* LactateView.swift in Sources */,
-				BFEDD12B2C483A7400E8E11C /* ChatViewModel.swift in Sources */,
 				BFAD15FA2C42F5CB0043D23F /* minperkm.swift in Sources */,
 				BF4A813F2C3AEE0900D4CAF1 /* DateHelper.swift in Sources */,
 				BF6C84162C3D179F00032E93 /* IntegrationsViewModel.swift in Sources */,
@@ -634,7 +634,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = starapp/starapp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"starapp/Preview Content\"";
 				DEVELOPMENT_TEAM = 7F33N9HZ63;
@@ -656,7 +656,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.2.5;
+				MARKETING_VERSION = 1.2.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starappv01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -675,7 +675,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = starapp/starapp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"starapp/Preview Content\"";
 				DEVELOPMENT_TEAM = 7F33N9HZ63;
@@ -697,7 +697,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.2.5;
+				MARKETING_VERSION = 1.2.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starappv01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;

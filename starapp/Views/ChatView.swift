@@ -1,13 +1,12 @@
 import SwiftUI
+import SwiftData
 
 struct ChatView: View {
-    @StateObject private var viewModel: ChatViewModel
+    @State private var messages: [ChatMessage] = []
     @State private var newMessageContent: String = ""
+    @State private var tagName: String = ""
     @FocusState private var isFocused: Bool
-    
-    init(user: User) {
-        _viewModel = StateObject(wrappedValue: ChatViewModel(user: user))
-    }
+    let user: User
     
     var body: some View {
         ZStack {
@@ -16,12 +15,12 @@ struct ChatView: View {
                 ScrollViewReader { proxy in
                     ScrollView {
                         VStack {
-                            ForEach(viewModel.messages) { message in
+                            ForEach(messages) { message in
                                 HStack(alignment: .top) {
                                     if message.isUser {
                                         Spacer()
                                         VStack(alignment: .trailing) {
-                                            Text(viewModel.user.tagName ?? "Unknown")
+                                            Text(user.tagName ?? "Unknown")
                                                 .font(.headline)
                                                 .foregroundColor(.white)
                                             Text(message.content)
@@ -55,7 +54,7 @@ struct ChatView: View {
                                                 .cornerRadius(10)
                                         }
                                         .padding([.trailing, .vertical])
-                                       
+                                        
                                     }
                                 }
                                 .id(message.id)
@@ -65,8 +64,8 @@ struct ChatView: View {
                     .onTapGesture {
                         hideKeyboard()
                     }
-                    .onChange(of: viewModel.messages) {
-                        if let lastMessage = viewModel.messages.last {
+                    .onChange(of: messages) { oldValue, newValue in
+                        if let lastMessage = newValue.last {
                             withAnimation {
                                 proxy.scrollTo(lastMessage.id)
                             }
@@ -98,8 +97,11 @@ struct ChatView: View {
                     .background(.darkOne)
                     .cornerRadius(24)
                     Button(action: {
-                        viewModel.userInput = newMessageContent
-                        viewModel.sendMessage()
+                        MessageHelper.sendMessage(userInput: newMessageContent) { newMessage in
+                            if let newMessage = newMessage {
+                                messages.append(newMessage)
+                            }
+                        }
                         newMessageContent = ""
                     }) {
                         Image(systemName: "arrow.up.circle.fill")
@@ -120,5 +122,5 @@ struct ChatView: View {
 }
 
 #Preview {
-    ChatView(user: User())
+    ChatView(user: User(tagName: "PreviewUser"))
 }
