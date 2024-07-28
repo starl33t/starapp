@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct IntegrationsView: View {
-    @StateObject private var viewModel = IntegrationsViewModel()
     
     var body: some View {
         ZStack {
