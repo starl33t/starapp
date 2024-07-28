@@ -47,9 +47,6 @@ struct IntegrationsView: View {
             .background(Color.starBlack)
             .cornerRadius(16)
             .presentationDetents([.medium])
-            .onAppear {
-                viewModel.showingSheet = true
-            }
         }
     }
 }

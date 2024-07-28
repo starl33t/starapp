@@ -2,19 +2,19 @@ import SwiftUI
 
 struct HomeToolBar: View {
     @Binding var showingSheet: Bool
-    @State private var showSubscriptionSheet = false
     @AppStorage("Notifications") private var Notifications = false
     var body: some View {
         HStack {
-            Button(action: {
-                showSubscriptionSheet.toggle()
-            }) {
-                Label("Subsciptions", systemImage: "cpu")
+            Menu {
+                Button(action: {
+                    // Action 1
+                }) {
+                    Text("AI Model Nola 1.0")
+                }
+            } label: {
+                Label("AI", systemImage: "cpu")
             }
-            .sheet(isPresented: $showSubscriptionSheet) {
-                SubscriptionView()
-                    .modifier(CloseButtonModifier(isPresented: $showSubscriptionSheet))
-            }
+
             Menu {
                 Button(action: {
                     // Action 1

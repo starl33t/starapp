@@ -72,7 +72,7 @@ struct ProfileView: View {
                         
                         
                         Button(action: { showSubscriptionSheet = true }) {
-                            profileRow(imageName: "cpu", text: "Subscriptions")
+                            profileRow(imageName: "dollarsign.arrow.trianglehead.counterclockwise.rotate.90", text: "Subscriptions")
                         }
                         
                         
