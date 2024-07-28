@@ -9,9 +9,9 @@ struct ContentView: View {
     @State private var currentUser: User?
 
     var body: some View {
-        ZStack {
-            Color.starBlack.ignoresSafeArea()
-            NavigationStack {
+        NavigationView {
+            ZStack {
+                Color.starBlack.ignoresSafeArea()
                 Group {
                     if let user = currentUser {
                         TabView(selection: $selectedTab) {
@@ -54,33 +54,33 @@ struct ContentView: View {
                             }
                     }
                 }
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        if let user = currentUser {
-                            NavigationLink(destination: ProfileView(user: user)) {
-                                Label("Profile", systemImage: "person.fill")
-                            }
-                        }
-                    }
-                    ToolbarItemGroup(placement: .topBarTrailing) {
-                        if let _ = currentUser {
-                            switch selectedTab {
-                            case 1:
-                                CalendarToolbar(showingSheet: $showingSheet)
-                            case 2:
-                                LactateToolbar(showingSheet: $showingSheet)
-                            case 3:
-                                ChatToolbar(showingSheet: $showingSheet)
-                            case 4:
-                                MetricToolBar(showingSheet: $showingSheet)
-                            default:
-                                HomeToolBar(showingSheet: $showingSheet)
-                            }
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    if let user = currentUser {
+                        NavigationLink(destination: ProfileView(user: user)) {
+                            Label("Profile", systemImage: "person.fill")
                         }
                     }
                 }
-                .tint(.whiteTwo)
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    if currentUser != nil {
+                        switch selectedTab {
+                        case 1:
+                            CalendarToolbar(showingSheet: $showingSheet)
+                        case 2:
+                            LactateToolbar(showingSheet: $showingSheet)
+                        case 3:
+                            ChatToolbar(showingSheet: $showingSheet)
+                        case 4:
+                            MetricToolBar(showingSheet: $showingSheet)
+                        default:
+                            HomeToolBar(showingSheet: $showingSheet)
+                        }
+                    }
+                }
             }
+            .tint(.whiteTwo)
         }
     }
 }

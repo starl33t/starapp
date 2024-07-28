@@ -24,9 +24,9 @@ struct SubscriptionView: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 50, height: 50)
-                                        .foregroundStyle(.whiteTwo)
+                                        .foregroundStyle(.whiteOne)
                                     Text("The Grind")
-                                        .foregroundStyle(.whiteTwo)
+                                        .foregroundStyle(.whiteOne)
                                         .font(.largeTitle)
                                         .bold()
                                     VStack(alignment: .leading, spacing: 24) {
@@ -54,7 +54,7 @@ struct SubscriptionView: View {
                                             Text("High priority on support tickets")
                                         }
                                     }
-                                    .foregroundStyle(.whiteTwo)
+                                    .foregroundStyle(.whiteOne)
                                     .font(.body)
                                     .padding(.top, 10)
                                 }
@@ -69,13 +69,13 @@ struct SubscriptionView: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 50, height: 50)
-                                        .foregroundStyle(.whiteTwo)
+                                        .foregroundStyle(.whiteOne)
                                     Text("Beast mode")
-                                        .foregroundStyle(.whiteTwo)
+                                        .foregroundStyle(.whiteOne)
                                         .font(.largeTitle)
                                         .bold()
                                     Text("Coming soon")
-                                        .foregroundStyle(.whiteTwo)
+                                        .foregroundStyle(.whiteOne)
                                         .font(.body)
                                         .multilineTextAlignment(.center)
                                         .padding(.top, 5)

@@ -25,17 +25,7 @@ struct MetricToolBar: View {
                     Button(action: {
                         // Action 1
                     }) {
-                        Text("Report")
-                    }
-                    Button(action: {
-                        // Action 2
-                    }) {
-                        Text("Advanced report")
-                    }
-                    Button(action: {
-                        // Action 3
-                    }) {
-                        Text("Download")
+                        Text("Download Report")
                     }
                 } label: {
                     Label("Notifications", systemImage: "list.bullet.clipboard")
