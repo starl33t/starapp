@@ -5,28 +5,43 @@ struct ChatToolbar: View {
     
     var body: some View {
         HStack {
-            Button(action: {
-            }) {
-                Label("Search", systemImage: "magnifyingglass")
+            Menu {
+                Button(action: {
+                    // Action 1
+                }) {
+                    Text("Maximize my recovery")
+                }
+                Button(action: {
+                    // Action 2
+                }) {
+                    Text("Make me a recovery plan")
+                }
+                Button(action: {
+                    // Action 3
+                }) {
+                    Text("Help me with my injuries")
+                }
+            } label: {
+                Label("Recovery", systemImage: "figure.pilates")
             }
             Menu {
                 Button(action: {
                     // Action 1
                 }) {
-                    Text("Give me a training plan")
+                    Text("Optimize my training")
                 }
                 Button(action: {
                     // Action 2
                 }) {
-                    Text("Maximize my recovery")
+                    Text("Give me a training plan")
                 }
                 Button(action: {
                     // Action 3
                 }) {
-                    Text("Help me prevent injuries")
+                    Text("I want to peak")
                 }
             } label: {
-                Label("AI", systemImage: "icloud.and.arrow.up.fill")
+                Label("Performance", systemImage: "trophy")
             }
         }
     }

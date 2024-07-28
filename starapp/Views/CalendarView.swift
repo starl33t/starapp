@@ -17,10 +17,6 @@ struct CalendarView: View {
             Color.starBlack.ignoresSafeArea()
             VStack {
                 HStack {
-                    Text("Filter")
-                        .padding()
-                        .foregroundStyle(.whiteOne)
-                        .frame(maxWidth: .infinity)
                     Button(action: {
                         let today = Date.now
                         selectedDate = today

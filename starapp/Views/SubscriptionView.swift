@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SubscriptionView: View {
-    @State var selectedColor: Color = .red
     
     var body: some View {
         ZStack {

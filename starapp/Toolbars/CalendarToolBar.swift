@@ -7,7 +7,7 @@ struct CalendarToolbar: View {
         HStack {
             Button(action: {
             }) {
-                Label("Search", systemImage: "magnifyingglass")
+                Label("Today", systemImage: "calendar.badge.checkmark")
             }
             Menu {
                 Button(action: {
