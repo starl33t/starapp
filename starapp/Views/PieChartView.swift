@@ -7,19 +7,21 @@
 
 import SwiftUI
 import Charts
+import SwiftData
 
 struct PieChartView: View {
-    @StateObject private var viewModel = PieChartViewModel()
+    @Query(sort: \Session.date, order: .reverse) private var sessions: [Session]
 
         var body: some View {
             ZStack {
                 Color.starBlack.ignoresSafeArea()
-                Chart(viewModel.data) { item in
+                Chart(sessions) { session in
                     SectorMark(
-                        angle: .value("Count", item.count),
+                        angle: .value("Lactate", session.lactate ?? 0),
                         innerRadius: .ratio(0.6),
                         angularInset: 2
                     )
+                    .foregroundStyle(LactateHelper.color(for: session.lactate))
                     .cornerRadius(5)
                 }
                 .scaledToFit()

@@ -7,30 +7,33 @@
 
 import SwiftUI
 import Charts
+import SwiftData
 
 struct LineChartView: View {
-    @StateObject private var viewModel = LineChartViewModel()
+    @Query(sort: \Session.heartRate, order: .reverse) private var sessions: [Session]
 
        var body: some View {
            ZStack {
                Color.starBlack.ignoresSafeArea()
-               Chart(viewModel.data, id: \.category) { item in
+               Chart(sessions) { session in
                    LineMark(
-                       x: .value("Category", item.category),
-                       y: .value("Value", item.value)
+                       x: .value("Heart Rate", session.heartRate ?? 0),
+                       y: .value("Lactate", session.lactate ?? 0)
                    )
+                   .foregroundStyle(.starMain)
                    .interpolationMethod(.cardinal)
                    PointMark(
-                       x: .value("Category", item.category),
-                       y: .value("Value", item.value)
+                       x: .value("Heart Rate", session.heartRate ?? 0),
+                       y: .value("Lactate", session.lactate ?? 0)
                    )
+                   .foregroundStyle(.whiteOne)
                }
+               
+               .padding()
                .scaledToFit()
                .chartXAxis(.hidden)
                .chartYAxis(.hidden)
-               Text("2.8 mM")
-                   .fontWeight(.black)
-                   .foregroundStyle(.whiteTwo)
+              
            }
        }
    }

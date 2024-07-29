@@ -1,32 +1,29 @@
-//
-//  BarChartView.swift
-//  starapp
-//
-//  Created by Peter Tran on 07/07/2024.
-//
-
 import SwiftUI
 import Charts
+import SwiftData
 
 struct BarChartView: View {
-    @StateObject private var viewModel = BarChartViewModel()
+    @Query private var sessions: [Session]
     
     var body: some View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
-            Chart(viewModel.data) { item in
-                BarMark(
-                    x: .value("Category", item.category),
-                    y: .value("Value", item.value)
-                )
+            Chart(sessions) { session in
+                    BarMark(
+                        x: .value("Date", session.date ?? Date(), unit: .day),
+                        y: .value("Lactate", session.lactate ?? 0),
+                        stacking: .standard
+                    )
+                    .foregroundStyle(LactateHelper.color(for: session.lactate))
             }
             .scaledToFit()
             .chartXAxis(.hidden)
             .chartYAxis(.hidden)
+            .padding()
         }
     }
 }
 
 #Preview {
-    BarChartView()
+ BarChartView()
 }

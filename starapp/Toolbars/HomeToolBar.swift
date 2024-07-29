@@ -9,7 +9,7 @@ struct HomeToolBar: View {
                 Button(action: {
                     // Action 1
                 }) {
-                    Text("AI Model Nola 1.0")
+                    Text("AI Model: Nola 1.0")
                 }
             } label: {
                 Label("AI", systemImage: "cpu")

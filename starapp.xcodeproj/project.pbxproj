@@ -16,14 +16,9 @@
 		BF4A81452C3AEE6C00D4CAF1 /* LactateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81442C3AEE6C00D4CAF1 /* LactateView.swift */; };
 		BF4A81492C3AEFCE00D4CAF1 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81482C3AEFCE00D4CAF1 /* ChatView.swift */; };
 		BF4A814D2C3AF03B00D4CAF1 /* MetricView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A814C2C3AF03B00D4CAF1 /* MetricView.swift */; };
-		BF4A814F2C3AF06200D4CAF1 /* MetricViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A814E2C3AF06200D4CAF1 /* MetricViewModel.swift */; };
 		BF4A81512C3AF12000D4CAF1 /* LineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81502C3AF12000D4CAF1 /* LineChartView.swift */; };
-		BF4A81532C3AF15200D4CAF1 /* LineChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81522C3AF15200D4CAF1 /* LineChartViewModel.swift */; };
-		BF4A81552C3AF24100D4CAF1 /* PointChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81542C3AF24100D4CAF1 /* PointChartViewModel.swift */; };
 		BF4A81572C3AF25900D4CAF1 /* PointChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81562C3AF25900D4CAF1 /* PointChartView.swift */; };
-		BF4A81592C3AF2A300D4CAF1 /* BarChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81582C3AF2A300D4CAF1 /* BarChartViewModel.swift */; };
 		BF4A815B2C3AF2B100D4CAF1 /* BarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A815A2C3AF2B100D4CAF1 /* BarChartView.swift */; };
-		BF4A815D2C3AF30F00D4CAF1 /* PieChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A815C2C3AF30F00D4CAF1 /* PieChartViewModel.swift */; };
 		BF4A815F2C3AF31800D4CAF1 /* PieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A815E2C3AF31800D4CAF1 /* PieChartView.swift */; };
 		BF4A81632C3AF53200D4CAF1 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81622C3AF53200D4CAF1 /* ProfileView.swift */; };
 		BF4A81672C3AF5D500D4CAF1 /* CalendarToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81662C3AF5D500D4CAF1 /* CalendarToolBar.swift */; };
@@ -86,14 +81,9 @@
 		BF4A81442C3AEE6C00D4CAF1 /* LactateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LactateView.swift; sourceTree = "<group>"; };
 		BF4A81482C3AEFCE00D4CAF1 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		BF4A814C2C3AF03B00D4CAF1 /* MetricView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricView.swift; sourceTree = "<group>"; };
-		BF4A814E2C3AF06200D4CAF1 /* MetricViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetricViewModel.swift; sourceTree = "<group>"; };
 		BF4A81502C3AF12000D4CAF1 /* LineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartView.swift; sourceTree = "<group>"; };
-		BF4A81522C3AF15200D4CAF1 /* LineChartViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineChartViewModel.swift; sourceTree = "<group>"; };
-		BF4A81542C3AF24100D4CAF1 /* PointChartViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointChartViewModel.swift; sourceTree = "<group>"; };
 		BF4A81562C3AF25900D4CAF1 /* PointChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointChartView.swift; sourceTree = "<group>"; };
-		BF4A81582C3AF2A300D4CAF1 /* BarChartViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarChartViewModel.swift; sourceTree = "<group>"; };
 		BF4A815A2C3AF2B100D4CAF1 /* BarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartView.swift; sourceTree = "<group>"; };
-		BF4A815C2C3AF30F00D4CAF1 /* PieChartViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChartViewModel.swift; sourceTree = "<group>"; };
 		BF4A815E2C3AF31800D4CAF1 /* PieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartView.swift; sourceTree = "<group>"; };
 		BF4A81622C3AF53200D4CAF1 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		BF4A81662C3AF5D500D4CAF1 /* CalendarToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarToolBar.swift; sourceTree = "<group>"; };
@@ -174,11 +164,11 @@
 				BF4A81722C3AF94F00D4CAF1 /* NewTrainingView.swift */,
 				BF4A81482C3AEFCE00D4CAF1 /* ChatView.swift */,
 				BF4A814C2C3AF03B00D4CAF1 /* MetricView.swift */,
+				BF4A81822C3AFC9200D4CAF1 /* PlotMetricView.swift */,
 				BF4A81502C3AF12000D4CAF1 /* LineChartView.swift */,
 				BF4A815A2C3AF2B100D4CAF1 /* BarChartView.swift */,
 				BF4A815E2C3AF31800D4CAF1 /* PieChartView.swift */,
 				BF4A81562C3AF25900D4CAF1 /* PointChartView.swift */,
-				BF4A81822C3AFC9200D4CAF1 /* PlotMetricView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -186,12 +176,7 @@
 		BF4A81942C3B05F200D4CAF1 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				BF4A814E2C3AF06200D4CAF1 /* MetricViewModel.swift */,
 				BF4A81802C3AFBBB00D4CAF1 /* PlotMetricViewModel.swift */,
-				BF4A81522C3AF15200D4CAF1 /* LineChartViewModel.swift */,
-				BF4A815C2C3AF30F00D4CAF1 /* PieChartViewModel.swift */,
-				BF4A81582C3AF2A300D4CAF1 /* BarChartViewModel.swift */,
-				BF4A81542C3AF24100D4CAF1 /* PointChartViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -435,10 +420,8 @@
 				BF4A815F2C3AF31800D4CAF1 /* PieChartView.swift in Sources */,
 				BF6744D12C3FCAE900A23D76 /* Session.swift in Sources */,
 				BF4A81632C3AF53200D4CAF1 /* ProfileView.swift in Sources */,
-				BF4A81592C3AF2A300D4CAF1 /* BarChartViewModel.swift in Sources */,
 				BF91AC6E2C45405C0028BC41 /* NumberFormatter.swift in Sources */,
 				BF4A81812C3AFBBB00D4CAF1 /* PlotMetricViewModel.swift in Sources */,
-				BF4A81552C3AF24100D4CAF1 /* PointChartViewModel.swift in Sources */,
 				BF4A81672C3AF5D500D4CAF1 /* CalendarToolBar.swift in Sources */,
 				BF31F0AB2C48FDAD000C005C /* EmailHelper.swift in Sources */,
 				BF4A816F2C3AF8DA00D4CAF1 /* LactateToolBar.swift in Sources */,
@@ -455,11 +438,8 @@
 				BF4A815B2C3AF2B100D4CAF1 /* BarChartView.swift in Sources */,
 				BF8D6ADC2C41A9DF000269F1 /* TrainingView.swift in Sources */,
 				BF1A81532C542C280057D87D /* HomeToolBar.swift in Sources */,
-				BF4A815D2C3AF30F00D4CAF1 /* PieChartViewModel.swift in Sources */,
 				BF4A81352C3AEC4D00D4CAF1 /* CalendarView.swift in Sources */,
-				BF4A81532C3AF15200D4CAF1 /* LineChartViewModel.swift in Sources */,
 				BF7342072C3AE74A00911375 /* starappApp.swift in Sources */,
-				BF4A814F2C3AF06200D4CAF1 /* MetricViewModel.swift in Sources */,
 				BF6C840E2C3C5E8100032E93 /* AccountView.swift in Sources */,
 				BF4A817F2C3AFB8600D4CAF1 /* MetricToolBar.swift in Sources */,
 				BF4A81892C3AFDDE00D4CAF1 /* SubscriptionView.swift in Sources */,
@@ -630,7 +610,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = starapp/starapp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 21;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"starapp/Preview Content\"";
 				DEVELOPMENT_TEAM = 7F33N9HZ63;
@@ -652,7 +632,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.2.7;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starappv01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -671,7 +651,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = starapp/starapp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 21;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"starapp/Preview Content\"";
 				DEVELOPMENT_TEAM = 7F33N9HZ63;
@@ -693,7 +673,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.2.7;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starappv01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;

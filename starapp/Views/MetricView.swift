@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct MetricView: View {
-    @StateObject private var viewModel = MetricViewModel()
 
         var body: some View {
             ZStack {

@@ -37,14 +37,16 @@ struct ChatView: View {
                                             .clipShape(Circle())
                                             .padding([.trailing, .vertical])
                                     } else {
+                                        
                                         Image(systemName: "person.circle.fill")
                                             .resizable()
                                             .foregroundColor(.white)
                                             .frame(width: 40, height: 40)
                                             .clipShape(Circle())
                                             .padding([.leading, .vertical])
+                                       
                                         VStack(alignment: .leading) {
-                                            Text("Renato")
+                                            Text("Agnes")
                                                 .font(.headline)
                                                 .foregroundColor(.white)
                                             Text(message.content)
@@ -54,6 +56,7 @@ struct ChatView: View {
                                                 .cornerRadius(10)
                                         }
                                         .padding([.trailing, .vertical])
+                                        Spacer()
                                         
                                     }
                                 }
