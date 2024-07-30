@@ -9,12 +9,21 @@ import SwiftUI
 import Charts
 
 struct PointChartView: View {
+<<<<<<< Updated upstream
     @StateObject private var viewModel = PointChartViewModel()
 
         var body: some View {
             ZStack {
                 Color.starBlack.ignoresSafeArea()
                 Chart(viewModel.data) { item in
+=======
+    @Query(sort: \Session.date, order: .reverse) private var sessions: [Session]
+    var body: some View {
+        ZStack {
+            Color.starBlack.ignoresSafeArea()
+            Chart(sessions) { session in
+      
+>>>>>>> Stashed changes
                     PointMark(
                         x: .value("Category", item.category),
                         y: .value("Value", item.value)

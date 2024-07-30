@@ -56,10 +56,73 @@ struct HomeView: View {
                     Button(action: {
                         selectedButton = "LT 2"
                         trigger.toggle()
+<<<<<<< Updated upstream
                     }, label: {
                         Text("LT 2")
                             .foregroundColor(selectedButton == "LT 2" ? .starMain : .gray)
                     })
+=======
+                    }
+                    .foregroundColor(selectedButton == "LT 2" ? .starMain : .gray)
+                }
+                Chart(sessions) { session in
+                        BarMark(
+                            x: .value("Date", session.date ?? Date(), unit: .day),
+                            y: .value("Lactate", session.lactate ?? 0),
+                            stacking: .standard
+                        )
+                        .foregroundStyle(LactateHelper.color(for: session.lactate))
+                        .annotation(position: .overlay, alignment: .center) {
+                            Text(LactateHelper.formatLactate(session.lactate ?? 0))
+                                .multilineTextAlignment(.center)
+                                .font(.system(size: 8))
+                                .fontWeight(.bold)
+                        }
+                    if let barSelection = barSelection {
+                        RuleMark(x: .value("Date", barSelection, unit: .day))
+                            .foregroundStyle(.gray)
+                            .zIndex(-10)
+                            .annotation(
+                                position: .bottom,
+                                spacing: 4,
+                                overflowResolution: .init(x: .disabled, y: .disabled)
+                            ) {
+                                if let session = sessions.first(where: { Calendar.current.isDate($0.date ?? Date(), inSameDayAs: barSelection) }) {
+                                    VStack {
+                                        Text(Date().formatDayMonth(date: session.date))
+                                    }
+                                    .font(.system(size: 14))
+                                    .foregroundStyle(.gray)
+                                    
+                                }
+                            }
+                    }
+                }
+                .chartXSelection(value: $barSelection)
+                .scaledToFit()
+                .chartXAxis(.hidden)
+                .chartYAxis(.hidden)
+                ScrollView(.horizontal){
+                    HStack(spacing: 35){
+                        ForEach(sessions) { session in
+                            let intensity = LactateHelper.intensity(for: session.lactate)
+                            VStack{
+                                Text("\(session.lactate ?? 0.0, specifier: "%.1f") mM")
+                                    .font(.system(size: 14))
+                                    .foregroundStyle(intensity.color)
+                                Image(systemName: intensity.icon)
+                                    .font(.system(size: 24, weight: .bold))
+                                    .foregroundStyle(intensity.color)
+                                    .aspectRatio(contentMode: .fill)
+                                Text("\(session.date?.formattedAsRelative() ?? "N/A")")
+                                    .font(.system(size: 14))
+                                    .foregroundStyle(.gray)
+                            }
+                            
+                        }
+                        
+                    }
+>>>>>>> Stashed changes
                     .padding()
                 }
                 .padding(.bottom)
