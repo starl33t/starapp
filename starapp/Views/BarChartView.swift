@@ -27,8 +27,8 @@ struct BarChartView: View {
                     .foregroundStyle(LactateHelper.color(for: session.lactate))
                     .annotation(position: .overlay, alignment: .center) {
                         Text(LactateHelper.formatLactate(session.lactate ?? 0))
+                            .multilineTextAlignment(.center)
                             .font(.system(size: 8))
-                            .foregroundStyle(.whiteOne)
                             .fontWeight(.bold)
                     }
                 }

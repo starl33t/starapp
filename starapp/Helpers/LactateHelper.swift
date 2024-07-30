@@ -59,7 +59,7 @@ struct LactateHelper {
             } else {
                 let integerPart = Int(value)
                 let decimalPart = Int((value - Double(integerPart)) * 10)
-                return "\(integerPart)\u{2022}\(decimalPart)"
+                return "\(integerPart)\n\u{2022}\n\(decimalPart)"
             }
         }
 }
