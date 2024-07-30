@@ -10,19 +10,14 @@ struct CalendarView: View {
     @State private var selectedDate = Date()
     @State private var date = Date()
     @State private var days: [Date] = Date().daysInYear
-    
+    @State private var sessionCache: [Date: [Session]] = [:]
     
     var body: some View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
             VStack {
                 HStack {
-                    Button(action: {
-                        let today = Date.now
-                        selectedDate = today
-                        date = today
-                        days = today.daysInYear
-                    }) {
+                    Button(action: resetToToday) {
                         Text("Today")
                             .foregroundColor(.whiteOne)
                     }
@@ -46,7 +41,7 @@ struct CalendarView: View {
                     ScrollView {
                         LazyVGrid(columns: columns) {
                             ForEach(days, id: \.self) { day in
-                                let daySessions = sessions.filter { Calendar.current.isDate($0.date ?? Date(), inSameDayAs: day) }
+                                let daySessions = sessionCache[day, default: []]
                                 
                                 ZStack(alignment: .top) {
                                     if Calendar.current.component(.day, from: day) == 1 {
@@ -84,6 +79,9 @@ struct CalendarView: View {
                                 .onAppear {
                                     visibleDates.insert(day)
                                     date = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: visibleDates.sorted()[visibleDates.count / 2])) ?? date
+                                    if sessionCache[day] == nil {
+                                        sessionCache[day] = sessions.filter { Calendar.current.isDate($0.date ?? Date(), inSameDayAs: day) }
+                                    }
                                 }
                                 .onDisappear {
                                     visibleDates.remove(day)
@@ -94,8 +92,7 @@ struct CalendarView: View {
                         }
                     }
                     .onAppear {
-                        proxy.scrollTo(days.first(where: { Calendar.current.isDate($0, inSameDayAs: Date.now) }), anchor: .center)
-                        
+                        proxy.scrollTo(days.first(where: { Calendar.current.isDate($0, inSameDayAs: Date()) }), anchor: .center)
                     }
                     .onChange(of: selectedDate) { oldDate, newDate in
                         date = newDate
@@ -135,6 +132,13 @@ struct CalendarView: View {
         
     }
     
+    private func resetToToday() {
+        let today = Date()
+        selectedDate = today
+        date = today
+        days = today.daysInYear
+    }
+   
 }
 
 #Preview {
