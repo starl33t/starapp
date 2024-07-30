@@ -1,12 +1,14 @@
 import SwiftUI
 import SwiftData
-
+import Combine
 struct CalendarView: View {
+    @Environment(\.modelContext) private var modelContext
     @State private var showDatePicker = false
-//    @State private var visibleDates: Set<Date> = []
+    @State private var visibleDates: Set<Date> = []
     let columns = Array(repeating: GridItem(.flexible()), count: 7)
     let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-    @Query private var sessions: [Session]
+//    @Query private var sessions: [Session]
+    @StateObject private var viewModel = CalendarViewModel()
     @State private var selectedDate = Date()
     @State private var date = Date()
     @State private var days: [Date] = Date().daysInYear
@@ -50,7 +52,8 @@ struct CalendarView: View {
                     ScrollView {
                         LazyVGrid(columns: columns) {
                             ForEach(days, id: \.self) { day in
-                                let daySessions = sessions.filter { Calendar.current.isDate($0.date ?? Date(), inSameDayAs: day) }
+//                                let daySessions = sessions.filter { Calendar.current.isDate($0.date ?? Date(), inSameDayAs: day) }
+                                let daySessions = viewModel.sessionsByDay[day] ?? []
                                 
                                 ZStack(alignment: .top) {
                                     if Calendar.current.component(.day, from: day) == 1 {
@@ -85,13 +88,13 @@ struct CalendarView: View {
                                 }
                                 .id(day)
                                 .frame(height: 70)
-//                                .onAppear {
-//                                    visibleDates.insert(day)
-//                                    date = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: visibleDates.sorted()[visibleDates.count / 2])) ?? date
-//                                }
-//                                .onDisappear {
-//                                    visibleDates.remove(day)
-//                                }
+                                .onAppear {
+                                    visibleDates.insert(day)
+                                    date = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: visibleDates.sorted()[visibleDates.count / 2])) ?? date
+                                }
+                                .onDisappear {
+                                    visibleDates.remove(day)
+                                }
                                 
                             }
                             
@@ -104,8 +107,12 @@ struct CalendarView: View {
                     .onChange(of: selectedDate) { oldDate, newDate in
                         date = newDate
                         days = date.daysInYear
+                        visibleDates.removeAll()
                         proxy.scrollTo(days.first(where: { Calendar.current.isDate($0, inSameDayAs: newDate) }), anchor: .center)
                         
+                    }
+                    .onReceive(NotificationCenter.default.publisher(for: .reloadSessions)) { _ in
+                        viewModel.loadSessions(from: modelContext)
                     }
                 }
                 
@@ -136,6 +143,9 @@ struct CalendarView: View {
                 )
             }
         }
+        .onAppear {
+            viewModel.loadSessions(from: modelContext)
+        }
         
     }
     
@@ -143,4 +153,44 @@ struct CalendarView: View {
 
 #Preview {
     CalendarView()
+}
+class CalendarViewModel: ObservableObject {
+    @Published var sessions = [Session]()
+    @Published var sessionsByDay = [Date: [Session]]()
+    private var cancellables = Set<AnyCancellable>()
+    
+    init() {
+        NotificationCenter.default.publisher(for: .newSessionSaved)
+            .sink { [weak self] _ in
+                self?.reloadSessions()
+            }
+            .store(in: &cancellables)
+    }
+    
+    func reloadSessions() {
+        NotificationCenter.default.post(name: .reloadSessions, object: nil)
+    }
+    
+    func loadSessions(from context: ModelContext) {
+        let fetchDescriptor = FetchDescriptor<Session>()
+        
+        do {
+            sessions = try context.fetch(fetchDescriptor)
+            organizeSessionsByDay()
+        } catch {
+            print("Failed to fetch sessions")
+        }
+    }
+    
+    private func organizeSessionsByDay() {
+        let calendar = Calendar.current
+        sessionsByDay = Dictionary(grouping: sessions, by: { session in
+            calendar.startOfDay(for: session.date ?? Date())
+        })
+    }
+}
+
+extension Notification.Name {
+    static let newSessionSaved = Notification.Name("newSessionSaved")
+    static let reloadSessions = Notification.Name("reloadSessions")
 }

@@ -76,6 +76,7 @@ struct CalendarEventView: View {
                         lactate: lactate ?? 0.0
                     )
                     context.insert(newSession)
+                    NotificationCenter.default.post(name: .newSessionSaved, object: nil)
                     dismiss()
                 }
                 .foregroundColor(.starMain)
