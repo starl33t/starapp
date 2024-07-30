@@ -78,7 +78,7 @@ struct CalendarView: View {
                                 .frame(height: 70)
                                 .onAppear {
                                     visibleDates.insert(day)
-                                    updateVisibleDate()
+                                    date = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: visibleDates.sorted()[visibleDates.count / 2])) ?? date
                                     if sessionCache[day] == nil {
                                         sessionCache[day] = sessions.filter { Calendar.current.isDate($0.date ?? Date(), inSameDayAs: day) }
                                     }
@@ -138,11 +138,7 @@ struct CalendarView: View {
         date = today
         days = today.daysInYear
     }
-    
-    private func updateVisibleDate() {
-        guard let midDate = visibleDates.sorted().dropLast(visibleDates.count / 2).first else { return }
-        date = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: midDate)) ?? date
-    }
+   
 }
 
 #Preview {
