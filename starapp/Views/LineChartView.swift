@@ -41,7 +41,7 @@ struct LineChartView: View {
                         y: .value("Lactate", session.lactate ?? 0)
                     )
                     .foregroundStyle(LactateHelper.color(for: session.lactate))
-                    .annotation(position: .trailing, alignment: .center) {
+                    .annotation(position: .trailing, alignment: .top) {
                         Text(LactateHelper.formatLactate(session.lactate ?? 0))
                             .font(.system(size: 8))
                             .foregroundStyle(.whiteOne)

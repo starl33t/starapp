@@ -29,7 +29,7 @@ struct PieChartView: View {
                     .annotation(position: .overlay, alignment: .center) {
                         Text(LactateHelper.formatLactate(session.lactate ?? 0))
                             .font(.system(size: 8))
-                            .foregroundStyle(.whiteOne)
+                            .multilineTextAlignment(.center)
                             .fontWeight(.bold)
                     }
                    
