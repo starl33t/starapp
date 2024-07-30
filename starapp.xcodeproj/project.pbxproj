@@ -26,8 +26,6 @@
 		BF4A81732C3AF94F00D4CAF1 /* NewTrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81722C3AF94F00D4CAF1 /* NewTrainingView.swift */; };
 		BF4A81772C3AFA1700D4CAF1 /* ChatToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81762C3AFA1700D4CAF1 /* ChatToolBar.swift */; };
 		BF4A817F2C3AFB8600D4CAF1 /* MetricToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A817E2C3AFB8600D4CAF1 /* MetricToolBar.swift */; };
-		BF4A81812C3AFBBB00D4CAF1 /* PlotMetricViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81802C3AFBBB00D4CAF1 /* PlotMetricViewModel.swift */; };
-		BF4A81832C3AFC9200D4CAF1 /* PlotMetricView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81822C3AFC9200D4CAF1 /* PlotMetricView.swift */; };
 		BF4A81892C3AFDDE00D4CAF1 /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81882C3AFDDE00D4CAF1 /* SubscriptionView.swift */; };
 		BF4A818B2C3AFDF500D4CAF1 /* ColorOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A818A2C3AFDF500D4CAF1 /* ColorOptionView.swift */; };
 		BF4A818F2C3AFFDD00D4CAF1 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A818E2C3AFFDD00D4CAF1 /* HomeView.swift */; };
@@ -91,8 +89,6 @@
 		BF4A81722C3AF94F00D4CAF1 /* NewTrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTrainingView.swift; sourceTree = "<group>"; };
 		BF4A81762C3AFA1700D4CAF1 /* ChatToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatToolBar.swift; sourceTree = "<group>"; };
 		BF4A817E2C3AFB8600D4CAF1 /* MetricToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricToolBar.swift; sourceTree = "<group>"; };
-		BF4A81802C3AFBBB00D4CAF1 /* PlotMetricViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlotMetricViewModel.swift; sourceTree = "<group>"; };
-		BF4A81822C3AFC9200D4CAF1 /* PlotMetricView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotMetricView.swift; sourceTree = "<group>"; };
 		BF4A81882C3AFDDE00D4CAF1 /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
 		BF4A818A2C3AFDF500D4CAF1 /* ColorOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorOptionView.swift; sourceTree = "<group>"; };
 		BF4A818E2C3AFFDD00D4CAF1 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -164,21 +160,12 @@
 				BF4A81722C3AF94F00D4CAF1 /* NewTrainingView.swift */,
 				BF4A81482C3AEFCE00D4CAF1 /* ChatView.swift */,
 				BF4A814C2C3AF03B00D4CAF1 /* MetricView.swift */,
-				BF4A81822C3AFC9200D4CAF1 /* PlotMetricView.swift */,
 				BF4A81502C3AF12000D4CAF1 /* LineChartView.swift */,
 				BF4A815A2C3AF2B100D4CAF1 /* BarChartView.swift */,
 				BF4A815E2C3AF31800D4CAF1 /* PieChartView.swift */,
 				BF4A81562C3AF25900D4CAF1 /* PointChartView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		BF4A81942C3B05F200D4CAF1 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				BF4A81802C3AFBBB00D4CAF1 /* PlotMetricViewModel.swift */,
-			);
-			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		BF4A81962C3B065500D4CAF1 /* Toolbars */ = {
@@ -245,7 +232,6 @@
 				BF3F6CAD2C3F23280087DF5A /* Info.plist */,
 				BF4A81932C3B04D900D4CAF1 /* Views */,
 				BF4A81972C3B07C800D4CAF1 /* Helpers */,
-				BF4A81942C3B05F200D4CAF1 /* ViewModels */,
 				BF4A81962C3B065500D4CAF1 /* Toolbars */,
 				BF6744CF2C3FCA5A00A23D76 /* Models */,
 				BF7342082C3AE74A00911375 /* ContentView.swift */,
@@ -421,12 +407,10 @@
 				BF6744D12C3FCAE900A23D76 /* Session.swift in Sources */,
 				BF4A81632C3AF53200D4CAF1 /* ProfileView.swift in Sources */,
 				BF91AC6E2C45405C0028BC41 /* NumberFormatter.swift in Sources */,
-				BF4A81812C3AFBBB00D4CAF1 /* PlotMetricViewModel.swift in Sources */,
 				BF4A81672C3AF5D500D4CAF1 /* CalendarToolBar.swift in Sources */,
 				BF31F0AB2C48FDAD000C005C /* EmailHelper.swift in Sources */,
 				BF4A816F2C3AF8DA00D4CAF1 /* LactateToolBar.swift in Sources */,
 				BF4A818F2C3AFFDD00D4CAF1 /* HomeView.swift in Sources */,
-				BF4A81832C3AFC9200D4CAF1 /* PlotMetricView.swift in Sources */,
 				BF3700882C47B60900CF255D /* User.swift in Sources */,
 				BFDEB5FE2C497D3900D32736 /* UserService.swift in Sources */,
 				BF6C84122C3D16D600032E93 /* IntegrationsView.swift in Sources */,
@@ -610,7 +594,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = starapp/starapp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 22;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"starapp/Preview Content\"";
 				DEVELOPMENT_TEAM = 7F33N9HZ63;
@@ -632,7 +616,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.3.1;
+				MARKETING_VERSION = 1.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starappv01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -651,7 +635,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = starapp/starapp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 22;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"starapp/Preview Content\"";
 				DEVELOPMENT_TEAM = 7F33N9HZ63;
@@ -673,7 +657,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.3.1;
+				MARKETING_VERSION = 1.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starappv01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;

@@ -10,35 +10,55 @@ import Charts
 import SwiftData
 
 struct LineChartView: View {
-    @Query(sort: \Session.heartRate, order: .reverse) private var sessions: [Session]
-
-       var body: some View {
-           ZStack {
-               Color.starBlack.ignoresSafeArea()
-               Chart(sessions) { session in
-                   LineMark(
-                       x: .value("Heart Rate", session.heartRate ?? 0),
-                       y: .value("Lactate", session.lactate ?? 0)
-                   )
-                   .foregroundStyle(.starMain)
-                   .interpolationMethod(.cardinal)
-                   PointMark(
-                       x: .value("Heart Rate", session.heartRate ?? 0),
-                       y: .value("Lactate", session.lactate ?? 0)
-                   )
-                   .foregroundStyle(.whiteOne)
-               }
-               
-               .padding()
-               .scaledToFit()
-               .chartXAxis(.hidden)
-               .chartYAxis(.hidden)
-              
-           }
-       }
-   }
+    @Query(sort: \Session.lactate, order: .reverse) private var sessions: [Session]
+    @Binding var showAnnotations: Bool
+    
+    var body: some View {
+        ZStack {
+            Chart(sessions) { session in
+                LineMark(
+                    x: .value("Lactate", session.lactate ?? 0),
+                    y: .value("Lactate", session.lactate ?? 0)
+                )
+                .foregroundStyle(.whiteOne)
+                .interpolationMethod(.cardinal)
+                
+                PointMark(
+                    x: .value("Lactate", session.lactate ?? 0),
+                    y: .value("Lactate", session.lactate ?? 0)
+                )
+                .foregroundStyle(LactateHelper.color(for: session.lactate))
+                
+                if showAnnotations {
+                    LineMark(
+                        x: .value("Lactate", session.lactate ?? 0),
+                        y: .value("Lactate", session.lactate ?? 0)
+                    )
+                    .foregroundStyle(.whiteOne)
+                    .interpolationMethod(.cardinal)
+                    PointMark(
+                        x: .value("Lactate", session.lactate ?? 0),
+                        y: .value("Lactate", session.lactate ?? 0)
+                    )
+                    .foregroundStyle(LactateHelper.color(for: session.lactate))
+                    .annotation(position: .trailing, alignment: .center) {
+                        Text(LactateHelper.formatLactate(session.lactate ?? 0))
+                            .font(.system(size: 8))
+                            .foregroundStyle(.whiteOne)
+                            .fontWeight(.bold)
+                    }
+                }
+            }
+            .padding()
+            .scaledToFit()
+            .chartXAxis(.hidden)
+            .chartYAxis(.hidden)
+            
+        }
+    }
+}
 
 
 #Preview {
-    LineChartView()
+    LineChartView(showAnnotations: .constant(true))
 }

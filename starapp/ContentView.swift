@@ -73,7 +73,7 @@ struct ContentView: View {
                         case 3:
                             ChatToolbar(showingSheet: $showingSheet)
                         case 4:
-                            MetricToolBar(showingSheet: $showingSheet)
+                            MetricToolBar(showingSheet: .constant(false))
                         default:
                             HomeToolBar(showingSheet: $showingSheet)
                         }

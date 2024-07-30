@@ -8,22 +8,22 @@
 import SwiftUI
 
 struct MetricView: View {
-
-        var body: some View {
-            ZStack {
-                Color.starBlack.ignoresSafeArea()
-                VStack {
-                    TabView {
-                        LineChartView()
-                        BarChartView()
-                        PieChartView()
-                        PointChartView()
-                    }
-                    .tabViewStyle(PageTabViewStyle())
+    @AppStorage("showAnnotations") var showAnnotations = true
+    var body: some View {
+        ZStack {
+            Color.starBlack.ignoresSafeArea()
+            VStack {
+                TabView {
+                    LineChartView(showAnnotations: $showAnnotations)
+                    BarChartView(showAnnotations: $showAnnotations)
+                    PieChartView(showAnnotations: $showAnnotations)
+                    PointChartView()
                 }
+                .tabViewStyle(PageTabViewStyle())
             }
         }
     }
+}
 
 
 #Preview {

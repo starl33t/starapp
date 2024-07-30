@@ -46,6 +46,11 @@ extension Date {
         }
         return days
     }
+    // Get last 14 days
+    // Get start date of the last 14 days
+        static func startOfLast14Days() -> Date {
+            return Calendar.current.date(byAdding: .day, value: -13, to: Date())!
+        }
     
     func formattedAsRelative() -> String {
         let calendar = Calendar.current
@@ -70,5 +75,18 @@ extension Date {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM yyyy"
         return formatter.string(from: self)
+    }
+    
+    func formatDayMonth(date: Date?) -> String {
+            guard let date = date else { return "N/A" }
+            let formatter = DateFormatter()
+            formatter.dateFormat = "d MMM"
+            return formatter.string(from: date)
+        }
+    func formatYear(date: Date?) -> String {
+        guard let date = date else { return "N/A" }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy"
+        return formatter.string(from: date)
     }
 }

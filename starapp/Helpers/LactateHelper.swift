@@ -52,4 +52,14 @@ struct LactateHelper {
         guard let lactate = lactate else { return .whiteOne }
         return intensity(for: lactate).color
     }
+    
+    static func formatLactate(_ value: Double) -> String {
+            if value.truncatingRemainder(dividingBy: 1) == 0 {
+                return String(Int(value))
+            } else {
+                let integerPart = Int(value)
+                let decimalPart = Int((value - Double(integerPart)) * 10)
+                return "\(integerPart)\u{2022}\(decimalPart)"
+            }
+        }
 }

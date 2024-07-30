@@ -13,34 +13,47 @@ import SwiftData
 struct HomeView: View {
     @State private var trigger = false
     @State private var selectedButton: String = "Sweet spot"
-    @Query(sort: \Session.date, order: .reverse) private var sessions: [Session]
+    @State private var barSelection: Date?
+    @Query private var sessions: [Session]
     @State private var selectedSession: String = "Session"
-
+    
+    init() {
+            let startOfLast14Days = Date.startOfLast14Days()
+            _sessions = Query(filter: #Predicate<Session> { session in
+                if let date = session.date {
+                    return date >= startOfLast14Days
+                } else {
+                    return false
+                }
+            }, sort: \Session.date, order: .reverse) 
+        }
+    
+    
     var body: some View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
             
             VStack {
                 HStack(spacing: 48) {
-                        HackerTextView(text: {
-                            switch selectedButton {
-                            case "LT 1": return "1,8 mM"
-                            case "Sweet spot": return "2,8 mM"
-                            case "LT 2": return "3,8 mM"
-                            default: return ""
-                            }
-                        }(), trigger: trigger)
+                    HackerTextView(text: {
+                        switch selectedButton {
+                        case "LT 1": return "1,8 mM"
+                        case "Sweet spot": return "2,8 mM"
+                        case "LT 2": return "3,8 mM"
+                        default: return ""
+                        }
+                    }(), trigger: trigger)
                     
-        
-                        HackerTextView(text: {
-                            switch selectedButton {
-                            case "LT 1": return "145 BPM"
-                            case "Sweet spot": return "160 BPM"
-                            case "LT 2": return "175 BPM"
-                            default: return ""
-                            }
-                        }(), trigger: trigger)
-                        
+                    
+                    HackerTextView(text: {
+                        switch selectedButton {
+                        case "LT 1": return "145 BPM"
+                        case "Sweet spot": return "160 BPM"
+                        case "LT 2": return "175 BPM"
+                        default: return ""
+                        }
+                    }(), trigger: trigger)
+                    
                 }
                 .padding(.bottom, 28)
                 .font(.system(size: 28, weight: .bold))
@@ -65,30 +78,67 @@ struct HomeView: View {
                     }
                     .foregroundColor(selectedButton == "LT 2" ? .starMain : .gray)
                 }
-                BarChartView()
-                    ScrollView(.horizontal){
-                        HStack(spacing: 35){
-                            ForEach(sessions) { session in
-                                let intensity = LactateHelper.intensity(for: session.lactate)
-                                VStack{
-                                    Text("\(session.lactate ?? 0.0, specifier: "%.1f") mM")
-                                        .font(.system(size: 14))
-                                        .foregroundStyle(intensity.color)
-                                    Image(systemName: intensity.icon)
-                                        .font(.system(size: 24, weight: .bold))
-                                        .foregroundStyle(intensity.color)
-                                        .aspectRatio(contentMode: .fill)
-                                    Text("\(session.date?.formattedAsRelative() ?? "N/A")")
-                                        .font(.system(size: 14))
-                                        .foregroundStyle(.gray)
-                                }
-                                
-                            }
-                        
+                Chart(sessions) { session in
+                        BarMark(
+                            x: .value("Date", session.date ?? Date(), unit: .day),
+                            y: .value("Lactate", session.lactate ?? 0),
+                            stacking: .standard
+                        )
+                        .foregroundStyle(LactateHelper.color(for: session.lactate))
+                        .annotation(position: .overlay, alignment: .center) {
+                            Text(LactateHelper.formatLactate(session.lactate ?? 0))
+                                .font(.system(size: 8))
+                                .foregroundStyle(.whiteOne)
+                                .fontWeight(.bold)
                         }
-                        .padding()
+                    if let barSelection = barSelection {
+                        RuleMark(x: .value("Date", barSelection, unit: .day))
+                            .foregroundStyle(.gray)
+                            .zIndex(-10)
+                            .annotation(
+                                position: .bottom,
+                                spacing: 4,
+                                overflowResolution: .init(x: .disabled, y: .disabled)
+                            ) {
+                                if let session = sessions.first(where: { Calendar.current.isDate($0.date ?? Date(), inSameDayAs: barSelection) }) {
+                                    VStack {
+                                        Text(Date().formatDayMonth(date: session.date))
+                                    }
+                                    .font(.system(size: 14))
+                                    .foregroundStyle(.gray)
+                                    
+                                }
+                            }
                     }
-                    .scrollIndicators(.hidden)
+                }
+                .chartXSelection(value: $barSelection)
+                .scaledToFit()
+                .chartXAxis(.hidden)
+                .chartYAxis(.hidden)
+                
+                ScrollView(.horizontal){
+                    HStack(spacing: 35){
+                        ForEach(sessions) { session in
+                            let intensity = LactateHelper.intensity(for: session.lactate)
+                            VStack{
+                                Text("\(session.lactate ?? 0.0, specifier: "%.1f") mM")
+                                    .font(.system(size: 14))
+                                    .foregroundStyle(intensity.color)
+                                Image(systemName: intensity.icon)
+                                    .font(.system(size: 24, weight: .bold))
+                                    .foregroundStyle(intensity.color)
+                                    .aspectRatio(contentMode: .fill)
+                                Text("\(session.date?.formattedAsRelative() ?? "N/A")")
+                                    .font(.system(size: 14))
+                                    .foregroundStyle(.gray)
+                            }
+                            
+                        }
+                        
+                    }
+                    .padding()
+                }
+                .scrollIndicators(.hidden)
                 
             }
             .padding(.top, 50)
