@@ -7,22 +7,17 @@ struct CalendarView: View {
     let columns = Array(repeating: GridItem(.flexible()), count: 7)
     let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     @Query private var sessions: [Session]
-    @State private var selectedDate = Date()
-    @State private var date = Date()
-    @State private var days: [Date] = Date().daysInYear
+    @Binding var selectedDate: Date
+    @Binding var date: Date
+    @Binding var days: [Date]
     @State private var sessionCache: [Date: [Session]] = [:]
+    var onTodayButtonTapped: () -> Void
     
     var body: some View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
             VStack {
                 HStack {
-                    Button(action: resetToToday) {
-                        Text("Today")
-                            .foregroundColor(.whiteOne)
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding()
                     Text(date.formattedMonthYear())
                         .foregroundStyle(.whiteOne)
                         .onTapGesture { showDatePicker.toggle() }
@@ -129,18 +124,10 @@ struct CalendarView: View {
                 )
             }
         }
-        
     }
     
-    private func resetToToday() {
-        let today = Date()
-        selectedDate = today
-        date = today
-        days = today.daysInYear
-    }
-   
 }
 
 #Preview {
-    CalendarView()
+    CalendarView(selectedDate: .constant(Date()), date: .constant(Date()), days: .constant(Date().daysInYear), onTodayButtonTapped: {})
 }

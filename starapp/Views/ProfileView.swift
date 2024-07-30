@@ -137,8 +137,6 @@ struct ProfileView: View {
     private func profileRow(imageName: String, text: String) -> some View {
         HStack {
             Image(systemName: imageName)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
                 .padding(8)
                 .foregroundStyle(.whiteOne)
                 .frame(width: 38, alignment: .center)

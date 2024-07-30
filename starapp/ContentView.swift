@@ -7,7 +7,10 @@ struct ContentView: View {
     @State private var searchText: String = ""
     @State private var showingSheet: Bool = false
     @State private var currentUser: User?
-
+    @State private var selectedDate = Date()
+    @State private var date = Date()
+    @State private var days: [Date] = Date().daysInYear
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -21,12 +24,19 @@ struct ContentView: View {
                                     Text("Home")
                                 }
                                 .tag(0)
-                            CalendarView()
-                                .tabItem {
-                                    Image(systemName: "calendar")
-                                    Text("Calendar")
+                            CalendarView(
+                                selectedDate: $selectedDate,
+                                date: $date,
+                                days: $days,
+                                onTodayButtonTapped: {
+                                    CalendarHelper.resetToToday(selectedDate: $selectedDate, date: $date, days: $days)
                                 }
-                                .tag(1)
+                            )
+                            .tabItem {
+                                Image(systemName: "calendar")
+                                Text("Calendar")
+                            }
+                            .tag(1)
                             LactateView()
                                 .tabItem {
                                     Image(systemName: "dot.radiowaves.left.and.right")
@@ -67,7 +77,9 @@ struct ContentView: View {
                     if currentUser != nil {
                         switch selectedTab {
                         case 1:
-                            CalendarToolbar(showingSheet: $showingSheet)
+                            CalendarToolbar(showingSheet: $showingSheet, onTodayButtonTapped: {
+                                CalendarHelper.resetToToday(selectedDate: $selectedDate, date: $date, days: $days)
+                            })
                         case 2:
                             LactateToolbar(showingSheet: $showingSheet)
                         case 3:
@@ -84,6 +96,8 @@ struct ContentView: View {
         }
     }
 }
+
+
 
 #Preview {
     NavigationView {

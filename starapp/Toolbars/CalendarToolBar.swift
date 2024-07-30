@@ -2,11 +2,11 @@ import SwiftUI
 
 struct CalendarToolbar: View {
     @Binding var showingSheet: Bool
-
+    var onTodayButtonTapped: () -> Void
+    
     var body: some View {
         HStack {
-            Button(action: {
-            }) {
+            Button(action: onTodayButtonTapped) {
                 Label("Today", systemImage: "calendar.badge.checkmark")
             }
             Menu {
@@ -28,11 +28,11 @@ struct CalendarToolbar: View {
             } label: {
                 Label("Filter", systemImage: "line.3.horizontal.decrease.circle")
             }
-       
+            
         }
     }
 }
 
 #Preview {
-    CalendarToolbar(showingSheet: .constant(false))
+    CalendarToolbar(showingSheet: .constant(false), onTodayButtonTapped: {})
 }
