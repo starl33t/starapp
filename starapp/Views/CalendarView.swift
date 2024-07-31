@@ -18,7 +18,7 @@ struct CalendarView: View {
             Color.starBlack.ignoresSafeArea()
             VStack {
                 HStack {
-                    Text(date.formattedMonthYear())
+                    Text(selectedDate.formatYear(date: selectedDate))
                         .foregroundStyle(.whiteOne)
                         .onTapGesture { showDatePicker.toggle() }
                         .frame(maxWidth: .infinity)
@@ -72,16 +72,16 @@ struct CalendarView: View {
                                 .id(day)
                                 .frame(height: 70)
                                 .onAppear {
-                                    visibleDates.insert(day)
-                                    date = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: visibleDates.sorted()[visibleDates.count / 2])) ?? date
                                     if sessionCache[day] == nil {
                                         sessionCache[day] = sessions.filter { Calendar.current.isDate($0.date ?? Date(), inSameDayAs: day) }
                                     }
                                 }
-                                .onDisappear {
-                                    visibleDates.remove(day)
+                                .onChange(of: sessions) {
+                                    sessionCache = [:]
+                                    for day in days {
+                                        sessionCache[day] = sessions.filter { Calendar.current.isDate($0.date ?? Date(), inSameDayAs: day) }
+                                    }
                                 }
-                                
                             }
                             
                         }
@@ -95,6 +95,7 @@ struct CalendarView: View {
                         proxy.scrollTo(days.first(where: { Calendar.current.isDate($0, inSameDayAs: newDate) }), anchor: .center)
                         
                     }
+                    
                 }
                 
             }

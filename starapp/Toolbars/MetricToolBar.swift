@@ -15,13 +15,9 @@ struct MetricToolBar: View {
             }) {
                 Label("Values", systemImage: showAnnotations ? "tag" : "tag.slash")
             }
-            Menu {
-                Button(action: {
-                    isExporting = true
-                }) {
-                    Text("Download CSV")
-                }
-            } label: {
+            Button(action: {
+                isExporting = true
+            }) {
                 Label("CSV Export", systemImage: "list.bullet.clipboard")
             }
         }

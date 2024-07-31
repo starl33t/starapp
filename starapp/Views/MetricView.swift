@@ -17,7 +17,7 @@ struct MetricView: View {
                     LineChartView(showAnnotations: $showAnnotations)
                     BarChartView(showAnnotations: $showAnnotations)
                     PieChartView(showAnnotations: $showAnnotations)
-                    PointChartView()
+                    PointChartView(showAnnotations: $showAnnotations)
                 }
                 .tabViewStyle(PageTabViewStyle())
             }
