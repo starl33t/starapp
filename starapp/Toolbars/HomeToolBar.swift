@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct HomeToolBar: View {
-    @Binding var showingSheet: Bool
     @AppStorage("Notifications") private var Notifications = false
     var body: some View {
         HStack {
@@ -29,5 +28,5 @@ struct HomeToolBar: View {
 }
 
 #Preview {
-    HomeToolBar(showingSheet: .constant(false))
+    HomeToolBar()
 }

@@ -5,11 +5,13 @@ struct ContentView: View {
     @Environment(\.modelContext) var context
     @State private var selectedTab: Int = 0
     @State private var searchText: String = ""
-    @State private var showingSheet: Bool = false
     @State private var currentUser: User?
     @State private var selectedDate = Date()
     @State private var date = Date()
     @State private var days: [Date] = Date().daysInYear
+    @State private var showDatePicker: Bool = false
+    @State private var messages: [ChatMessage] = []
+    @State private var sessions: [Session] = []
     
     var body: some View {
         NavigationView {
@@ -25,6 +27,7 @@ struct ContentView: View {
                                 }
                                 .tag(0)
                             CalendarView(
+                                showDatePicker: $showDatePicker,
                                 selectedDate: $selectedDate,
                                 date: $date,
                                 days: $days,
@@ -43,7 +46,7 @@ struct ContentView: View {
                                     Text("Lactate")
                                 }
                                 .tag(2)
-                            ChatView(user: user)
+                            ChatView(messages: $messages, user: user)
                                 .tabItem {
                                     Image(systemName: "person.2")
                                     Text("Chat")
@@ -77,17 +80,17 @@ struct ContentView: View {
                     if currentUser != nil {
                         switch selectedTab {
                         case 1:
-                            CalendarToolbar(showingSheet: $showingSheet, onTodayButtonTapped: {
+                            CalendarToolbar(showDatePicker: $showDatePicker, onTodayButtonTapped: {
                                 CalendarHelper.resetToToday(selectedDate: $selectedDate, date: $date, days: $days)
                             })
                         case 2:
-                            LactateToolbar(showingSheet: $showingSheet)
+                            LactateToolbar()
                         case 3:
-                            ChatToolbar(showingSheet: $showingSheet)
+                            ChatToolbar(messages: $messages, user: currentUser!)
                         case 4:
-                            MetricToolBar(showingSheet: .constant(false))
+                            MetricToolBar()
                         default:
-                            HomeToolBar(showingSheet: $showingSheet)
+                            HomeToolBar()
                         }
                     }
                 }

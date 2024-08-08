@@ -2,8 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct CalendarView: View {
-    @State private var showDatePicker = false
-    @State private var visibleDates: Set<Date> = []
+    @Binding var showDatePicker: Bool
     let columns = Array(repeating: GridItem(.flexible()), count: 7)
     let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     @Query private var sessions: [Session]
@@ -18,13 +17,6 @@ struct CalendarView: View {
             Color.starBlack.ignoresSafeArea()
             VStack {
                 HStack {
-                    Text(selectedDate.formatYear(date: selectedDate))
-                        .foregroundStyle(.whiteOne)
-                        .onTapGesture { showDatePicker.toggle() }
-                        .frame(maxWidth: .infinity)
-                }
-                .padding(.bottom, 16)
-                HStack {
                     ForEach(daysOfWeek, id: \.self) { dayOfWeek in
                         Text(dayOfWeek)
                             .frame(maxWidth: .infinity)
@@ -36,54 +28,13 @@ struct CalendarView: View {
                     ScrollView {
                         LazyVGrid(columns: columns) {
                             ForEach(days, id: \.self) { day in
-                                let daySessions = sessionCache[day, default: []]
-                                
-                                ZStack(alignment: .top) {
-                                    if Calendar.current.component(.day, from: day) == 1 {
-                                        Text(day.formatted(.dateTime.month(.abbreviated)))
-                                            .fontWeight(.bold)
-                                            .frame(maxWidth: .infinity)
-                                    }
-                                    VStack {
-                                        ZStack {
-                                            Text(day.formatted(.dateTime.day()))
-                                                .fontWeight(.bold)
-                                                .frame(maxWidth: .infinity)
-                                                .foregroundColor(
-                                                    Calendar.current.isDateInToday(day) ? .starMain : .whiteOne
-                                                )
-                                            if !daySessions.isEmpty {
-                                                VStack {
-                                                    HStack(spacing: 4) {
-                                                        ForEach(daySessions, id: \.self) { session in
-                                                            Circle()
-                                                                .frame(width: 6, height: 6)
-                                                                .foregroundStyle(LactateHelper.color(for: session.lactate))
-                                                        }
-                                                    }
-                                                    .padding(.top, 28)
-                                                }
-                                            }
-                                        }
-                                        .frame(maxWidth: .infinity, alignment: .center)
-                                    }
+                                DayView(day: day, sessions: sessionCache[day, default: []])
+                                    .id(day)
                                     .frame(height: 70)
-                                }
-                                .id(day)
-                                .frame(height: 70)
-                                .onAppear {
-                                    if sessionCache[day] == nil {
-                                        sessionCache[day] = sessions.filter { Calendar.current.isDate($0.date ?? Date(), inSameDayAs: day) }
+                                    .onAppear {
+                                        updateSessionCache(for: day)
                                     }
-                                }
-                                .onChange(of: sessions) {
-                                    sessionCache = [:]
-                                    for day in days {
-                                        sessionCache[day] = sessions.filter { Calendar.current.isDate($0.date ?? Date(), inSameDayAs: day) }
-                                    }
-                                }
                             }
-                            
                         }
                     }
                     .onAppear {
@@ -93,11 +44,8 @@ struct CalendarView: View {
                         date = newDate
                         days = date.daysInYear
                         proxy.scrollTo(days.first(where: { Calendar.current.isDate($0, inSameDayAs: newDate) }), anchor: .center)
-                        
                     }
-                    
                 }
-                
             }
             .padding()
             .foregroundStyle(.whiteTwo)
@@ -125,10 +73,66 @@ struct CalendarView: View {
                 )
             }
         }
+        .onChange(of: sessions) { _, _ in
+            updateEntireSessionCache()
+        }
     }
     
+    private func updateSessionCache(for day: Date) {
+        let startOfDay = Calendar.current.startOfDay(for: day)
+        sessionCache[startOfDay] = CalendarHelper.updateSessionCache(for: startOfDay, sessions: sessions)
+    }
+    
+    private func updateEntireSessionCache() {
+        sessionCache = CalendarHelper.updateEntireSessionCache(days: days, sessions: sessions)
+    }
+}
+
+struct DayView: View {
+    let day: Date
+    let sessions: [Session]
+    
+    var body: some View {
+        ZStack(alignment: .top) {
+            if Calendar.current.component(.day, from: day) == 1 {
+                Text(day.formatted(.dateTime.month(.abbreviated)))
+                    .fontWeight(.bold)
+                    .frame(maxWidth: .infinity)
+            }
+            VStack {
+                ZStack {
+                    Text(day.formatted(.dateTime.day()))
+                        .fontWeight(.bold)
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(
+                            Calendar.current.isDateInToday(day) ? .starMain : .whiteOne
+                        )
+                    if !sessions.isEmpty {
+                        VStack {
+                            HStack(spacing: 4) {
+                                ForEach(sessions, id: \.self) { session in
+                                    Circle()
+                                        .frame(width: 6, height: 6)
+                                        .foregroundStyle(LactateHelper.color(for: session.lactate))
+                                }
+                            }
+                            .padding(.top, 28)
+                        }
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
+            }
+            .frame(height: 70)
+        }
+    }
 }
 
 #Preview {
-    CalendarView(selectedDate: .constant(Date()), date: .constant(Date()), days: .constant(Date().daysInYear), onTodayButtonTapped: {})
+    CalendarView(
+        showDatePicker: .constant(false),
+        selectedDate: .constant(Date()),
+        date: .constant(Date()),
+        days: .constant(Date().daysInYear),
+        onTodayButtonTapped: {}
+    )
 }

@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct ChatView: View {
-    @State private var messages: [ChatMessage] = []
+    @Binding var messages: [ChatMessage]
     @State private var newMessageContent: String = ""
     @State private var tagName: String = ""
     @FocusState private var isFocused: Bool
@@ -125,5 +125,5 @@ struct ChatView: View {
 }
 
 #Preview {
-    ChatView(user: User(tagName: "PreviewUser"))
+    ChatView(messages: .constant([]), user: User(tagName: "PreviewUser"))
 }

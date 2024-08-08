@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct LactateToolbar: View {
-    @Binding var showingSheet: Bool
     @State var trainingSheet: Bool = false
+
 
     var body: some View {
         HStack {
@@ -28,5 +28,5 @@ struct LactateToolbar: View {
 }
 
 #Preview {
-    LactateToolbar(showingSheet: .constant(false))
+    LactateToolbar()
 }

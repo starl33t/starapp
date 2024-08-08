@@ -4,7 +4,6 @@ import UniformTypeIdentifiers
 
 struct MetricToolBar: View {
     @Query private var sessions: [Session]
-    @Binding var showingSheet: Bool
     @AppStorage("showAnnotations") var showAnnotations = true
     @State private var isExporting = false
     
@@ -38,5 +37,5 @@ struct MetricToolBar: View {
 }
 
 #Preview {
-    MetricToolBar(showingSheet: .constant(false))
+    MetricToolBar()
 }

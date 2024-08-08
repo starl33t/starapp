@@ -51,6 +51,11 @@ extension Date {
         static func startOfLast14Days() -> Date {
             return Calendar.current.date(byAdding: .day, value: -13, to: Date())!
         }
+    var daySquareIcon: String {
+            let calendar = Calendar.current
+            let day = calendar.component(.day, from: self)
+            return "\(day).square"
+        }
     
     func formattedAsRelative() -> String {
         let calendar = Calendar.current
@@ -70,12 +75,7 @@ extension Date {
             return "N/A"
         }
     }
-    
-    func formattedMonthYear() -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMM yyyy"
-        return formatter.string(from: self)
-    }
+
     
     func formatDayMonth(date: Date?) -> String {
             guard let date = date else { return "N/A" }
@@ -89,4 +89,11 @@ extension Date {
         formatter.dateFormat = "yyyy"
         return formatter.string(from: date)
     }
+    func formatSessionDate() -> String {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "d MMM yyyy (HH:mm)"
+            dateFormatter.timeZone = TimeZone.current
+            return dateFormatter.string(from: self)
+        }
+    
 }
