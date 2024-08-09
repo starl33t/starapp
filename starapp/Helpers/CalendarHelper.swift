@@ -2,10 +2,10 @@ import Foundation
 import SwiftUI
 
 struct CalendarHelper {
-    
-    static func resetToToday(selectedDate: Binding<Date>, days: Binding<[Date]>) {
+    @AppStorage("selectedDate") static var selectedDate: Date = Date()
+    static func resetToToday(days: Binding<[Date]>) {
             let today = Date()
-            selectedDate.wrappedValue = today
+            selectedDate = today  // Directly update the AppStorage value
             days.wrappedValue = today.daysInYear
         }
     

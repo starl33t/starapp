@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct CalendarToolbar: View {
-    @Binding var showDatePicker: Bool
-    @Binding var selectedDate: Date
+    @State private var showDatePicker: Bool = false
+    @AppStorage("selectedDate") var selectedDate: Date = Date()
     var onTodayButtonTapped: () -> Void
     
     var body: some View {
@@ -11,7 +11,7 @@ struct CalendarToolbar: View {
                 Image(systemName: Date().daySquareIcon)
             }
             Button(action: {
-                showDatePicker = true  // Set showDatePicker to true to show the sheet
+                showDatePicker = true  
             }) {
                 Label("Calendar", systemImage: "calendar")
             }
@@ -38,5 +38,5 @@ struct CalendarToolbar: View {
 }
 
 #Preview {
-    CalendarToolbar(showDatePicker: .constant(false), selectedDate: .constant(Date()), onTodayButtonTapped: {})
+    CalendarToolbar(onTodayButtonTapped: {})
 }

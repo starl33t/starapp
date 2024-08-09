@@ -5,10 +5,10 @@ struct CalendarView: View {
     let columns = Array(repeating: GridItem(.flexible()), count: 7)
     let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     @Query private var sessions: [Session]
-    @Binding var selectedDate: Date
+    @AppStorage("selectedDate") var selectedDate: Date = Date()
     @Binding var days: [Date]
     @State private var sessionCache: [Date: [Session]] = [:]
-    var onTodayButtonTapped: () -> Void
+   
     
     var body: some View {
         ZStack {
@@ -103,8 +103,6 @@ struct DayView: View {
 
 #Preview {
     CalendarView(
-        selectedDate: .constant(Date()),
-        days: .constant(Date().daysInYear),
-        onTodayButtonTapped: {}
+        days: .constant(Date().daysInYear)
     )
 }
