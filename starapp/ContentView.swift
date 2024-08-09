@@ -26,7 +26,6 @@ struct ContentView: View {
                                 }
                                 .tag(0)
                             CalendarView(
-                                showDatePicker: $showDatePicker,
                                 selectedDate: $selectedDate,
                                 days: $days,
                                 onTodayButtonTapped: {
@@ -78,9 +77,13 @@ struct ContentView: View {
                     if currentUser != nil {
                         switch selectedTab {
                         case 1:
-                            CalendarToolbar(showDatePicker: $showDatePicker, onTodayButtonTapped: {
-                                CalendarHelper.resetToToday(selectedDate: $selectedDate, days: $days)
-                            })
+                            CalendarToolbar(
+                                showDatePicker: $showDatePicker,
+                                selectedDate: $selectedDate,  
+                                onTodayButtonTapped: {
+                                    CalendarHelper.resetToToday(selectedDate: $selectedDate, days: $days)
+                                }
+                            )
                         case 2:
                             LactateToolbar()
                         case 3:

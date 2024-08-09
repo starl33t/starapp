@@ -2,7 +2,6 @@ import SwiftUI
 import SwiftData
 
 struct CalendarView: View {
-    @Binding var showDatePicker: Bool
     let columns = Array(repeating: GridItem(.flexible()), count: 7)
     let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     @Query private var sessions: [Session]
@@ -23,10 +22,6 @@ struct CalendarView: View {
             }
             .padding()
             .foregroundStyle(.whiteTwo)
-            
-            if showDatePicker {
-                datePicker()
-            }
         }
         .onAppear {
             CalendarHelper.updateEntireSessionCache(days: days, sessions: sessions, sessionCache: &sessionCache)
@@ -62,36 +57,11 @@ struct CalendarView: View {
                 proxy.scrollTo(days.first(where: { Calendar.current.isDate($0, inSameDayAs: Date()) }), anchor: .center)
             }
             .onChange(of: selectedDate) { oldDate, newDate in
-               
                 days = newDate.daysInYear
                 proxy.scrollTo(days.first(where: { Calendar.current.isDate($0, inSameDayAs: newDate) }), anchor: .center)
                 CalendarHelper.updateEntireSessionCache(days: days, sessions: sessions, sessionCache: &sessionCache)
             }
         }
-    }
-    
-    private func datePicker() -> some View {
-        VStack {
-            Spacer()
-            VStack {
-                DatePicker("Select Date", selection: $selectedDate, displayedComponents: .date)
-                    .datePickerStyle(WheelDatePickerStyle())
-                    .labelsHidden()
-                    .environment(\.colorScheme, .dark)
-            }
-            .frame(maxWidth: .infinity)
-            .padding()
-            .background(Color.starBlack)
-            .cornerRadius(10)
-            .shadow(radius: 20)
-        }
-        .background(
-            Color.black.opacity(0.3)
-                .edgesIgnoringSafeArea(.all)
-                .onTapGesture {
-                    showDatePicker = false
-                }
-        )
     }
 }
 
@@ -133,7 +103,6 @@ struct DayView: View {
 
 #Preview {
     CalendarView(
-        showDatePicker: .constant(false),
         selectedDate: .constant(Date()),
         days: .constant(Date().daysInYear),
         onTodayButtonTapped: {}
