@@ -12,7 +12,7 @@ struct CalendarToolbar: View {
             Button(action: {
                 showDatePicker.toggle()  // Toggle the binding here
             }) {
-                Label("Filter", systemImage: "calendar")
+                Label("Calendar", systemImage: "calendar")
             }
         }
     }

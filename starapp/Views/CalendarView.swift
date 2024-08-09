@@ -16,65 +16,53 @@ struct CalendarView: View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
             VStack {
-                HStack {
-                    ForEach(daysOfWeek, id: \.self) { dayOfWeek in
-                        Text(dayOfWeek)
-                            .frame(maxWidth: .infinity)
+                daysOfWeekHeader()
+                scrollViewDate
+                    .onChange(of: sessions) {
+                        updateEntireSessionCache()
                     }
-                }
-                .fontWeight(.black)
-                .padding(.bottom, 8)
-                ScrollViewReader { proxy in
-                    ScrollView {
-                        LazyVGrid(columns: columns) {
-                            ForEach(days, id: \.self) { day in
-                                DayView(day: day, sessions: sessionCache[day, default: []])
-                                    .id(day)
-                                    .frame(height: 70)
-                                    .onAppear {
-                                        updateSessionCache(for: day)
-                                    }
-                            }
-                        }
-                    }
-                    .onAppear {
-                        proxy.scrollTo(days.first(where: { Calendar.current.isDate($0, inSameDayAs: Date()) }), anchor: .center)
-                    }
-                    .onChange(of: selectedDate) { oldDate, newDate in
-                        date = newDate
-                        days = date.daysInYear
-                        proxy.scrollTo(days.first(where: { Calendar.current.isDate($0, inSameDayAs: newDate) }), anchor: .center)
-                    }
-                }
             }
             .padding()
             .foregroundStyle(.whiteTwo)
+            
             if showDatePicker {
-                VStack {
-                    Spacer()
-                    VStack {
-                        DatePicker("Select Date", selection: $selectedDate, displayedComponents: [.date])
-                            .datePickerStyle(WheelDatePickerStyle())
-                            .labelsHidden()
-                            .environment(\.colorScheme, .dark)
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.starBlack)
-                    .cornerRadius(10)
-                    .shadow(radius: 20)
-                }
-                .background(
-                    Color.black.opacity(0.3)
-                        .edgesIgnoringSafeArea(.all)
-                        .onTapGesture {
-                            showDatePicker = false
-                        }
-                )
+                datePicker()
             }
         }
-        .onChange(of: sessions) { _, _ in
-            updateEntireSessionCache()
+    }
+    private func daysOfWeekHeader() -> some View {
+        HStack {
+            ForEach(daysOfWeek, id: \.self) { dayOfWeek in
+                Text(dayOfWeek)
+                    .frame(maxWidth: .infinity)
+            }
+        }
+        .fontWeight(.black)
+        .padding(.bottom, 8)
+    }
+    
+    private var scrollViewDate: some View {
+        ScrollViewReader { proxy in
+            ScrollView {
+                LazyVGrid(columns: columns) {
+                    ForEach(days, id: \.self) { day in
+                        DayView(day: day, sessions: sessionCache[day, default: []])
+                            .id(day)
+                            .frame(height: 70)
+                            .onAppear {
+                                updateSessionCache(for: day)
+                            }
+                    }
+                }
+            }
+            .onAppear {
+                proxy.scrollTo(days.first(where: { Calendar.current.isDate($0, inSameDayAs: Date()) }), anchor: .center)
+            }
+            .onChange(of: selectedDate) { oldDate, newDate in
+                date = newDate
+                days = date.daysInYear
+                proxy.scrollTo(days.first(where: { Calendar.current.isDate($0, inSameDayAs: newDate) }), anchor: .center)
+            }
         }
     }
     
@@ -85,6 +73,30 @@ struct CalendarView: View {
     
     private func updateEntireSessionCache() {
         sessionCache = CalendarHelper.updateEntireSessionCache(days: days, sessions: sessions)
+    }
+    
+    private func datePicker() -> some View {
+        VStack {
+            Spacer()
+            VStack {
+                DatePicker("Select Date", selection: $selectedDate, displayedComponents: [.date])
+                    .datePickerStyle(WheelDatePickerStyle())
+                    .labelsHidden()
+                    .environment(\.colorScheme, .dark)
+            }
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(Color.starBlack)
+            .cornerRadius(10)
+            .shadow(radius: 20)
+        }
+        .background(
+            Color.black.opacity(0.3)
+                .edgesIgnoringSafeArea(.all)
+                .onTapGesture {
+                    showDatePicker = false
+                }
+        )
     }
 }
 
@@ -104,9 +116,6 @@ struct DayView: View {
                     Text(day.formatted(.dateTime.day()))
                         .fontWeight(.bold)
                         .frame(maxWidth: .infinity)
-                        .foregroundColor(
-                            Calendar.current.isDateInToday(day) ? .starMain : .whiteOne
-                        )
                     if !sessions.isEmpty {
                         VStack {
                             HStack(spacing: 4) {

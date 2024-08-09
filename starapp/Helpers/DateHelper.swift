@@ -46,11 +46,13 @@ extension Date {
         }
         return days
     }
-    // Get last 14 days
-    // Get start date of the last 14 days
         static func startOfLast14Days() -> Date {
             return Calendar.current.date(byAdding: .day, value: -13, to: Date())!
         }
+    
+    static func startOfLast28Days() -> Date {
+        return Calendar.current.date(byAdding: .day, value: -27, to: Date())!
+    }
     var daySquareIcon: String {
             let calendar = Calendar.current
             let day = calendar.component(.day, from: self)

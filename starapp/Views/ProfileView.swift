@@ -165,7 +165,6 @@ struct CloseButtonModifier: ViewModifier {
                     .padding()
             }
         }
-        .edgesIgnoringSafeArea(.all)
     }
 }
 

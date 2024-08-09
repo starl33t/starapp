@@ -54,12 +54,18 @@ struct LactateHelper {
     }
     
     static func formatLactate(_ value: Double) -> String {
-            if value.truncatingRemainder(dividingBy: 1) == 0 {
-                return String(Int(value))
-            } else {
-                let integerPart = Int(value)
-                let decimalPart = Int((value - Double(integerPart)) * 10)
-                return "\(integerPart)\n\u{2022}\n\(decimalPart)"
-            }
+        // Return "<1" if the value is under 1
+        guard value >= 1 else {
+            return "<1"
         }
+        
+        if value.truncatingRemainder(dividingBy: 1) == 0 {
+            return String(Int(value))
+        } else {
+            let integerPart = Int(value)
+            let decimalPart = Int((value - Double(integerPart)) * 10)
+            return "\(integerPart)\n\u{2022}\n\(decimalPart)"
+        }
+    }
+
 }

@@ -16,14 +16,9 @@
 		BF4A81452C3AEE6C00D4CAF1 /* LactateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81442C3AEE6C00D4CAF1 /* LactateView.swift */; };
 		BF4A81492C3AEFCE00D4CAF1 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81482C3AEFCE00D4CAF1 /* ChatView.swift */; };
 		BF4A814D2C3AF03B00D4CAF1 /* MetricView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A814C2C3AF03B00D4CAF1 /* MetricView.swift */; };
-		BF4A81512C3AF12000D4CAF1 /* LineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81502C3AF12000D4CAF1 /* LineChartView.swift */; };
-		BF4A81572C3AF25900D4CAF1 /* PointChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81562C3AF25900D4CAF1 /* PointChartView.swift */; };
-		BF4A815B2C3AF2B100D4CAF1 /* BarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A815A2C3AF2B100D4CAF1 /* BarChartView.swift */; };
-		BF4A815F2C3AF31800D4CAF1 /* PieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A815E2C3AF31800D4CAF1 /* PieChartView.swift */; };
 		BF4A81632C3AF53200D4CAF1 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81622C3AF53200D4CAF1 /* ProfileView.swift */; };
 		BF4A81672C3AF5D500D4CAF1 /* CalendarToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81662C3AF5D500D4CAF1 /* CalendarToolBar.swift */; };
 		BF4A816F2C3AF8DA00D4CAF1 /* LactateToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A816E2C3AF8DA00D4CAF1 /* LactateToolBar.swift */; };
-		BF4A81732C3AF94F00D4CAF1 /* NewTrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81722C3AF94F00D4CAF1 /* NewTrainingView.swift */; };
 		BF4A81772C3AFA1700D4CAF1 /* ChatToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81762C3AFA1700D4CAF1 /* ChatToolBar.swift */; };
 		BF4A817F2C3AFB8600D4CAF1 /* MetricToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A817E2C3AFB8600D4CAF1 /* MetricToolBar.swift */; };
 		BF4A81892C3AFDDE00D4CAF1 /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81882C3AFDDE00D4CAF1 /* SubscriptionView.swift */; };
@@ -81,14 +76,9 @@
 		BF4A81442C3AEE6C00D4CAF1 /* LactateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LactateView.swift; sourceTree = "<group>"; };
 		BF4A81482C3AEFCE00D4CAF1 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		BF4A814C2C3AF03B00D4CAF1 /* MetricView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricView.swift; sourceTree = "<group>"; };
-		BF4A81502C3AF12000D4CAF1 /* LineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartView.swift; sourceTree = "<group>"; };
-		BF4A81562C3AF25900D4CAF1 /* PointChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointChartView.swift; sourceTree = "<group>"; };
-		BF4A815A2C3AF2B100D4CAF1 /* BarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartView.swift; sourceTree = "<group>"; };
-		BF4A815E2C3AF31800D4CAF1 /* PieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartView.swift; sourceTree = "<group>"; };
 		BF4A81622C3AF53200D4CAF1 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		BF4A81662C3AF5D500D4CAF1 /* CalendarToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarToolBar.swift; sourceTree = "<group>"; };
 		BF4A816E2C3AF8DA00D4CAF1 /* LactateToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LactateToolBar.swift; sourceTree = "<group>"; };
-		BF4A81722C3AF94F00D4CAF1 /* NewTrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTrainingView.swift; sourceTree = "<group>"; };
 		BF4A81762C3AFA1700D4CAF1 /* ChatToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatToolBar.swift; sourceTree = "<group>"; };
 		BF4A817E2C3AFB8600D4CAF1 /* MetricToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricToolBar.swift; sourceTree = "<group>"; };
 		BF4A81882C3AFDDE00D4CAF1 /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
@@ -161,13 +151,8 @@
 				BF4A81342C3AEC4D00D4CAF1 /* CalendarView.swift */,
 				BF4A81442C3AEE6C00D4CAF1 /* LactateView.swift */,
 				BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */,
-				BF4A81722C3AF94F00D4CAF1 /* NewTrainingView.swift */,
 				BF4A81482C3AEFCE00D4CAF1 /* ChatView.swift */,
 				BF4A814C2C3AF03B00D4CAF1 /* MetricView.swift */,
-				BF4A81502C3AF12000D4CAF1 /* LineChartView.swift */,
-				BF4A815A2C3AF2B100D4CAF1 /* BarChartView.swift */,
-				BF4A815E2C3AF31800D4CAF1 /* PieChartView.swift */,
-				BF4A81562C3AF25900D4CAF1 /* PointChartView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -406,10 +391,7 @@
 			files = (
 				BF7342092C3AE74A00911375 /* ContentView.swift in Sources */,
 				BF4A818B2C3AFDF500D4CAF1 /* ColorOptionView.swift in Sources */,
-				BF4A81572C3AF25900D4CAF1 /* PointChartView.swift in Sources */,
 				BF4A814D2C3AF03B00D4CAF1 /* MetricView.swift in Sources */,
-				BF4A81512C3AF12000D4CAF1 /* LineChartView.swift in Sources */,
-				BF4A815F2C3AF31800D4CAF1 /* PieChartView.swift in Sources */,
 				BF6744D12C3FCAE900A23D76 /* Session.swift in Sources */,
 				BFDE40532C591F8200733888 /* CalendarHelper.swift in Sources */,
 				BF4A81632C3AF53200D4CAF1 /* ProfileView.swift in Sources */,
@@ -423,10 +405,8 @@
 				BF6C84122C3D16D600032E93 /* IntegrationsView.swift in Sources */,
 				BFEDD12D2C484A4500E8E11C /* Constants.swift in Sources */,
 				BF6C84182C3D1C6D00032E93 /* LearnView.swift in Sources */,
-				BF4A81732C3AF94F00D4CAF1 /* NewTrainingView.swift in Sources */,
 				BF4A81492C3AEFCE00D4CAF1 /* ChatView.swift in Sources */,
 				BFDEB6042C49994C00D32736 /* SupportView.swift in Sources */,
-				BF4A815B2C3AF2B100D4CAF1 /* BarChartView.swift in Sources */,
 				BF8D6ADC2C41A9DF000269F1 /* TrainingView.swift in Sources */,
 				BF1A81532C542C280057D87D /* HomeToolBar.swift in Sources */,
 				BF4A81352C3AEC4D00D4CAF1 /* CalendarView.swift in Sources */,
