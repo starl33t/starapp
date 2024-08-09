@@ -7,7 +7,6 @@ struct ContentView: View {
     @State private var searchText: String = ""
     @State private var currentUser: User?
     @State private var selectedDate = Date()
-    @State private var date = Date()
     @State private var days: [Date] = Date().daysInYear
     @State private var showDatePicker: Bool = false
     @State private var messages: [ChatMessage] = []
@@ -29,10 +28,9 @@ struct ContentView: View {
                             CalendarView(
                                 showDatePicker: $showDatePicker,
                                 selectedDate: $selectedDate,
-                                date: $date,
                                 days: $days,
                                 onTodayButtonTapped: {
-                                    CalendarHelper.resetToToday(selectedDate: $selectedDate, date: $date, days: $days)
+                                    CalendarHelper.resetToToday(selectedDate: $selectedDate, days: $days)
                                 }
                             )
                             .tabItem {
@@ -81,7 +79,7 @@ struct ContentView: View {
                         switch selectedTab {
                         case 1:
                             CalendarToolbar(showDatePicker: $showDatePicker, onTodayButtonTapped: {
-                                CalendarHelper.resetToToday(selectedDate: $selectedDate, date: $date, days: $days)
+                                CalendarHelper.resetToToday(selectedDate: $selectedDate, days: $days)
                             })
                         case 2:
                             LactateToolbar()
@@ -97,6 +95,7 @@ struct ContentView: View {
             }
             .tint(.whiteTwo)
         }
+        .tint(.starMain)
     }
 }
 

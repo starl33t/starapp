@@ -133,6 +133,7 @@ struct ProfileView: View {
                 .modifier(CloseButtonModifier(isPresented: $showPrivacySheet))
         }
     }
+
     
     private func profileRow(imageName: String, text: String) -> some View {
         HStack {

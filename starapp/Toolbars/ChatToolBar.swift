@@ -79,7 +79,7 @@ struct ChatToolbar: View {
         var description = ""
         
         if let title = session.title {
-            description += "\"\(title)\"\n"
+            description += "Title: \(title)\n"
         }
         if let distance = session.distance {
             description += "Distance: \(distance) km\n"

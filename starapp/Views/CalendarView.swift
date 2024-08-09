@@ -7,7 +7,6 @@ struct CalendarView: View {
     let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     @Query private var sessions: [Session]
     @Binding var selectedDate: Date
-    @Binding var date: Date
     @Binding var days: [Date]
     @State private var sessionCache: [Date: [Session]] = [:]
     var onTodayButtonTapped: () -> Void
@@ -18,8 +17,8 @@ struct CalendarView: View {
             VStack {
                 daysOfWeekHeader()
                 scrollViewDate
-                    .onChange(of: sessions) {
-                        updateEntireSessionCache()
+                    .onChange(of: sessions) { 
+                        CalendarHelper.updateEntireSessionCache(days: days, sessions: sessions, sessionCache: &sessionCache)
                     }
             }
             .padding()
@@ -29,7 +28,11 @@ struct CalendarView: View {
                 datePicker()
             }
         }
+        .onAppear {
+            CalendarHelper.updateEntireSessionCache(days: days, sessions: sessions, sessionCache: &sessionCache)
+        }
     }
+    
     private func daysOfWeekHeader() -> some View {
         HStack {
             ForEach(daysOfWeek, id: \.self) { dayOfWeek in
@@ -50,7 +53,7 @@ struct CalendarView: View {
                             .id(day)
                             .frame(height: 70)
                             .onAppear {
-                                updateSessionCache(for: day)
+                                CalendarHelper.updateSessionCache(for: day, sessions: sessions, sessionCache: &sessionCache)
                             }
                     }
                 }
@@ -59,27 +62,19 @@ struct CalendarView: View {
                 proxy.scrollTo(days.first(where: { Calendar.current.isDate($0, inSameDayAs: Date()) }), anchor: .center)
             }
             .onChange(of: selectedDate) { oldDate, newDate in
-                date = newDate
-                days = date.daysInYear
+               
+                days = newDate.daysInYear
                 proxy.scrollTo(days.first(where: { Calendar.current.isDate($0, inSameDayAs: newDate) }), anchor: .center)
+                CalendarHelper.updateEntireSessionCache(days: days, sessions: sessions, sessionCache: &sessionCache)
             }
         }
-    }
-    
-    private func updateSessionCache(for day: Date) {
-        let startOfDay = Calendar.current.startOfDay(for: day)
-        sessionCache[startOfDay] = CalendarHelper.updateSessionCache(for: startOfDay, sessions: sessions)
-    }
-    
-    private func updateEntireSessionCache() {
-        sessionCache = CalendarHelper.updateEntireSessionCache(days: days, sessions: sessions)
     }
     
     private func datePicker() -> some View {
         VStack {
             Spacer()
             VStack {
-                DatePicker("Select Date", selection: $selectedDate, displayedComponents: [.date])
+                DatePicker("Select Date", selection: $selectedDate, displayedComponents: .date)
                     .datePickerStyle(WheelDatePickerStyle())
                     .labelsHidden()
                     .environment(\.colorScheme, .dark)
@@ -140,7 +135,6 @@ struct DayView: View {
     CalendarView(
         showDatePicker: .constant(false),
         selectedDate: .constant(Date()),
-        date: .constant(Date()),
         days: .constant(Date().daysInYear),
         onTodayButtonTapped: {}
     )
