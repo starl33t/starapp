@@ -10,7 +10,7 @@ struct ContentView: View {
     @State private var sessions: [Session] = []
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 Color.starBlack.ignoresSafeArea()
                 Group {

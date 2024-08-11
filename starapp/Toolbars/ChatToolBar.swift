@@ -78,9 +78,9 @@ struct ChatToolbar: View {
     private func describeSession(_ session: Session) -> String {
         var description = ""
         
-        if let title = session.title {
-            description += "Title: \(title)\n"
-        }
+        if let title = session.title, !title.isEmpty {
+                description += "Title: \(title)\n"
+            }
         if let distance = session.distance {
             description += "Distance: \(distance) km\n"
         }

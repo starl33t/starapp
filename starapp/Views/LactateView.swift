@@ -4,6 +4,7 @@ import SwiftData
 struct LactateView: View {
     @Environment(\.modelContext) private var context
     @Query(sort: \Session.date, order: .reverse) private var sessions: [Session]
+    @State private var refreshTrigger = false
     
     var body: some View {
         NavigationView {
@@ -65,13 +66,20 @@ struct LactateView: View {
                         }
                     }
                     .listStyle(PlainListStyle())
-                    .scrollIndicators(.hidden) 
+                    .scrollIndicators(.hidden)
                     .scrollContentBackground(.hidden)
                     .padding(.top)
+                    .padding(.bottom)
+                    .refreshable {
+                        refreshFormattedRelative()
+                    }
                 }
             }
             
         }
+    }
+    private func refreshFormattedRelative() {
+        refreshTrigger.toggle()
     }
 }
 

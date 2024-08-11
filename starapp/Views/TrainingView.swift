@@ -6,87 +6,86 @@ struct TrainingView: View {
     
     @State private var distance: Double? = nil
     @State private var duration: Double? = nil
-    @State private var pace: Int? = nil
+    @State private var pace: Double? = nil
     @State private var power: Int? = nil
     @State private var lactate: Double? = nil
     @State private var heartRate: Int? = nil
     @State private var date: Date = Date()
     @State private var title: String = ""
-    
     @AppStorage("Distance") private var showDistance = true
     @AppStorage("Pace") private var showPace = true
     @AppStorage("Power") private var showPower = true
     @AppStorage("Heartrate") private var showHeartRate = true
-    @AppStorage("Duration") private var showDuration = true  
+    @AppStorage("Duration") private var showDuration = true
     
     var body: some View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
-            VStack {
+            VStack (spacing: 14){
                 Section {
-                    if showDistance {
                         HStack {
-                            Text("Distance:")
+                            Text("Lactate:")
                                 .foregroundColor(.whiteOne)
-                            TextField("km", value: $distance, formatter: NumberFormatter.customFormatter)
+                            TextField("mM", value: $lactate, formatter: NumberFormatter.customFormatter)
                                 .foregroundColor(.whiteOne)
                                 .keyboardType(.decimalPad)
                         }
-                        .padding()
-                    }
-                    
-                    if showDuration {  // Conditionally display duration
-                        HStack {
-                            Text("Duration:")
-                                .foregroundColor(.whiteOne)
-                            TextField("min", value: $duration, formatter: NumberFormatter.customFormatter)
-                                .foregroundColor(.whiteOne)
-                                .keyboardType(.decimalPad)
+                        if showHeartRate {
+                            HStack {
+                                Text("Heart rate:")
+                                    .foregroundColor(.whiteOne)
+                                TextField("BPM", value: $heartRate, formatter: NumberFormatter.customFormatter)
+                                    .foregroundColor(.whiteOne)
+                                    .keyboardType(.numberPad)
+                            }
+                            
                         }
-                        .padding()
-                    }
-                    
-                    if showPace {
-                        HStack {
-                            Text("Pace:")
-                                .foregroundColor(.whiteOne)
-                            TextField("min/km", value: $pace, formatter: NumberFormatter.customFormatter)
-                                .foregroundColor(.whiteOne)
-                                .keyboardType(.decimalPad)
-                        }
-                        .padding()
-                    }
-                    
-                    if showPower {
-                        HStack {
-                            Text("Power:")
-                                .foregroundColor(.whiteOne)
-                            TextField("W", value: $power, formatter: NumberFormatter.customFormatter)
-                                .foregroundColor(.whiteOne)
-                                .keyboardType(.decimalPad)
-                        }
-                        .padding()
-                    }
                     
                     HStack {
-                        Text("Lactate:")
-                            .foregroundColor(.whiteOne)
-                        TextField("mM", value: $lactate, formatter: NumberFormatter.customFormatter)
-                            .foregroundColor(.whiteOne)
-                            .keyboardType(.decimalPad)
-                    }
-                    .padding()
-                    
-                    if showHeartRate {
-                        HStack {
-                            Text("Heart rate:")
-                                .foregroundColor(.whiteOne)
-                            TextField("BPM", value: $heartRate, formatter: NumberFormatter.customFormatter)
-                                .foregroundColor(.whiteOne)
-                                .keyboardType(.numberPad)
+                        if showDistance {
+                            HStack {
+                                Text("Distance:")
+                                    .foregroundColor(.whiteOne)
+                                TextField("km", value: $distance, formatter: NumberFormatter.customFormatter)
+                                    .foregroundColor(.whiteOne)
+                                    .keyboardType(.decimalPad)
+                            }
                         }
-                        .padding()
+                        
+                        if showDuration {
+                            HStack {
+                                Text("Duration:")
+                                    .foregroundColor(.whiteOne)
+                                TextField("min", value: $duration, formatter: NumberFormatter.customFormatter)
+                                    .foregroundColor(.whiteOne)
+                                    .keyboardType(.decimalPad)
+                            }
+                        }
                     }
+                    HStack {
+                        if showPace {
+                            HStack {
+                                Text("Pace:")
+                                    .foregroundColor(.whiteOne)
+                                TextField("min/km", value: $pace, formatter: NumberFormatter.customFormatter)
+                                    .foregroundColor(.whiteOne)
+                                    .keyboardType(.decimalPad)
+                            }
+                            
+                        }
+                        
+                        if showPower {
+                            HStack {
+                                Text("Power:")
+                                    .foregroundColor(.whiteOne)
+                                TextField("W", value: $power, formatter: NumberFormatter.customFormatter)
+                                    .foregroundColor(.whiteOne)
+                                    .keyboardType(.decimalPad)
+                            }
+                            
+                        }
+                    }
+                   
                 } header: {
                     ZStack {
                         if title.isEmpty {
@@ -100,6 +99,7 @@ struct TrainingView: View {
                             .multilineTextAlignment(.center)
                     }
                     .frame(maxWidth: .infinity)
+                    .padding(.bottom, 20)
                 }
             }
             .padding()

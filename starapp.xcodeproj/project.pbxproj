@@ -30,7 +30,7 @@
 		BF6C84122C3D16D600032E93 /* IntegrationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C84112C3D16D600032E93 /* IntegrationsView.swift */; };
 		BF6C84182C3D1C6D00032E93 /* LearnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C84172C3D1C6D00032E93 /* LearnView.swift */; };
 		BF6C841A2C3D1E5200032E93 /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C84192C3D1E5200032E93 /* PrivacyView.swift */; };
-		BF7342072C3AE74A00911375 /* starappApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7342062C3AE74A00911375 /* starappApp.swift */; };
+		BF7342072C3AE74A00911375 /* starleetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7342062C3AE74A00911375 /* starleetApp.swift */; };
 		BF7342092C3AE74A00911375 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7342082C3AE74A00911375 /* ContentView.swift */; };
 		BF73420D2C3AE74C00911375 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF73420C2C3AE74C00911375 /* Assets.xcassets */; };
 		BF7342112C3AE74C00911375 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF7342102C3AE74C00911375 /* Preview Assets.xcassets */; };
@@ -39,7 +39,6 @@
 		BF7342272C3AE74C00911375 /* starappUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7342262C3AE74C00911375 /* starappUITestsLaunchTests.swift */; };
 		BF8D6ADC2C41A9DF000269F1 /* TrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */; };
 		BF91AC6E2C45405C0028BC41 /* NumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF91AC6D2C4540530028BC41 /* NumberFormatter.swift */; };
-		BFAD15FA2C42F5CB0043D23F /* minperkm.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD15F92C42F5C80043D23F /* minperkm.swift */; };
 		BFBBD9582C55869200671197 /* MessageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBBD9572C55868F00671197 /* MessageHelper.swift */; };
 		BFDE40512C591A1200733888 /* CSVDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE40502C591A0900733888 /* CSVDocument.swift */; };
 		BFDE40532C591F8200733888 /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE40522C591F7B00733888 /* CalendarHelper.swift */; };
@@ -91,7 +90,7 @@
 		BF6C84172C3D1C6D00032E93 /* LearnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnView.swift; sourceTree = "<group>"; };
 		BF6C84192C3D1E5200032E93 /* PrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyView.swift; sourceTree = "<group>"; };
 		BF7342032C3AE74A00911375 /* starapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = starapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		BF7342062C3AE74A00911375 /* starappApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = starappApp.swift; sourceTree = "<group>"; };
+		BF7342062C3AE74A00911375 /* starleetApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = starleetApp.swift; sourceTree = "<group>"; };
 		BF7342082C3AE74A00911375 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		BF73420C2C3AE74C00911375 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BF73420E2C3AE74C00911375 /* starapp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = starapp.entitlements; sourceTree = "<group>"; };
@@ -103,7 +102,6 @@
 		BF7342262C3AE74C00911375 /* starappUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = starappUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingView.swift; sourceTree = "<group>"; };
 		BF91AC6D2C4540530028BC41 /* NumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFormatter.swift; sourceTree = "<group>"; };
-		BFAD15F92C42F5C80043D23F /* minperkm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = minperkm.swift; sourceTree = "<group>"; };
 		BFBBD9572C55868F00671197 /* MessageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHelper.swift; sourceTree = "<group>"; };
 		BFDE40502C591A0900733888 /* CSVDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVDocument.swift; sourceTree = "<group>"; };
 		BFDE40522C591F7B00733888 /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
@@ -181,7 +179,6 @@
 				BFEDD12C2C484A3E00E8E11C /* Constants.swift */,
 				BF91AC6D2C4540530028BC41 /* NumberFormatter.swift */,
 				BF4A818A2C3AFDF500D4CAF1 /* ColorOptionView.swift */,
-				BFAD15F92C42F5C80043D23F /* minperkm.swift */,
 				BF4A813E2C3AEE0900D4CAF1 /* DateHelper.swift */,
 				BF4A81402C3AEE1500D4CAF1 /* HackerTextView.swift */,
 			);
@@ -226,7 +223,7 @@
 				BF4A81962C3B065500D4CAF1 /* Toolbars */,
 				BF6744CF2C3FCA5A00A23D76 /* Models */,
 				BF7342082C3AE74A00911375 /* ContentView.swift */,
-				BF7342062C3AE74A00911375 /* starappApp.swift */,
+				BF7342062C3AE74A00911375 /* starleetApp.swift */,
 				BF73420C2C3AE74C00911375 /* Assets.xcassets */,
 				BF73420E2C3AE74C00911375 /* starapp.entitlements */,
 				BF73420F2C3AE74C00911375 /* Preview Content */,
@@ -411,7 +408,7 @@
 				BF1A81532C542C280057D87D /* HomeToolBar.swift in Sources */,
 				BF4A81352C3AEC4D00D4CAF1 /* CalendarView.swift in Sources */,
 				BFDE40512C591A1200733888 /* CSVDocument.swift in Sources */,
-				BF7342072C3AE74A00911375 /* starappApp.swift in Sources */,
+				BF7342072C3AE74A00911375 /* starleetApp.swift in Sources */,
 				BF6C840E2C3C5E8100032E93 /* AccountView.swift in Sources */,
 				BF4A817F2C3AFB8600D4CAF1 /* MetricToolBar.swift in Sources */,
 				BF4A81892C3AFDDE00D4CAF1 /* SubscriptionView.swift in Sources */,
@@ -419,7 +416,6 @@
 				BFBBD9582C55869200671197 /* MessageHelper.swift in Sources */,
 				BF6C841A2C3D1E5200032E93 /* PrivacyView.swift in Sources */,
 				BF4A81452C3AEE6C00D4CAF1 /* LactateView.swift in Sources */,
-				BFAD15FA2C42F5CB0043D23F /* minperkm.swift in Sources */,
 				BF4A813F2C3AEE0900D4CAF1 /* DateHelper.swift in Sources */,
 				BF57B8A92C541365000F24BB /* LactateHelper.swift in Sources */,
 				BF4A81772C3AFA1700D4CAF1 /* ChatToolBar.swift in Sources */,
@@ -582,7 +578,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = starapp/starapp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 26;
+				CURRENT_PROJECT_VERSION = 40;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"starapp/Preview Content\"";
 				DEVELOPMENT_TEAM = 7F33N9HZ63;
@@ -604,7 +600,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.3.6;
+				MARKETING_VERSION = 1.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starappv01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -623,7 +619,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = starapp/starapp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 26;
+				CURRENT_PROJECT_VERSION = 40;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"starapp/Preview Content\"";
 				DEVELOPMENT_TEAM = 7F33N9HZ63;
@@ -645,7 +641,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.3.6;
+				MARKETING_VERSION = 1.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starappv01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;

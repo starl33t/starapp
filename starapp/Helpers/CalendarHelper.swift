@@ -1,24 +1,25 @@
+// CalendarHelper.swift
 import Foundation
 import SwiftUI
 
 struct CalendarHelper {
     @AppStorage("selectedDate") static var selectedDate: Date = Date()
+    
     static func resetToToday(days: Binding<[Date]>) {
-            let today = Date()
-            selectedDate = today  // Directly update the AppStorage value
-            days.wrappedValue = today.daysInYear
+        let today = Date()
+        selectedDate = today
+        days.wrappedValue = today.daysInYear
+    }
+    
+    static func buildSessionCache(for days: [Date], with sessions: [Session]) -> [Date: [Session]] {
+        var sessionCache: [Date: [Session]] = [:]
+        for day in days {
+            sessionCache[day] = filterSessions(for: day, from: sessions)
         }
-    
-    static func updateSessionCache(for day: Date, sessions: [Session], sessionCache: inout [Date: [Session]]) {
-        let startOfDay = Calendar.current.startOfDay(for: day)
-        sessionCache[startOfDay] = CalendarHelper.updateSessionCache(for: startOfDay, sessions: sessions)
+        return sessionCache
     }
     
-    static func updateEntireSessionCache(days: [Date], sessions: [Session], sessionCache: inout [Date: [Session]]) {
-        sessionCache = CalendarHelper.updateEntireSessionCache(days: days, sessions: sessions)
-    }
-    
-    private static func updateSessionCache(for day: Date, sessions: [Session]) -> [Session] {
+    static func filterSessions(for day: Date, from sessions: [Session]) -> [Session] {
         let startOfDay = Calendar.current.startOfDay(for: day)
         return sessions.filter {
             guard let sessionDate = $0.date else { return false }
@@ -26,11 +27,9 @@ struct CalendarHelper {
         }
     }
     
-    private static func updateEntireSessionCache(days: [Date], sessions: [Session]) -> [Date: [Session]] {
-        var sessionCache: [Date: [Session]] = [:]
-        for day in days {
-            sessionCache[day] = updateSessionCache(for: day, sessions: sessions)
+    static func scrollToDay(_ date: Date, using proxy: ScrollViewProxy, in days: [Date], calendar: Calendar) {
+        if let targetDay = days.first(where: { calendar.isDate($0, inSameDayAs: date) }) {
+            proxy.scrollTo(targetDay, anchor: .center)
         }
-        return sessionCache
     }
 }

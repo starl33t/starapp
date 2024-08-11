@@ -5,7 +5,7 @@ import SwiftData
 class Session {
     var distance: Double?
     var duration: Double?
-    var pace: Int?
+    var pace: Double?
     var power: Int?
     var heartRate: Int?
     var lactate: Double?
@@ -17,7 +17,7 @@ class Session {
     init(
         distance: Double? = nil,
         duration: Double? = nil,
-        pace: Int? = nil,
+        pace: Double? = nil,
         power: Int? = nil,
         heartRate: Int? = nil,
         lactate: Double? = nil,

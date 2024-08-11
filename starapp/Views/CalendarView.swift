@@ -2,29 +2,30 @@ import SwiftUI
 import SwiftData
 
 struct CalendarView: View {
-    let columns = Array(repeating: GridItem(.flexible()), count: 7)
-    let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    private let columns = Array(repeating: GridItem(.flexible()), count: 7)
+    private let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    
+    @Environment(\.calendar) private var calendar
     @Query private var sessions: [Session]
-    @AppStorage("selectedDate") var selectedDate: Date = Date()
+    @AppStorage("selectedDate") private var selectedDate: Date = Date()
     @Binding var days: [Date]
     @State private var sessionCache: [Date: [Session]] = [:]
-   
     
     var body: some View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
             VStack {
                 daysOfWeekHeader()
-                scrollViewDate
-                    .onChange(of: sessions) { 
-                        CalendarHelper.updateEntireSessionCache(days: days, sessions: sessions, sessionCache: &sessionCache)
+                dateScrollView
+                    .onChange(of: sessions) {
+                        updateSessionCache()
                     }
             }
             .padding()
             .foregroundStyle(.whiteTwo)
         }
         .onAppear {
-            CalendarHelper.updateEntireSessionCache(days: days, sessions: sessions, sessionCache: &sessionCache)
+            updateSessionCache()
         }
     }
     
@@ -39,7 +40,7 @@ struct CalendarView: View {
         .padding(.bottom, 8)
     }
     
-    private var scrollViewDate: some View {
+    private var dateScrollView: some View {
         ScrollViewReader { proxy in
             ScrollView {
                 LazyVGrid(columns: columns) {
@@ -48,20 +49,25 @@ struct CalendarView: View {
                             .id(day)
                             .frame(height: 70)
                             .onAppear {
-                                CalendarHelper.updateSessionCache(for: day, sessions: sessions, sessionCache: &sessionCache)
+                                if sessionCache[day] == nil {
+                                    sessionCache[day] = CalendarHelper.filterSessions(for: day, from: sessions)
+                                }
                             }
                     }
                 }
             }
             .onAppear {
-                proxy.scrollTo(days.first(where: { Calendar.current.isDate($0, inSameDayAs: Date()) }), anchor: .center)
+                CalendarHelper.scrollToDay(Date(), using: proxy, in: days, calendar: calendar)
             }
             .onChange(of: selectedDate) { oldDate, newDate in
                 days = newDate.daysInYear
-                proxy.scrollTo(days.first(where: { Calendar.current.isDate($0, inSameDayAs: newDate) }), anchor: .center)
-                CalendarHelper.updateEntireSessionCache(days: days, sessions: sessions, sessionCache: &sessionCache)
+                CalendarHelper.scrollToDay(newDate, using: proxy, in: days, calendar: calendar)
+                updateSessionCache()
             }
         }
+    }
+    private func updateSessionCache() {
+        sessionCache = CalendarHelper.buildSessionCache(for: days, with: sessions)
     }
 }
 
@@ -82,16 +88,14 @@ struct DayView: View {
                         .fontWeight(.bold)
                         .frame(maxWidth: .infinity)
                     if !sessions.isEmpty {
-                        VStack {
-                            HStack(spacing: 4) {
-                                ForEach(sessions, id: \.self) { session in
-                                    Circle()
-                                        .frame(width: 6, height: 6)
-                                        .foregroundStyle(LactateHelper.color(for: session.lactate))
-                                }
+                        HStack(spacing: 4) {
+                            ForEach(sessions, id: \.self) { session in
+                                Circle()
+                                    .frame(width: 6, height: 6)
+                                    .foregroundStyle(LactateHelper.color(for: session.lactate))
                             }
-                            .padding(.top, 28)
                         }
+                        .padding(.top, 28)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .center)

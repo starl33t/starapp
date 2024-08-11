@@ -5,7 +5,7 @@ struct ChatView: View {
     @Binding var messages: [ChatMessage]
     @State private var newMessageContent: String = ""
     @State private var tagName: String = ""
-    @FocusState private var isFocused: Bool
+    @FocusState private var textFieldIsFocused: Bool
     let user: User
     
     var body: some View {
@@ -14,7 +14,7 @@ struct ChatView: View {
             VStack {
                 ScrollViewReader { proxy in
                     ScrollView {
-                        VStack {
+                        LazyVStack {
                             ForEach(messages) { message in
                                 HStack(alignment: .top) {
                                     if message.isUser {
@@ -44,9 +44,9 @@ struct ChatView: View {
                                             .frame(width: 40, height: 40)
                                             .clipShape(Circle())
                                             .padding([.leading, .vertical])
-                                       
+                                        
                                         VStack(alignment: .leading) {
-                                            Text("Agnes")
+                                            Text("Renato")
                                                 .font(.headline)
                                                 .foregroundColor(.white)
                                             Text(message.content)
@@ -64,9 +64,6 @@ struct ChatView: View {
                             }
                         }
                     }
-                    .onTapGesture {
-                        hideKeyboard()
-                    }
                     .onChange(of: messages) { oldValue, newValue in
                         if let lastMessage = newValue.last {
                             withAnimation {
@@ -74,11 +71,14 @@ struct ChatView: View {
                             }
                         }
                     }
+                    .onTapGesture {
+                        textFieldIsFocused = false
+                    }
                 }
                 HStack {
                     Button(action: {
                         newMessageContent = ""
-                        hideKeyboard()
+                        textFieldIsFocused = false
                     }) {
                         Image(systemName: "xmark.circle.fill")
                             .font(.system(size: 30))
@@ -89,14 +89,14 @@ struct ChatView: View {
                         if newMessageContent.isEmpty {
                             Text("Ask Renato CanovAI")
                                 .foregroundStyle(.gray)
-                                .padding()
+                                .padding(.horizontal)
                         }
-                        TextField("", text: $newMessageContent)
+                        TextField("", text: $newMessageContent, axis: .vertical)
                             .foregroundStyle(.whiteOne)
-                            .focused($isFocused)
-                            .padding()
+                            .focused($textFieldIsFocused)
+                            .padding(.horizontal)
                     }
-                    .frame(height: 32)
+                    .padding(.vertical, 4)
                     .background(.darkOne)
                     .cornerRadius(24)
                     Button(action: {
@@ -113,14 +113,14 @@ struct ChatView: View {
                     }
                     .disabled(newMessageContent.isEmpty)
                 }
-                .padding()
+                .padding(.horizontal)
+                .padding(.vertical, 4)
             }
             .padding(.top)
         }
-    }
-    
-    private func hideKeyboard() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        .onTapGesture {
+            textFieldIsFocused = false
+        }
     }
 }
 

@@ -18,79 +18,86 @@ struct HomeView: View {
     @State private var selectedSession: String = "Session"
     
     init() {
-            let startOfLast14Days = Date.startOfLast14Days()
-            _sessions = Query(filter: #Predicate<Session> { session in
-                if let date = session.date {
-                    return date >= startOfLast14Days
-                } else {
-                    return false
-                }
-            }, sort: \Session.date, order: .reverse) 
-        }
+        let startOfLast14Days = Date.startOfLast14Days()
+        _sessions = Query(filter: #Predicate<Session> { session in
+            if let date = session.date {
+                return date >= startOfLast14Days
+            } else {
+                return false
+            }
+        }, sort: \Session.date, order: .reverse)
+    }
     
     
     var body: some View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
-            
             VStack {
-                HStack(spacing: 48) {
-                    HackerTextView(text: {
-                        switch selectedButton {
-                        case "LT 1": return "1,8 mM"
-                        case "Sweet spot": return "2,8 mM"
-                        case "LT 2": return "3,8 mM"
-                        default: return ""
+                RoundedRectangle(cornerRadius: 24)
+                    .fill(.darkOne.opacity(0.2))
+                    .frame(maxWidth: .infinity)
+                    .overlay(
+                        VStack {
+                            HStack(spacing: 48) {
+                                HackerTextView(text: {
+                                    switch selectedButton {
+                                    case "Easy": return "1,0 mM"
+                                    case "Sweet spot": return "3,0 mM"
+                                    case "Hard": return "4,0 mM"
+                                    default: return ""
+                                    }
+                                }(), trigger: trigger)
+                                
+                                HackerTextView(text: {
+                                    switch selectedButton {
+                                    case "Easy": return "140 BPM"
+                                    case "Sweet spot": return "160 BPM"
+                                    case "Hard": return "170 BPM"
+                                    default: return ""
+                                    }
+                                }(), trigger: trigger)
+                            }
+                            .font(.system(size: 28, weight: .bold))
+                            .foregroundStyle(.whiteOne)
+                            .padding()
+                            
+                            HStack(spacing: 20) {
+                                Button("Easy") {
+                                    selectedButton = "Easy"
+                                    trigger.toggle()
+                                }
+                                .foregroundColor(selectedButton == "Easy" ? .starMain : .gray)
+                                
+                                Button("Sweet spot") {
+                                    selectedButton = "Sweet spot"
+                                    trigger.toggle()
+                                }
+                                .foregroundColor(selectedButton == "Sweet spot" ? .starMain : .gray)
+                                
+                                Button("Hard") {
+                                    selectedButton = "Hard"
+                                    trigger.toggle()
+                                }
+                                .foregroundColor(selectedButton == "Hard" ? .starMain : .gray)
+                            }
                         }
-                    }(), trigger: trigger)
-                    
-                    
-                    HackerTextView(text: {
-                        switch selectedButton {
-                        case "LT 1": return "145 BPM"
-                        case "Sweet spot": return "160 BPM"
-                        case "LT 2": return "175 BPM"
-                        default: return ""
-                        }
-                    }(), trigger: trigger)
-                    
-                }
-                .padding(.bottom, 28)
-                .font(.system(size: 28, weight: .bold))
-                .foregroundStyle(.whiteOne)
+                        .padding()
+                    )
+                    .padding()
                 
-                HStack (spacing: 20){
-                    Button("LT 1") {
-                        selectedButton = "LT 1"
-                        trigger.toggle()
-                    }
-                    .foregroundColor(selectedButton == "LT 1" ? .starMain : .gray)
-                    
-                    Button("Sweet spot") {
-                        selectedButton = "Sweet spot"
-                        trigger.toggle()
-                    }
-                    .foregroundColor(selectedButton == "Sweet spot" ? .starMain : .gray)
-                    
-                    Button("LT 2") {
-                        selectedButton = "LT 2"
-                        trigger.toggle()
-                    }
-                    .foregroundColor(selectedButton == "LT 2" ? .starMain : .gray)
-                }
                 Chart(sessions) { session in
-                        BarMark(
-                            x: .value("Date", session.date ?? Date(), unit: .day),
-                            y: .value("Lactate", session.lactate ?? 0),
-                            stacking: .standard
-                        )
-                        .foregroundStyle(LactateHelper.color(for: session.lactate))
-                        .annotation(position: .overlay, alignment: .center) {
-                            Text(LactateHelper.formatLactate(session.lactate ?? 0))
-                                .multilineTextAlignment(.center)
-                                .font(.system(size: 8))
-                                .fontWeight(.bold)
-                        }
+                    BarMark(
+                        x: .value("Date", session.date ?? Date(), unit: .day),
+                        y: .value("Lactate", session.lactate ?? 0),
+                        stacking: .standard
+                    )
+                    .foregroundStyle(LactateHelper.color(for: session.lactate))
+                    .annotation(position: .overlay, alignment: .center) {
+                        Text(LactateHelper.formatLactate(session.lactate ?? 0))
+                            .multilineTextAlignment(.center)
+                            .font(.system(size: 8))
+                            .fontWeight(.bold)
+                    }
                     if let barSelection = barSelection {
                         RuleMark(x: .value("Date", barSelection, unit: .day))
                             .foregroundStyle(.gray)
@@ -141,8 +148,7 @@ struct HomeView: View {
                 .scrollIndicators(.hidden)
                 
             }
-            .padding(.top, 50)
-            .padding(.bottom)
+         
         }
         
     }

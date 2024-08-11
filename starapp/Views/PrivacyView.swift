@@ -9,7 +9,7 @@ struct PrivacyView: View {
                     Text("""
                     **Privacy Policy**
 
-                    Welcome to StarApp! Your privacy is important to us. This privacy policy explains how we collect, use, disclose, and protect your information when you use our fitness app.
+                    Welcome to Starleet! Your privacy is important to us. This privacy policy explains how we collect, use, disclose, and protect your information when you use our fitness app.
                     """)
                     .padding()
                     
@@ -69,7 +69,7 @@ struct PrivacyView: View {
                     Text("""
                     **Contact Us**
 
-                    If you have any questions or concerns about this privacy policy, please contact us at hi@starapp.com.
+                    If you have any questions or concerns about this privacy policy, please contact us at pt@starleet.com.
                     """)
                     .padding()
                 }

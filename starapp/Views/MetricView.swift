@@ -188,6 +188,7 @@ struct MetricView: View {
             }
             
         }
+        .scaledToFit()
         .chartXAxis(.hidden)
         .chartYAxis(.hidden)
     }

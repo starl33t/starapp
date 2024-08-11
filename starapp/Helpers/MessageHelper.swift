@@ -22,9 +22,16 @@ struct MessageHelper {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let parameters: [String: Any] = [
-            "model": "gpt-4-turbo",
-            "messages": [["role": "user", "content": message]]
+            "model": "gpt-4o-mini",
+            "messages": [
+                ["role": "system", "content": "You are the famous coach Renato CanovAI, named after the famous endurance coach Renato Canova. Keep the answers brief."],
+                ["role": "user", "content": message],
+                ["role": "assistant", "content": "As Renato CanovAI, I'm here to help you optimize your training with lactate measurements. Keep the answers brief."]
+            ],
+            "temperature": 0.5,
+            "max_tokens": 200
         ]
+
 
         request.httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: [])
 
