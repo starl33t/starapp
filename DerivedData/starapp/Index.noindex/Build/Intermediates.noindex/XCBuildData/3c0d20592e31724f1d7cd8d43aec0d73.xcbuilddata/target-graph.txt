@@ -1,0 +1,15 @@
+Target dependency graph (10 targets)
+Target 'starappUITests' in project 'starapp' (no dependencies)
+Target 'starappUITests' in project 'starapp' (no dependencies)
+Target 'starappUITests' in project 'starapp'
+➜ Explicit dependency on target 'starapp' in project 'starapp'
+Target 'starappUITests' in project 'starapp'
+➜ Explicit dependency on target 'starapp' in project 'starapp'
+Target 'starappTests' in project 'starapp' (no dependencies)
+Target 'starappTests' in project 'starapp' (no dependencies)
+Target 'starappTests' in project 'starapp'
+➜ Explicit dependency on target 'starapp' in project 'starapp'
+Target 'starappTests' in project 'starapp'
+➜ Explicit dependency on target 'starapp' in project 'starapp'
+Target 'starapp' in project 'starapp' (no dependencies)
+Target 'starapp' in project 'starapp' (no dependencies)

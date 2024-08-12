@@ -1,0 +1,72 @@
+{
+  "source": "/Users/petertran/Desktop/starapp/starapp/Views/HomeView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Easy",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 65
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sweet spot",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 71
+        }
+      },
+      {
+        "comment": "",
+        "key": "Hard",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 77
+        }
+      },
+      {
+        "comment": "",
+        "key": "Date",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 90
+        }
+      },
+      {
+        "comment": "",
+        "key": "Lactate",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 91
+        }
+      },
+      {
+        "comment": "",
+        "key": "Date",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 102
+        }
+      },
+      {
+        "comment": "",
+        "key": "%.1f mM",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 131
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 138
+        }
+      }
+    ]
+  },
+  "version": 1
+}

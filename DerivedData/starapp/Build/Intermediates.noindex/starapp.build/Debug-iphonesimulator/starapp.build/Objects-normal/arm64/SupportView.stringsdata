@@ -1,0 +1,24 @@
+{
+  "source": "/Users/petertran/Desktop/starapp/starapp/Views/SupportView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "**Under Development**\n\nThe app is still under development. If you need support, please contact us at\n\npt@starleet.com",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "Email",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 27
+        }
+      }
+    ]
+  },
+  "version": 1
+}

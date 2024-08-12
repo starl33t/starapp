@@ -1,0 +1,136 @@
+{
+  "source": "/Users/petertran/Desktop/starapp/starapp/Views/TrainingView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Lactate:",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "mM",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 29
+        }
+      },
+      {
+        "comment": "",
+        "key": "Heart rate:",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 35
+        }
+      },
+      {
+        "comment": "",
+        "key": "BPM",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "Distance:",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 47
+        }
+      },
+      {
+        "comment": "",
+        "key": "km",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 49
+        }
+      },
+      {
+        "comment": "",
+        "key": "Duration:",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 57
+        }
+      },
+      {
+        "comment": "",
+        "key": "min",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 59
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pace:",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 68
+        }
+      },
+      {
+        "comment": "",
+        "key": "min/km",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 70
+        }
+      },
+      {
+        "comment": "",
+        "key": "Power:",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 79
+        }
+      },
+      {
+        "comment": "",
+        "key": "W",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 81
+        }
+      },
+      {
+        "comment": "",
+        "key": "Title",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 92
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 97
+        }
+      },
+      {
+        "comment": "",
+        "key": "Date",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 121
+        }
+      },
+      {
+        "comment": "",
+        "key": "Save",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 126
+        }
+      }
+    ]
+  },
+  "version": 1
+}

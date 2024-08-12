@@ -1,0 +1,40 @@
+{
+  "source": "/Users/petertran/Desktop/starapp/starapp/Views/LactateView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "No Sessions Found",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 14
+        }
+      },
+      {
+        "comment": "",
+        "key": "%.0f min",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 25
+        }
+      },
+      {
+        "comment": "",
+        "key": "%.1f mM",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 34
+        }
+      }
+    ]
+  },
+  "version": 1
+}

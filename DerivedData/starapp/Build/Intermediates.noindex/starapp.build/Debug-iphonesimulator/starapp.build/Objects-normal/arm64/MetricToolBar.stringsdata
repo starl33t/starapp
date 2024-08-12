@@ -1,0 +1,24 @@
+{
+  "source": "/Users/petertran/Desktop/starapp/starapp/Toolbars/MetricToolBar.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Values",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "CSV Export",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 20
+        }
+      }
+    ]
+  },
+  "version": 1
+}

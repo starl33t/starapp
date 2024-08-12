@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>11</integer>
+	<key>logs</key>
+	<dict>
+		<key>3C61A578-2F00-4320-8EE8-A78CB511EEB6</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>3C61A578-2F00-4320-8EE8-A78CB511EEB6.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>0</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>0</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>starapp project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>starapp</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build starapp</string>
+			<key>timeStartedRecording</key>
+			<real>745079588.772843</real>
+			<key>timeStoppedRecording</key>
+			<real>745079590.88736999</real>
+			<key>title</key>
+			<string>Build starapp</string>
+			<key>uniqueIdentifier</key>
+			<string>3C61A578-2F00-4320-8EE8-A78CB511EEB6</string>
+		</dict>
+		<key>54D438F9-DEB2-46A7-B790-E3788DDBF98A</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>54D438F9-DEB2-46A7-B790-E3788DDBF98A.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>0</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>0</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>starapp project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>starapp</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build starapp</string>
+			<key>timeStartedRecording</key>
+			<real>745079731.56706095</real>
+			<key>timeStoppedRecording</key>
+			<real>745079735.95387304</real>
+			<key>title</key>
+			<string>Build starapp</string>
+			<key>uniqueIdentifier</key>
+			<string>54D438F9-DEB2-46A7-B790-E3788DDBF98A</string>
+		</dict>
+		<key>E3F754BD-8369-4316-9C78-135B0CF38288</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>E3F754BD-8369-4316-9C78-135B0CF38288.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>0</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>0</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>starapp project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>starapp</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build starapp</string>
+			<key>timeStartedRecording</key>
+			<real>745079467.97244501</real>
+			<key>timeStoppedRecording</key>
+			<real>745079468.04191506</real>
+			<key>title</key>
+			<string>Build starapp</string>
+			<key>uniqueIdentifier</key>
+			<string>E3F754BD-8369-4316-9C78-135B0CF38288</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

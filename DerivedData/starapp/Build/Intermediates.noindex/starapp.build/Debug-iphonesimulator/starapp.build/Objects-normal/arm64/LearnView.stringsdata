@@ -1,0 +1,40 @@
+{
+  "source": "/Users/petertran/Desktop/starapp/starapp/Views/LearnView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "**What is Starleet?**\n\nStarleet was founded by a group of athletes in Denmark, inspired by recent advancements in sensor technology and the performance gains of athletes using lactate meters. We set out to create the world's first continuous lactate monitor, believing that AI-driven sensors will revolutionize health and performance.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 9
+        }
+      },
+      {
+        "comment": "",
+        "key": "**Why lactate?**\n\nLactate is a proven biomarker for cellular stress, widely used by Norwegian cross-country skiers and gradually adopted by other sports. While lactate testing has been around for over 50 years, the full potential of its measurements remains untapped.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "**What's in it for me?**\n\nLactate is more than just a stress indicator. Elite athletes use it to reach peak performance, longevity enthusiasts use it to fine-tune activities, and medical professionals monitor patients with it. The versatility of lactate suggests there are many more insights to uncover.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 23
+        }
+      },
+      {
+        "comment": "",
+        "key": "**How can I use lactate?**\n\nThe fastest way to use lactate is during exercise. Gauging your intensity with lactate is key to understanding how your body responds. Along with our AI, discovering a new you becomes a rewarding, life-changing journey. You may even find your own unique way to leverage lactate.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 30
+        }
+      }
+    ]
+  },
+  "version": 1
+}

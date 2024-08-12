@@ -26,7 +26,7 @@ struct ProfileView: View {
             Color.starBlack.ignoresSafeArea()
             VStack {
                 VStack {
-                    Image(systemName: "1.circle")
+                    Image(systemName: "person.circle.fill")
                         .font(.system(size: 74))
                         .foregroundStyle(.whiteOne)
                         .padding(.bottom, 8)

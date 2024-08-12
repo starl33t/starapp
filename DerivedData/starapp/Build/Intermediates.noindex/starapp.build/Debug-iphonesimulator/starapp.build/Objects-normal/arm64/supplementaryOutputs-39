@@ -1,0 +1,24 @@
+"/Users/petertran/Desktop/starapp/starapp/Views/CalendarView.swift":
+  const-values: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarView.swiftconstvalues"
+  diagnostics: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarView.dia"
+  dependencies: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarView.d"
+  object: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarView.o"
+  swift-dependencies: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarView.swiftdeps"
+"/Users/petertran/Desktop/starapp/starapp/Helpers/CSVDocument.swift":
+  dependencies: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CSVDocument.d"
+  const-values: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CSVDocument.swiftconstvalues"
+  diagnostics: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CSVDocument.dia"
+  swift-dependencies: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CSVDocument.swiftdeps"
+  object: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CSVDocument.o"
+"/Users/petertran/Desktop/starapp/starapp/Views/TrainingView.swift":
+  const-values: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/TrainingView.swiftconstvalues"
+  swift-dependencies: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/TrainingView.swiftdeps"
+  diagnostics: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/TrainingView.dia"
+  dependencies: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/TrainingView.d"
+  object: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/TrainingView.o"
+"/Users/petertran/Desktop/starapp/starapp/Toolbars/HomeToolBar.swift":
+  diagnostics: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeToolBar.dia"
+  object: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeToolBar.o"
+  dependencies: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeToolBar.d"
+  const-values: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeToolBar.swiftconstvalues"
+  swift-dependencies: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeToolBar.swiftdeps"

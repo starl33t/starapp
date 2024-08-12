@@ -2,7 +2,8 @@ import SwiftUI
 import SwiftData
 
 struct ChatToolbar: View {
-    @Binding var messages: [ChatMessage]
+    @Binding var messages: [Message]
+    @ObservedObject var viewModel: AssistantViewModel
     @Query(sort: \Session.date, order: .reverse) private var sessions: [Session]
     var user: User
     
@@ -50,12 +51,15 @@ struct ChatToolbar: View {
     }
     
     private func sendMessage(_ text: String) {
-        let sessionInfo = formatSessionInfo()
-        let fullMessage = "\(text)\n\n\(sessionInfo)"
-        
-        MessageHelper.sendMessage(userInput: fullMessage) { responseMessage in
-            if let responseMessage = responseMessage {
-                messages.append(responseMessage)
+        Task {
+            let sessionInfo = formatSessionInfo()
+            let fullMessage = "\(text)\n\n\(sessionInfo)"
+            
+            if let threadId = viewModel.threadId {
+                await viewModel.createMessage(threadId: threadId, content: fullMessage)
+                try await viewModel.startAndCheckRun(threadId: threadId)
+            } else {
+                print("Thread ID not available.")
             }
         }
     }
@@ -79,8 +83,8 @@ struct ChatToolbar: View {
         var description = ""
         
         if let title = session.title, !title.isEmpty {
-                description += "Title: \(title)\n"
-            }
+            description += "Title: \(title)\n"
+        }
         if let distance = session.distance {
             description += "Distance: \(distance) km\n"
         }
@@ -102,8 +106,4 @@ struct ChatToolbar: View {
         
         return description.trimmingCharacters(in: .whitespacesAndNewlines)
     }
-}
-
-#Preview {
-    ChatToolbar(messages: .constant([]), user: User(tagName: "PreviewUser"))
 }

@@ -1,0 +1,32 @@
+{
+  "source": "/Users/petertran/Desktop/starapp/starapp/Views/ChatView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Renato",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 49
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ask Renato CanovAI",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 90
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 94
+        }
+      }
+    ]
+  },
+  "version": 1
+}

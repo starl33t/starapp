@@ -1,0 +1,72 @@
+{
+  "source": "/Users/petertran/Desktop/starapp/starapp/Views/SubscriptionView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "The Grind",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "Access to the latest AI model for peak performance",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 32
+        }
+      },
+      {
+        "comment": "",
+        "key": "First in line to the continuous lactate meter",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 40
+        }
+      },
+      {
+        "comment": "",
+        "key": "High priority on support tickets",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 47
+        }
+      },
+      {
+        "comment": "",
+        "key": "Beast mode",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 64
+        }
+      },
+      {
+        "comment": "",
+        "key": "Coming soon",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 68
+        }
+      },
+      {
+        "comment": "",
+        "key": "Unavailable",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 93
+        }
+      },
+      {
+        "comment": "",
+        "key": "Currently Free!",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 93
+        }
+      }
+    ]
+  },
+  "version": 1
+}

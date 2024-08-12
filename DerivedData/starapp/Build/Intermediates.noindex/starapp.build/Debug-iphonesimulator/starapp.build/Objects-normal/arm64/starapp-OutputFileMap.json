@@ -1,0 +1,348 @@
+{
+  "" : {
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/starapp-master.dia",
+    "emit-module-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/starapp-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/starapp-master-emit-module.dia",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/starapp-master.swiftdeps"
+  },
+  "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/GeneratedAssetSymbols.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/GeneratedAssetSymbols.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/GeneratedAssetSymbols~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/ContentView.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ContentView.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ContentView.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ContentView.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ContentView.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ContentView.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ContentView.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ContentView.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ContentView~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Helpers/CSVDocument.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CSVDocument.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CSVDocument.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CSVDocument.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CSVDocument.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CSVDocument.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CSVDocument.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CSVDocument.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CSVDocument~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Helpers/CalendarHelper.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarHelper.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarHelper.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarHelper.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarHelper.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarHelper.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarHelper.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarHelper.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarHelper~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Helpers/ColorOptionView.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ColorOptionView.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ColorOptionView.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ColorOptionView.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ColorOptionView.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ColorOptionView.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ColorOptionView.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ColorOptionView.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ColorOptionView~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Helpers/Constants.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/Constants.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/Constants.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/Constants.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/Constants.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/Constants.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/Constants.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/Constants.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/Constants~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Helpers/DateHelper.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/DateHelper.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/DateHelper.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/DateHelper.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/DateHelper.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/DateHelper.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/DateHelper.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/DateHelper.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/DateHelper~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Helpers/EmailHelper.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/EmailHelper.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/EmailHelper.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/EmailHelper.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/EmailHelper.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/EmailHelper.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/EmailHelper.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/EmailHelper.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/EmailHelper~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Helpers/HackerTextView.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HackerTextView.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HackerTextView.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HackerTextView.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HackerTextView.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HackerTextView.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HackerTextView.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HackerTextView.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HackerTextView~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Helpers/LactateHelper.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateHelper.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateHelper.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateHelper.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateHelper.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateHelper.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateHelper.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateHelper.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateHelper~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Helpers/MessageHelper.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MessageHelper.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MessageHelper.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MessageHelper.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MessageHelper.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MessageHelper.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MessageHelper.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MessageHelper.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MessageHelper~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Helpers/NumberFormatter.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/NumberFormatter.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/NumberFormatter.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/NumberFormatter.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/NumberFormatter.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/NumberFormatter.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/NumberFormatter.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/NumberFormatter.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/NumberFormatter~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Helpers/UserService.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/UserService.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/UserService.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/UserService.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/UserService.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/UserService.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/UserService.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/UserService.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/UserService~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Models/Session.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/Session.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/Session.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/Session.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/Session.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/Session.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/Session.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/Session.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/Session~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Models/User.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/User.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/User.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/User.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/User.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/User.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/User.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/User.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/User~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Toolbars/CalendarToolBar.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarToolBar.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarToolBar.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarToolBar.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarToolBar.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarToolBar.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarToolBar.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarToolBar.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarToolBar~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Toolbars/ChatToolBar.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ChatToolBar.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ChatToolBar.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ChatToolBar.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ChatToolBar.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ChatToolBar.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ChatToolBar.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ChatToolBar.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ChatToolBar~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Toolbars/HomeToolBar.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeToolBar.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeToolBar.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeToolBar.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeToolBar.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeToolBar.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeToolBar.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeToolBar.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeToolBar~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Toolbars/LactateToolBar.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateToolBar.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateToolBar.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateToolBar.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateToolBar.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateToolBar.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateToolBar.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateToolBar.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateToolBar~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Toolbars/MetricToolBar.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MetricToolBar.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MetricToolBar.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MetricToolBar.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MetricToolBar.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MetricToolBar.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MetricToolBar.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MetricToolBar.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MetricToolBar~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Views/AccountView.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/AccountView.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/AccountView.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/AccountView.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/AccountView.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/AccountView.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/AccountView.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/AccountView.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/AccountView~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Views/CalendarView.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarView.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarView.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarView.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarView.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarView.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarView.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarView.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/CalendarView~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Views/ChatView.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ChatView.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ChatView.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ChatView.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ChatView.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ChatView.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ChatView.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ChatView.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ChatView~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Views/HomeView.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeView.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeView.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeView.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeView.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeView.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeView.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeView.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeView~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Views/IntegrationsView.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/IntegrationsView.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/IntegrationsView.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/IntegrationsView.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/IntegrationsView.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/IntegrationsView.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/IntegrationsView.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/IntegrationsView.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/IntegrationsView~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Views/LactateView.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateView.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateView.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateView.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateView.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateView.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateView.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateView.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateView~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Views/LearnView.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LearnView.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LearnView.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LearnView.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LearnView.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LearnView.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LearnView.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LearnView.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LearnView~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Views/MetricView.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MetricView.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MetricView.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MetricView.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MetricView.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MetricView.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MetricView.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MetricView.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MetricView~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Views/PrivacyView.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/PrivacyView.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/PrivacyView.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/PrivacyView.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/PrivacyView.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/PrivacyView.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/PrivacyView.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/PrivacyView.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/PrivacyView~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Views/ProfileView.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ProfileView.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ProfileView.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ProfileView.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ProfileView.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ProfileView.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ProfileView.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ProfileView.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/ProfileView~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Views/SubscriptionView.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/SubscriptionView.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/SubscriptionView.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/SubscriptionView.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/SubscriptionView.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/SubscriptionView.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/SubscriptionView.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/SubscriptionView.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/SubscriptionView~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Views/SupportView.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/SupportView.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/SupportView.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/SupportView.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/SupportView.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/SupportView.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/SupportView.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/SupportView.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/SupportView~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/Views/TrainingView.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/TrainingView.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/TrainingView.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/TrainingView.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/TrainingView.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/TrainingView.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/TrainingView.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/TrainingView.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/TrainingView~partial.swiftmodule"
+  },
+  "/Users/petertran/Desktop/starapp/starapp/starleetApp.swift" : {
+    "const-values" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/starleetApp.swiftconstvalues",
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/starleetApp.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/starleetApp.dia",
+    "index-unit-output-path" : "/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/starleetApp.o",
+    "llvm-bc" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/starleetApp.bc",
+    "object" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/starleetApp.o",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/starleetApp.swiftdeps",
+    "swiftmodule" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/starleetApp~partial.swiftmodule"
+  }
+}

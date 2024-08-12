@@ -1,0 +1,24 @@
+{
+  "source": "/Users/petertran/Desktop/starapp/starapp/Toolbars/CalendarToolBar.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Calendar",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "Select Date",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 29
+        }
+      }
+    ]
+  },
+  "version": 1
+}

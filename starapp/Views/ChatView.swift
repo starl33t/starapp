@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct ChatView: View {
-    @Binding var messages: [ChatMessage]
+    @ObservedObject var viewModel: AssistantViewModel = AssistantViewModel() // Shared instance for consistency
     @State private var newMessageContent: String = ""
     @State private var tagName: String = ""
     @FocusState private var textFieldIsFocused: Bool
@@ -15,9 +15,9 @@ struct ChatView: View {
                 ScrollViewReader { proxy in
                     ScrollView {
                         LazyVStack {
-                            ForEach(messages) { message in
+                            ForEach(viewModel.messages) { message in
                                 HStack(alignment: .top) {
-                                    if message.isUser {
+                                    if message.role == "user" {
                                         Spacer()
                                         VStack(alignment: .trailing) {
                                             Text(user.tagName ?? "Unknown")
@@ -37,7 +37,6 @@ struct ChatView: View {
                                             .clipShape(Circle())
                                             .padding([.trailing, .vertical])
                                     } else {
-                                        
                                         Image(systemName: "person.circle.fill")
                                             .resizable()
                                             .foregroundColor(.white)
@@ -57,14 +56,13 @@ struct ChatView: View {
                                         }
                                         .padding([.trailing, .vertical])
                                         Spacer()
-                                        
                                     }
                                 }
                                 .id(message.id)
                             }
                         }
                     }
-                    .onChange(of: messages) { oldValue, newValue in
+                    .onChange(of: viewModel.messages) { _, newValue in
                         if let lastMessage = newValue.last {
                             withAnimation {
                                 proxy.scrollTo(lastMessage.id)
@@ -100,12 +98,15 @@ struct ChatView: View {
                     .background(.darkOne)
                     .cornerRadius(24)
                     Button(action: {
-                        MessageHelper.sendMessage(userInput: newMessageContent) { newMessage in
-                            if let newMessage = newMessage {
-                                messages.append(newMessage)
+                        Task {
+                            if let threadId = viewModel.threadId {
+                                await viewModel.createMessage(threadId: threadId, content: newMessageContent)
+                                newMessageContent = ""  // Reset input field after sending
+                                try await viewModel.startAndCheckRun(threadId: threadId)
+                            } else {
+                                print("Thread ID not available.")
                             }
                         }
-                        newMessageContent = ""
                     }) {
                         Image(systemName: "arrow.up.circle.fill")
                             .foregroundColor(newMessageContent.isEmpty ? .gray : .starMain)
@@ -118,6 +119,13 @@ struct ChatView: View {
             }
             .padding(.top)
         }
+        .onAppear {
+            Task {
+                if viewModel.threadId == nil {
+                    await viewModel.createThread()
+                }
+            }
+        }
         .onTapGesture {
             textFieldIsFocused = false
         }
@@ -125,5 +133,5 @@ struct ChatView: View {
 }
 
 #Preview {
-    ChatView(messages: .constant([]), user: User(tagName: "PreviewUser"))
+    ChatView(user: User(tagName: "PreviewUser"))
 }

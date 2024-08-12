@@ -1,0 +1,24 @@
+"/Users/petertran/Desktop/starapp/starapp/Views/PrivacyView.swift":
+  dependencies: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/PrivacyView.d"
+  diagnostics: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/PrivacyView.dia"
+  object: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/PrivacyView.o"
+  const-values: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/PrivacyView.swiftconstvalues"
+  swift-dependencies: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/PrivacyView.swiftdeps"
+"/Users/petertran/Desktop/starapp/starapp/Views/LactateView.swift":
+  diagnostics: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateView.dia"
+  object: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateView.o"
+  dependencies: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateView.d"
+  const-values: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateView.swiftconstvalues"
+  swift-dependencies: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/LactateView.swiftdeps"
+"/Users/petertran/Desktop/starapp/starapp/Helpers/HackerTextView.swift":
+  swift-dependencies: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HackerTextView.swiftdeps"
+  const-values: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HackerTextView.swiftconstvalues"
+  diagnostics: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HackerTextView.dia"
+  dependencies: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HackerTextView.d"
+  object: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HackerTextView.o"
+"/Users/petertran/Desktop/starapp/starapp/Helpers/MessageHelper.swift":
+  object: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MessageHelper.o"
+  swift-dependencies: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MessageHelper.swiftdeps"
+  const-values: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MessageHelper.swiftconstvalues"
+  diagnostics: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MessageHelper.dia"
+  dependencies: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/MessageHelper.d"

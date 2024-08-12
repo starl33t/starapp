@@ -1,0 +1,24 @@
+"/Users/petertran/Desktop/starapp/starapp/Views/HomeView.swift":
+  object: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeView.o"
+  const-values: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeView.swiftconstvalues"
+  swift-dependencies: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeView.swiftdeps"
+  dependencies: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeView.d"
+  diagnostics: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/HomeView.dia"
+"/Users/petertran/Desktop/starapp/starapp/Helpers/UserService.swift":
+  object: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/UserService.o"
+  const-values: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/UserService.swiftconstvalues"
+  swift-dependencies: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/UserService.swiftdeps"
+  diagnostics: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/UserService.dia"
+  dependencies: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/UserService.d"
+"/Users/petertran/Desktop/starapp/starapp/Views/IntegrationsView.swift":
+  const-values: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/IntegrationsView.swiftconstvalues"
+  object: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/IntegrationsView.o"
+  diagnostics: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/IntegrationsView.dia"
+  dependencies: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/IntegrationsView.d"
+  swift-dependencies: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/IntegrationsView.swiftdeps"
+"/Users/petertran/Desktop/starapp/starapp/Models/User.swift":
+  diagnostics: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/User.dia"
+  dependencies: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/User.d"
+  object: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/User.o"
+  const-values: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/User.swiftconstvalues"
+  swift-dependencies: "/Users/petertran/Desktop/starapp/DerivedData/starapp/Build/Intermediates.noindex/starapp.build/Debug-iphonesimulator/starapp.build/Objects-normal/arm64/User.swiftdeps"

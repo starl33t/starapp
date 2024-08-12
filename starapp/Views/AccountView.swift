@@ -154,7 +154,6 @@ struct AccountView: View {
                 // Reset all user properties to nil or default values
                 user.userName = nil
                 user.tagName = nil
-                user.avatar = nil
                 user.tier = nil
                 user.sessions = []
             } else {

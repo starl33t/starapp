@@ -74,6 +74,13 @@
             ReferencedContainer = "container:starapp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "OPENAI_API_KEY"
+            value = "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"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

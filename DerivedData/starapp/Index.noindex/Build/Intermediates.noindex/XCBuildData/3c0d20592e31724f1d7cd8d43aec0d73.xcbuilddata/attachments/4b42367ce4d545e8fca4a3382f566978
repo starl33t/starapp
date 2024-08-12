@@ -1,0 +1,12 @@
+{
+  "" : {
+    "dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Index.noindex/Build/Intermediates.noindex/starapp.build/Debug-iphoneos/starappTests.build/Objects-normal/arm64/starappTests-master.d",
+    "diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Index.noindex/Build/Intermediates.noindex/starapp.build/Debug-iphoneos/starappTests.build/Objects-normal/arm64/starappTests-master.dia",
+    "emit-module-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Index.noindex/Build/Intermediates.noindex/starapp.build/Debug-iphoneos/starappTests.build/Objects-normal/arm64/starappTests-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Index.noindex/Build/Intermediates.noindex/starapp.build/Debug-iphoneos/starappTests.build/Objects-normal/arm64/starappTests-master-emit-module.dia",
+    "swift-dependencies" : "/Users/petertran/Desktop/starapp/DerivedData/starapp/Index.noindex/Build/Intermediates.noindex/starapp.build/Debug-iphoneos/starappTests.build/Objects-normal/arm64/starappTests-master.swiftdeps"
+  },
+  "/Users/petertran/Desktop/starapp/starappTests/starappTests.swift" : {
+
+  }
+}

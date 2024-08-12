@@ -1,0 +1,64 @@
+{
+  "source": "/Users/petertran/Desktop/starapp/starapp/ContentView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Loading...",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 52
+        }
+      },
+      {
+        "comment": "",
+        "key": "Home",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "Calendar",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 28
+        }
+      },
+      {
+        "comment": "",
+        "key": "Lactate",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 34
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chat",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 40
+        }
+      },
+      {
+        "comment": "",
+        "key": "Metrics",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 46
+        }
+      },
+      {
+        "comment": "",
+        "key": "Profile",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 63
+        }
+      }
+    ]
+  },
+  "version": 1
+}

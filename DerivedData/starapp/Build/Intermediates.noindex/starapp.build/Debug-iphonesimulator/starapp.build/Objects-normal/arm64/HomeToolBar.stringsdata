@@ -1,0 +1,40 @@
+{
+  "source": "/Users/petertran/Desktop/starapp/starapp/Toolbars/HomeToolBar.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "AI Model: Nola 1.0",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 11
+        }
+      },
+      {
+        "comment": "",
+        "key": "AI",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 14
+        }
+      },
+      {
+        "comment": "",
+        "key": "No Notifications!",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 21
+        }
+      },
+      {
+        "comment": "",
+        "key": "Notifications",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 24
+        }
+      }
+    ]
+  },
+  "version": 1
+}

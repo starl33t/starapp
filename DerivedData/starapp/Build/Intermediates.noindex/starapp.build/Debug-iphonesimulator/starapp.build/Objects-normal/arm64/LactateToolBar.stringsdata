@@ -1,0 +1,56 @@
+{
+  "source": "/Users/petertran/Desktop/starapp/starapp/Toolbars/LactateToolBar.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "No wearables detected!",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "Notifications",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 19
+        }
+      },
+      {
+        "comment": "",
+        "key": "New Training",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 24
+        }
+      },
+      {
+        "comment": "",
+        "key": "Save",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 59
+        }
+      },
+      {
+        "comment": "",
+        "key": "Lactate",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 42
+        }
+      },
+      {
+        "comment": "",
+        "key": "mM",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 46
+        }
+      }
+    ]
+  },
+  "version": 1
+}

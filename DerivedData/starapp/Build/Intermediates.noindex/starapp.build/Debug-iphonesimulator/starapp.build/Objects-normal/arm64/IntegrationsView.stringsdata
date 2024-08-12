@@ -1,0 +1,24 @@
+{
+  "source": "/Users/petertran/Desktop/starapp/starapp/Views/IntegrationsView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Integrations",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 26
+        }
+      },
+      {
+        "comment": "",
+        "key": "Coming soon!",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 36
+        }
+      }
+    ]
+  },
+  "version": 1
+}
