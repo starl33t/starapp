@@ -7,7 +7,7 @@ struct ContentView: View {
     @State private var currentUser: User?
     @State private var days: [Date] = Date().daysInYear
     @State private var sessions: [Session] = []
-    @StateObject private var assistantViewModel = AssistantViewModel()
+    @StateObject private var assistantViewModel = MessageHelper()
     
     var body: some View {
         NavigationStack {

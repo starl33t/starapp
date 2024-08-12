@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct ChatView: View {
-    @ObservedObject var viewModel: AssistantViewModel = AssistantViewModel() // Shared instance for consistency
+    @ObservedObject var viewModel: MessageHelper = MessageHelper() 
     @State private var newMessageContent: String = ""
     @State private var tagName: String = ""
     @FocusState private var textFieldIsFocused: Bool

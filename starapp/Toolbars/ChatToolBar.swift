@@ -3,7 +3,7 @@ import SwiftData
 
 struct ChatToolbar: View {
     @Binding var messages: [Message]
-    @ObservedObject var viewModel: AssistantViewModel
+    @ObservedObject var viewModel: MessageHelper
     @Query(sort: \Session.date, order: .reverse) private var sessions: [Session]
     var user: User
     

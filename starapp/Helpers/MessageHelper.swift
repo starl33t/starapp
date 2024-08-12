@@ -14,7 +14,7 @@ struct Message: Identifiable, Codable, Comparable {
     }
 }
 
-class AssistantViewModel: ObservableObject {
+class MessageHelper: ObservableObject {
     @Published var messages: [Message] = []
     @Published var sortedMessages: [Message] = []
     @Published var threadId: String?
@@ -26,13 +26,14 @@ class AssistantViewModel: ObservableObject {
     var service: OpenAIService!
 
     init() {
-        if let apiKey = ProcessInfo.processInfo.environment["OPENAI_API_KEY"] {
-            self.apiKey = apiKey
-        } else {
-            fatalError("API Key not found")
+            if let key = Bundle.main.object(forInfoDictionaryKey: "OpenAIAPIKey") as? String {
+                self.apiKey = key
+            } else {
+                fatalError("API Key not found in Info.plist")
+            }
+            self.service = OpenAIServiceFactory.service(apiKey: self.apiKey)
         }
-        self.service = OpenAIServiceFactory.service(apiKey: self.apiKey)
-    }
+
 
     func createThread() async {
         let parameters = CreateThreadParameters()
