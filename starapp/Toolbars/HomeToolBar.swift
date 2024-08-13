@@ -26,7 +26,3 @@ struct HomeToolBar: View {
         }
     }
 }
-
-#Preview {
-    HomeToolBar()
-}

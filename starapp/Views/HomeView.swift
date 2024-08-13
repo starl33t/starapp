@@ -34,11 +34,12 @@ struct HomeView: View {
             Color.starBlack.ignoresSafeArea()
             VStack {
                 RoundedRectangle(cornerRadius: 24)
-                    .fill(.darkOne.opacity(0.2))
-                    .frame(maxWidth: .infinity)
+                    .fill(.darkOne.opacity(0.25))
+                    .frame(height: 200)
                     .overlay(
                         VStack {
-                            HStack(spacing: 48) {
+                            HStack(spacing: 24) {
+                                Text("Lactate:")
                                 HackerTextView(text: {
                                     switch selectedButton {
                                     case "Easy": return "1,0 mM"
@@ -47,19 +48,10 @@ struct HomeView: View {
                                     default: return ""
                                     }
                                 }(), trigger: trigger)
-                                
-                                HackerTextView(text: {
-                                    switch selectedButton {
-                                    case "Easy": return "140 BPM"
-                                    case "Sweet spot": return "160 BPM"
-                                    case "Hard": return "170 BPM"
-                                    default: return ""
-                                    }
-                                }(), trigger: trigger)
                             }
                             .font(.system(size: 28, weight: .bold))
                             .foregroundStyle(.whiteOne)
-                            .padding()
+                            .padding(. vertical, 24)
                             
                             HStack(spacing: 20) {
                                 Button("Easy") {
@@ -81,9 +73,8 @@ struct HomeView: View {
                                 .foregroundColor(selectedButton == "Hard" ? .starMain : .gray)
                             }
                         }
-                        .padding()
                     )
-                    .padding()
+                    .padding(.horizontal)
                 
                 Chart(sessions) { session in
                     BarMark(
@@ -143,7 +134,7 @@ struct HomeView: View {
                         }
                         
                     }
-                    .padding()
+                    .padding(.horizontal)
                 }
                 .scrollIndicators(.hidden)
                 
@@ -155,6 +146,3 @@ struct HomeView: View {
     
 }
 
-#Preview {
-    HomeView()
-}

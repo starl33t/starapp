@@ -21,7 +21,6 @@ struct CalendarView: View {
                         updateSessionCache()
                     }
             }
-            .padding()
             .foregroundStyle(.whiteTwo)
         }
         .onAppear {
@@ -103,10 +102,4 @@ struct DayView: View {
             .frame(height: 70)
         }
     }
-}
-
-#Preview {
-    CalendarView(
-        days: .constant(Date().daysInYear)
-    )
 }

@@ -15,7 +15,8 @@ struct SupportView: View {
                 Text("""
                 **Under Development**
                 
-                The app is still under development. If you need support, please contact us at
+                The app is still under development. 
+                Our AI-coach can help with most questions. If you need further support, please contact us at
                 
                 pt@starleet.com
                 """)
@@ -38,6 +39,3 @@ struct SupportView: View {
     }
 }
 
-#Preview {
-    SupportView()
-}

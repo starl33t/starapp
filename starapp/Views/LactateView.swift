@@ -69,7 +69,6 @@ struct LactateView: View {
                     .scrollIndicators(.hidden)
                     .scrollContentBackground(.hidden)
                     .padding(.top)
-                    .padding(.bottom)
                     .refreshable {
                         refreshFormattedRelative()
                     }
@@ -83,6 +82,3 @@ struct LactateView: View {
     }
 }
 
-#Preview {
-    LactateView()
-}

@@ -115,7 +115,6 @@ struct ChatView: View {
                     .disabled(newMessageContent.isEmpty)
                 }
                 .padding(.horizontal)
-                .padding(.vertical, 4)
             }
             .padding(.top)
         }
@@ -132,6 +131,3 @@ struct ChatView: View {
     }
 }
 
-#Preview {
-    ChatView(user: User(tagName: "PreviewUser"))
-}

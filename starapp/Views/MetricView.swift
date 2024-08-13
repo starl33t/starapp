@@ -194,8 +194,3 @@ struct MetricView: View {
     }
     
 }
-
-
-#Preview {
-    MetricView()
-}

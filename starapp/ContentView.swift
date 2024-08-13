@@ -86,3 +86,4 @@ struct ContentView: View {
         .tint(.starMain)
     }
 }
+

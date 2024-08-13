@@ -50,6 +50,4 @@ struct IntegrationsView: View {
         }
     }
 }
-#Preview {
-    IntegrationsView()
-}
+

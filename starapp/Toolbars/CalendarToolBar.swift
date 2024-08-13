@@ -36,7 +36,3 @@ struct CalendarToolbar: View {
             }
     }
 }
-
-#Preview {
-    CalendarToolbar(onTodayButtonTapped: {})
-}

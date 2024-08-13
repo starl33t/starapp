@@ -169,7 +169,3 @@ struct CloseButtonModifier: ViewModifier {
     }
 }
 
-#Preview {
-    ProfileView(user: User())
-}
-

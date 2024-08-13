@@ -83,7 +83,7 @@ struct SubscriptionView: View {
                     }
                 }
                 .scrollIndicators(.hidden)
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 30)
                 .padding(.bottom, 20)
                 
 
@@ -117,6 +117,3 @@ struct SubscriptionView: View {
     }
 }
 
-#Preview {
-    SubscriptionView()
-}

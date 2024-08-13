@@ -139,7 +139,3 @@ struct TrainingView: View {
         }
     }
 }
-
-#Preview {
-    TrainingView(session: Session(distance: nil, duration: nil, pace: nil, power: nil, heartRate: nil, lactate: nil, date: nil, title: ""))
-}

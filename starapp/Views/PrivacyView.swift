@@ -80,7 +80,3 @@ struct PrivacyView: View {
         }
     }
 }
-
-#Preview {
-    PrivacyView()
-}

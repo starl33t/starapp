@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftData
 
 @main
-struct starleetApp: App {
+struct starappApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

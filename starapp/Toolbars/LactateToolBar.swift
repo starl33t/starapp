@@ -27,7 +27,7 @@ struct LactateToolbar: View {
                 resetFields()
             }) {
                 NewTrainingView(dismiss: {
-                    resetFields() 
+                    resetFields()
                     trainingSheet = false
                 })
             }
@@ -56,15 +56,21 @@ struct LactateToolbar: View {
                 }
                 .padding()
                 
-                Button("Save") {
+                Button(action: {
                     let newSession = Session(
                         lactate: lactate ?? 0.0,
                         date: Date()
                     )
                     context.insert(newSession)
                     dismiss()
+                }) {
+                    Text("Save")
+                        .padding()
+                        .background(Color.starMain)
+                        .foregroundColor(.whiteOne)
+                        .cornerRadius(8)
                 }
-                .foregroundColor(.starMain)
+                .padding(.bottom, 100)
                 .padding()
             }
             .background(Color.starBlack)
@@ -72,22 +78,18 @@ struct LactateToolbar: View {
             .presentationDetents([.medium])
         }
         .overlay(
-                Button(action: dismiss) {
-                    Image(systemName: "xmark")
-                        .font(.system(size: 22))
-                        .foregroundStyle(.whiteOne)
-                        .padding()
-                }
-                , alignment: .topLeading
-            )
+            Button(action: dismiss) {
+                Image(systemName: "xmark")
+                    .font(.system(size: 22))
+                    .foregroundStyle(.whiteOne)
+                    .padding()
+            }
+            , alignment: .topLeading
+        )
     }
     
     private func resetFields() {
         lactate = nil
         date = Date()
     }
-}
-
-#Preview {
-    LactateToolbar()
 }

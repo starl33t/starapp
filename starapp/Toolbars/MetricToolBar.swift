@@ -35,7 +35,3 @@ struct MetricToolBar: View {
         }
     }
 }
-
-#Preview {
-    MetricToolBar()
-}
