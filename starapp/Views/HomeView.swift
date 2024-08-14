@@ -113,6 +113,7 @@ struct HomeView: View {
                 .scaledToFit()
                 .chartXAxis(.hidden)
                 .chartYAxis(.hidden)
+                .padding(.bottom)
                 
                 ScrollView(.horizontal){
                     HStack(spacing: 35){

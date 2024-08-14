@@ -9,68 +9,150 @@
       }
     ]
   },
-  "identifier" : "8A59A39B",
+  "identifier" : "F4051F92",
   "nonRenewingSubscriptions" : [
 
   ],
   "products" : [
-
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : false,
+      "internalID" : "6635838256",
+      "localizations" : [
+        {
+          "description" : "Copenhagen",
+          "displayName" : "Denmark",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "products",
+      "referenceName" : "products",
+      "type" : "NonConsumable"
+    }
   ],
   "settings" : {
     "_applicationInternalID" : "6541761517",
+    "_billingGracePeriodEnabled" : true,
+    "_billingIssuesEnabled" : true,
     "_developerTeamID" : "7F33N9HZ63",
-    "_failTransactionsEnabled" : false,
-    "_lastSynchronizedDate" : 745262605.05296302,
+    "_failTransactionsEnabled" : true,
+    "_lastSynchronizedDate" : 745268093.70846701,
+    "_locale" : "en_US",
+    "_renewalBillingIssuesEnabled" : true,
+    "_storefront" : "USA",
     "_storeKitErrors" : [
       {
-        "current" : null,
-        "enabled" : false,
+        "current" : {
+          "index" : 2,
+          "type" : "generic"
+        },
+        "enabled" : true,
         "name" : "Load Products"
       },
       {
-        "current" : null,
-        "enabled" : false,
+        "current" : {
+          "index" : 1,
+          "type" : "purchase"
+        },
+        "enabled" : true,
         "name" : "Purchase"
       },
       {
-        "current" : null,
-        "enabled" : false,
+        "current" : {
+          "index" : 0,
+          "type" : "verification"
+        },
+        "enabled" : true,
         "name" : "Verification"
       },
       {
-        "current" : null,
-        "enabled" : false,
+        "current" : {
+          "index" : 2,
+          "type" : "generic"
+        },
+        "enabled" : true,
         "name" : "App Store Sync"
       },
       {
-        "current" : null,
-        "enabled" : false,
+        "current" : {
+          "index" : 2,
+          "type" : "generic"
+        },
+        "enabled" : true,
         "name" : "Subscription Status"
       },
       {
-        "current" : null,
-        "enabled" : false,
+        "current" : {
+          "index" : 3,
+          "type" : "generic"
+        },
+        "enabled" : true,
         "name" : "App Transaction"
       },
       {
-        "current" : null,
-        "enabled" : false,
+        "current" : {
+          "index" : 3,
+          "type" : "generic"
+        },
+        "enabled" : true,
         "name" : "Manage Subscriptions Sheet"
       },
       {
-        "current" : null,
-        "enabled" : false,
+        "current" : {
+          "index" : 0,
+          "type" : "refund request"
+        },
+        "enabled" : true,
         "name" : "Refund Request Sheet"
       },
       {
-        "current" : null,
-        "enabled" : false,
+        "current" : {
+          "index" : 4,
+          "type" : "generic"
+        },
+        "enabled" : true,
         "name" : "Offer Code Redeem Sheet"
       }
     ]
   },
   "subscriptionGroups" : [
+    {
+      "id" : "21525230",
+      "localizations" : [
 
+      ],
+      "name" : "tiersub",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "4.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6633447010",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Copenhagen",
+              "displayName" : "Denmark",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "starsub1",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "tier0",
+          "subscriptionGroupID" : "21525230",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        }
+      ]
+    }
   ],
   "version" : {
     "major" : 4,

@@ -38,10 +38,12 @@
 		BF73421B2C3AE74C00911375 /* starappTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF73421A2C3AE74C00911375 /* starappTests.swift */; };
 		BF7342252C3AE74C00911375 /* starappUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7342242C3AE74C00911375 /* starappUITests.swift */; };
 		BF7342272C3AE74C00911375 /* starappUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7342262C3AE74C00911375 /* starappUITestsLaunchTests.swift */; };
+		BF73F4572C6BD85300922B9B /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF73F4562C6BD85300922B9B /* StoreKit.framework */; };
+		BF73F4592C6BD8F600922B9B /* Starleet.storekit in Resources */ = {isa = PBXBuildFile; fileRef = BF73F4582C6BD8F600922B9B /* Starleet.storekit */; };
+		BF73F45B2C6BE63500922B9B /* StarStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF73F45A2C6BE62D00922B9B /* StarStore.swift */; };
 		BF8D6ADC2C41A9DF000269F1 /* TrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */; };
 		BF91AC6E2C45405C0028BC41 /* NumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF91AC6D2C4540530028BC41 /* NumberFormatter.swift */; };
 		BFBBD9582C55869200671197 /* MessageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBBD9572C55868F00671197 /* MessageHelper.swift */; };
-		BFD070262C6BCE0900CD5079 /* Starleet.storekit in Resources */ = {isa = PBXBuildFile; fileRef = BFD070252C6BCE0900CD5079 /* Starleet.storekit */; };
 		BFDE40512C591A1200733888 /* CSVDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE40502C591A0900733888 /* CSVDocument.swift */; };
 		BFDE40532C591F8200733888 /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE40522C591F7B00733888 /* CalendarHelper.swift */; };
 		BFDEB5FE2C497D3900D32736 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDEB5FD2C497D3100D32736 /* UserService.swift */; };
@@ -101,10 +103,12 @@
 		BF7342202C3AE74C00911375 /* starappUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = starappUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF7342242C3AE74C00911375 /* starappUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = starappUITests.swift; sourceTree = "<group>"; };
 		BF7342262C3AE74C00911375 /* starappUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = starappUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		BF73F4562C6BD85300922B9B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		BF73F4582C6BD8F600922B9B /* Starleet.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Starleet.storekit; sourceTree = "<group>"; };
+		BF73F45A2C6BE62D00922B9B /* StarStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarStore.swift; sourceTree = "<group>"; };
 		BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingView.swift; sourceTree = "<group>"; };
 		BF91AC6D2C4540530028BC41 /* NumberFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFormatter.swift; sourceTree = "<group>"; };
 		BFBBD9572C55868F00671197 /* MessageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHelper.swift; sourceTree = "<group>"; };
-		BFD070252C6BCE0900CD5079 /* Starleet.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Starleet.storekit; sourceTree = "<group>"; };
 		BFDE40502C591A0900733888 /* CSVDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVDocument.swift; sourceTree = "<group>"; };
 		BFDE40522C591F7B00733888 /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
 		BFDEB5FD2C497D3100D32736 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
@@ -117,6 +121,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF0C1BCF2C69F4AD00A7BDF2 /* SwiftOpenAI in Frameworks */,
+				BF73F4572C6BD85300922B9B /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,6 +206,7 @@
 				BF7342052C3AE74A00911375 /* starapp */,
 				BF7342192C3AE74C00911375 /* starappTests */,
 				BF7342232C3AE74C00911375 /* starappUITests */,
+				BF73F4552C6BD85300922B9B /* Frameworks */,
 				BF7342042C3AE74A00911375 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -225,7 +231,8 @@
 				BF6744CF2C3FCA5A00A23D76 /* Models */,
 				BF7342082C3AE74A00911375 /* ContentView.swift */,
 				BF7342062C3AE74A00911375 /* starleetApp.swift */,
-				BFD070252C6BCE0900CD5079 /* Starleet.storekit */,
+				BF73F4582C6BD8F600922B9B /* Starleet.storekit */,
+				BF73F45A2C6BE62D00922B9B /* StarStore.swift */,
 				BF73420C2C3AE74C00911375 /* Assets.xcassets */,
 				BF73420E2C3AE74C00911375 /* starapp.entitlements */,
 				BF73420F2C3AE74C00911375 /* Preview Content */,
@@ -256,6 +263,14 @@
 				BF7342262C3AE74C00911375 /* starappUITestsLaunchTests.swift */,
 			);
 			path = starappUITests;
+			sourceTree = "<group>";
+		};
+		BF73F4552C6BD85300922B9B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BF73F4562C6BD85300922B9B /* StoreKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -366,7 +381,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF7342112C3AE74C00911375 /* Preview Assets.xcassets in Resources */,
-				BFD070262C6BCE0900CD5079 /* Starleet.storekit in Resources */,
+				BF73F4592C6BD8F600922B9B /* Starleet.storekit in Resources */,
 				BF73420D2C3AE74C00911375 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -400,6 +415,7 @@
 				BF4A81632C3AF53200D4CAF1 /* ProfileView.swift in Sources */,
 				BF91AC6E2C45405C0028BC41 /* NumberFormatter.swift in Sources */,
 				BF4A81672C3AF5D500D4CAF1 /* CalendarToolBar.swift in Sources */,
+				BF73F45B2C6BE63500922B9B /* StarStore.swift in Sources */,
 				BF31F0AB2C48FDAD000C005C /* EmailHelper.swift in Sources */,
 				BF4A816F2C3AF8DA00D4CAF1 /* LactateToolBar.swift in Sources */,
 				BF4A818F2C3AFFDD00D4CAF1 /* HomeView.swift in Sources */,
@@ -583,7 +599,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = starapp/starapp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 47;
+				CURRENT_PROJECT_VERSION = 64;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"starapp/Preview Content\"";
 				DEVELOPMENT_TEAM = 7F33N9HZ63;
@@ -605,7 +621,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.5.7;
+				MARKETING_VERSION = 1.7.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starappv01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -624,7 +640,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = starapp/starapp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 47;
+				CURRENT_PROJECT_VERSION = 64;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"starapp/Preview Content\"";
 				DEVELOPMENT_TEAM = 7F33N9HZ63;
@@ -646,7 +662,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.5.7;
+				MARKETING_VERSION = 1.7.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starappv01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;

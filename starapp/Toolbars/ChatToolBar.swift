@@ -2,6 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct ChatToolbar: View {
+    @AppStorage("isWaitingForResponse") private var isWaitingForResponse: Bool = false
     @Binding var messages: [Message]
     @ObservedObject var viewModel: MessageHelper
     @Query(sort: \Session.date, order: .reverse) private var sessions: [Session]
@@ -56,8 +57,10 @@ struct ChatToolbar: View {
             let fullMessage = "\(text)\n\n\(sessionInfo)"
             
             if let threadId = viewModel.threadId {
+                isWaitingForResponse = true
                 await viewModel.createMessage(threadId: threadId, content: fullMessage)
                 try await viewModel.startAndCheckRun(threadId: threadId)
+                isWaitingForResponse = false
             } else {
                 print("Thread ID not available.")
             }

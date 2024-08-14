@@ -15,7 +15,7 @@ struct AccountView: View {
     @AppStorage("Duration") var durationToggle: Bool = true
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
-    @Query private var users: [User]
+    @Query private var user: [User]
     @Query private var allSessions: [Session]
     
     var body: some View {
@@ -150,7 +150,7 @@ struct AccountView: View {
                 modelContext.delete(session)
             }
             
-            if let user = users.first {
+            if let user = user.first {
                 // Reset all user properties to nil or default values
                 user.userName = nil
                 user.tagName = nil

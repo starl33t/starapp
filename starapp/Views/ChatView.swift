@@ -2,10 +2,14 @@ import SwiftUI
 import SwiftData
 
 struct ChatView: View {
-    @ObservedObject var viewModel: MessageHelper = MessageHelper() 
+    @ObservedObject var viewModel: MessageHelper = MessageHelper()
     @State private var newMessageContent: String = ""
     @State private var tagName: String = ""
     @FocusState private var textFieldIsFocused: Bool
+    @AppStorage("isWaitingForResponse") private var isWaitingForResponse: Bool = false
+    @AppStorage("dailyMessageCount") private var dailyMessageCount: Int = 0
+    @AppStorage("lastMessageDate") private var lastMessageDate: String = Date().formatted()
+    @State private var showAlert: Bool = false
     let user: User
     
     var body: some View {
@@ -85,7 +89,7 @@ struct ChatView: View {
                     }
                     ZStack(alignment: .leading) {
                         if newMessageContent.isEmpty {
-                            Text("Ask Renato CanovAI")
+                            Text(placeholderText)
                                 .foregroundStyle(.gray)
                                 .padding(.horizontal)
                         }
@@ -98,21 +102,36 @@ struct ChatView: View {
                     .background(.darkOne)
                     .cornerRadius(24)
                     Button(action: {
-                        Task {
-                            if let threadId = viewModel.threadId {
-                                await viewModel.createMessage(threadId: threadId, content: newMessageContent)
-                                newMessageContent = ""  // Reset input field after sending
-                                try await viewModel.startAndCheckRun(threadId: threadId)
-                            } else {
-                                print("Thread ID not available.")
+                        if canSendMessage() {
+                            Task {
+                                if let threadId = viewModel.threadId {
+                                    isWaitingForResponse = true
+                                    
+                                    await viewModel.createMessage(threadId: threadId, content: newMessageContent)
+                                    incrementMessageCount()
+                                    newMessageContent = ""  // Reset input field after sending
+                                    try await viewModel.startAndCheckRun(threadId: threadId)
+                                    isWaitingForResponse = false
+                                } else {
+                                    print("Thread ID not available.")
+                                }
                             }
+                        } else {
+                            showAlert = true
                         }
                     }) {
-                        Image(systemName: "arrow.up.circle.fill")
-                            .foregroundColor(newMessageContent.isEmpty ? .gray : .starMain)
+                        Image(systemName: isWaitingForResponse ? "stop.circle.fill" : "arrow.up.circle.fill")
+                            .foregroundColor(isWaitingForResponse ? .gray : .starMain)
                             .font(.system(size: 30))
                     }
                     .disabled(newMessageContent.isEmpty)
+                    .alert(isPresented: $showAlert) {
+                        Alert(
+                            title: Text("Daily Limit Reached"),
+                            message: Text("Please subscribe using the Profile icon (upper left corner) -> Subscriptions."),
+                            dismissButton: .default(Text("OK"))
+                        )
+                    }
                 }
                 .padding(.horizontal)
             }
@@ -123,11 +142,41 @@ struct ChatView: View {
                 if viewModel.threadId == nil {
                     await viewModel.createThread()
                 }
+                resetMessageCountIfNeeded()
             }
         }
         .onTapGesture {
             textFieldIsFocused = false
         }
     }
+    private var placeholderText: String {
+        let maxMessages = user.tier == 1 ? 500 : 100
+        let messagesLeft = maxMessages - dailyMessageCount
+        
+        if messagesLeft <= 5 {
+            return "\(messagesLeft) messages left today"
+        } else {
+            return "Ask Renato CanovAI"
+        }
+    }
+    
+    
+    private func canSendMessage() -> Bool {
+        resetMessageCountIfNeeded()
+        let maxMessages = user.tier == 1 ? 500 : 100
+        return dailyMessageCount < maxMessages
+    }
+    
+    private func incrementMessageCount() {
+        dailyMessageCount += 1
+        lastMessageDate = Date().formatDayMonth(date: Date())
+    }
+    
+    private func resetMessageCountIfNeeded() {
+        let currentDate = Date().formatDayMonth(date: Date())
+        if currentDate != lastMessageDate {
+            dailyMessageCount = 0
+            lastMessageDate = currentDate
+        }
+    }
 }
-

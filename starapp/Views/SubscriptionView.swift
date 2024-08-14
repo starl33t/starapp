@@ -1,8 +1,14 @@
 import SwiftUI
+import StoreKit
+
 
 struct SubscriptionView: View {
+    @Environment(\.modelContext) var context
     @State private var isSecondRectangleVisible: Bool = false
-
+    @State var isPurchased = false
+    @StateObject var starStore = StarStore()
+    let user: User
+    
     var body: some View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
@@ -19,7 +25,7 @@ struct SubscriptionView: View {
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 50, height: 50)
                                         .foregroundStyle(.whiteOne)
-                                    Text("The Grind")
+                                    Text("Tier 1")
                                         .foregroundStyle(.whiteOne)
                                         .font(.largeTitle)
                                         .bold()
@@ -31,7 +37,7 @@ struct SubscriptionView: View {
                                                 .frame(width: 20, height: 20)
                                             Text("Access to the latest AI model for peak performance")
                                         }
-
+                                        
                                         HStack(alignment: .center) {
                                             Image(systemName: "aqi.medium")
                                                 .resizable()
@@ -51,9 +57,9 @@ struct SubscriptionView: View {
                                     .font(.body)
                                     .padding(.top, 10)
                                 }
-                                .padding()
+                                    .padding()
                             )
-
+                        
                         // Use GeometryReader to detect when the second rectangle is visible
                         GeometryReader { geometry in
                             RoundedRectangle(cornerRadius: 10)
@@ -86,11 +92,15 @@ struct SubscriptionView: View {
                 .padding(.horizontal, 30)
                 .padding(.bottom, 20)
                 
-
+                
                 Button(action: {
-                    // Button action here
+                    Task {
+                        if let product = starStore.subscriptions.first {
+                            await buy(product: product)
+                        }
+                    }
                 }) {
-                    Text(isSecondRectangleVisible ? "Unavailable" : "Currently Free!")
+                    Text(isSecondRectangleVisible ? "Unavailable" : (user.tier == 1 ? "Subscribed" : "Upgrade"))
                         .font(.headline)
                         .foregroundColor(.whiteOne)
                         .padding()
@@ -98,21 +108,48 @@ struct SubscriptionView: View {
                         .cornerRadius(10)
                 }
                 .frame(maxWidth: .infinity)
+                .disabled(isSecondRectangleVisible)
             }
         }
+        .onAppear() {
+            checkSubscriptionStatus()
+        }
     }
-
+    
     private func updateVisibility(geometry: GeometryProxy) {
         let screenWidth = UIScreen.main.bounds.width
         let halfViewWidth = geometry.size.width / 3
         let viewMinX = geometry.frame(in: .global).minX
         let viewMaxX = geometry.frame(in: .global).maxX
-
+        
         // Check if more than half of the second rectangle is within the screen bounds
         if viewMinX + halfViewWidth >= 0 && viewMaxX - halfViewWidth <= screenWidth {
             isSecondRectangleVisible = true
         } else {
             isSecondRectangleVisible = false
+        }
+    }
+    func buy(product: Product) async {
+        do {
+            if try await starStore.purchase(product) != nil {
+                isPurchased = true
+                user.tier = 1
+                UserService.saveContext(context)
+            }
+        } catch {
+            print("purchase failed")
+        }
+    }
+    private func checkSubscriptionStatus() {
+        Task {
+            if let subscriptionGroupStatus = starStore.subscriptionGroupStatus {
+                DispatchQueue.main.async {
+                    if subscriptionGroupStatus == .expired || subscriptionGroupStatus == .revoked {
+                        user.tier = 0
+                        UserService.saveContext(context)
+                    } 
+                }
+            }
         }
     }
 }

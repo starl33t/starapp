@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ProfileView: View {
     @Environment(\.modelContext) var context
-    @State private var userName: String
+    @State private var tier: Int
     @State private var tagName: String
     let user: User
     
@@ -14,11 +14,17 @@ struct ProfileView: View {
     @State private var showLearnSheet = false
     @State private var showPrivacySheet = false
     
-    
     init(user: User) {
         self.user = user
-        _userName = State(initialValue: user.userName ?? "")
         _tagName = State(initialValue: user.tagName ?? "")
+        _tier = State(initialValue: user.tier ?? 0)
+    }
+    
+    private var displayedTier: String {
+        tier == 0 ? "Tier 0" : "Tier 1"
+    }
+    private var iconTier: String {
+        tier == 0 ? "person.circle.fill" : "star.fill"
     }
     
     var body: some View {
@@ -26,26 +32,15 @@ struct ProfileView: View {
             Color.starBlack.ignoresSafeArea()
             VStack {
                 VStack {
-                    Image(systemName: "person.circle.fill")
+                    Image(systemName: iconTier)
                         .font(.system(size: 74))
                         .foregroundStyle(.whiteOne)
                         .padding(.bottom, 8)
                     
-                    ZStack {
-                        if userName.isEmpty {
-                            Text("Name")
-                                .foregroundColor(.whiteOne)
-                                .frame(maxWidth: .infinity)
-                                .multilineTextAlignment(.center)
-                        }
-                        TextField("", text: $userName)
-                            .foregroundColor(.whiteOne)
-                            .multilineTextAlignment(.center)
-                            .onChange(of: userName) { user.userName = userName
-                                UserService.saveContext(context) }
-                    }
-                    .font(.system(size: 24, weight: .bold))
-                    .frame(maxWidth: .infinity)
+                    Text(displayedTier)
+                        .foregroundColor(.whiteOne)
+                        .multilineTextAlignment(.center)
+                        .font(.system(size: 24, weight: .bold))
                     ZStack {
                         if tagName.isEmpty {
                             Text("@Tag")
@@ -107,13 +102,19 @@ struct ProfileView: View {
             }
             .padding()
             .tint(.whiteTwo)
+            .onAppear {
+                tier = user.tier ?? 0
+            }
+            .onChange(of: user.tier) { oldTier, newTier in
+                tier = newTier ?? 0
+            }
         }
         .sheet(isPresented: $showAccountSheet) {
             AccountView()
                 .modifier(CloseButtonModifier(isPresented: $showAccountSheet))
         }
         .sheet(isPresented: $showSubscriptionSheet) {
-            SubscriptionView()
+            SubscriptionView(user: user)
                 .modifier(CloseButtonModifier(isPresented: $showSubscriptionSheet))
         }
         .sheet(isPresented: $showIntegrationsSheet) {
@@ -133,7 +134,7 @@ struct ProfileView: View {
                 .modifier(CloseButtonModifier(isPresented: $showPrivacySheet))
         }
     }
-
+    
     
     private func profileRow(imageName: String, text: String) -> some View {
         HStack {
@@ -150,7 +151,6 @@ struct ProfileView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .contentShape(Rectangle())
     }
-    
 }
 struct CloseButtonModifier: ViewModifier {
     @Binding var isPresented: Bool

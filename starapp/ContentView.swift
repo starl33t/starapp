@@ -6,7 +6,6 @@ struct ContentView: View {
     @State private var selectedTab: Int = 0
     @State private var currentUser: User?
     @State private var days: [Date] = Date().daysInYear
-    @State private var sessions: [Session] = []
     @StateObject private var assistantViewModel = MessageHelper()
     
     var body: some View {
@@ -85,5 +84,6 @@ struct ContentView: View {
         }
         .tint(.starMain)
     }
+    
 }
 
