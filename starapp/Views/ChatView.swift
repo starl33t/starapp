@@ -120,9 +120,16 @@ struct ChatView: View {
                             showAlert = true
                         }
                     }) {
-                        Image(systemName: isWaitingForResponse ? "stop.circle.fill" : "arrow.up.circle.fill")
-                            .foregroundColor(isWaitingForResponse ? .gray : .starMain)
-                            .font(.system(size: 30))
+                        if isWaitingForResponse {
+                                Image(systemName: "stop.circle.fill")
+                                    .symbolEffect(.pulse.wholeSymbol)
+                                    .foregroundColor(.gray)
+                                    .font(.system(size: 30))
+                            } else {
+                                Image(systemName: "arrow.up.circle.fill")
+                                    .foregroundColor(newMessageContent.isEmpty ? .gray : .starMain)
+                                    .font(.system(size: 30))
+                            }
                     }
                     .disabled(newMessageContent.isEmpty)
                     .alert(isPresented: $showAlert) {
