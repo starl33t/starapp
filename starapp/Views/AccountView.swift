@@ -76,10 +76,7 @@ struct AccountView: View {
                     VStack {
                         ZStack(alignment: .leading) {
                             Capsule()
-                                .fill({
-                                    let progress = deleteOffset / maxOffset
-                                    return Color.red.opacity(0.2 + progress * 0.9)
-                                }())
+                                .fill(Color.red.opacity(0.2 + (deleteOffset / maxOffset) * 0.9))
                                 .frame(height: 60)
                             
                             Text("Slide to delete all data")
