@@ -7,7 +7,7 @@ struct CalendarView: View {
     
     @Environment(\.calendar) private var calendar
     @Query private var sessions: [Session]
-    @AppStorage("selectedDate") private var selectedDate: Date = Date()
+    @Binding var selectedDate: Date
     @Binding var days: [Date]
     @State private var sessionCache: [Date: [Session]] = [:]
     

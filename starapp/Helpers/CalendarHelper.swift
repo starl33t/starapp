@@ -3,13 +3,12 @@ import Foundation
 import SwiftUI
 
 struct CalendarHelper {
-    @AppStorage("selectedDate") static var selectedDate: Date = Date()
     
-    static func resetToToday(days: Binding<[Date]>) {
-        let today = Date()
-        selectedDate = today
-        days.wrappedValue = today.daysInYear
-    }
+    static func resetToToday(selectedDate: Binding<Date>, days: Binding<[Date]>) {
+           let today = Date()
+           selectedDate.wrappedValue = today  // Update the selectedDate
+           days.wrappedValue = today.daysInYear
+       }
     
     static func buildSessionCache(for days: [Date], with sessions: [Session]) -> [Date: [Session]] {
         var sessionCache: [Date: [Session]] = [:]

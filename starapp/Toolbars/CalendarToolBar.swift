@@ -2,7 +2,7 @@ import SwiftUI
 
 struct CalendarToolbar: View {
     @State private var showDatePicker: Bool = false
-    @AppStorage("selectedDate") var selectedDate: Date = Date()
+    @Binding var selectedDate: Date
     var onTodayButtonTapped: () -> Void
     
     var body: some View {
