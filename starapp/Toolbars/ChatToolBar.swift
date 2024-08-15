@@ -92,10 +92,14 @@ struct ChatToolbar: View {
             description += "Distance: \(distance) km\n"
         }
         if let duration = session.duration {
-            description += "Duration: \(duration) min\n"
+            let minutes = Int(duration)
+            let seconds = Int((duration - Double(minutes)) * 60)
+            description += String(format: "Duration: %d min %02d sec\n", minutes, seconds)
         }
         if let pace = session.pace {
-            description += "Pace: \(pace) min/km\n"
+            let paceMinutes = Int(pace)
+            let paceSeconds = Int((pace - Double(paceMinutes)) * 60)
+            description += String(format: "Pace: %02d:%02d min/km\n", paceMinutes, paceSeconds) 
         }
         if let power = session.power {
             description += "Power: \(power) W\n"

@@ -76,44 +76,49 @@ struct HomeView: View {
                     )
                     .padding(.horizontal)
                 
-                Chart(sessions) { session in
-                    BarMark(
-                        x: .value("Date", session.date ?? Date(), unit: .day),
-                        y: .value("Lactate", session.lactate ?? 0),
-                        stacking: .standard
-                    )
-                    .foregroundStyle(LactateHelper.color(for: session.lactate))
-                    .annotation(position: .overlay, alignment: .center) {
-                        Text(LactateHelper.formatLactate(session.lactate ?? 0))
-                            .multilineTextAlignment(.center)
-                            .font(.system(size: 8))
-                            .fontWeight(.bold)
-                    }
-                    if let barSelection = barSelection {
-                        RuleMark(x: .value("Date", barSelection, unit: .day))
-                            .foregroundStyle(.gray)
-                            .zIndex(-10)
-                            .annotation(
-                                position: .bottom,
-                                spacing: 4,
-                                overflowResolution: .init(x: .disabled, y: .disabled)
-                            ) {
-                                if let session = sessions.first(where: { Calendar.current.isDate($0.date ?? Date(), inSameDayAs: barSelection) }) {
-                                    VStack {
-                                        Text(Date().formatDayMonth(date: session.date))
+                if sessions.isEmpty {
+                    ContentUnavailableView("No Sessions Found", systemImage: "figure.run")
+                        .foregroundStyle(.whiteOne)
+                } else {
+                    Chart(sessions) { session in
+                        BarMark(
+                            x: .value("Date", session.date ?? Date(), unit: .day),
+                            y: .value("Lactate", session.lactate ?? 0),
+                            stacking: .standard
+                        )
+                        .foregroundStyle(LactateHelper.color(for: session.lactate))
+                        .annotation(position: .overlay, alignment: .center) {
+                            Text(LactateHelper.formatLactate(session.lactate ?? 0))
+                                .multilineTextAlignment(.center)
+                                .font(.system(size: 8))
+                                .fontWeight(.bold)
+                        }
+                        if let barSelection = barSelection {
+                            RuleMark(x: .value("Date", barSelection, unit: .day))
+                                .foregroundStyle(.gray)
+                                .zIndex(-10)
+                                .annotation(
+                                    position: .bottom,
+                                    spacing: 4,
+                                    overflowResolution: .init(x: .disabled, y: .disabled)
+                                ) {
+                                    if let session = sessions.first(where: { Calendar.current.isDate($0.date ?? Date(), inSameDayAs: barSelection) }) {
+                                        VStack {
+                                            Text(Date().formatDayMonth(date: session.date))
+                                        }
+                                        .font(.system(size: 14))
+                                        .foregroundStyle(.gray)
+                                        
                                     }
-                                    .font(.system(size: 14))
-                                    .foregroundStyle(.gray)
-                                    
                                 }
-                            }
+                        }
                     }
+                    .chartXSelection(value: $barSelection)
+                    .scaledToFit()
+                    .chartXAxis(.hidden)
+                    .chartYAxis(.hidden)
+                    .padding(.bottom)
                 }
-                .chartXSelection(value: $barSelection)
-                .scaledToFit()
-                .chartXAxis(.hidden)
-                .chartYAxis(.hidden)
-                .padding(.bottom)
                 
                 ScrollView(.horizontal){
                     HStack(spacing: 35){

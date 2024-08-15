@@ -43,7 +43,7 @@ struct LactateToolbar: View {
                         .foregroundStyle(.whiteTwo)
                     Spacer()
                     ZStack(alignment: .leading) {
-                        TextField("mM", value: $lactate, formatter: NumberFormatter.customFormatter)
+                        TextField("mM", value: $lactate, formatter: NumberHelper.customFormatter())
                             .keyboardType(.decimalPad)
                             .foregroundStyle(.whiteTwo)
                     }

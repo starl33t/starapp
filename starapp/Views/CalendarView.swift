@@ -83,6 +83,11 @@ struct DayView: View {
             }
             VStack {
                 ZStack {
+                    if Calendar.current.isDateInToday(day) {
+                        RoundedRectangle(cornerRadius: 4)
+                            .stroke(Color.whiteTwo, lineWidth: 1)
+                            .frame(width: 20, height: 20)
+                    }
                     Text(day.formatted(.dateTime.day()))
                         .fontWeight(.bold)
                         .frame(maxWidth: .infinity)
