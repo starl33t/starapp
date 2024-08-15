@@ -14,7 +14,7 @@ class StarStore: ObservableObject {
     @Published private(set) var subscriptions: [Product] = []
     @Published private(set) var purchasedSubscriptions: [Product] = []
     @Published private(set) var subscriptionGroupStatus: RenewalState?
-    private let productIds: [String] = ["starsub1"]
+    private let productIds: [String] = ["tier1"]
     var updateListenerTask : Task<Void, Error>? = nil
     
     init() {

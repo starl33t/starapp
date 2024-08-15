@@ -92,7 +92,6 @@ struct SubscriptionView: View {
                 .padding(.horizontal, 30)
                 .padding(.bottom, 20)
                 
-                
                 Button(action: {
                     Task {
                         if let product = starStore.subscriptions.first {
@@ -100,7 +99,7 @@ struct SubscriptionView: View {
                         }
                     }
                 }) {
-                    Text(isSecondRectangleVisible ? "Unavailable" : (user.tier == 1 ? "Subscribed" : "Upgrade"))
+                    Text(isSecondRectangleVisible ? "Unavailable" : (user.tier == 1 ? "Subscribed" : "Tier 1 for US$ 4.99"))
                         .font(.headline)
                         .foregroundColor(.whiteOne)
                         .padding()
@@ -109,6 +108,10 @@ struct SubscriptionView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .disabled(isSecondRectangleVisible)
+                    Text("Tier 1 is charged monthly. By proceeding you have read and agree to our [Terms & Conditions](https://www.apple.com/legal/internet-services/itunes/dev/stdeula/) and [Privacy Policy](https://www.apple.com/legal/privacy/pdfs/apple-privacy-policy-en-ww.pdf).")
+                        .font(.system(size: 14))
+                        .foregroundColor(.gray)
+                        .padding()
             }
         }
         .onAppear() {

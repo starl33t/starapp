@@ -13,6 +13,7 @@ struct ProfileView: View {
     @State private var showSupportSheet = false
     @State private var showLearnSheet = false
     @State private var showPrivacySheet = false
+    @StateObject var starStore = StarStore()
     
     init(user: User) {
         self.user = user
@@ -115,7 +116,7 @@ struct ProfileView: View {
         }
         .sheet(isPresented: $showSubscriptionSheet) {
             SubscriptionView(user: user)
-                .modifier(CloseButtonModifier(isPresented: $showSubscriptionSheet))
+                .modifier(SubscriptionCloseButtonModifier(isPresented: $showSubscriptionSheet, onRestoreBuys: checkSubscriptionStatus))
         }
         .sheet(isPresented: $showIntegrationsSheet) {
             IntegrationsView()
@@ -151,6 +152,20 @@ struct ProfileView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .contentShape(Rectangle())
     }
+    
+    private func checkSubscriptionStatus() {
+        Task {
+            if let subscriptionGroupStatus = starStore.subscriptionGroupStatus {
+                DispatchQueue.main.async {
+                    if subscriptionGroupStatus == .expired || subscriptionGroupStatus == .revoked {
+                        user.tier = 0
+                        UserService.saveContext(context)
+                    }
+                }
+            }
+        }
+    }
+    
 }
 struct CloseButtonModifier: ViewModifier {
     @Binding var isPresented: Bool
@@ -169,3 +184,32 @@ struct CloseButtonModifier: ViewModifier {
     }
 }
 
+struct SubscriptionCloseButtonModifier: ViewModifier {
+    @Binding var isPresented: Bool
+    let onRestoreBuys: () -> Void
+    
+    func body(content: Content) -> some View {
+        ZStack(alignment: .topLeading) {
+            content
+            
+            HStack {
+                Button(action: { isPresented = false }) {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 22))
+                        .foregroundStyle(.whiteOne)
+                        .padding()
+                }
+                Spacer()
+                Button(action: {
+                    onRestoreBuys()
+                }) {
+                    Text("Restore")
+                        .foregroundColor(.whiteOne)
+                        .padding()
+                }
+            }
+            
+            
+        }
+    }
+}

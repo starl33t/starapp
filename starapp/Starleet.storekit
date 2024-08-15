@@ -36,7 +36,7 @@
     "_billingIssuesEnabled" : true,
     "_developerTeamID" : "7F33N9HZ63",
     "_failTransactionsEnabled" : true,
-    "_lastSynchronizedDate" : 745268093.70846701,
+    "_lastSynchronizedDate" : 745440387.51201105,
     "_locale" : "en_US",
     "_renewalBillingIssuesEnabled" : true,
     "_storefront" : "USA",
@@ -121,7 +121,7 @@
       "localizations" : [
 
       ],
-      "name" : "tiersub",
+      "name" : "startiers",
       "subscriptions" : [
         {
           "adHocOffers" : [
@@ -133,18 +133,18 @@
           "displayPrice" : "4.99",
           "familyShareable" : false,
           "groupNumber" : 1,
-          "internalID" : "6633447010",
+          "internalID" : "6636554611",
           "introductoryOffer" : null,
           "localizations" : [
             {
-              "description" : "Copenhagen",
-              "displayName" : "Denmark",
+              "description" : "Denmark, Copenhagen",
+              "displayName" : "Starleet",
               "locale" : "en_US"
             }
           ],
-          "productID" : "starsub1",
-          "recurringSubscriptionPeriod" : "P1Y",
-          "referenceName" : "tier0",
+          "productID" : "tier1",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "tier1",
           "subscriptionGroupID" : "21525230",
           "type" : "RecurringSubscription",
           "winbackOffers" : [
