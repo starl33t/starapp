@@ -2,6 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct ChatView: View {
+    @Environment(\.modelContext) var context
     @ObservedObject var viewModel: MessageHelper = MessageHelper()
     @State private var newMessageContent: String = ""
     @State private var tagName: String = ""
@@ -10,6 +11,8 @@ struct ChatView: View {
     @AppStorage("dailyMessageCount") private var dailyMessageCount: Int = 0
     @AppStorage("lastMessageDate") private var lastMessageDate: String = Date().formatted()
     @State private var showAlert: Bool = false
+    @StateObject var starStore = StarStore()
+    @Binding var tier: Int
     let user: User
     
     var body: some View {
@@ -150,6 +153,7 @@ struct ChatView: View {
                     await viewModel.createThread()
                 }
                 resetMessageCountIfNeeded()
+                checkSubscriptionStatus()
             }
         }
         .onTapGesture {
@@ -157,7 +161,7 @@ struct ChatView: View {
         }
     }
     private var placeholderText: String {
-        let maxMessages = user.tier == 1 ? 500 : 100
+        let maxMessages = user.tier == 1 ? 500 : 10
         let messagesLeft = maxMessages - dailyMessageCount
         
         if messagesLeft <= 5 {
@@ -170,7 +174,7 @@ struct ChatView: View {
     
     private func canSendMessage() -> Bool {
         resetMessageCountIfNeeded()
-        let maxMessages = user.tier == 1 ? 500 : 100
+        let maxMessages = user.tier == 1 ? 500 : 10
         return dailyMessageCount < maxMessages
     }
     
@@ -184,6 +188,23 @@ struct ChatView: View {
         if currentDate != lastMessageDate {
             dailyMessageCount = 0
             lastMessageDate = currentDate
+        }
+    }
+    private func checkSubscriptionStatus() {
+        Task {
+            if let subscriptionGroupStatus = starStore.subscriptionGroupStatus {
+                DispatchQueue.main.async {
+                    if subscriptionGroupStatus == .expired || subscriptionGroupStatus == .revoked {
+                        user.tier = 0
+                    } else {
+                        user.tier = 1
+                    }
+                    UserService.saveContext(context)
+                    
+                    // Update the UI state safely by unwrapping the optional tier
+                    tier = user.tier ?? 0
+                }
+            }
         }
     }
 }

@@ -28,8 +28,8 @@ struct SupportView: View {
                     Label("Email", systemImage: "envelope")
                         .padding()
                         .background(.starMain)
-                        .foregroundColor(.whiteOne)
-                        .cornerRadius(8)
+                        .foregroundStyle(.whiteOne)
+                        .cornerRadius(10)
                 }
             }
             .foregroundStyle(.whiteOne)

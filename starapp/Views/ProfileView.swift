@@ -1,4 +1,5 @@
 import SwiftUI
+import StoreKit
 
 struct ProfileView: View {
     @Environment(\.modelContext) var context
@@ -14,6 +15,7 @@ struct ProfileView: View {
     @State private var showLearnSheet = false
     @State private var showPrivacySheet = false
     @StateObject var starStore = StarStore()
+    @State var isRestored = false
     
     init(user: User) {
         self.user = user
@@ -105,6 +107,7 @@ struct ProfileView: View {
             .tint(.whiteTwo)
             .onAppear {
                 tier = user.tier ?? 0
+                checkSubscriptionStatus()
             }
             .onChange(of: user.tier) { oldTier, newTier in
                 tier = newTier ?? 0
@@ -115,8 +118,14 @@ struct ProfileView: View {
                 .modifier(CloseButtonModifier(isPresented: $showAccountSheet))
         }
         .sheet(isPresented: $showSubscriptionSheet) {
-            SubscriptionView(user: user)
-                .modifier(SubscriptionCloseButtonModifier(isPresented: $showSubscriptionSheet, onRestoreBuys: checkSubscriptionStatus))
+            SubscriptionView(tier: $tier, user: user)
+                .modifier(SubscriptionCloseButtonModifier(isPresented: $showSubscriptionSheet, onRestoreBuys: {
+                    Task {
+                        if let product = starStore.subscriptions.first {
+                            await buy(product: product)
+                        }
+                    }
+                }))
         }
         .sheet(isPresented: $showIntegrationsSheet) {
             IntegrationsView()
@@ -135,6 +144,7 @@ struct ProfileView: View {
                 .modifier(CloseButtonModifier(isPresented: $showPrivacySheet))
         }
     }
+    
     
     
     private func profileRow(imageName: String, text: String) -> some View {
@@ -159,14 +169,29 @@ struct ProfileView: View {
                 DispatchQueue.main.async {
                     if subscriptionGroupStatus == .expired || subscriptionGroupStatus == .revoked {
                         user.tier = 0
-                        UserService.saveContext(context)
+                    } else {
+                        user.tier = 1
                     }
+                    UserService.saveContext(context)
+                    
+                    tier = user.tier ?? 0
                 }
             }
         }
     }
-    
+    func buy(product: Product) async {
+        do {
+            if try await starStore.purchase(product) != nil {
+                isRestored = true
+                user.tier = 1
+                UserService.saveContext(context)
+            }
+        } catch {
+            print("purchase failed")
+        }
+    }
 }
+
 struct CloseButtonModifier: ViewModifier {
     @Binding var isPresented: Bool
     
@@ -201,7 +226,9 @@ struct SubscriptionCloseButtonModifier: ViewModifier {
                 }
                 Spacer()
                 Button(action: {
-                    onRestoreBuys()
+                    Task {
+                        onRestoreBuys()
+                    }
                 }) {
                     Text("Restore")
                         .foregroundColor(.whiteOne)
