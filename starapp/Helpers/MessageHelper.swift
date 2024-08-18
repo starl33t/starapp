@@ -5,16 +5,11 @@ struct CreateThreadResponse: Codable {
     let id: String
 }
 
-struct Message: Identifiable, Codable, Comparable {
+struct Message: Identifiable, Codable{
     var id: UUID
     var threadId: String
     var role: String
     var content: String
-    var createdAt: Date
-
-    static func < (lhs: Message, rhs: Message) -> Bool {
-        return lhs.createdAt > rhs.createdAt
-    }
 }
 
 class MessageHelper: ObservableObject {
@@ -85,12 +80,10 @@ class MessageHelper: ObservableObject {
                 id: UUID(),
                 threadId: threadId,
                 role: "user",
-                content: content,
-                createdAt: Date()
+                content: content
             )
             DispatchQueue.main.async {
                 self.messages.append(newMessage)
-                self.trimMessages()  // Ensure only 5 messages are stored
             }
 
             try await streamAssistantResponse(threadId: threadId)
@@ -99,14 +92,6 @@ class MessageHelper: ObservableObject {
             print("Error creating message: \(error)")
         }
     }
-
-    func trimMessages() {
-        if messages.count > 5 {
-            messages.removeFirst(messages.count - 5)
-        }
-    }
-
-   
 
     @MainActor
     func updateAssistantMessage(_ content: String, threadId: String) {
@@ -117,8 +102,7 @@ class MessageHelper: ObservableObject {
                 id: UUID(),
                 threadId: threadId,
                 role: "assistant",
-                content: content,
-                createdAt: Date()
+                content: content
             )
             self.messages.append(newAssistantMessage)
         }

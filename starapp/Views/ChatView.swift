@@ -20,19 +20,11 @@ struct ChatView: View {
             Color.starBlack.ignoresSafeArea()
             VStack {
                 ScrollView {
-                    ScrollViewReader { proxy in
                         LazyVStack {
-                            ForEach(viewModel.messages.suffix(5)) { message in
-                                MessageRowView(message: message, user: user)
-                                    .id(message.id)
+                            if let lastMessage = viewModel.messages.last {
+                                MessageRowView(message: lastMessage, user: user)
                             }
                         }
-                        .onChange(of: viewModel.messages) { _,messages in
-                            if let lastMessage = messages.last {
-                                    proxy.scrollTo(lastMessage.id, anchor: .top)
-                            }
-                        }
-                    }
                 }
                 HStack {
                     Button(action: {
@@ -113,7 +105,7 @@ struct ChatView: View {
         }
     }
     private var placeholderText: String {
-        let maxMessages = user.tier == 1 ? 500 : 500
+        let maxMessages = user.tier == 1 ? 500 : 10
         let messagesLeft = maxMessages - dailyMessageCount
         
         if messagesLeft <= 5 {
@@ -126,7 +118,7 @@ struct ChatView: View {
     
     private func canSendMessage() -> Bool {
         resetMessageCountIfNeeded()
-        let maxMessages = user.tier == 1 ? 500 : 500
+        let maxMessages = user.tier == 1 ? 500 : 10
         return dailyMessageCount < maxMessages
     }
     
