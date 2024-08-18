@@ -90,7 +90,7 @@ class MessageHelper: ObservableObject {
             )
             DispatchQueue.main.async {
                 self.messages.append(newMessage)
-                self.updateSortedMessages()
+                self.trimMessages()  // Ensure only 5 messages are stored
             }
 
             try await streamAssistantResponse(threadId: threadId)
@@ -100,11 +100,13 @@ class MessageHelper: ObservableObject {
         }
     }
 
-    func updateSortedMessages() {
-        DispatchQueue.main.async {
-            self.sortedMessages = self.messages.sorted { $0.createdAt > $1.createdAt }
+    func trimMessages() {
+        if messages.count > 5 {
+            messages.removeFirst(messages.count - 5)
         }
     }
+
+   
 
     @MainActor
     func updateAssistantMessage(_ content: String, threadId: String) {
@@ -120,7 +122,6 @@ class MessageHelper: ObservableObject {
             )
             self.messages.append(newAssistantMessage)
         }
-        self.updateSortedMessages()
     }
 
     func streamAssistantResponse(threadId: String) async throws {

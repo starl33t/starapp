@@ -37,7 +37,7 @@ struct SubscriptionView: View {
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: 20, height: 20)
-                                        Text("Unlimited access to the latest AI model for peak performance")
+                                        Text("Unlimited chat with the AI coach for peak performance")
                                     }
                                     
                                     HStack(alignment: .center) {
@@ -69,7 +69,7 @@ struct SubscriptionView: View {
                         }
                     }
                 }) {
-                    Text(user.tier == 1 ? "Subscribed" : "Tier 1: US$ 4.99")
+                    Text(user.tier == 1 ? "Subscribed" : "Get Tier 1 for US$ 4.99/m")
                         .font(.headline)
                         .foregroundStyle(.whiteOne)
                         .padding()

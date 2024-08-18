@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import Combine
 
 struct ChatView: View {
     @ObservedObject var viewModel: MessageHelper = MessageHelper()
@@ -10,70 +11,27 @@ struct ChatView: View {
     @AppStorage("dailyMessageCount") private var dailyMessageCount: Int = 0
     @AppStorage("lastMessageDate") private var lastMessageDate: String = Date().formatted()
     @State private var showAlert: Bool = false
-    @State private var lastMessageId: UUID? = nil
+    @State private var scrollCounter: Int = 0
     let user: User
+    
     
     var body: some View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
             VStack {
-                ScrollViewReader { proxy in
-                    ScrollView {
+                ScrollView {
+                    ScrollViewReader { proxy in
                         LazyVStack {
-                            ForEach(viewModel.messages) { message in
-                                HStack(alignment: .top) {
-                                    if message.role == "user" {
-                                        Spacer()
-                                        VStack(alignment: .trailing) {
-                                            Text(user.tagName ?? "Unknown")
-                                                .font(.headline)
-                                                .foregroundColor(.white)
-                                            Text(message.content)
-                                                .foregroundColor(.white)
-                                                .padding(10)
-                                                .background(.starMain)
-                                                .cornerRadius(10)
-                                        }
-                                        .padding([.leading, .vertical])
-                                        Image(systemName: "person.circle.fill")
-                                            .resizable()
-                                            .foregroundColor(.white)
-                                            .frame(width: 40, height: 40)
-                                            .clipShape(Circle())
-                                            .padding([.trailing, .vertical])
-                                    } else {
-                                        Image(systemName: "person.circle.fill")
-                                            .resizable()
-                                            .foregroundColor(.white)
-                                            .frame(width: 40, height: 40)
-                                            .clipShape(Circle())
-                                            .padding([.leading, .vertical])
-                                        
-                                        VStack(alignment: .leading) {
-                                            Text("Renato")
-                                                .font(.headline)
-                                                .foregroundColor(.white)
-                                            Text(message.content)
-                                                .foregroundColor(.white)
-                                                .padding(10)
-                                                .background(.darkTwo)
-                                                .cornerRadius(10)
-                                        }
-                                        .padding([.trailing, .vertical])
-                                        Spacer()
-                                    }
-                                }
-                                .id(message.id)
+                            ForEach(viewModel.messages.suffix(5)) { message in
+                                MessageRowView(message: message, user: user)
+                                    .id(message.id)
                             }
                         }
-                    }
-                    .onChange(of: viewModel.messages.last?.id) { _, id in
-                        if let id = id {
-                            proxy.scrollTo(id, anchor: .top)
+                        .onChange(of: viewModel.messages) { _,messages in
+                            if let lastMessage = messages.last {
+                                    proxy.scrollTo(lastMessage.id, anchor: .top)
+                            }
                         }
-                    }
-                    .onTapGesture {
-                        textFieldIsFocused = false
                     }
                 }
                 HStack {
@@ -184,4 +142,54 @@ struct ChatView: View {
             lastMessageDate = currentDate
         }
     }
+}
+struct MessageRowView: View {
+    let message: Message
+    let user: User
+    
+    var body: some View {
+        HStack(alignment: .top) {
+            if message.role == "user" {
+                Spacer()
+                VStack(alignment: .trailing) {
+                    Text(user.tagName ?? "Unknown")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                    Text(message.content)
+                        .foregroundColor(.white)
+                        .padding(10)
+                        .background(.starMain)
+                        .cornerRadius(10)
+                }
+                .padding([.leading, .vertical])
+                Image(systemName: "person.circle.fill")
+                    .resizable()
+                    .foregroundColor(.white)
+                    .frame(width: 40, height: 40)
+                    .clipShape(Circle())
+                    .padding([.trailing, .vertical])
+            } else {
+                Image(systemName: "person.circle.fill")
+                    .resizable()
+                    .foregroundColor(.white)
+                    .frame(width: 40, height: 40)
+                    .clipShape(Circle())
+                    .padding([.leading, .vertical])
+                
+                VStack(alignment: .leading) {
+                    Text("Renato")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                    Text(message.content)
+                        .foregroundColor(.white)
+                        .padding(10)
+                        .background(.darkTwo)
+                        .cornerRadius(10)
+                }
+                .padding([.trailing, .vertical])
+                Spacer()
+            }
+        }
+    }
+    
 }
