@@ -8,7 +8,6 @@ struct ContentView: View {
     @State private var days: [Date] = Date().daysInYear
     @State private var selectedDate: Date = Date()
     @StateObject private var assistantViewModel = MessageHelper()
-    @State private var tier: Int = 0
     
     var body: some View {
         NavigationStack {
@@ -34,7 +33,7 @@ struct ContentView: View {
                                 Text("Lactate")
                             }
                             .tag(2)
-                        ChatView(viewModel: assistantViewModel, tier: $tier, user: user)
+                        ChatView(viewModel: assistantViewModel, user: user)
                             .tabItem {
                                 Image(systemName: "person.2")
                                 Text("Chat")

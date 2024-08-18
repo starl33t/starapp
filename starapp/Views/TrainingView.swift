@@ -33,7 +33,6 @@ struct TrainingView: View {
             Color.starBlack.ignoresSafeArea()
             VStack (spacing: 18) {
                 Section {
-                   
                         HStack {
                             Text("Lactate:")
                                 .foregroundColor(.whiteOne)

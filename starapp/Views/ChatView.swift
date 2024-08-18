@@ -2,7 +2,6 @@ import SwiftUI
 import SwiftData
 
 struct ChatView: View {
-    @Environment(\.modelContext) var context
     @ObservedObject var viewModel: MessageHelper = MessageHelper()
     @State private var newMessageContent: String = ""
     @State private var tagName: String = ""
@@ -11,8 +10,7 @@ struct ChatView: View {
     @AppStorage("dailyMessageCount") private var dailyMessageCount: Int = 0
     @AppStorage("lastMessageDate") private var lastMessageDate: String = Date().formatted()
     @State private var showAlert: Bool = false
-    @StateObject var starStore = StarStore()
-    @Binding var tier: Int
+    @State private var lastMessageId: UUID? = nil
     let user: User
     
     var body: some View {
@@ -69,11 +67,9 @@ struct ChatView: View {
                             }
                         }
                     }
-                    .onChange(of: viewModel.messages) { _, newValue in
-                        if let lastMessage = newValue.last {
-                            withAnimation {
-                                proxy.scrollTo(lastMessage.id)
-                            }
+                    .onChange(of: viewModel.messages.last?.id) { _, id in
+                        if let id = id {
+                            proxy.scrollTo(id, anchor: .top)
                         }
                     }
                     .onTapGesture {
@@ -107,13 +103,12 @@ struct ChatView: View {
                     Button(action: {
                         if canSendMessage() {
                             Task {
+                                let contentToSend = newMessageContent
+                                newMessageContent = ""
                                 if let threadId = viewModel.threadId {
                                     isWaitingForResponse = true
-                                    
-                                    await viewModel.createMessage(threadId: threadId, content: newMessageContent)
+                                    await viewModel.createMessage(threadId: threadId, content: contentToSend)
                                     incrementMessageCount()
-                                    newMessageContent = ""  // Reset input field after sending
-                                    try await viewModel.startAndCheckRun(threadId: threadId)
                                     isWaitingForResponse = false
                                 } else {
                                     print("Thread ID not available.")
@@ -124,15 +119,15 @@ struct ChatView: View {
                         }
                     }) {
                         if isWaitingForResponse {
-                                Image(systemName: "stop.circle.fill")
-                                    .symbolEffect(.pulse.wholeSymbol)
-                                    .foregroundColor(.gray)
-                                    .font(.system(size: 30))
-                            } else {
-                                Image(systemName: "arrow.up.circle.fill")
-                                    .foregroundColor(newMessageContent.isEmpty ? .gray : .starMain)
-                                    .font(.system(size: 30))
-                            }
+                            Image(systemName: "stop.circle.fill")
+                                .symbolEffect(.pulse.wholeSymbol)
+                                .foregroundColor(.gray)
+                                .font(.system(size: 30))
+                        } else {
+                            Image(systemName: "arrow.up.circle.fill")
+                                .foregroundColor(newMessageContent.isEmpty ? .gray : .starMain)
+                                .font(.system(size: 30))
+                        }
                     }
                     .disabled(newMessageContent.isEmpty)
                     .alert(isPresented: $showAlert) {
@@ -153,7 +148,6 @@ struct ChatView: View {
                     await viewModel.createThread()
                 }
                 resetMessageCountIfNeeded()
-                checkSubscriptionStatus()
             }
         }
         .onTapGesture {
@@ -161,7 +155,7 @@ struct ChatView: View {
         }
     }
     private var placeholderText: String {
-        let maxMessages = user.tier == 1 ? 500 : 10
+        let maxMessages = user.tier == 1 ? 500 : 500
         let messagesLeft = maxMessages - dailyMessageCount
         
         if messagesLeft <= 5 {
@@ -174,7 +168,7 @@ struct ChatView: View {
     
     private func canSendMessage() -> Bool {
         resetMessageCountIfNeeded()
-        let maxMessages = user.tier == 1 ? 500 : 10
+        let maxMessages = user.tier == 1 ? 500 : 500
         return dailyMessageCount < maxMessages
     }
     
@@ -188,23 +182,6 @@ struct ChatView: View {
         if currentDate != lastMessageDate {
             dailyMessageCount = 0
             lastMessageDate = currentDate
-        }
-    }
-    private func checkSubscriptionStatus() {
-        Task {
-            if let subscriptionGroupStatus = starStore.subscriptionGroupStatus {
-                DispatchQueue.main.async {
-                    if subscriptionGroupStatus == .expired || subscriptionGroupStatus == .revoked {
-                        user.tier = 0
-                    } else {
-                        user.tier = 1
-                    }
-                    UserService.saveContext(context)
-                    
-                    // Update the UI state safely by unwrapping the optional tier
-                    tier = user.tier ?? 0
-                }
-            }
         }
     }
 }

@@ -29,6 +29,8 @@ struct SubscriptionView: View {
                                     .foregroundStyle(.whiteOne)
                                     .font(.largeTitle)
                                     .bold()
+                                Text("US$ 4.99/month")
+                                    .foregroundStyle(.whiteOne)
                                 VStack(alignment: .leading, spacing: 24) {
                                     HStack(alignment: .center) {
                                         Image(systemName: "brain.head.profile.fill")
@@ -50,7 +52,7 @@ struct SubscriptionView: View {
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: 20, height: 20)
-                                        Text("High priority on support tickets")
+                                        Text("High priority on support tickets and requests")
                                     }
                                 }
                                 .foregroundStyle(.whiteOne)

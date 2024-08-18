@@ -59,7 +59,6 @@ struct ChatToolbar: View {
             if let threadId = viewModel.threadId {
                 isWaitingForResponse = true
                 await viewModel.createMessage(threadId: threadId, content: fullMessage)
-                try await viewModel.startAndCheckRun(threadId: threadId)
                 isWaitingForResponse = false
             } else {
                 print("Thread ID not available.")
