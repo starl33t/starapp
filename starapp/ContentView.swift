@@ -5,7 +5,6 @@ struct ContentView: View {
     @Environment(\.modelContext) var context
     @State private var selectedTab: Int = 0
     @State private var currentUser: User?
-    @State private var days: [Date] = Date().daysInYear
     @State private var selectedDate: Date = Date()
     @StateObject private var assistantViewModel = MessageHelper()
     
@@ -21,7 +20,7 @@ struct ContentView: View {
                                 Text("Home")
                             }
                             .tag(0)
-                        CalendarView(selectedDate: $selectedDate, days: $days)
+                        CalendarView(selectedDate: $selectedDate)
                             .tabItem {
                                 Image(systemName: "calendar")
                                 Text("Calendar")
@@ -67,9 +66,7 @@ struct ContentView: View {
                         case 3:
                             ChatToolbar(viewModel: assistantViewModel)
                         case 1:
-                            CalendarToolbar(selectedDate: $selectedDate, onTodayButtonTapped: {
-                                CalendarHelper.resetToToday(selectedDate: $selectedDate, days: $days)
-                            })
+                            CalendarToolbar(selectedDate: $selectedDate)
                         case 2:
                             LactateToolbar()
                         case 4:

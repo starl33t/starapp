@@ -4,11 +4,9 @@ import SwiftUI
 
 struct CalendarHelper {
     
-    static func resetToToday(selectedDate: Binding<Date>, days: Binding<[Date]>) {
-           let today = Date()
-           selectedDate.wrappedValue = today  // Update the selectedDate
-           days.wrappedValue = today.daysInYear
-       }
+    static func updateSessionCache(for days: [Date], with sessions: [Session]) -> [Date: [Session]] {
+            return buildSessionCache(for: days, with: sessions)
+        }
     
     static func buildSessionCache(for days: [Date], with sessions: [Session]) -> [Date: [Session]] {
         var sessionCache: [Date: [Session]] = [:]
@@ -27,8 +25,9 @@ struct CalendarHelper {
     }
     
     static func scrollToDay(_ date: Date, using proxy: ScrollViewProxy, in days: [Date], calendar: Calendar) {
-        if let targetDay = days.first(where: { calendar.isDate($0, inSameDayAs: date) }) {
-            proxy.scrollTo(targetDay, anchor: .center)
+            if let targetDay = days.first(where: { calendar.isDate($0, inSameDayAs: date) }) {
+                proxy.scrollTo(targetDay, anchor: .center)
+            }
         }
-    }
+    
 }

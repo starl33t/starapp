@@ -8,7 +8,7 @@ struct CalendarView: View {
     @Environment(\.calendar) private var calendar
     @Query private var sessions: [Session]
     @Binding var selectedDate: Date
-    @Binding var days: [Date]
+    @State private var days: [Date] = Date().daysInYear
     @State private var sessionCache: [Date: [Session]] = [:]
     
     var body: some View {
@@ -18,13 +18,13 @@ struct CalendarView: View {
                 daysOfWeekHeader()
                 dateScrollView
                     .onChange(of: sessions) {
-                        updateSessionCache()
+                        sessionCache = CalendarHelper.updateSessionCache(for: days, with: sessions)
                     }
             }
             .foregroundStyle(.whiteTwo)
         }
         .onAppear {
-            updateSessionCache()
+            sessionCache = CalendarHelper.updateSessionCache(for: days, with: sessions)
         }
     }
     
@@ -47,11 +47,6 @@ struct CalendarView: View {
                         DayView(day: day, sessions: sessionCache[day, default: []])
                             .id(day)
                             .frame(height: 70)
-                            .onAppear {
-                                if sessionCache[day] == nil {
-                                    sessionCache[day] = CalendarHelper.filterSessions(for: day, from: sessions)
-                                }
-                            }
                     }
                 }
             }
@@ -59,14 +54,9 @@ struct CalendarView: View {
                 CalendarHelper.scrollToDay(Date(), using: proxy, in: days, calendar: calendar)
             }
             .onChange(of: selectedDate) { oldDate, newDate in
-                days = newDate.daysInYear
                 CalendarHelper.scrollToDay(newDate, using: proxy, in: days, calendar: calendar)
-                updateSessionCache()
             }
         }
-    }
-    private func updateSessionCache() {
-        sessionCache = CalendarHelper.buildSessionCache(for: days, with: sessions)
     }
 }
 
