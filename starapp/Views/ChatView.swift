@@ -20,7 +20,6 @@ struct ChatView: View {
             VStack {
                 ScrollView {
                     LazyVStack {
-                        Spacer()
                         if let latestMessage = viewModel.currentMessage {
                             MessageRowView(message: latestMessage, user: user)
                         }
@@ -55,6 +54,7 @@ struct ChatView: View {
                             Task {
                                 let contentToSend = newMessageContent
                                 newMessageContent = ""
+                                textFieldIsFocused = false
                                 if let threadId = viewModel.threadId {
                                     isWaitingForResponse = true
                                     await viewModel.createMessage(threadId: threadId, content: contentToSend)
