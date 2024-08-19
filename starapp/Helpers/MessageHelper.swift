@@ -1,10 +1,14 @@
 import Combine
 import Foundation
 
-struct Message: Codable {
+struct Message: Codable, Equatable {
     var threadId: String
     var role: String
     var content: String
+    
+    static func ==(lhs: Message, rhs: Message) -> Bool {
+            return lhs.threadId == rhs.threadId && lhs.role == rhs.role && lhs.content == rhs.content
+        }
 }
 
 class MessageHelper: ObservableObject {

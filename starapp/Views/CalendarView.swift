@@ -18,13 +18,13 @@ struct CalendarView: View {
                 daysOfWeekHeader()
                 dateScrollView
                     .onChange(of: sessions) {
-                        sessionCache = CalendarHelper.updateSessionCache(for: days, with: sessions)
+                        sessionCache = CalendarHelper.buildSessionCache(for: days, with: sessions)
                     }
             }
             .foregroundStyle(.whiteTwo)
         }
         .onAppear {
-            sessionCache = CalendarHelper.updateSessionCache(for: days, with: sessions)
+            sessionCache = CalendarHelper.buildSessionCache(for: days, with: sessions)
         }
     }
     
