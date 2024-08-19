@@ -11,7 +11,6 @@ struct ChatView: View {
     @AppStorage("dailyMessageCount") private var dailyMessageCount: Int = 0
     @AppStorage("lastMessageDate") private var lastMessageDate: String = Date().formatted()
     @State private var showAlert: Bool = false
-    @State private var scrollCounter: Int = 0
     let user: User
     
     
@@ -20,11 +19,12 @@ struct ChatView: View {
             Color.starBlack.ignoresSafeArea()
             VStack {
                 ScrollView {
-                        LazyVStack {
-                            if let lastMessage = viewModel.messages.last {
-                                MessageRowView(message: lastMessage, user: user)
-                            }
+                    LazyVStack {
+                        Spacer()
+                        if let latestMessage = viewModel.currentMessage {
+                            MessageRowView(message: latestMessage, user: user)
                         }
+                    }
                 }
                 HStack {
                     Button(action: {
@@ -97,6 +97,7 @@ struct ChatView: View {
                 if viewModel.threadId == nil {
                     await viewModel.createThread()
                 }
+                isWaitingForResponse = false
                 resetMessageCountIfNeeded()
             }
         }
@@ -153,21 +154,8 @@ struct MessageRowView: View {
                         .background(.starMain)
                         .cornerRadius(10)
                 }
-                .padding([.leading, .vertical])
-                Image(systemName: "person.circle.fill")
-                    .resizable()
-                    .foregroundColor(.white)
-                    .frame(width: 40, height: 40)
-                    .clipShape(Circle())
-                    .padding([.trailing, .vertical])
+                .padding()
             } else {
-                Image(systemName: "person.circle.fill")
-                    .resizable()
-                    .foregroundColor(.white)
-                    .frame(width: 40, height: 40)
-                    .clipShape(Circle())
-                    .padding([.leading, .vertical])
-                
                 VStack(alignment: .leading) {
                     Text("Renato")
                         .font(.headline)
@@ -178,7 +166,7 @@ struct MessageRowView: View {
                         .background(.darkTwo)
                         .cornerRadius(10)
                 }
-                .padding([.trailing, .vertical])
+                .padding()
                 Spacer()
             }
         }

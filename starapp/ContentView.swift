@@ -63,10 +63,9 @@ struct ContentView: View {
                     }
                 }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    if let user = currentUser {
                         switch selectedTab {
                         case 3:
-                            ChatToolbar(messages: $assistantViewModel.messages, viewModel: assistantViewModel, user: user)
+                            ChatToolbar(viewModel: assistantViewModel)
                         case 1:
                             CalendarToolbar(selectedDate: $selectedDate, onTodayButtonTapped: {
                                 CalendarHelper.resetToToday(selectedDate: $selectedDate, days: $days)
@@ -78,7 +77,6 @@ struct ContentView: View {
                         default:
                             HomeToolBar()
                         }
-                    }
                 }
             }
             .tint(.whiteTwo)

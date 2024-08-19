@@ -3,10 +3,8 @@ import SwiftData
 
 struct ChatToolbar: View {
     @AppStorage("isWaitingForResponse") private var isWaitingForResponse: Bool = false
-    @Binding var messages: [Message]
     @ObservedObject var viewModel: MessageHelper
     @Query(sort: \Session.date, order: .reverse) private var sessions: [Session]
-    var user: User
     
     var body: some View {
         HStack {

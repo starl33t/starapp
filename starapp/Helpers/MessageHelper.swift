@@ -1,20 +1,14 @@
 import Combine
 import Foundation
 
-struct CreateThreadResponse: Codable {
-    let id: String
-}
-
-struct Message: Identifiable, Codable{
-    var id: UUID
+struct Message: Codable {
     var threadId: String
     var role: String
     var content: String
 }
 
 class MessageHelper: ObservableObject {
-    @Published var messages: [Message] = []
-    @Published var sortedMessages: [Message] = []
+    @Published var currentMessage: Message?
     @Published var threadId: String?
 
     let assistantId = "asst_LQa6lUG4q2TN2mdatyXXI490"
@@ -27,11 +21,8 @@ class MessageHelper: ObservableObject {
         self.apiKey = key
     }
     
-    private func performRequest<T: Decodable>(url: String, method: String, body: [String: Any]? = nil) async throws -> T {
-        guard let url = URL(string: url) else {
-            throw URLError(.badURL)
-        }
-
+    private func performRequest(url: String, method: String, body: [String: Any]? = nil) async throws -> [String: Any] {
+        let url = URL(string: url)!
         var request = URLRequest(url: url)
         request.httpMethod = method
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -39,33 +30,23 @@ class MessageHelper: ObservableObject {
         request.addValue("assistants=v2", forHTTPHeaderField: "OpenAI-Beta")
 
         if let body = body {
-            request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
+            request.httpBody = try! JSONSerialization.data(withJSONObject: body, options: [])
         }
 
-        let (data, response) = try await URLSession.shared.data(for: request)
-
-        guard let httpResponse = response as? HTTPURLResponse, 200..<300 ~= httpResponse.statusCode else {
-            throw URLError(.badServerResponse)
-        }
-
-        // If T is Data, return the raw data without decoding
-        if T.self == Data.self {
-            return data as! T
-        }
-
-        return try JSONDecoder().decode(T.self, from: data)
+        let (data, _) = try! await URLSession.shared.data(for: request)
+        let jsonObject = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+        return jsonObject
     }
+
 
     func createThread() async {
-        do {
-            let threadResponse: CreateThreadResponse = try await performRequest(url: "https://api.openai.com/v1/threads", method: "POST")
-            DispatchQueue.main.async {
-                self.threadId = threadResponse.id
-            }
-        } catch {
-            print("Error creating thread: \(error)")
+        let response = try! await performRequest(url: "https://api.openai.com/v1/threads", method: "POST")
+        let threadId = response["id"] as! String
+        DispatchQueue.main.async {
+            self.threadId = threadId
         }
     }
+
 
     func createMessage(threadId: String, content: String) async {
         let jsonBody: [String: Any] = [
@@ -73,40 +54,37 @@ class MessageHelper: ObservableObject {
             "content": content
         ]
 
-        do {
-            _ = try await performRequest(url: "https://api.openai.com/v1/threads/\(threadId)/messages", method: "POST", body: jsonBody) as Data
+        // Make the request to create a message
+        _ = try! await performRequest(url: "https://api.openai.com/v1/threads/\(threadId)/messages", method: "POST", body: jsonBody)
 
-            let newMessage = Message(
-                id: UUID(),
-                threadId: threadId,
-                role: "user",
-                content: content
-            )
-            DispatchQueue.main.async {
-                self.messages.append(newMessage)
-            }
-
-            try await streamAssistantResponse(threadId: threadId)
-
-        } catch {
-            print("Error creating message: \(error)")
+        // Create and append the new message locally
+        let newMessage = Message(
+            threadId: threadId,
+            role: "user",
+            content: content
+        )
+        DispatchQueue.main.async {
+            self.currentMessage = newMessage
         }
+
+        // Stream assistant response
+        try! await streamAssistantResponse(threadId: threadId)
     }
+
 
     @MainActor
     func updateAssistantMessage(_ content: String, threadId: String) {
-        if let lastMessage = self.messages.last, lastMessage.role == "assistant" {
-            self.messages[self.messages.count - 1].content += content
-        } else {
-            let newAssistantMessage = Message(
-                id: UUID(),
-                threadId: threadId,
-                role: "assistant",
-                content: content
-            )
-            self.messages.append(newAssistantMessage)
+            if let lastMessage = self.currentMessage, lastMessage.role == "assistant" {
+                self.currentMessage?.content += content
+            } else {
+                let newAssistantMessage = Message(
+                    threadId: threadId,
+                    role: "assistant",
+                    content: content
+                )
+                self.currentMessage = newAssistantMessage
+            }
         }
-    }
 
     func streamAssistantResponse(threadId: String) async throws {
         print("Starting streamAssistantResponse for threadId: \(threadId)")
