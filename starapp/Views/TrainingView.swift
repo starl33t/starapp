@@ -21,7 +21,6 @@ struct TrainingView: View {
     @State private var heartRate: Int? = nil
     @State private var date: Date = Date()
     @State private var title: String = ""
-    @State private var hasManuallyEnteredPace = false
     @AppStorage("Distance") private var showDistance = true
     @AppStorage("Pace") private var showPace = true
     @AppStorage("Power") private var showPower = true
@@ -89,7 +88,6 @@ struct TrainingView: View {
                                 Text(String(format: "%02d:%02d", paceMinutes, paceSeconds))
                                     .foregroundColor(.whiteOne)
                                     .onTapGesture {
-                                        hasManuallyEnteredPace = true
                                         showPacePicker = true
                                     }
                                 Spacer()
@@ -195,18 +193,28 @@ struct TrainingView: View {
         duration = Double(durationMinutes) + Double(durationSeconds) / 60.0
         calculatePace()
     }
+    
     private func calculatePace() {
-        if !hasManuallyEnteredPace {
+        if let distance = distance, let duration = duration, distance > 0, duration > 0 {
+            // Calculate pace based on distance and duration
             pace = NumberHelper.calculatePace(distance: distance, duration: duration)
+            
+            if let pace = pace {
+                paceMinutes = Int(pace)
+                paceSeconds = Int((pace - Double(paceMinutes)) * 60)
+            }
+        } else {
+            // Do not reset pace; rely on user input for pace
             if let pace = pace {
                 paceMinutes = Int(pace)
                 paceSeconds = Int((pace - Double(paceMinutes)) * 60)
             }
         }
     }
+
+
     
     private func updatePace() {
-        hasManuallyEnteredPace = true
         pace = Double(paceMinutes) + Double(paceSeconds) / 60.0
     }
     

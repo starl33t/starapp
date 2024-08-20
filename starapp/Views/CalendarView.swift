@@ -89,7 +89,7 @@ struct DayView: View {
                                     .foregroundStyle(LactateHelper.color(for: session.lactate))
                             }
                         }
-                        .padding(.top, 36)
+                        .padding(.top, 38)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .center)

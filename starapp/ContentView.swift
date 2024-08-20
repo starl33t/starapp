@@ -82,14 +82,6 @@ struct ContentView: View {
             .tint(.whiteTwo)
         }
         .tint(.starMain)
-        .onAppear {
-            Task {
-                if viewModel.threadId == nil {
-                    await viewModel.createThread()
-                }
-                
-            }
-        }
     }
     
 }

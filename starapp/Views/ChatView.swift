@@ -95,8 +95,13 @@ struct ChatView: View {
             .padding(.top)
         }
         .onAppear {
-            resetMessageCountIfNeeded()
-            updateCanSendMessage()
+            Task {
+                if viewModel.threadId == nil {
+                    await viewModel.createThread()
+                }
+                resetMessageCountIfNeeded()
+                updateCanSendMessage()
+            }
         }
         .onTapGesture {
             textFieldIsFocused = false
@@ -116,11 +121,11 @@ struct ChatView: View {
     private func updateCanSendMessage() {
         dailyMessageCount += 1
         lastMessageDate = Date().formatDayMonth(date: Date())
-
+        
         let maxMessages = user.tier == 1 ? 500 : 10
         canSendMessage = dailyMessageCount < maxMessages
     }
-
+    
     private func resetMessageCountIfNeeded() {
         let currentDate = Date().formatDayMonth(date: Date())
         if currentDate != lastMessageDate {
