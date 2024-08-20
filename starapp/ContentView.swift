@@ -7,7 +7,7 @@ struct ContentView: View {
     @State private var currentUser: User?
     @State private var selectedDate: Date = Date()
     @State private var days: [Date] = Date().daysInYear
-    @StateObject private var assistantViewModel = MessageHelper()
+    @StateObject private var viewModel = MessageHelper()
     
     var body: some View {
         NavigationStack {
@@ -33,7 +33,7 @@ struct ContentView: View {
                                 Text("Lactate")
                             }
                             .tag(2)
-                        ChatView(viewModel: assistantViewModel, user: user)
+                        ChatView(viewModel: viewModel, user: user)
                             .tabItem {
                                 Image(systemName: "person.2")
                                 Text("Chat")
@@ -63,9 +63,10 @@ struct ContentView: View {
                     }
                 }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    if let user = currentUser {
                         switch selectedTab {
                         case 3:
-                            ChatToolbar(viewModel: assistantViewModel)
+                            ChatToolbar(viewModel: viewModel, user: user)
                         case 1:
                             CalendarToolbar(selectedDate: $selectedDate, days: $days)
                         case 2:
@@ -75,11 +76,20 @@ struct ContentView: View {
                         default:
                             HomeToolBar()
                         }
+                    }
                 }
             }
             .tint(.whiteTwo)
         }
         .tint(.starMain)
+        .onAppear {
+            Task {
+                if viewModel.threadId == nil {
+                    await viewModel.createThread()
+                }
+                
+            }
+        }
     }
     
 }

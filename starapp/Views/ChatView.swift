@@ -10,7 +10,8 @@ struct ChatView: View {
     @AppStorage("isWaitingForResponse") private var isWaitingForResponse: Bool = false
     @AppStorage("dailyMessageCount") private var dailyMessageCount: Int = 0
     @AppStorage("lastMessageDate") private var lastMessageDate: String = Date().formatted()
-    @State private var showAlert: Bool = false
+    @AppStorage("showAlert") private var showAlert: Bool = false
+    @AppStorage("canSendMessage") private var canSendMessage: Bool = true
     let user: User
     
     
@@ -50,7 +51,7 @@ struct ChatView: View {
                     .background(.darkOne)
                     .cornerRadius(24)
                     Button(action: {
-                        if canSendMessage() {
+                        if canSendMessage {
                             Task {
                                 let contentToSend = newMessageContent
                                 newMessageContent = ""
@@ -58,7 +59,7 @@ struct ChatView: View {
                                 if let threadId = viewModel.threadId {
                                     isWaitingForResponse = true
                                     await viewModel.createMessage(threadId: threadId, content: contentToSend)
-                                    incrementMessageCount()
+                                    updateCanSendMessage()
                                     isWaitingForResponse = false
                                 } else {
                                     print("Thread ID not available.")
@@ -94,13 +95,8 @@ struct ChatView: View {
             .padding(.top)
         }
         .onAppear {
-            Task {
-                if viewModel.threadId == nil {
-                    await viewModel.createThread()
-                }
-                isWaitingForResponse = false
-                resetMessageCountIfNeeded()
-            }
+            resetMessageCountIfNeeded()
+            updateCanSendMessage()
         }
         .onTapGesture {
             textFieldIsFocused = false
@@ -117,18 +113,14 @@ struct ChatView: View {
         }
     }
     
-    
-    private func canSendMessage() -> Bool {
-        resetMessageCountIfNeeded()
-        let maxMessages = user.tier == 1 ? 500 : 10
-        return dailyMessageCount < maxMessages
-    }
-    
-    private func incrementMessageCount() {
+    private func updateCanSendMessage() {
         dailyMessageCount += 1
         lastMessageDate = Date().formatDayMonth(date: Date())
+
+        let maxMessages = user.tier == 1 ? 500 : 10
+        canSendMessage = dailyMessageCount < maxMessages
     }
-    
+
     private func resetMessageCountIfNeeded() {
         let currentDate = Date().formatDayMonth(date: Date())
         if currentDate != lastMessageDate {
@@ -136,6 +128,8 @@ struct ChatView: View {
             lastMessageDate = currentDate
         }
     }
+    
+    
 }
 struct MessageRowView: View {
     let message: Message

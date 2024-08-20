@@ -3,8 +3,13 @@ import SwiftData
 
 struct ChatToolbar: View {
     @AppStorage("isWaitingForResponse") private var isWaitingForResponse: Bool = false
+    @AppStorage("dailyMessageCount") private var dailyMessageCount: Int = 0
+    @AppStorage("lastMessageDate") private var lastMessageDate: String = Date().formatted()
     @ObservedObject var viewModel: MessageHelper
     @Query(sort: \Session.date, order: .reverse) private var sessions: [Session]
+    @AppStorage("showAlert") private var showAlert: Bool = false
+    @AppStorage("canSendMessage") private var canSendMessage: Bool = true
+    let user: User
     
     var body: some View {
         HStack {
@@ -50,18 +55,31 @@ struct ChatToolbar: View {
     }
     
     private func sendMessage(_ text: String) {
-        Task {
-            let sessionInfo = formatSessionInfo()
-            let fullMessage = "\(text)\n\n\(sessionInfo)"
-            
-            if let threadId = viewModel.threadId {
-                isWaitingForResponse = true
-                await viewModel.createMessage(threadId: threadId, content: fullMessage)
-                isWaitingForResponse = false
-            } else {
-                print("Thread ID not available.")
+        if canSendMessage {
+            Task {
+                let sessionInfo = formatSessionInfo()
+                let fullMessage = "\(text)\n\n\(sessionInfo)"
+                
+                if let threadId = viewModel.threadId {
+                    isWaitingForResponse = true
+                    await viewModel.createMessage(threadId: threadId, content: fullMessage)
+                    updateCanSendMessage()
+                    isWaitingForResponse = false
+                } else {
+                    print("Thread ID not available.")
+                }
             }
+        } else {
+            showAlert = true
         }
+    }
+    
+    private func updateCanSendMessage() {
+        dailyMessageCount += 1
+        lastMessageDate = Date().formatDayMonth(date: Date())
+
+        let maxMessages = user.tier == 1 ? 500 : 10
+        canSendMessage = dailyMessageCount < maxMessages
     }
     
     private func formatSessionInfo() -> String {
