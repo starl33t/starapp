@@ -3,11 +3,14 @@ import SwiftUI
 struct CalendarToolbar: View {
     @State private var showDatePicker: Bool = false
     @Binding var selectedDate: Date
+    @Binding var days: [Date]
     
     var body: some View {
         HStack {
             Button(action: {
-                selectedDate = Date()
+                let today = Date()
+                selectedDate = today
+                days = today.daysInYear
             }) {
                 Image(systemName: Date().daySquareIcon)
             }

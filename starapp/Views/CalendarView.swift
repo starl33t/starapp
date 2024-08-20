@@ -8,7 +8,7 @@ struct CalendarView: View {
     @Environment(\.calendar) private var calendar
     @Query private var sessions: [Session]
     @Binding var selectedDate: Date
-    @State private var days: [Date] = Date().daysInYear
+    @Binding var days: [Date]
     @State private var sessionCache: [Date: [Session]] = [:]
     
     var body: some View {
@@ -22,9 +22,6 @@ struct CalendarView: View {
                     }
             }
             .foregroundStyle(.whiteTwo)
-        }
-        .onAppear {
-            sessionCache = CalendarHelper.buildSessionCache(for: days, with: sessions)
         }
     }
     
@@ -52,9 +49,12 @@ struct CalendarView: View {
             }
             .onAppear {
                 CalendarHelper.scrollToDay(Date(), using: proxy, in: days, calendar: calendar)
+                sessionCache = CalendarHelper.buildSessionCache(for: days, with: sessions)
             }
             .onChange(of: selectedDate) { oldDate, newDate in
+                days = newDate.daysInYear
                 CalendarHelper.scrollToDay(newDate, using: proxy, in: days, calendar: calendar)
+                sessionCache = CalendarHelper.buildSessionCache(for: days, with: sessions)
             }
         }
     }
@@ -75,8 +75,8 @@ struct DayView: View {
                 ZStack {
                     if Calendar.current.isDateInToday(day) {
                         RoundedRectangle(cornerRadius: 4)
-                            .stroke(Color.whiteTwo, lineWidth: 1)
-                            .frame(width: 20, height: 20)
+                            .stroke(Color.whiteTwo, lineWidth: 2)
+                            .frame(width: 26, height: 22)
                     }
                     Text(day.formatted(.dateTime.day()))
                         .fontWeight(.bold)
@@ -89,7 +89,7 @@ struct DayView: View {
                                     .foregroundStyle(LactateHelper.color(for: session.lactate))
                             }
                         }
-                        .padding(.top, 28)
+                        .padding(.top, 36)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .center)

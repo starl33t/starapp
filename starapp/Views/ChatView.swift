@@ -18,12 +18,12 @@ struct ChatView: View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
             VStack {
-                ScrollViewReader { proxy in
-                        LazyVStack {
-                            if let latestMessage = viewModel.currentMessage {
-                                MessageRowView(message: latestMessage, user: user)
-                            }
+                ScrollView {
+                    LazyVStack {
+                        if let latestMessage = viewModel.currentMessage {
+                            MessageRowView(message: latestMessage, user: user)
                         }
+                    }
                 }
                 HStack {
                     Button(action: {

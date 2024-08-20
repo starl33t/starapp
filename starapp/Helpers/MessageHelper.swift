@@ -5,9 +5,10 @@ struct Message: Codable, Equatable {
     var threadId: String
     var role: String
     var content: String
+    var createdAt: Date
     
-    static func ==(lhs: Message, rhs: Message) -> Bool {
-            return lhs.threadId == rhs.threadId && lhs.role == rhs.role && lhs.content == rhs.content
+    static func < (lhs: Message, rhs: Message) -> Bool {
+            return lhs.createdAt > rhs.createdAt
         }
 }
 
@@ -65,7 +66,8 @@ class MessageHelper: ObservableObject {
         let newMessage = Message(
             threadId: threadId,
             role: "user",
-            content: content
+            content: content,
+            createdAt: Date()
         )
         DispatchQueue.main.async {
             self.currentMessage = newMessage
@@ -84,7 +86,8 @@ class MessageHelper: ObservableObject {
                 let newAssistantMessage = Message(
                     threadId: threadId,
                     role: "assistant",
-                    content: content
+                    content: content,
+                    createdAt: Date()
                 )
                 self.currentMessage = newAssistantMessage
             }

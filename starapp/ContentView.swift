@@ -6,6 +6,7 @@ struct ContentView: View {
     @State private var selectedTab: Int = 0
     @State private var currentUser: User?
     @State private var selectedDate: Date = Date()
+    @State private var days: [Date] = Date().daysInYear
     @StateObject private var assistantViewModel = MessageHelper()
     
     var body: some View {
@@ -20,7 +21,7 @@ struct ContentView: View {
                                 Text("Home")
                             }
                             .tag(0)
-                        CalendarView(selectedDate: $selectedDate)
+                        CalendarView(selectedDate: $selectedDate, days: $days)
                             .tabItem {
                                 Image(systemName: "calendar")
                                 Text("Calendar")
@@ -66,7 +67,7 @@ struct ContentView: View {
                         case 3:
                             ChatToolbar(viewModel: assistantViewModel)
                         case 1:
-                            CalendarToolbar(selectedDate: $selectedDate)
+                            CalendarToolbar(selectedDate: $selectedDate, days: $days)
                         case 2:
                             LactateToolbar()
                         case 4:

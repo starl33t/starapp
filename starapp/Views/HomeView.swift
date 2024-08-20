@@ -19,14 +19,17 @@ struct HomeView: View {
     
     init() {
         let startOfLast14Days = Date.startOfLast14Days()
+        let endOfValidPeriod = Calendar.current.date(byAdding: .day, value: 13, to: Date())! // 13 days from today
+        
         _sessions = Query(filter: #Predicate<Session> { session in
             if let date = session.date {
-                return date >= startOfLast14Days
+                return date >= startOfLast14Days && date <= endOfValidPeriod
             } else {
                 return false
             }
         }, sort: \Session.date, order: .reverse)
     }
+
     
     
     var body: some View {
