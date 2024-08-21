@@ -100,7 +100,6 @@ struct ChatView: View {
                     await viewModel.createThread()
                 }
                 resetMessageCountIfNeeded()
-                updateCanSendMessage()
             }
         }
         .onTapGesture {
