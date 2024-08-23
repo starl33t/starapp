@@ -9,7 +9,5 @@ struct starappApp: App {
         }
         .modelContainer(for: [User.self])
     }
-    init() {
-            print(URL.applicationSupportDirectory.path(percentEncoded: false))
-        }
+    
 }

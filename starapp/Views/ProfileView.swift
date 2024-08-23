@@ -2,7 +2,6 @@ import SwiftUI
 import StoreKit
 
 struct ProfileView: View {
-    @Environment(\.modelContext) var context
     @State private var tier: Int
     @State private var tagName: String
     let user: User
@@ -55,7 +54,7 @@ struct ProfileView: View {
                             .foregroundColor(.gray)
                             .multilineTextAlignment(.center)
                             .onChange(of: tagName) { user.tagName = tagName
-                                UserService.saveContext(context) }
+                                CloudHelper.saveUserChanges(user: user) }
                     }
                     .font(.system(size: 14))
                     .frame(maxWidth: .infinity)
@@ -107,10 +106,11 @@ struct ProfileView: View {
             .tint(.whiteTwo)
             .onAppear {
                 tier = user.tier ?? 0
-                checkSubscriptionStatus()
+                starStore.checkSubscriptionStatus(for: user)
             }
             .onChange(of: user.tier) { oldTier, newTier in
                 tier = newTier ?? 0
+                CloudHelper.saveUserChanges(user: user)
             }
         }
         .sheet(isPresented: $showAccountSheet) {
@@ -145,8 +145,6 @@ struct ProfileView: View {
         }
     }
     
-    
-    
     private func profileRow(imageName: String, text: String) -> some View {
         HStack {
             Image(systemName: imageName)
@@ -162,29 +160,12 @@ struct ProfileView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .contentShape(Rectangle())
     }
-    
-    private func checkSubscriptionStatus() {
-        Task {
-            if let subscriptionGroupStatus = starStore.subscriptionGroupStatus {
-                DispatchQueue.main.async {
-                    if subscriptionGroupStatus == .expired || subscriptionGroupStatus == .revoked {
-                        user.tier = 0
-                    } else {
-                        user.tier = 1
-                    }
-                    UserService.saveContext(context)
-                    
-                    tier = user.tier ?? 0
-                }
-            }
-        }
-    }
     func buy(product: Product) async {
         do {
             if try await starStore.purchase(product) != nil {
                 isRestored = true
                 user.tier = 1
-                UserService.saveContext(context)
+                CloudHelper.saveUserChanges(user: user)
             }
         } catch {
             print("purchase failed")
@@ -235,8 +216,6 @@ struct SubscriptionCloseButtonModifier: ViewModifier {
                         .padding()
                 }
             }
-            
-            
         }
     }
 }

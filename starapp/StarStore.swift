@@ -24,7 +24,6 @@ class StarStore: ObservableObject {
         
         Task {
             await requestProducts()
-            
             await updateCustomerProductStatus()
         }
     }
@@ -124,6 +123,30 @@ class StarStore: ObservableObject {
             }
         }
     }
+    func checkSubscriptionStatus(for user: User) {
+        Task {
+            guard let subscriptionGroupStatus = self.subscriptionGroupStatus else {
+                DispatchQueue.main.async {
+                    user.tier = 0
+                    CloudHelper.saveUserChanges(user: user)
+                }
+                return 
+            }
+            
+            DispatchQueue.main.async {
+                switch subscriptionGroupStatus {
+                case .expired, .revoked:
+                    user.tier = 0
+                case .inGracePeriod, .inBillingRetryPeriod, .subscribed:
+                    user.tier = 1
+                default:
+                    user.tier = 0
+                }
+                CloudHelper.saveUserChanges(user: user)
+            }
+        }
+    }
+
 }
 
 

@@ -3,7 +3,6 @@ import StoreKit
 
 
 struct SubscriptionView: View {
-    @Environment(\.modelContext) var context
     @State private var isSecondRectangleVisible: Bool = false
     @State var isPurchased = false
     @StateObject var starStore = StarStore()
@@ -84,35 +83,21 @@ struct SubscriptionView: View {
             }
         }
         .onAppear() {
-            checkSubscriptionStatus()
+            starStore.checkSubscriptionStatus(for: user)
+        }
+        .onChange(of: user.tier) { oldTier, newTier in
+            tier = newTier ?? 0
+            CloudHelper.saveUserChanges(user: user)
         }
     }
     func buy(product: Product) async {
         do {
             if try await starStore.purchase(product) != nil {
                 isPurchased = true
-                user.tier = 1
-                UserService.saveContext(context)
+                starStore.checkSubscriptionStatus(for: user)
             }
         } catch {
             print("purchase failed")
-        }
-    }
-    
-    private func checkSubscriptionStatus() {
-        Task {
-            if let subscriptionGroupStatus = starStore.subscriptionGroupStatus {
-                DispatchQueue.main.async {
-                    if subscriptionGroupStatus == .expired || subscriptionGroupStatus == .revoked {
-                        user.tier = 0
-                    } else {
-                        user.tier = 1
-                    }
-                    UserService.saveContext(context)
-            
-                    tier = user.tier ?? 0
-                }
-            }
         }
     }
 }
