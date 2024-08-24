@@ -2,59 +2,43 @@ import SwiftUI
 import StoreKit
 
 struct ProfileView: View {
-    @State private var tier: Int
-    @State private var tagName: String
-    let user: User
-    
-    // Add state variables for sheet presentation
+    @EnvironmentObject var appState: AppState
+    @EnvironmentObject var starStore: StarStore
     @State private var showAccountSheet = false
     @State private var showSubscriptionSheet = false
     @State private var showIntegrationsSheet = false
     @State private var showSupportSheet = false
     @State private var showLearnSheet = false
     @State private var showPrivacySheet = false
-    @StateObject var starStore = StarStore()
     @State var isRestored = false
-    
-    init(user: User) {
-        self.user = user
-        _tagName = State(initialValue: user.tagName ?? "")
-        _tier = State(initialValue: user.tier ?? 0)
-    }
-    
-    private var displayedTier: String {
-        tier == 0 ? "Tier 0" : "Tier 1"
-    }
-    private var iconTier: String {
-        tier == 0 ? "person.circle.fill" : "star.fill"
-    }
     
     var body: some View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
             VStack {
                 VStack {
-                    Image(systemName: iconTier)
+                    Image(systemName: appState.tier == 0 ? "person.circle.fill" : "star.fill")
                         .font(.system(size: 74))
                         .foregroundStyle(.whiteOne)
                         .padding(.bottom, 8)
                     
-                    Text(displayedTier)
+                    Text(appState.tier == 0 ? "Tier 0" : "Tier 1")
                         .foregroundColor(.whiteOne)
                         .multilineTextAlignment(.center)
                         .font(.system(size: 24, weight: .bold))
                     ZStack {
-                        if tagName.isEmpty {
+                        if appState.tagName.isEmpty {
                             Text("@Tag")
                                 .foregroundColor(.gray)
                                 .frame(maxWidth: .infinity)
                                 .multilineTextAlignment(.center)
                         }
-                        TextField("", text: $tagName)
-                            .foregroundColor(.gray)
-                            .multilineTextAlignment(.center)
-                            .onChange(of: tagName) { user.tagName = tagName
-                                CloudHelper.saveUserChanges(user: user) }
+                        TextField("", text: $appState.tagName, onCommit: {
+                            appState.updateTagName(appState.tagName)
+                        })
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.center)
+                        
                     }
                     .font(.system(size: 14))
                     .frame(maxWidth: .infinity)
@@ -105,12 +89,10 @@ struct ProfileView: View {
             .padding()
             .tint(.whiteTwo)
             .onAppear {
-                tier = user.tier ?? 0
-                starStore.checkSubscriptionStatus(for: user)
+                starStore.checkSubscriptionStatus(for: appState.currentUser!)
             }
-            .onChange(of: user.tier) { oldTier, newTier in
-                tier = newTier ?? 0
-                CloudHelper.saveUserChanges(user: user)
+            .onChange(of: appState.tier) { _,newTier in
+                appState.updateTier(newTier)
             }
         }
         .sheet(isPresented: $showAccountSheet) {
@@ -118,7 +100,7 @@ struct ProfileView: View {
                 .modifier(CloseButtonModifier(isPresented: $showAccountSheet))
         }
         .sheet(isPresented: $showSubscriptionSheet) {
-            SubscriptionView(tier: $tier, user: user)
+            SubscriptionView()
                 .modifier(SubscriptionCloseButtonModifier(isPresented: $showSubscriptionSheet, onRestoreBuys: {
                     Task {
                         if let product = starStore.subscriptions.first {
@@ -164,8 +146,7 @@ struct ProfileView: View {
         do {
             if try await starStore.purchase(product) != nil {
                 isRestored = true
-                user.tier = 1
-                CloudHelper.saveUserChanges(user: user)
+                appState.updateTier(1)
             }
         } catch {
             print("purchase failed")

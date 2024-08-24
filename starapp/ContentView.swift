@@ -16,7 +16,7 @@ struct ContentView: View {
                             Text("Home")
                         }
                         .tag(0)
-                    CalendarView(selectedDate: $appState.selectedDate, days: $appState.days)
+                    CalendarView()
                         .tabItem {
                             Image(systemName: "calendar")
                             Text("Calendar")
@@ -28,7 +28,7 @@ struct ContentView: View {
                             Text("Lactate")
                         }
                         .tag(2)
-                    ChatView(viewModel: viewModel, user: appState.currentUser!)
+                    ChatView(viewModel: viewModel)
                         .tabItem {
                             Image(systemName: "person.2")
                             Text("Chat")
@@ -42,24 +42,21 @@ struct ContentView: View {
                         .tag(4)
                 }
                 .tint(.starMain)
-                
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    
-                    NavigationLink(destination: ProfileView(user: appState.currentUser!)) {
+                    NavigationLink(destination: ProfileView()) {
                         Label("Profile", systemImage: "person.fill")
                     }
-                    
                 }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     switch appState.selectedTab {
-                    case 3:
-                        ChatToolbar(viewModel: viewModel, user: appState.currentUser!)
                     case 1:
-                        CalendarToolbar(selectedDate: $appState.selectedDate, days: $appState.days)
+                        CalendarToolbar()
                     case 2:
                         LactateToolbar()
+                    case 3:
+                        ChatToolbar(viewModel: viewModel)
                     case 4:
                         MetricToolBar()
                     default:

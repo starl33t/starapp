@@ -3,17 +3,16 @@ import SwiftData
 import Combine
 
 struct ChatView: View {
+    @EnvironmentObject var appState: AppState
+    @EnvironmentObject var starStore: StarStore
     @ObservedObject var viewModel: MessageHelper = MessageHelper()
     @State private var newMessageContent: String = ""
-    @State private var tagName: String = ""
     @FocusState private var textFieldIsFocused: Bool
     @AppStorage("isWaitingForResponse") private var isWaitingForResponse: Bool = false
     @AppStorage("dailyMessageCount") private var dailyMessageCount: Int = 0
     @AppStorage("lastMessageDate") private var lastMessageDate: String = Date().formatted()
     @AppStorage("showAlert") private var showAlert: Bool = false
     @AppStorage("canSendMessage") private var canSendMessage: Bool = true
-    let user: User
-    
     
     var body: some View {
         ZStack {
@@ -22,7 +21,7 @@ struct ChatView: View {
                 ScrollView {
                     LazyVStack {
                         if let latestMessage = viewModel.currentMessage {
-                            MessageRowView(message: latestMessage, user: user)
+                            MessageRowView(message: latestMessage)
                         }
                     }
                 }
@@ -102,12 +101,18 @@ struct ChatView: View {
                 resetMessageCountIfNeeded()
             }
         }
+        .onAppear() {
+            starStore.checkSubscriptionStatus(for: appState.currentUser!)
+        }
+        .onChange(of: appState.tier) { oldTier, newTier in
+            updateCanSendMessage()
+        }
         .onTapGesture {
             textFieldIsFocused = false
         }
     }
     private var placeholderText: String {
-        let maxMessages = user.tier == 1 ? 500 : 10
+        let maxMessages = appState.tier == 1 ? 500 : 10
         let messagesLeft = maxMessages - dailyMessageCount
         
         if messagesLeft <= 5 {
@@ -121,7 +126,7 @@ struct ChatView: View {
         dailyMessageCount += 1
         lastMessageDate = Date().formatDayMonth(date: Date())
         
-        let maxMessages = user.tier == 1 ? 500 : 10
+        let maxMessages = appState.tier == 1 ? 500 : 10
         canSendMessage = dailyMessageCount < maxMessages
     }
     
@@ -136,15 +141,15 @@ struct ChatView: View {
     
 }
 struct MessageRowView: View {
+    @EnvironmentObject var appState: AppState
     let message: Message
-    let user: User
     
     var body: some View {
         HStack(alignment: .top) {
             if message.role == "user" {
                 Spacer()
                 VStack(alignment: .trailing) {
-                    Text(user.tagName ?? "Unknown")
+                    Text(appState.tagName.isEmpty ? "Unknown" : appState.tagName)
                         .font(.headline)
                         .foregroundColor(.white)
                     Text(message.content)

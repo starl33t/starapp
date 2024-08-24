@@ -1,16 +1,17 @@
 import CloudKit
 
 class CloudHelper {
-    
+
     static let customZoneID = CKRecordZone.ID(zoneName: "com.apple.coredata.cloudkit.zone", ownerName: CKCurrentUserDefaultName)
     
     // Fetch user record from CloudKit
     static func fetchUserRecord(completion: @escaping (CKRecord?, Error?) -> Void) {
         let predicate = NSPredicate(value: true)
         let query = CKQuery(recordType: "CD_User", predicate: predicate)
+        
         let queryOperation = CKQueryOperation(query: query)
         queryOperation.zoneID = customZoneID
-        queryOperation.resultsLimit = 1
+        queryOperation.resultsLimit = 1  // Ensure only one record is fetched
         
         var fetchedRecord: CKRecord?
         
@@ -35,20 +36,28 @@ class CloudHelper {
         CKContainer.default().privateCloudDatabase.add(queryOperation)
     }
     
-    // Create a new user record in CloudKit
+    // Create a new user record in CloudKit (only if no record exists)
     static func createUserRecord(user: User, completion: @escaping (CKRecord?, Error?) -> Void) {
-        let recordID = CKRecord.ID(zoneID: customZoneID)
-        let record = CKRecord(recordType: "CD_User", recordID: recordID)
-        record["CD_userName"] = user.userName
-        record["CD_tagName"] = user.tagName
-        record["CD_tier"] = user.tier
-        
-        CKContainer.default().privateCloudDatabase.save(record) { savedRecord, error in
-            if let error = error {
-                print("Failed to save new user: \(error.localizedDescription)")
-                completion(nil, error)
-            } else {
-                completion(savedRecord, nil)
+        fetchUserRecord { existingRecord, error in
+            if let _ = existingRecord {
+                // Record already exists, no need to create a new one
+                print("User record already exists, skipping creation.")
+                completion(nil, nil)
+                return
+            }
+            
+            let recordID = CKRecord.ID(zoneID: customZoneID)
+            let record = CKRecord(recordType: "CD_User", recordID: recordID)
+            record["CD_userName"] = user.userName
+            record["CD_tagName"] = user.tagName
+            record["CD_tier"] = user.tier
+            
+            CKContainer.default().privateCloudDatabase.save(record) { savedRecord, error in
+                if let error = error {
+                    completion(nil, error)
+                } else {
+                    completion(savedRecord, nil)
+                }
             }
         }
     }
@@ -90,21 +99,17 @@ class CloudHelper {
         
         fetchUserRecord { record, error in
             if let record = record {
+                // Update existing CloudKit record with local changes
                 record["CD_userName"] = user.userName
                 record["CD_tagName"] = user.tagName
                 record["CD_tier"] = user.tier
                 
                 saveUserRecord(record: record) { error in
-                    if let error = error {
-                        print("Failed to sync local changes to CloudKit: \(error.localizedDescription)")
-                    }
                     completion()
                 }
             } else {
+                // No record found, create a new one only if none exists
                 createUserRecord(user: user) { _, error in
-                    if let error = error {
-                        print("Failed to create user in CloudKit: \(error.localizedDescription)")
-                    }
                     completion()
                 }
             }
@@ -117,7 +122,7 @@ class CloudHelper {
             if let record = record {
                 let user = User(
                     userName: record["CD_userName"] as? String ?? "defaultUserName",
-                    tagName: record["CD_tagName"] as? String ?? "defaultTagName",
+                    tagName: record["CD_tagName"] as? String ?? "Enter Tag",
                     tier: record["CD_tier"] as? Int ?? 0
                 )
                 saveToLocalCache(user: user)

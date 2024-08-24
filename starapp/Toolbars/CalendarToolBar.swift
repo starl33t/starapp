@@ -1,16 +1,15 @@
 import SwiftUI
 
 struct CalendarToolbar: View {
+    @EnvironmentObject var appState: AppState
     @State private var showDatePicker: Bool = false
-    @Binding var selectedDate: Date
-    @Binding var days: [Date]
     
     var body: some View {
         HStack {
             Button(action: {
                 let today = Date()
-                selectedDate = today
-                days = today.daysInYear
+                appState.selectedDate = today
+                appState.days = today.daysInYear
             }) {
                 Image(systemName: Date().daySquareIcon)
             }
@@ -38,7 +37,7 @@ struct CalendarToolbar: View {
         return ZStack {
             Color.starBlack.ignoresSafeArea()
             VStack {
-                DatePicker("Select Date", selection: $selectedDate, in: dateRange, displayedComponents: .date)
+                DatePicker("Select Date", selection: $appState.selectedDate, in: dateRange, displayedComponents: .date)
                     .datePickerStyle(WheelDatePickerStyle())
                     .labelsHidden()
                     .environment(\.colorScheme, .dark)

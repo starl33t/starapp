@@ -3,11 +3,8 @@ import StoreKit
 
 
 struct SubscriptionView: View {
-    @State private var isSecondRectangleVisible: Bool = false
-    @State var isPurchased = false
-    @StateObject var starStore = StarStore()
-    @Binding var tier: Int 
-    let user: User
+    @EnvironmentObject var starStore: StarStore
+    @EnvironmentObject var appState: AppState
     
     var body: some View {
         ZStack {
@@ -68,7 +65,7 @@ struct SubscriptionView: View {
                         }
                     }
                 }) {
-                    Text(user.tier == 1 ? "Subscribed" : "Get Tier 1 for US$ 4.99/m")
+                    Text(appState.tier == 1 ? "Subscribed" : "Get Tier 1 for US$ 4.99/m")
                         .font(.headline)
                         .foregroundStyle(.whiteOne)
                         .padding()
@@ -83,18 +80,16 @@ struct SubscriptionView: View {
             }
         }
         .onAppear() {
-            starStore.checkSubscriptionStatus(for: user)
+            starStore.checkSubscriptionStatus(for: appState.currentUser!)
         }
-        .onChange(of: user.tier) { oldTier, newTier in
-            tier = newTier ?? 0
-            CloudHelper.saveUserChanges(user: user)
+        .onChange(of: appState.tier) { oldTier, newTier in
+            appState.updateTier(appState.tier)
         }
     }
     func buy(product: Product) async {
         do {
             if try await starStore.purchase(product) != nil {
-                isPurchased = true
-                starStore.checkSubscriptionStatus(for: user)
+                appState.updateTier(1)
             }
         } catch {
             print("purchase failed")

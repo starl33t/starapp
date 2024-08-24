@@ -2,14 +2,15 @@ import SwiftUI
 import SwiftData
 
 struct ChatToolbar: View {
+    @EnvironmentObject var appState: AppState
+    @ObservedObject var viewModel: MessageHelper
+    @Query(sort: \Session.date, order: .reverse) private var sessions: [Session]
+    
     @AppStorage("isWaitingForResponse") private var isWaitingForResponse: Bool = false
     @AppStorage("dailyMessageCount") private var dailyMessageCount: Int = 0
     @AppStorage("lastMessageDate") private var lastMessageDate: String = Date().formatted()
-    @ObservedObject var viewModel: MessageHelper
-    @Query(sort: \Session.date, order: .reverse) private var sessions: [Session]
     @AppStorage("showAlert") private var showAlert: Bool = false
     @AppStorage("canSendMessage") private var canSendMessage: Bool = true
-    let user: User
     
     var body: some View {
         HStack {
@@ -78,7 +79,7 @@ struct ChatToolbar: View {
         dailyMessageCount += 1
         lastMessageDate = Date().formatDayMonth(date: Date())
 
-        let maxMessages = user.tier == 1 ? 500 : 10
+        let maxMessages = appState.tier == 1 ? 500 : 10
         canSendMessage = dailyMessageCount < maxMessages
     }
     

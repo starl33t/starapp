@@ -2,15 +2,14 @@ import SwiftUI
 import SwiftData
 
 struct CalendarView: View {
-    private let columns = Array(repeating: GridItem(.flexible()), count: 7)
-    private let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-    
     @Environment(\.calendar) private var calendar
     @Query private var sessions: [Session]
-    @Binding var selectedDate: Date
-    @Binding var days: [Date]
+    @EnvironmentObject var appState: AppState
     @State private var sessionCache: [Date: [Session]] = [:]
     
+    private let columns = Array(repeating: GridItem(.flexible()), count: 7)
+    private let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+
     var body: some View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
@@ -18,7 +17,7 @@ struct CalendarView: View {
                 daysOfWeekHeader()
                 dateScrollView
                     .onChange(of: sessions) {
-                        sessionCache = CalendarHelper.buildSessionCache(for: days, with: sessions)
+                        sessionCache = CalendarHelper.buildSessionCache(for: appState.days, with: sessions)
                     }
             }
             .foregroundStyle(.whiteTwo)
@@ -40,7 +39,7 @@ struct CalendarView: View {
         ScrollViewReader { proxy in
             ScrollView {
                 LazyVGrid(columns: columns) {
-                    ForEach(days, id: \.self) { day in
+                    ForEach(appState.days, id: \.self) { day in
                         DayView(day: day, sessions: sessionCache[day, default: []])
                             .id(day)
                             .frame(height: 70)
@@ -48,13 +47,13 @@ struct CalendarView: View {
                 }
             }
             .onAppear {
-                CalendarHelper.scrollToDay(Date(), using: proxy, in: days, calendar: calendar)
-                sessionCache = CalendarHelper.buildSessionCache(for: days, with: sessions)
+                CalendarHelper.scrollToDay(Date(), using: proxy, in: appState.days, calendar: calendar)
+                sessionCache = CalendarHelper.buildSessionCache(for: appState.days, with: sessions)
             }
-            .onChange(of: selectedDate) { oldDate, newDate in
-                days = newDate.daysInYear
-                CalendarHelper.scrollToDay(newDate, using: proxy, in: days, calendar: calendar)
-                sessionCache = CalendarHelper.buildSessionCache(for: days, with: sessions)
+            .onChange(of: appState.selectedDate) { oldDate, newDate in
+                appState.days = newDate.daysInYear
+                CalendarHelper.scrollToDay(newDate, using: proxy, in: appState.days, calendar: calendar)
+                sessionCache = CalendarHelper.buildSessionCache(for: appState.days, with: sessions)
             }
         }
     }
