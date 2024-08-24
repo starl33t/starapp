@@ -4,7 +4,7 @@ class CloudHelper {
     
     static let customZoneID = CKRecordZone.ID(zoneName: "com.apple.coredata.cloudkit.zone", ownerName: CKCurrentUserDefaultName)
     
-    // Updated fetch function to use the existing custom zone
+    // Fetch user record from CloudKit
     static func fetchUserRecord(completion: @escaping (CKRecord?, Error?) -> Void) {
         let predicate = NSPredicate(value: true)
         let query = CKQuery(recordType: "CD_User", predicate: predicate)
@@ -35,7 +35,7 @@ class CloudHelper {
         CKContainer.default().privateCloudDatabase.add(queryOperation)
     }
     
-    // Updated create function to use the existing custom zone
+    // Create a new user record in CloudKit
     static func createUserRecord(user: User, completion: @escaping (CKRecord?, Error?) -> Void) {
         let recordID = CKRecord.ID(zoneID: customZoneID)
         let record = CKRecord(recordType: "CD_User", recordID: recordID)
@@ -53,12 +53,14 @@ class CloudHelper {
         }
     }
     
+    // Save an existing user record to CloudKit
     static func saveUserRecord(record: CKRecord, completion: @escaping (Error?) -> Void) {
-            CKContainer.default().privateCloudDatabase.save(record) { savedRecord, error in
-                completion(error)
-            }
+        CKContainer.default().privateCloudDatabase.save(record) { _, error in
+            completion(error)
         }
+    }
     
+    // Save user data to local cache
     static func saveToLocalCache(user: User?) {
         guard let user = user else { return }
 
@@ -69,22 +71,77 @@ class CloudHelper {
         ]
         UserDefaults.standard.set(userDict, forKey: "user")
     }
+    
+    // Load user data from local cache
+    static func loadUserFromLocalCache() -> User? {
+        if let userDict = UserDefaults.standard.dictionary(forKey: "user") {
+            return User(
+                userName: userDict["userName"] as? String,
+                tagName: userDict["tagName"] as? String,
+                tier: userDict["tier"] as? Int
+            )
+        }
+        return nil
+    }
 
-    // Save user changes (specific to ProfileView)
-    static func saveUserChanges(user: User) {
-        // Save to local cache first
-        saveToLocalCache(user: user)
-
-        // Attempt to save changes to CloudKit
+    // Sync local changes to CloudKit
+    static func syncLocalChangesToCloudKit(user: User?, completion: @escaping () -> Void) {
+        guard let user = user else { return }
+        
         fetchUserRecord { record, error in
             if let record = record {
+                record["CD_userName"] = user.userName
                 record["CD_tagName"] = user.tagName
                 record["CD_tier"] = user.tier
-
+                
                 saveUserRecord(record: record) { error in
-                    // Handle any errors silently, or log if needed
+                    if let error = error {
+                        print("Failed to sync local changes to CloudKit: \(error.localizedDescription)")
+                    }
+                    completion()
+                }
+            } else {
+                createUserRecord(user: user) { _, error in
+                    if let error = error {
+                        print("Failed to create user in CloudKit: \(error.localizedDescription)")
+                    }
+                    completion()
                 }
             }
         }
+    }
+    
+    // Sync with CloudKit and update local cache
+    static func syncWithCloudKit(completion: @escaping (User?) -> Void) {
+        fetchUserRecord { record, error in
+            if let record = record {
+                let user = User(
+                    userName: record["CD_userName"] as? String ?? "defaultUserName",
+                    tagName: record["CD_tagName"] as? String ?? "defaultTagName",
+                    tier: record["CD_tier"] as? Int ?? 0
+                )
+                saveToLocalCache(user: user)
+                completion(user)
+            } else {
+                completion(nil)
+            }
+        }
+    }
+    
+    // Create a new user locally and save it
+    static func createUserLocally(completion: @escaping (User) -> Void) {
+        let newUser = User(
+            userName: "defaultUserName",
+            tagName: "defaultTagName",
+            tier: 0
+        )
+        saveToLocalCache(user: newUser)
+        completion(newUser)
+    }
+    
+    // Save user changes (specific to ProfileView)
+    static func saveUserChanges(user: User) {
+        saveToLocalCache(user: user)
+        syncLocalChangesToCloudKit(user: user) {}
     }
 }
