@@ -2,15 +2,12 @@ import CloudKit
 
 class CloudHelper {
 
-    static let customZoneID = CKRecordZone.ID(zoneName: "com.apple.coredata.cloudkit.zone", ownerName: CKCurrentUserDefaultName)
-    
     // Fetch user record from CloudKit
     static func fetchUserRecord(completion: @escaping (CKRecord?, Error?) -> Void) {
         let predicate = NSPredicate(value: true)
         let query = CKQuery(recordType: "CD_User", predicate: predicate)
         
         let queryOperation = CKQueryOperation(query: query)
-        queryOperation.zoneID = customZoneID
         queryOperation.resultsLimit = 1  // Ensure only one record is fetched
         
         var fetchedRecord: CKRecord?
@@ -33,7 +30,7 @@ class CloudHelper {
             }
         }
         
-        CKContainer.default().privateCloudDatabase.add(queryOperation)
+        CKContainer.default().publicCloudDatabase.add(queryOperation)
     }
     
     // Create a new user record in CloudKit (only if no record exists)
@@ -46,13 +43,12 @@ class CloudHelper {
                 return
             }
             
-            let recordID = CKRecord.ID(zoneID: customZoneID)
-            let record = CKRecord(recordType: "CD_User", recordID: recordID)
+            let record = CKRecord(recordType: "CD_User")
             record["CD_userName"] = user.userName
             record["CD_tagName"] = user.tagName
             record["CD_tier"] = user.tier
             
-            CKContainer.default().privateCloudDatabase.save(record) { savedRecord, error in
+            CKContainer.default().publicCloudDatabase.save(record) { savedRecord, error in
                 if let error = error {
                     completion(nil, error)
                 } else {
@@ -64,7 +60,7 @@ class CloudHelper {
     
     // Save an existing user record to CloudKit
     static func saveUserRecord(record: CKRecord, completion: @escaping (Error?) -> Void) {
-        CKContainer.default().privateCloudDatabase.save(record) { _, error in
+        CKContainer.default().publicCloudDatabase.save(record) { _, error in
             completion(error)
         }
     }

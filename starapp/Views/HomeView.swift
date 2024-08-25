@@ -30,128 +30,145 @@ struct HomeView: View {
         }, sort: \Session.date, order: .reverse)
     }
 
-    
-    
     var body: some View {
-        ZStack {
-            Color.starBlack.ignoresSafeArea()
-            VStack {
-                RoundedRectangle(cornerRadius: 24)
-                    .fill(.darkOne.opacity(0.25))
-                    .frame(height: 200)
-                    .overlay(
-                        VStack {
-                            HStack(spacing: 24) {
-                                Text("Lactate:")
-                                HackerTextView(text: {
-                                    switch selectedButton {
-                                    case "Easy": return "1,0 mM"
-                                    case "Sweet spot": return "3,0 mM"
-                                    case "Hard": return "4,0 mM"
-                                    default: return ""
-                                    }
-                                }(), trigger: trigger)
-                            }
-                            .font(.system(size: 28, weight: .bold))
+            ZStack {
+                Color.starBlack.ignoresSafeArea()
+                VStack {
+                    lactateSummaryView()
+                        .padding(.horizontal)
+                    
+                    if sessions.isEmpty {
+                        ContentUnavailableView("No Sessions Found", systemImage: "figure.run")
                             .foregroundStyle(.whiteOne)
-                            .padding(. vertical, 24)
-                            
-                            HStack(spacing: 20) {
-                                Button("Easy") {
-                                    selectedButton = "Easy"
-                                    trigger.toggle()
-                                }
-                                .foregroundColor(selectedButton == "Easy" ? .starMain : .gray)
-                                
-                                Button("Sweet spot") {
-                                    selectedButton = "Sweet spot"
-                                    trigger.toggle()
-                                }
-                                .foregroundColor(selectedButton == "Sweet spot" ? .starMain : .gray)
-                                
-                                Button("Hard") {
-                                    selectedButton = "Hard"
-                                    trigger.toggle()
-                                }
-                                .foregroundColor(selectedButton == "Hard" ? .starMain : .gray)
-                            }
-                        }
-                    )
-                    .padding(.horizontal)
-                
-                if sessions.isEmpty {
-                    ContentUnavailableView("No Sessions Found", systemImage: "figure.run")
-                        .foregroundStyle(.whiteOne)
-                } else {
-                    Chart(sessions) { session in
-                        BarMark(
-                            x: .value("Date", session.date ?? Date(), unit: .day),
-                            y: .value("Lactate", session.lactate ?? 0),
-                            stacking: .standard
-                        )
-                        .foregroundStyle(LactateHelper.color(for: session.lactate))
-                        .annotation(position: .overlay, alignment: .center) {
-                            Text(LactateHelper.formatLactate(session.lactate ?? 0))
-                                .multilineTextAlignment(.center)
-                                .font(.system(size: 8))
-                                .fontWeight(.bold)
-                        }
-                        if let barSelection = barSelection {
-                            RuleMark(x: .value("Date", barSelection, unit: .day))
-                                .foregroundStyle(.gray)
-                                .zIndex(-10)
-                                .annotation(
-                                    position: .bottom,
-                                    spacing: 4,
-                                    overflowResolution: .init(x: .disabled, y: .disabled)
-                                ) {
-                                    if let session = sessions.first(where: { Calendar.current.isDate($0.date ?? Date(), inSameDayAs: barSelection) }) {
-                                        VStack {
-                                            Text(Date().formatDayMonth(date: session.date))
-                                        }
-                                        .font(.system(size: 14))
-                                        .foregroundStyle(.gray)
-                                        
-                                    }
-                                }
-                        }
+                    } else {
+                        sessionChartView()
+                            .padding(.bottom)
                     }
-                    .chartXSelection(value: $barSelection)
-                    .scaledToFit()
-                    .chartXAxis(.hidden)
-                    .chartYAxis(.hidden)
-                    .padding(.bottom)
+                    
+                    sessionScrollView()
+                        .scrollIndicators(.hidden)
                 }
-                
-                ScrollView(.horizontal){
-                    HStack(spacing: 35){
-                        ForEach(sessions) { session in
-                            let intensity = LactateHelper.intensity(for: session.lactate)
-                            VStack{
-                                Text("\(session.lactate ?? 0.0, specifier: "%.1f") mM")
-                                    .font(.system(size: 14))
-                                    .foregroundStyle(intensity.color)
-                                Image(systemName: intensity.icon)
-                                    .font(.system(size: 24, weight: .bold))
-                                    .foregroundStyle(intensity.color)
-                                    .aspectRatio(contentMode: .fill)
-                                Text("\(session.date?.formattedAsRelative() ?? "N/A")")
-                                    .font(.system(size: 14))
-                                    .foregroundStyle(.gray)
-                            }
-                            
-                        }
-                        
-                    }
-                    .padding(.horizontal)
-                }
-                .scrollIndicators(.hidden)
-                
             }
-         
         }
         
+        @ViewBuilder
+        private func lactateSummaryView() -> some View {
+            RoundedRectangle(cornerRadius: 24)
+                .fill(.darkOne.opacity(0.25))
+                .frame(height: 200)
+                .overlay(
+                    VStack {
+                        lactateSummaryText()
+                        lactateButtonSelection()
+                    }
+                )
+        }
+        
+        @ViewBuilder
+        private func lactateSummaryText() -> some View {
+            HStack(spacing: 24) {
+                Text("Lactate:")
+                HackerTextView(text: lactateValue(), trigger: trigger)
+            }
+            .font(.system(size: 28, weight: .bold))
+            .foregroundStyle(.whiteOne)
+            .padding(.vertical, 24)
+        }
+        
+        private func lactateValue() -> String {
+            switch selectedButton {
+            case "Easy": return "1,0 mM"
+            case "Sweet spot": return "3,0 mM"
+            case "Hard": return "4,0 mM"
+            default: return ""
+            }
+        }
+        
+        @ViewBuilder
+        private func lactateButtonSelection() -> some View {
+            HStack(spacing: 20) {
+                ForEach(["Easy", "Sweet spot", "Hard"], id: \.self) { button in
+                    Button(button) {
+                        selectedButton = button
+                        trigger.toggle()
+                    }
+                    .foregroundColor(selectedButton == button ? .starMain : .gray)
+                }
+            }
+        }
+        
+        @ViewBuilder
+        private func sessionChartView() -> some View {
+            Chart(sessions) { session in
+                BarMark(
+                    x: .value("Date", session.date ?? Date(), unit: .day),
+                    y: .value("Lactate", session.lactate ?? 0),
+                    stacking: .standard
+                )
+                .foregroundStyle(LactateHelper.color(for: session.lactate))
+                .annotation(position: .overlay, alignment: .center) {
+                    Text(LactateHelper.formatLactate(session.lactate ?? 0))
+                        .multilineTextAlignment(.center)
+                        .font(.system(size: 8))
+                        .fontWeight(.bold)
+                }
+                if let barSelection = barSelection {
+                    RuleMark(x: .value("Date", barSelection, unit: .day))
+                        .foregroundStyle(.gray)
+                        .zIndex(-10)
+                        .annotation(
+                            position: .bottom,
+                            spacing: 4,
+                            overflowResolution: .init(x: .disabled, y: .disabled)
+                        ) {
+                            selectedDateAnnotation(for: barSelection)
+                        }
+                }
+            }
+            .chartXSelection(value: $barSelection)
+            .scaledToFit()
+            .chartXAxis(.hidden)
+            .chartYAxis(.hidden)
+        }
+        
+        @ViewBuilder
+        private func selectedDateAnnotation(for date: Date) -> some View {
+            if let session = sessions.first(where: { Calendar.current.isDate($0.date ?? Date(), inSameDayAs: date) }) {
+                VStack {
+                    Text(Date().formatDayMonth(date: session.date))
+                }
+                .font(.system(size: 14))
+                .foregroundStyle(.gray)
+            }
+        }
+        
+        @ViewBuilder
+        private func sessionScrollView() -> some View {
+            ScrollView(.horizontal) {
+                HStack(spacing: 35) {
+                    ForEach(sessions) { session in
+                        sessionView(for: session)
+                    }
+                }
+                .padding(.horizontal)
+            }
+        }
+        
+        @ViewBuilder
+        private func sessionView(for session: Session) -> some View {
+            let intensity = LactateHelper.intensity(for: session.lactate)
+            VStack {
+                Text("\(session.lactate ?? 0.0, specifier: "%.1f") mM")
+                    .font(.system(size: 14))
+                    .foregroundStyle(intensity.color)
+                Image(systemName: intensity.icon)
+                    .font(.system(size: 24, weight: .bold))
+                    .foregroundStyle(intensity.color)
+                    .aspectRatio(contentMode: .fill)
+                Text("\(session.date?.formattedAsRelative() ?? "N/A")")
+                    .font(.system(size: 14))
+                    .foregroundStyle(.gray)
+            }
+        }
     }
-    
-}
 
