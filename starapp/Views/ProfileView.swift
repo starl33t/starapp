@@ -10,7 +10,6 @@ struct ProfileView: View {
     @State private var showSupportSheet = false
     @State private var showLearnSheet = false
     @State private var showPrivacySheet = false
-    @State var isRestored = false
     
     var body: some View {
         ZStack {
@@ -93,6 +92,7 @@ struct ProfileView: View {
             }
             .onChange(of: appState.tier) { _,newTier in
                 appState.updateTier(newTier)
+                starStore.checkSubscriptionStatus(for: appState.currentUser!)
             }
         }
         .sheet(isPresented: $showAccountSheet) {
@@ -145,8 +145,7 @@ struct ProfileView: View {
     func buy(product: Product) async {
         do {
             if try await starStore.purchase(product) != nil {
-                isRestored = true
-                appState.updateTier(1)
+                starStore.checkSubscriptionStatus(for: appState.currentUser!)
             }
         } catch {
             print("purchase failed")

@@ -5,7 +5,7 @@ class AppState: ObservableObject {
     @Published var currentUser: User? {
         didSet {
             // Set tier and tagName when currentUser is set
-            tier = currentUser?.tier ?? 0 
+            tier = currentUser?.tier ?? 0
             tagName = currentUser?.tagName ?? ""
         }
     }
@@ -15,33 +15,39 @@ class AppState: ObservableObject {
     @Published var days: [Date] = Date().daysInYear
     
     func loadOrCreateUser() {
-            // 1) Try to fetch the user from CloudKit and save to local
-            CloudHelper.syncWithCloudKit { [weak self] user in
-                DispatchQueue.main.async {
-                    if let user = user {
-                        self?.currentUser = user
-                        CloudHelper.saveToLocalCache(user: user)
-                    } else {
-                        // 2) If fetching from CloudKit fails, try to fetch the user from local and sync to CloudKit
-                        if let localUser = CloudHelper.loadUserFromLocalCache() {
-                            self?.currentUser = localUser
-                            CloudHelper.syncLocalChangesToCloudKit(user: localUser) {
-                                // Handle completion or errors if necessary
-                            }
-                        } else {
-                            // 3) If neither CloudKit nor local cache works, then create the user
-                            CloudHelper.createUserLocally { newUser in
-                                self?.currentUser = newUser
-                                // Optionally sync this new user back to CloudKit
-                                CloudHelper.syncLocalChangesToCloudKit(user: newUser) {
-                                    // Handle completion or errors if necessary
-                                }
+        // 1) Load the user from cache
+        if let cachedUser = CloudHelper.loadUserFromLocalCache() {
+            self.currentUser = cachedUser
+        } else {
+            // 2) If no cache exists, create a new user on cache and save to cache
+            CloudHelper.createUserLocally { [weak self] newUser in
+                self?.currentUser = newUser
+                CloudHelper.saveToLocalCache(user: newUser)
+            }
+        }
+        
+        // 3) Fetch user record from CloudKit
+        CloudHelper.syncWithCloudKit { [weak self] cloudUser in
+            DispatchQueue.main.async {
+                if let cloudUser = cloudUser {
+                    // 4) Save cloudkit user to local cache
+                    self?.currentUser = cloudUser
+                    CloudHelper.saveToLocalCache(user: cloudUser)
+                } else {
+                    // If no CloudKit records exist, create a new user on CloudKit
+                    if let localUser = self?.currentUser {
+                        CloudHelper.createUserRecord(user: localUser) { _, error in
+                            if error == nil {
+                                CloudHelper.saveToLocalCache(user: localUser)
+                            } else {
+                                print("Failed to create user on CloudKit: \(error!.localizedDescription)")
                             }
                         }
                     }
                 }
             }
         }
+    }
     
     func updateTier(_ newTier: Int) {
         tier = newTier
@@ -60,9 +66,8 @@ class AppState: ObservableObject {
     }
     
     func updateSubscriptionStatus(starStore: StarStore) {
-            if let user = currentUser {
-                starStore.checkSubscriptionStatus(for: user)
-                tier = user.tier ?? 0
-            }
+        if let user = currentUser {
+            starStore.checkSubscriptionStatus(for: user)
         }
+    }
 }

@@ -44,9 +44,12 @@ struct ChatView: View {
         }
         .onAppear {
             starStore.checkSubscriptionStatus(for: appState.currentUser!)
-        }
-        .onChange(of: appState.tier) { _, _ in
             updateCanSendMessage()
+        }
+        .onChange(of: appState.tier) { _,newTier in
+            appState.updateTier(newTier)
+            updateCanSendMessage()
+            starStore.checkSubscriptionStatus(for: appState.currentUser!)
         }
         .onTapGesture {
             textFieldIsFocused = false

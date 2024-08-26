@@ -9,13 +9,17 @@ import SwiftUI
 
 struct LoadingView: View {
     var body: some View {
-        VStack {
-            ProgressView("Loading...")
-                .progressViewStyle(CircularProgressViewStyle())
-                .foregroundColor(.white)
-                .padding()
+        ZStack {
+            Color.starBlack.ignoresSafeArea()
+            VStack {
+                HackerTextView(text: "Welcome to starleet", trigger: true)
+            }
+            .font(.title)
+            .foregroundStyle(.whiteOne)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.starBlack.ignoresSafeArea())
     }
+}
+
+#Preview {
+    LoadingView()
 }

@@ -1,7 +1,7 @@
 import CloudKit
 
 class CloudHelper {
-
+    
     // Fetch user record from CloudKit
     static func fetchUserRecord(completion: @escaping (CKRecord?, Error?) -> Void) {
         let predicate = NSPredicate(value: true)
@@ -68,7 +68,7 @@ class CloudHelper {
     // Save user data to local cache
     static func saveToLocalCache(user: User?) {
         guard let user = user else { return }
-
+        
         let userDict: [String: Any] = [
             "userName": user.userName ?? "",
             "tagName": user.tagName ?? "",
@@ -88,29 +88,29 @@ class CloudHelper {
         }
         return nil
     }
-
+    
     // Sync local changes to CloudKit
     static func syncLocalChangesToCloudKit(user: User?, completion: @escaping () -> Void) {
-        guard let user = user else { return }
-        
-        fetchUserRecord { record, error in
-            if let record = record {
-                // Update existing CloudKit record with local changes
-                record["CD_userName"] = user.userName
-                record["CD_tagName"] = user.tagName
-                record["CD_tier"] = user.tier
-                
-                saveUserRecord(record: record) { error in
-                    completion()
-                }
-            } else {
-                // No record found, create a new one only if none exists
-                createUserRecord(user: user) { _, error in
-                    completion()
-                }
-            }
-        }
-    }
+           guard let user = user else { return }
+           
+           fetchUserRecord { record, error in
+               if let record = record {
+                   // Update existing CloudKit record with local changes
+                   record["CD_userName"] = user.userName
+                   record["CD_tagName"] = user.tagName
+                   record["CD_tier"] = user.tier
+                   
+                   saveUserRecord(record: record) { error in
+                       completion()
+                   }
+               } else {
+                   // No record found, create a new one only if none exists
+                   createUserRecord(user: user) { _, error in
+                       completion()
+                   }
+               }
+           }
+       }
     
     // Sync with CloudKit and update local cache
     static func syncWithCloudKit(completion: @escaping (User?) -> Void) {
@@ -140,9 +140,17 @@ class CloudHelper {
         completion(newUser)
     }
     
-    // Save user changes (specific to ProfileView)
     static func saveUserChanges(user: User) {
-        saveToLocalCache(user: user)
-        syncLocalChangesToCloudKit(user: user) {}
+        // 1. Save changes to CloudKit
+        syncLocalChangesToCloudKit(user: user) {
+            // 2. After saving to CloudKit, sync with CloudKit to update the local cache
+            syncWithCloudKit { updatedUser in
+                // The local cache is automatically updated by syncWithCloudKit
+                if updatedUser == nil {
+                    // Handle the error if needed
+                }
+            }
+        }
     }
+
 }

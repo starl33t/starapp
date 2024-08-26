@@ -25,6 +25,7 @@
 		BF4A818B2C3AFDF500D4CAF1 /* ColorOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A818A2C3AFDF500D4CAF1 /* ColorOptionView.swift */; };
 		BF4A818F2C3AFFDD00D4CAF1 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A818E2C3AFFDD00D4CAF1 /* HomeView.swift */; };
 		BF57B8A92C541365000F24BB /* LactateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF57B8A82C541360000F24BB /* LactateHelper.swift */; };
+		BF6359722C78C75B006F8CB4 /* CloudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6359712C78C758006F8CB4 /* CloudHelper.swift */; };
 		BF6744D12C3FCAE900A23D76 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6744D02C3FCAE400A23D76 /* Session.swift */; };
 		BF6C840E2C3C5E8100032E93 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C840D2C3C5E8100032E93 /* AccountView.swift */; };
 		BF6C84122C3D16D600032E93 /* IntegrationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C84112C3D16D600032E93 /* IntegrationsView.swift */; };
@@ -40,6 +41,8 @@
 		BF73F4572C6BD85300922B9B /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF73F4562C6BD85300922B9B /* StoreKit.framework */; };
 		BF73F4592C6BD8F600922B9B /* Starleet.storekit in Resources */ = {isa = PBXBuildFile; fileRef = BF73F4582C6BD8F600922B9B /* Starleet.storekit */; };
 		BF73F45B2C6BE63500922B9B /* StarStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF73F45A2C6BE62D00922B9B /* StarStore.swift */; };
+		BF87F7B92C79C69D00B35F6A /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF87F7B82C79C69A00B35F6A /* AppState.swift */; };
+		BF87F7BB2C79C6CC00B35F6A /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF87F7BA2C79C6C900B35F6A /* LoadingView.swift */; };
 		BF8D6ADC2C41A9DF000269F1 /* TrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */; };
 		BF91AC6E2C45405C0028BC41 /* NumberHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF91AC6D2C4540530028BC41 /* NumberHelper.swift */; };
 		BFBBD9582C55869200671197 /* MessageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBBD9572C55868F00671197 /* MessageHelper.swift */; };
@@ -87,6 +90,7 @@
 		BF4A818A2C3AFDF500D4CAF1 /* ColorOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorOptionView.swift; sourceTree = "<group>"; };
 		BF4A818E2C3AFFDD00D4CAF1 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		BF57B8A82C541360000F24BB /* LactateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LactateHelper.swift; sourceTree = "<group>"; };
+		BF6359712C78C758006F8CB4 /* CloudHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudHelper.swift; sourceTree = "<group>"; };
 		BF6744D02C3FCAE400A23D76 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		BF6C840D2C3C5E8100032E93 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		BF6C84112C3D16D600032E93 /* IntegrationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationsView.swift; sourceTree = "<group>"; };
@@ -106,6 +110,8 @@
 		BF73F4562C6BD85300922B9B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		BF73F4582C6BD8F600922B9B /* Starleet.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Starleet.storekit; sourceTree = "<group>"; };
 		BF73F45A2C6BE62D00922B9B /* StarStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarStore.swift; sourceTree = "<group>"; };
+		BF87F7B82C79C69A00B35F6A /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		BF87F7BA2C79C6C900B35F6A /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingView.swift; sourceTree = "<group>"; };
 		BF91AC6D2C4540530028BC41 /* NumberHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberHelper.swift; sourceTree = "<group>"; };
 		BFBBD9572C55868F00671197 /* MessageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHelper.swift; sourceTree = "<group>"; };
@@ -181,6 +187,7 @@
 				BFBBD9572C55868F00671197 /* MessageHelper.swift */,
 				BF57B8A82C541360000F24BB /* LactateHelper.swift */,
 				BFE876052C6E7DA6006725A6 /* StringHelper.swift */,
+				BF6359712C78C758006F8CB4 /* CloudHelper.swift */,
 				BFDEB5FD2C497D3100D32736 /* UserService.swift */,
 				BF31F0AA2C48FDA9000C005C /* EmailHelper.swift */,
 				BFDE40522C591F7B00733888 /* CalendarHelper.swift */,
@@ -232,6 +239,8 @@
 				BF6744CF2C3FCA5A00A23D76 /* Models */,
 				BF7342082C3AE74A00911375 /* ContentView.swift */,
 				BF7342062C3AE74A00911375 /* starleetApp.swift */,
+				BF87F7B82C79C69A00B35F6A /* AppState.swift */,
+				BF87F7BA2C79C6C900B35F6A /* LoadingView.swift */,
 				BF73F4582C6BD8F600922B9B /* Starleet.storekit */,
 				BF73F45A2C6BE62D00922B9B /* StarStore.swift */,
 				BF73420C2C3AE74C00911375 /* Assets.xcassets */,
@@ -338,7 +347,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1520;
-				LastUpgradeCheck = 1600;
+				LastUpgradeCheck = 1610;
 				TargetAttributes = {
 					BF7342022C3AE74A00911375 = {
 						CreatedOnToolsVersion = 15.2;
@@ -410,7 +419,9 @@
 				BF7342092C3AE74A00911375 /* ContentView.swift in Sources */,
 				BF4A818B2C3AFDF500D4CAF1 /* ColorOptionView.swift in Sources */,
 				BF4A814D2C3AF03B00D4CAF1 /* MetricView.swift in Sources */,
+				BF87F7B92C79C69D00B35F6A /* AppState.swift in Sources */,
 				BF6744D12C3FCAE900A23D76 /* Session.swift in Sources */,
+				BF87F7BB2C79C6CC00B35F6A /* LoadingView.swift in Sources */,
 				BFDE40532C591F8200733888 /* CalendarHelper.swift in Sources */,
 				BF4A81632C3AF53200D4CAF1 /* ProfileView.swift in Sources */,
 				BF91AC6E2C45405C0028BC41 /* NumberHelper.swift in Sources */,
@@ -426,6 +437,7 @@
 				BF6C84182C3D1C6D00032E93 /* LearnView.swift in Sources */,
 				BF4A81492C3AEFCE00D4CAF1 /* ChatView.swift in Sources */,
 				BFDEB6042C49994C00D32736 /* SupportView.swift in Sources */,
+				BF6359722C78C75B006F8CB4 /* CloudHelper.swift in Sources */,
 				BF8D6ADC2C41A9DF000269F1 /* TrainingView.swift in Sources */,
 				BF1A81532C542C280057D87D /* HomeToolBar.swift in Sources */,
 				BF4A81352C3AEC4D00D4CAF1 /* CalendarView.swift in Sources */,
@@ -580,6 +592,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -590,6 +603,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
 		};
@@ -600,7 +614,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = starapp/starapp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 88;
+				CURRENT_PROJECT_VERSION = 141;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"starapp/Preview Content\"";
 				DEVELOPMENT_TEAM = 7F33N9HZ63;
@@ -624,7 +638,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.9.8;
+				MARKETING_VERSION = 2.0.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starappv01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -643,7 +657,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = starapp/starapp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 88;
+				CURRENT_PROJECT_VERSION = 141;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"starapp/Preview Content\"";
 				DEVELOPMENT_TEAM = 7F33N9HZ63;
@@ -667,7 +681,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.9.8;
+				MARKETING_VERSION = 2.0.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starappv01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
