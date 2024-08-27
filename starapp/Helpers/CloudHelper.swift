@@ -2,65 +2,88 @@ import CloudKit
 
 class CloudHelper {
     
-    // Fetch user record from CloudKit
+    // Fetch user record from CloudKit using recordName
     static func fetchUserRecord(completion: @escaping (CKRecord?, Error?) -> Void) {
-        let predicate = NSPredicate(value: true)
-        let query = CKQuery(recordType: "CD_User", predicate: predicate)
-        
-        let queryOperation = CKQueryOperation(query: query)
-        queryOperation.resultsLimit = 1  // Ensure only one record is fetched
-        
-        var fetchedRecord: CKRecord?
-        
-        queryOperation.recordMatchedBlock = { (recordID, result) in
-            switch result {
-            case .success(let record):
-                fetchedRecord = record
-            case .failure(let error):
-                print("Error fetching record: \(error.localizedDescription)")
-            }
-        }
-        
-        queryOperation.queryResultBlock = { result in
-            switch result {
-            case .success:
-                completion(fetchedRecord, nil)
-            case .failure(let error):
+        let container = CKContainer.default()
+        container.fetchUserRecordID { userRecordID, error in
+            if let userRecordID = userRecordID {
+                let recordName = userRecordID.recordName
+                let recordID = CKRecord.ID(recordName: recordName)
+                
+                print("Debug: Fetching record with recordName: \(recordName)")
+                
+                container.publicCloudDatabase.fetch(withRecordID: recordID) { fetchedRecord, error in
+                    if let error = error as? CKError, error.code == .unknownItem {
+                        print("Debug: No record found with recordName: \(recordName)")
+                        // No record found, return nil without error
+                        completion(nil, nil)
+                    } else if let error = error {
+                        print("Debug: Error fetching record: \(error.localizedDescription)")
+                        completion(nil, error)
+                    } else {
+                        print("Debug: Successfully fetched record with recordName: \(recordName)")
+                        completion(fetchedRecord, nil)
+                    }
+                }
+            } else if let error = error {
+                print("Debug: Error fetching userRecordID: \(error.localizedDescription)")
                 completion(nil, error)
             }
         }
-        
-        CKContainer.default().publicCloudDatabase.add(queryOperation)
     }
     
-    // Create a new user record in CloudKit (only if no record exists)
+    // Create a new user record in CloudKit using recordName
     static func createUserRecord(user: User, completion: @escaping (CKRecord?, Error?) -> Void) {
-        fetchUserRecord { existingRecord, error in
-            if let _ = existingRecord {
-                // Record already exists, no need to create a new one
-                print("User record already exists, skipping creation.")
-                completion(nil, nil)
-                return
-            }
-            
-            let record = CKRecord(recordType: "CD_User")
-            record["CD_userName"] = user.userName
-            record["CD_tagName"] = user.tagName
-            record["CD_tier"] = user.tier
-            
-            CKContainer.default().publicCloudDatabase.save(record) { savedRecord, error in
-                if let error = error {
-                    completion(nil, error)
-                } else {
-                    completion(savedRecord, nil)
+        let container = CKContainer.default()
+        container.fetchUserRecordID { userRecordID, error in
+            if let userRecordID = userRecordID {
+                let recordName = userRecordID.recordName
+                let recordID = CKRecord.ID(recordName: recordName)
+                
+                print("Debug: Attempting to create record with recordName: \(recordName)")
+                
+                // Check if record already exists
+                fetchUserRecord { existingRecord, error in
+                    if let _ = existingRecord {
+                        // Record already exists, no need to create a new one
+                        print("Debug: User record already exists, skipping creation.")
+                        completion(nil, nil)
+                        return
+                    }
+                    
+                    print("Debug: No existing record found, creating new record.")
+                    
+                    let record = CKRecord(recordType: "CD_User", recordID: recordID)
+                    record["CD_userName"] = user.userName
+                    record["CD_tagName"] = user.tagName
+                    record["CD_tier"] = user.tier
+                    
+                    container.publicCloudDatabase.save(record) { savedRecord, error in
+                        if let error = error {
+                            print("Debug: Error saving new record: \(error.localizedDescription)")
+                            completion(nil, error)
+                        } else {
+                            print("Debug: Successfully created and saved new record with recordName: \(recordName)")
+                            completion(savedRecord, nil)
+                        }
+                    }
                 }
+            } else if let error = error {
+                print("Debug: Error fetching userRecordID: \(error.localizedDescription)")
+                completion(nil, error)
             }
         }
     }
-    
+
     // Save an existing user record to CloudKit
     static func saveUserRecord(record: CKRecord, completion: @escaping (Error?) -> Void) {
+        print("Debug: Saving record with recordName: \(record.recordID.recordName)")
         CKContainer.default().publicCloudDatabase.save(record) { _, error in
+            if let error = error {
+                print("Debug: Error saving record: \(error.localizedDescription)")
+            } else {
+                print("Debug: Successfully saved record with recordName: \(record.recordID.recordName)")
+            }
             completion(error)
         }
     }
