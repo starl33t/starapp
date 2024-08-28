@@ -5,6 +5,7 @@ import SwiftData
 struct starappApp: App {
     @StateObject private var appState = AppState()
     @StateObject private var starStore = StarStore()
+    @StateObject private var navigationTitleTypes = NavigationTitleTypes()
     
     var body: some Scene {
         WindowGroup {
@@ -12,6 +13,7 @@ struct starappApp: App {
                 ContentView()
                     .environmentObject(appState)
                     .environmentObject(starStore)
+                    .environmentObject(navigationTitleTypes)
             } else {
                 LoadingView()
                     .onAppear {

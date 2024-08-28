@@ -42,6 +42,7 @@ struct ChatView: View {
             .padding(.top)
         }
         .onAppear {
+            updateNavigationTitleToAICoach()
             Task {
                 if viewModel.threadId == nil {
                     await viewModel.createThread()
@@ -50,17 +51,18 @@ struct ChatView: View {
             }
         }
         .onAppear {
-            starStore.checkSubscriptionStatus(for: appState.currentUser!)
             updateCanSendMessage()
         }
         .onChange(of: appState.tier) { _,newTier in
-            appState.updateTier(newTier)
             updateCanSendMessage()
-            starStore.checkSubscriptionStatus(for: appState.currentUser!)
         }
         .onTapGesture {
             textFieldIsFocused = false
         }
+    }
+    
+    private func updateNavigationTitleToAICoach() {
+        appState.updateNavigationTitle(with: "AI Coach", trigger: appState.trigger)
     }
     
     private var placeholderText: String {
@@ -135,6 +137,7 @@ struct ChatView: View {
                         dailyMessageCount += 1
                         updateCanSendMessage()
                         isWaitingForResponse = false
+                        await appState.updateSubscriptionStatus(starStore: starStore)
                     } else {
                         print("Thread ID not available.")
                     }

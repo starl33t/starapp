@@ -13,6 +13,8 @@ class AppState: ObservableObject {
     @Published var tagName: String = ""
     @Published var selectedDate: Date = Date()
     @Published var days: [Date] = Date().daysInYear
+    @Published var navigationTitle: String = "Home" //Homescreen
+    @Published var trigger: Bool = false //Homescreen
     
     func loadOrCreateUser() {
         // 1) Load the user from cache
@@ -65,9 +67,14 @@ class AppState: ObservableObject {
         }
     }
     
-    func updateSubscriptionStatus(starStore: StarStore) {
+    func updateSubscriptionStatus(starStore: StarStore) async {
         if let user = currentUser {
-            starStore.checkSubscriptionStatus(for: user)
+            await starStore.checkSubscriptionStatus(for: user)
         }
+    }
+    
+    func updateNavigationTitle(with newTitle: String, trigger: Bool) {
+        self.navigationTitle = newTitle
+        self.trigger = trigger
     }
 }

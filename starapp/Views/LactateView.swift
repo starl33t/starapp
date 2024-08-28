@@ -3,6 +3,7 @@ import SwiftData
 
 struct LactateView: View {
     @Environment(\.modelContext) private var context
+    @EnvironmentObject var appState: AppState
     @Query(sort: \Session.date, order: .reverse) private var sessions: [Session]
     @State private var refreshTrigger = false
     
@@ -70,6 +71,13 @@ struct LactateView: View {
                 .padding(.top)
             }
         }
+        .onAppear {
+            updateNavigationTitleWithSweetSpot()
+        }
+    }
+    private func updateNavigationTitleWithSweetSpot() {
+        let sweetSpotTitle = "Hit 3,0 mM"
+        appState.updateNavigationTitle(with: sweetSpotTitle, trigger: appState.trigger)
     }
 }
 

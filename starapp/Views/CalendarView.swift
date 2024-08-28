@@ -9,7 +9,7 @@ struct CalendarView: View {
     
     private let columns = Array(repeating: GridItem(.flexible()), count: 7)
     private let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-
+    
     var body: some View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
@@ -22,6 +22,17 @@ struct CalendarView: View {
             }
             .foregroundStyle(.whiteTwo)
         }
+        .onAppear {
+            updateNavigationTitleWithToday()
+        }
+    }
+    
+    private func updateNavigationTitleWithToday() {
+        let today = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .long // Choose your preferred date format
+        let dateString = dateFormatter.string(from: today)
+        appState.updateNavigationTitle(with: dateString, trigger: appState.trigger)
     }
     
     private func daysOfWeekHeader() -> some View {

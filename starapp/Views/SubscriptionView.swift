@@ -55,7 +55,7 @@ struct SubscriptionView: View {
                                 .font(.body)
                                 .padding(.top, 10)
                             }
-                                .padding()
+                            .padding()
                         )
                 }
                 Button(action: {
@@ -79,18 +79,12 @@ struct SubscriptionView: View {
                     .padding(.horizontal)
             }
         }
-        .onAppear() {
-            starStore.checkSubscriptionStatus(for: appState.currentUser!)
-        }
-        .onChange(of: appState.tier) { oldTier, newTier in
-            appState.updateTier(appState.tier)
-            starStore.checkSubscriptionStatus(for: appState.currentUser!)
-        }
     }
+    
     func buy(product: Product) async {
         do {
             if try await starStore.purchase(product) != nil {
-                starStore.checkSubscriptionStatus(for: appState.currentUser!)
+                appState.updateTier(1)
             }
         } catch {
             print("purchase failed")

@@ -33,11 +33,19 @@ struct ProfileView: View {
                                 .multilineTextAlignment(.center)
                         }
                         TextField("", text: $appState.tagName, onCommit: {
+                            // Ensure the tag name is not more than 20 characters
+                            if appState.tagName.count > 20 {
+                                appState.tagName = String(appState.tagName.prefix(20))
+                            }
                             appState.updateTagName(appState.tagName)
                         })
                         .foregroundColor(.gray)
                         .multilineTextAlignment(.center)
-                        
+                        .onChange(of: appState.tagName) { _,newValue in
+                            if newValue.count > 20 {
+                                appState.tagName = String(newValue.prefix(20))
+                            }
+                        }
                     }
                     .font(.system(size: 14))
                     .frame(maxWidth: .infinity)
@@ -82,17 +90,17 @@ struct ProfileView: View {
                     .padding()
                     .background(Color.darkOne.opacity(0.25))
                     .cornerRadius(16)
-                    
                 }
             }
             .padding()
             .tint(.whiteTwo)
-            .onAppear {
-                starStore.checkSubscriptionStatus(for: appState.currentUser!)
-            }
-            .onChange(of: appState.tier) { _,newTier in
-                appState.updateTier(newTier)
-                starStore.checkSubscriptionStatus(for: appState.currentUser!)
+        }
+        .onAppear {
+            // Check the subscription status when the view appears
+            if let currentUser = appState.currentUser {
+                Task {
+                    await starStore.checkSubscriptionStatus(for: currentUser)
+                }
             }
         }
         .sheet(isPresented: $showAccountSheet) {
@@ -142,10 +150,11 @@ struct ProfileView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .contentShape(Rectangle())
     }
+    
     func buy(product: Product) async {
         do {
             if try await starStore.purchase(product) != nil {
-                starStore.checkSubscriptionStatus(for: appState.currentUser!)
+                appState.updateTier(1)
             }
         } catch {
             print("purchase failed")

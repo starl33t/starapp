@@ -11,34 +11,76 @@ import SwiftData
 
 struct MetricView: View {
     @AppStorage("showAnnotations") var showAnnotations = true
+    @EnvironmentObject var appState: AppState
     @Query(sort: \Session.lactate, order: .reverse) private var sessions: [Session]
     @State private var barSelection: Date?
+    @State private var selectedChart: ChartType = .lineChart
+    
+    enum ChartType {
+            case lineChart, barChart, pieChart, scatterPlot
+        }
     
     init() {
-            let startOfLast28Days = Date.startOfLast28Days()
-            _sessions = Query(filter: #Predicate<Session> { session in
-                if let date = session.date {
-                    return date >= startOfLast28Days
-                } else {
-                    return false
-                }
-            }, sort: \Session.date, order: .reverse)
-        }
+        let startOfLast28Days = Date.startOfLast28Days()
+        _sessions = Query(filter: #Predicate<Session> { session in
+            if let date = session.date {
+                return date >= startOfLast28Days
+            } else {
+                return false
+            }
+        }, sort: \Session.date, order: .reverse)
+    }
     
     var body: some View {
-        ZStack {
-            Color.starBlack.ignoresSafeArea()
-            VStack {
-                TabView {
-                    lineChart
-                    barChart
-                    pieChart
-                    scatterPlot
+            ZStack {
+                Color.starBlack.ignoresSafeArea()
+                VStack {
+                    TabView(selection: $selectedChart) {
+                        lineChart
+                            .tag(ChartType.lineChart)
+                            .onAppear {
+                                appState.updateNavigationTitle(with: "Linechart", trigger: appState.trigger)
+                            }
+                        barChart
+                            .tag(ChartType.barChart)
+                            .onAppear {
+                                appState.updateNavigationTitle(with: "Barchart", trigger: appState.trigger)
+                            }
+                        pieChart
+                            .tag(ChartType.pieChart)
+                            .onAppear {
+                                appState.updateNavigationTitle(with: "Piechart", trigger: appState.trigger)
+                            }
+                        scatterPlot
+                            .tag(ChartType.scatterPlot)
+                            .onAppear {
+                                appState.updateNavigationTitle(with: "Scatterplot", trigger: appState.trigger)
+                            }
+                    }
+                    .tabViewStyle(PageTabViewStyle())
                 }
-                .tabViewStyle(PageTabViewStyle())
+            }
+            .onAppear {
+                updateNavigationTitleForSelectedChart()
+            }
+            .onChange(of: selectedChart) { 
+                updateNavigationTitleForSelectedChart()
             }
         }
-    }
+    
+    private func updateNavigationTitleForSelectedChart() {
+            switch selectedChart {
+            case .lineChart:
+                appState.updateNavigationTitle(with: "Linechart", trigger: appState.trigger)
+            case .barChart:
+                appState.updateNavigationTitle(with: "Barchart", trigger: appState.trigger)
+            case .pieChart:
+                appState.updateNavigationTitle(with: "Piechart", trigger: appState.trigger)
+            case .scatterPlot:
+                appState.updateNavigationTitle(with: "Scatterplot", trigger: appState.trigger)
+            }
+        }
+    
     private var lineChart: some View {
         Chart(sessions) { session in
             LineMark(
@@ -102,7 +144,7 @@ struct MetricView: View {
                         .fontWeight(.bold)
                 }
             }
-                
+            
             
             
             if let barSelection = barSelection {
@@ -149,16 +191,16 @@ struct MetricView: View {
                         .multilineTextAlignment(.center)
                         .fontWeight(.bold)
                 }
-               
+                
             } else {
                 
-                    SectorMark(
-                        angle: .value("Lactate", session.lactate ?? 0),
-                        innerRadius: .ratio(0.6),
-                        angularInset: 2
-                    )
-                    .foregroundStyle(LactateHelper.color(for: session.lactate))
-                    .cornerRadius(5)
+                SectorMark(
+                    angle: .value("Lactate", session.lactate ?? 0),
+                    innerRadius: .ratio(0.6),
+                    angularInset: 2
+                )
+                .foregroundStyle(LactateHelper.color(for: session.lactate))
+                .cornerRadius(5)
             }
         }
         .scaledToFit()
@@ -167,11 +209,11 @@ struct MetricView: View {
     
     private var scatterPlot: some View {
         Chart(sessions) { session in
-                PointMark(
-                    x: .value("Date", session.date ?? Date(), unit: .day),
-                    y: .value("Lactate", session.lactate ?? 0)
-                )
-                .foregroundStyle(LactateHelper.color(for: session.lactate))
+            PointMark(
+                x: .value("Date", session.date ?? Date(), unit: .day),
+                y: .value("Lactate", session.lactate ?? 0)
+            )
+            .foregroundStyle(LactateHelper.color(for: session.lactate))
             
             if showAnnotations {
                 PointMark(

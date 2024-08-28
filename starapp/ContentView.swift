@@ -3,7 +3,10 @@ import CloudKit
 
 struct ContentView: View {
     @EnvironmentObject var appState: AppState
+    @EnvironmentObject var starStore: StarStore
+    @EnvironmentObject var navigationTitleTypes: NavigationTitleTypes
     @StateObject private var viewModel = MessageHelper()
+    
     
     var body: some View {
         NavigationStack {
@@ -43,7 +46,13 @@ struct ContentView: View {
                 }
                 .tint(.starMain)
             }
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                ToolbarItem(placement: .principal) {
+                    HackerTextView(text: appState.navigationTitle, trigger: appState.trigger)
+                        .font(.headline)
+                        .foregroundColor(.whiteOne) 
+                }
                 ToolbarItem(placement: .navigationBarLeading) {
                     NavigationLink(destination: ProfileView()) {
                         Label("Profile", systemImage: "person.fill")
@@ -66,6 +75,21 @@ struct ContentView: View {
             }
             .tint(.whiteTwo)
         }
+        .onAppear {
+            // Check the subscription status when ContentView appears
+            if appState.currentUser != nil {
+                Task {
+                    await appState.updateSubscriptionStatus(starStore: starStore)
+                }
+            }
+        }
         .tint(.starMain)
     }
+}
+
+#Preview {
+    ContentView()
+        .environmentObject(AppState())
+        .environmentObject(StarStore())
+        .environmentObject(NavigationTitleTypes())
 }

@@ -41,6 +41,7 @@
 		BF73F4572C6BD85300922B9B /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF73F4562C6BD85300922B9B /* StoreKit.framework */; };
 		BF73F4592C6BD8F600922B9B /* Starleet.storekit in Resources */ = {isa = PBXBuildFile; fileRef = BF73F4582C6BD8F600922B9B /* Starleet.storekit */; };
 		BF73F45B2C6BE63500922B9B /* StarStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF73F45A2C6BE62D00922B9B /* StarStore.swift */; };
+		BF7A4EE72C7F9B3C009E7070 /* NavigationTitleTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7A4EE62C7F9B1E009E7070 /* NavigationTitleTypes.swift */; };
 		BF87F7B92C79C69D00B35F6A /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF87F7B82C79C69A00B35F6A /* AppState.swift */; };
 		BF87F7BB2C79C6CC00B35F6A /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF87F7BA2C79C6C900B35F6A /* LoadingView.swift */; };
 		BF8D6ADC2C41A9DF000269F1 /* TrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */; };
@@ -110,6 +111,7 @@
 		BF73F4562C6BD85300922B9B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		BF73F4582C6BD8F600922B9B /* Starleet.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Starleet.storekit; sourceTree = "<group>"; };
 		BF73F45A2C6BE62D00922B9B /* StarStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarStore.swift; sourceTree = "<group>"; };
+		BF7A4EE62C7F9B1E009E7070 /* NavigationTitleTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTitleTypes.swift; sourceTree = "<group>"; };
 		BF87F7B82C79C69A00B35F6A /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		BF87F7BA2C79C6C900B35F6A /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingView.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 				BF7342082C3AE74A00911375 /* ContentView.swift */,
 				BF7342062C3AE74A00911375 /* starleetApp.swift */,
 				BF87F7B82C79C69A00B35F6A /* AppState.swift */,
+				BF7A4EE62C7F9B1E009E7070 /* NavigationTitleTypes.swift */,
 				BF87F7BA2C79C6C900B35F6A /* LoadingView.swift */,
 				BF73F4582C6BD8F600922B9B /* Starleet.storekit */,
 				BF73F45A2C6BE62D00922B9B /* StarStore.swift */,
@@ -434,6 +437,7 @@
 				BF3700882C47B60900CF255D /* User.swift in Sources */,
 				BFDEB5FE2C497D3900D32736 /* UserService.swift in Sources */,
 				BF6C84122C3D16D600032E93 /* IntegrationsView.swift in Sources */,
+				BF7A4EE72C7F9B3C009E7070 /* NavigationTitleTypes.swift in Sources */,
 				BF6C84182C3D1C6D00032E93 /* LearnView.swift in Sources */,
 				BF4A81492C3AEFCE00D4CAF1 /* ChatView.swift in Sources */,
 				BFDEB6042C49994C00D32736 /* SupportView.swift in Sources */,
@@ -620,6 +624,7 @@
 				DEVELOPMENT_TEAM = 7F33N9HZ63;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = starapp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Starleet;
@@ -634,11 +639,11 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 2.0.6;
+				MARKETING_VERSION = 2.0.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starappv01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -663,6 +668,7 @@
 				DEVELOPMENT_TEAM = 7F33N9HZ63;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = starapp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Starleet;
@@ -677,17 +683,18 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 2.0.6;
+				MARKETING_VERSION = 2.0.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starappv01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -724,6 +731,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 4PVRS8J86T;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MACOSX_DEPLOYMENT_TARGET = 13.6;
@@ -733,6 +741,7 @@
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/starapp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/starapp";
@@ -768,6 +777,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 4PVRS8J86T;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MACOSX_DEPLOYMENT_TARGET = 13.6;
@@ -777,6 +787,7 @@
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = starapp;
