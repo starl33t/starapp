@@ -42,16 +42,16 @@ struct ChatView: View {
             .padding(.top)
         }
         .onAppear {
-            updateNavigationTitleToAICoach()
             Task {
                 if viewModel.threadId == nil {
                     await viewModel.createThread()
                 }
-                resetMessageCountIfNeeded()
             }
         }
         .onAppear {
             updateCanSendMessage()
+            resetMessageCountIfNeeded()
+            updateNavigationTitleToAICoach()
         }
         .onChange(of: appState.tier) { _,newTier in
             updateCanSendMessage()

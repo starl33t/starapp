@@ -12,19 +12,21 @@ import SwiftData
 
 struct HomeView: View {
     @EnvironmentObject var appState: AppState
+    @Namespace private var tabAnimation
     @State private var trigger = false
     @State private var selectedButton: String = "Sweet spot"
     @State private var barSelection: Date?
     @Query private var sessions: [Session]
     @State private var selectedSession: String = "Session"
+    @State private var activeTab: Tab = .lactate
     
     init() {
-        let startOfLast14Days = Date.startOfLast14Days()
-        let endOfValidPeriod = Calendar.current.date(byAdding: .day, value: 13, to: Date())!
+        let startOfLast7Days = Calendar.current.date(byAdding: .day, value: -6, to: Date())!
+        let endOfValidPeriod = Calendar.current.date(byAdding: .day, value: 6, to: Date())!
         
         _sessions = Query(filter: #Predicate<Session> { session in
             if let date = session.date {
-                return date >= startOfLast14Days && date <= endOfValidPeriod
+                return date >= startOfLast7Days && date <= endOfValidPeriod
             } else {
                 return false
             }
@@ -35,9 +37,11 @@ struct HomeView: View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
             VStack {
+                Divider()
                 lactateSummaryView()
-                    .padding(.horizontal)
-                
+                Text("This Week")
+                    .foregroundStyle(.whiteOne)
+                Spacer()
                 if sessions.isEmpty {
                     ContentUnavailableView("No Sessions Found", systemImage: "figure.run")
                         .foregroundStyle(.whiteOne)
@@ -56,56 +60,49 @@ struct HomeView: View {
     }
     
     private func updateNavigationTitle() {
-            appState.updateNavigationTitle(with: lactateValue(), trigger: trigger)
-        }
+        appState.updateNavigationTitle(with: activeTab.navigationTitle, trigger: trigger)
+    }
     
     
     @ViewBuilder
     private func lactateSummaryView() -> some View {
-        RoundedRectangle(cornerRadius: 24)
-            .fill(.darkOne.opacity(0.25))
-            .frame(height: 200)
-            .overlay(
-                VStack {
-                    lactateSummaryText()
-                    lactateButtonSelection()
-                }
-            )
-    }
-    
-    @ViewBuilder
-    private func lactateSummaryText() -> some View {
-        HStack(spacing: 24) {
-            Text("Lactate:")
-            HackerTextView(text: lactateValue(), trigger: trigger)
-        }
-        .font(.system(size: 28, weight: .bold))
-        .foregroundStyle(.whiteOne)
-        .padding(.vertical, 24)
-    }
-    
-    private func lactateValue() -> String {
-        switch selectedButton {
-        case "Easy": return "1,0 mM"
-        case "Sweet spot": return "3,0 mM"
-        case "Hard": return "4,0 mM"
-        default: return ""
-        }
-    }
-    
-    @ViewBuilder
-    private func lactateButtonSelection() -> some View {
-        HStack(spacing: 20) {
-            ForEach(["Easy", "Sweet spot", "Hard"], id: \.self) { button in
-                Button(button) {
-                    selectedButton = button
-                    trigger.toggle()
+        HStack (spacing: 0){
+            ForEach(Tab.allCases, id: \.rawValue) { tab in
+                Button {
+                    activeTab = tab
                     updateNavigationTitle()
+                } label: {
+                    HStack (spacing: 5) {
+                        Image(systemName: tab.rawValue)
+                            .font(.title3)
+                            .foregroundColor(.whiteOne)
+                            .frame(height: 30)
+                        
+                        if activeTab == tab {
+                            Text(tab.title)
+                                .font(.caption)
+                                .fontWeight(.semibold)
+                                .lineLimit(1)
+                        }
+                    }
+                    .foregroundColor(activeTab == tab ? .whiteOne : .gray)
+                    .padding(.vertical, 2)
+                    .padding(.leading, 10)
+                    .padding(.trailing, 15)
+                    .contentShape(.rect)
+                    .background {
+                        if activeTab == tab {
+                            Capsule()
+                                .fill(Color.starMain)
+                                .matchedGeometryEffect(id: "ACTIVE_TAB", in: tabAnimation)
+                        }
+                    }
                 }
-                .foregroundColor(selectedButton == button ? .starMain : .gray)
             }
         }
+        .animation(.smooth(duration: 0.3, extraBounce: 0), value: activeTab)
     }
+    
     
     @ViewBuilder
     private func sessionChartView() -> some View {
@@ -178,6 +175,42 @@ struct HomeView: View {
             Text("\(session.date?.formattedAsRelative() ?? "N/A")")
                 .font(.system(size: 14))
                 .foregroundStyle(.gray)
+        }
+    }
+}
+
+#Preview {
+    HomeView()
+        .environmentObject(AppState())
+}
+
+enum Tab: String, CaseIterable {
+    case lactate = "gauge.with.dots.needle.67percent"
+    case duration = "stopwatch"
+    case distance = "road.lanes"
+    case heartRate = "heart"
+    case pace = "hare"
+    case power = "bolt"
+    
+    var title: AttributedString {
+        switch self {
+        case .lactate: return "10,0 mM"
+        case .duration: return "200 min"
+        case .distance: return "120 km"
+        case .heartRate: return "150 BPM"
+        case .pace: return "3:45 min/km"
+        case .power: return "150 W"
+        }
+    }
+    
+    var navigationTitle: String {
+        switch self {
+        case .lactate: return "Lactate"
+        case .duration: return "Duration"
+        case .distance: return "Distance"
+        case .heartRate: return "Heart Rate"
+        case .pace: return "Pace"
+        case .power: return "Power"
         }
     }
 }

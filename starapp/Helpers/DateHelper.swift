@@ -1,6 +1,7 @@
 import Foundation
 
 extension Date {
+    //Calendarview
     static var calendar: Calendar {
         var calendar = Calendar.current
         calendar.firstWeekday = 2 // Start week on Monday
@@ -46,19 +47,20 @@ extension Date {
         }
         return days
     }
-        static func startOfLast14Days() -> Date {
-            return Calendar.current.date(byAdding: .day, value: -13, to: Date())!
-        }
     
+    //last month in MetricView
     static func startOfLast28Days() -> Date {
         return Calendar.current.date(byAdding: .day, value: -27, to: Date())!
     }
+    
+    //Calendarview's todays date button
     var daySquareIcon: String {
             let calendar = Calendar.current
             let day = calendar.component(.day, from: self)
             return "\(day).square"
         }
     
+    //LactateView
     func formattedAsRelative() -> String {
         let calendar = Calendar.current
         if calendar.isDateInToday(self) {
@@ -78,7 +80,7 @@ extension Date {
         }
     }
 
-    
+    //CalendarView
     func formatDayMonth(date: Date?) -> String {
             guard let date = date else { return "N/A" }
             let formatter = DateFormatter()
