@@ -35,21 +35,21 @@ struct HomeView: View {
     
     var body: some View {
         ZStack {
-            Color.starBlack.ignoresSafeArea()
+            Color.starBlack.ignoresSafeArea() // Background color
             VStack {
                 Divider()
-                lactateSummaryView()
+                summaryView()
                 Text("This Week")
                     .foregroundStyle(.whiteOne)
-                Spacer()
-                // Check if sessions are empty and show mock sessions if needed
-                if sessions.isEmpty {
-                    Text("No sessions available. Displaying mock data.")
-                        .foregroundColor(.gray)
-                    sessionChartView(sessions: HomeView.createMockSessions())
-                } else {
-                    sessionChartView(sessions: sessions)
+                Group{
+                    if sessions.isEmpty {
+                        sessionChartView(sessions: HomeView.createMockSessions())
+                    } else {
+                        sessionChartView(sessions: sessions)
+                    }
                 }
+                .frame(height: 200)
+                Spacer()
                 sessionScrollView()
                     .scrollIndicators(.hidden)
             }
@@ -62,34 +62,12 @@ struct HomeView: View {
     private func updateNavigationTitle() {
         appState.updateNavigationTitle(with: activeTab.navigationTitle, trigger: trigger)
     }
-    
-    private func calculateAverageValue(for tab: Tab, in sessions: [Session]) -> Double {
-        let values = sessions.compactMap { session in
-            switch tab {
-            case .lactate:
-                return session.lactate
-            case .duration:
-                return session.duration.map { $0 / 60 } // converting to minutes for display
-            case .distance:
-                return session.distance
-            case .heartRate:
-                return session.heartRate.map(Double.init)
-            case .pace:
-                return session.pace
-            case .power:
-                return session.power.map(Double.init)
-            }
-        }
-        return values.reduce(0, +) / Double(values.count)
-    }
 
-    
-    
     @ViewBuilder
-    private func lactateSummaryView() -> some View {
+    private func summaryView() -> some View {
         let sessionsToUse = sessions.isEmpty ? HomeView.createMockSessions() : sessions
-        let averageValue = calculateAverageValue(for: activeTab, in: sessionsToUse)
-
+        let averageValue = NumberHelper.calculateAverageValue(for: activeTab, in: sessionsToUse)
+        
         HStack(spacing: 0) {
             ForEach(Tab.allCases, id: \.rawValue) { tab in
                 Button {
@@ -101,7 +79,7 @@ struct HomeView: View {
                             .font(.title3)
                             .foregroundColor(.whiteOne)
                             .frame(height: 30)
-
+                        
                         if activeTab == tab {
                             Text(tab.title(with: averageValue))
                                 .font(.caption)
@@ -117,7 +95,7 @@ struct HomeView: View {
                     .background {
                         if activeTab == tab {
                             Capsule()
-                                .fill(Color.starMain)
+                                .fill(colorForTab(activeTab))
                                 .matchedGeometryEffect(id: "ACTIVE_TAB", in: tabAnimation)
                         }
                     }
@@ -126,51 +104,82 @@ struct HomeView: View {
         }
         .animation(.smooth(duration: 0.3, extraBounce: 0), value: activeTab)
     }
-
-    
     
     @ViewBuilder
-      private func sessionChartView(sessions: [Session]) -> some View {
-          let groupedSessions = Dictionary(grouping: sessions) { session in
-              Calendar.current.startOfDay(for: session.date ?? Date())
-          }
+    private func sessionChartView(sessions: [Session]) -> some View {
+        let groupedSessions = Dictionary(grouping: sessions) { session in
+            Calendar.current.startOfDay(for: session.date ?? Date())
+        }
+        
+        let dailyAverages = groupedSessions.map { (date, sessions) -> (Date, Double) in
+            let values = sessions.compactMap {
+                switch activeTab {
+                case .lactate:
+                    return $0.lactate
+                case .duration:
+                    return $0.duration.map { $0 / 60 } // converting to minutes for display
+                case .distance:
+                    return $0.distance
+                case .heartRate:
+                    return $0.heartRate.map(Double.init)
+                case .pace:
+                    return $0.pace
+                case .power:
+                    return $0.power.map(Double.init)
+                }
+            }
+            let average = values.isEmpty ? 0.0 : values.reduce(0, +) / Double(values.count)
+            return (date, average)
+        }.sorted(by: { $0.0 < $1.0 })
+        
+        let keyPath = \ (Date, Double).1
+        
+        let ranges = dailyAverages.map { (element: (Date, Double)) -> Range<Double> in
+            let averageValue = element[keyPath: keyPath]
+            let lowerBound = averageValue - (averageValue * 0.1)
+            let upperBound = averageValue + (averageValue * 0.1)
+            return lowerBound..<upperBound
+        }
+        
+        let overallRange = rangeOfRanges(ranges)
+        let maxMagnitude = ranges.map { magnitude(of: $0) }.max()!
+        let heightRatio = 1 - CGFloat(maxMagnitude / magnitude(of: overallRange))
+        
+        GeometryReader { proxy in
+            let sessionCount = dailyAverages.count
+            let additionalCapsules = max(0, 30 - sessionCount)
 
-          let dailyAverages = groupedSessions.map { (date, sessions) -> (Date, Double) in
-              let values = sessions.compactMap {
-                  switch activeTab {
-                  case .lactate:
-                      return $0.lactate
-                  case .duration:
-                      return $0.duration.map { $0 / 60 } // converting to minutes for display
-                  case .distance:
-                      return $0.distance
-                  case .heartRate:
-                      return $0.heartRate.map(Double.init)
-                  case .pace:
-                      return $0.pace
-                  case .power:
-                      return $0.power.map(Double.init)
-                  }
-              }
-              let average = values.reduce(0, +) / Double(values.count)
-              return (date, average)
-          }.sorted(by: { $0.0 < $1.0 })
+            HStack(alignment: .bottom, spacing: proxy.size.width / 120) {
+                ForEach(0..<(sessionCount + additionalCapsules), id: \.self) { index in
+                    if index < sessionCount {
+                        let averageValue = dailyAverages[index][keyPath: keyPath]
+                        let range = ranges[index]
+                        HomeCapsuleGraph(
+                            index: index,
+                            color: colorForTab(activeTab),
+                            height: proxy.size.height,
+                            range: range,
+                            overallRange: overallRange
+                        )
+                        .animation(.ripple(index: index), value: averageValue)
+                    } else {
+                        Capsule()
+                            .fill(Color.starBlack)
+                    }
+                }
+                .offset(x: 0, y: proxy.size.height * heightRatio)
+            }
+        }
+    }
 
-          GeometryReader { proxy in
-              HStack(alignment: .bottom, spacing: proxy.size.width / 120) {
-                  ForEach(dailyAverages, id: \.0) { (date, averageValue) in
-                      GraphCapsule(
-                          index: 0,
-                          color: colorForTab(activeTab),
-                          height: proxy.size.height,
-                          value: averageValue,
-                          overallMax: dailyAverages.map(\.1).max() ?? 1.0
-                      )
-                      .animation(.default)
-                  }
-              }
-          }
-      }
+    
+    func rangeOfRanges<C: Collection>(_ ranges: C) -> Range<Double>
+    where C.Element == Range<Double> {
+        guard !ranges.isEmpty else { return 0..<1 } // Default to a small range if empty
+        let low = ranges.lazy.map { $0.lowerBound }.min()!
+        let high = ranges.lazy.map { $0.upperBound }.max()!
+        return low..<high
+    }
     
     private func colorForTab(_ tab: Tab) -> Color {
         switch tab {
@@ -230,20 +239,9 @@ struct HomeView: View {
     }
     
     static func createMockSessions() -> [Session] {
-            let calendar = Calendar.current
-            return [
-                Session(distance: 5.2, duration: 3600, pace: 4.5, power: 200, heartRate: 150, lactate: 4.5, date: calendar.date(byAdding: .day, value: -6, to: Date()), title: "Morning Run"),
-                Session(distance: 10.0, duration: 5400, pace: 5.0, power: 220, heartRate: 160, lactate: 3.8, date: calendar.date(byAdding: .day, value: -5, to: Date()), title: "Evening Jog"),
-                Session(distance: 7.0, duration: 4200, pace: 6.0, power: 210, heartRate: 155, lactate: 5.0, date: calendar.date(byAdding: .day, value: -4, to: Date()), title: "Afternoon Training"),
-                Session(distance: 8.0, duration: 4800, pace: 4.8, power: 230, heartRate: 162, lactate: 4.2, date: calendar.date(byAdding: .day, value: -3, to: Date()), title: "Morning Run"),
-                Session(distance: 12.0, duration: 7200, pace: 5.2, power: 240, heartRate: 165, lactate: 6.1, date: calendar.date(byAdding: .day, value: -2, to: Date()), title: "Long Run"),
-                Session(distance: 4.5, duration: 3000, pace: 4.2, power: 190, heartRate: 145, lactate: 3.9, date: calendar.date(byAdding: .day, value: -1, to: Date()), title: "Speed Workout"),
-                Session(distance: 6.0, duration: 3600, pace: 4.0, power: 195, heartRate: 148, lactate: 4.7, date: calendar.date(byAdding: .day, value: 0, to: Date()), title: "Recovery Run"),
-                Session(distance: 9.0, duration: 5400, pace: 4.9, power: 215, heartRate: 158, lactate: 5.2, date: calendar.date(byAdding: .day, value: 1, to: Date()), title: "Tempo Run"),
-                Session(distance: 11.0, duration: 6000, pace: 5.4, power: 225, heartRate: 160, lactate: 4.1, date: calendar.date(byAdding: .day, value: 2, to: Date()), title: "Steady Run"),
-                Session(distance: 13.0, duration: 7800, pace: 5.5, power: 235, heartRate: 163, lactate: 3.7, date: calendar.date(byAdding: .day, value: 3, to: Date()), title: "Long Run")
-            ]
-        }
+        // Use the new MockSessionGenerator
+        return MockSessionGenerator.createMockSessions()
+    }
 }
 
 #Preview {
@@ -302,26 +300,10 @@ enum Tab: String, CaseIterable {
 }
 
 
-struct GraphCapsule: View, Equatable {
-    var index: Int
-    var color: Color
-    var height: CGFloat
-    var value: Double
-    var overallMax: Double
-
-    var heightRatio: CGFloat {
-        guard overallMax > 0 else { return 0 }  // No height if overallMax is 0
-        let ratio = CGFloat(value / overallMax)
-        return ratio.isFinite && ratio > 0 ? ratio : 0
-    }
-
-    @ViewBuilder
-    var body: some View {
-        if heightRatio > 0 {
-            Capsule()
-                .fill(color)
-                .frame(height: height * heightRatio)
-                .offset(x: 0, y: height * (1 - heightRatio))
-        }
+extension Animation {
+    static func ripple(index: Int) -> Animation {
+        Animation.spring(dampingFraction: 0.5)
+            .speed(2)
+            .delay(0.03 * Double(index))
     }
 }

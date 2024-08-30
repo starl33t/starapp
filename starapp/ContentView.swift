@@ -4,7 +4,6 @@ import CloudKit
 struct ContentView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var starStore: StarStore
-    @EnvironmentObject var navigationTitleTypes: NavigationTitleTypes
     @StateObject private var viewModel = MessageHelper()
     
     
@@ -91,5 +90,4 @@ struct ContentView: View {
     ContentView()
         .environmentObject(AppState())
         .environmentObject(StarStore())
-        .environmentObject(NavigationTitleTypes())
 }

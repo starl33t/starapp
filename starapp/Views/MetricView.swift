@@ -38,24 +38,12 @@ struct MetricView: View {
                     TabView(selection: $selectedChart) {
                         lineChart
                             .tag(ChartType.lineChart)
-                            .onAppear {
-                                appState.updateNavigationTitle(with: "Linechart", trigger: appState.trigger)
-                            }
                         barChart
                             .tag(ChartType.barChart)
-                            .onAppear {
-                                appState.updateNavigationTitle(with: "Barchart", trigger: appState.trigger)
-                            }
                         pieChart
                             .tag(ChartType.pieChart)
-                            .onAppear {
-                                appState.updateNavigationTitle(with: "Piechart", trigger: appState.trigger)
-                            }
                         scatterPlot
                             .tag(ChartType.scatterPlot)
-                            .onAppear {
-                                appState.updateNavigationTitle(with: "Scatterplot", trigger: appState.trigger)
-                            }
                     }
                     .tabViewStyle(PageTabViewStyle())
                 }
@@ -63,9 +51,10 @@ struct MetricView: View {
             .onAppear {
                 updateNavigationTitleForSelectedChart()
             }
-            .onChange(of: selectedChart) { 
+            .onChange(of: selectedChart) {
                 updateNavigationTitleForSelectedChart()
             }
+        
         }
     
     private func updateNavigationTitleForSelectedChart() {

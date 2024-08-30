@@ -19,4 +19,25 @@ struct NumberHelper {
             return nil
         }
     }
+    
+    static func calculateAverageValue(for tab: Tab, in sessions: [Session]) -> Double {
+        let values = sessions.compactMap { session in
+            switch tab {
+            case .lactate:
+                return session.lactate
+            case .duration:
+                return session.duration.map { $0 / 60 } // converting to minutes for display
+            case .distance:
+                return session.distance
+            case .heartRate:
+                return session.heartRate.map(Double.init)
+            case .pace:
+                return session.pace
+            case .power:
+                return session.power.map(Double.init)
+            }
+        }
+        return values.reduce(0, +) / Double(values.count)
+    }
+    
 }
