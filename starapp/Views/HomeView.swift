@@ -21,8 +21,8 @@ struct HomeView: View {
     @State private var activeTab: Tab = .lactate
     
     init() {
-        let startOfLast7Days = Calendar.current.date(byAdding: .day, value: -6, to: Date())!
-        let endOfValidPeriod = Calendar.current.date(byAdding: .day, value: 6, to: Date())!
+        let startOfLast7Days = Calendar.current.date(byAdding: .day, value: -7, to: Date())!
+        let endOfValidPeriod = Calendar.current.date(byAdding: .day, value: 0, to: Date())!
         
         _sessions = Query(filter: #Predicate<Session> { session in
             if let date = session.date {
@@ -39,19 +39,46 @@ struct HomeView: View {
             VStack {
                 Divider()
                 summaryView()
-                Text("This Week")
-                    .foregroundStyle(.whiteOne)
                 Group{
                     if sessions.isEmpty {
-                        sessionChartView(sessions: HomeView.createMockSessions())
+                        HStack{
+                            Text("Monthly")
+                            Image(systemName: "arrow.forward")
+                            Text("Total: \(totalValue(for: activeTab, in: MockSessionGenerator.createMockSessions()))")
+                            Spacer()
+                        }
+                        .foregroundStyle(.whiteOne)
+                        .padding()
+                        sessionChartView(sessions: MockSessionGenerator.createMockSessions())
+                            .frame(height: 100)
+                        VStack(alignment: .leading) {
+                            Text("Renato")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                            Text("Hello, I'm Renato CanovAI. Your AI-Coach. You didn't have any sessions so I gave you some examples to play around with. Whenever you're ready then let's get started! You can add new sessions with lactate and/or talk with me in the chat.")
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(.darkTwo)
+                                .cornerRadius(10)
+                        }
+                        .padding()
                     } else {
+                        HStack{
+                            Text("Weekly")
+                            Image(systemName: "arrow.forward")
+                            Text("Total: \(totalValue(for: activeTab, in: sessions))")
+                            Spacer()
+                        }
+                        .foregroundStyle(.whiteOne)
+                        .padding()
                         sessionChartView(sessions: sessions)
+                            .frame(height: 100)
                     }
                 }
-                .frame(height: 200)
+                
+                
                 Spacer()
-                sessionScrollView()
-                    .scrollIndicators(.hidden)
+                
             }
         }
         .onAppear {
@@ -62,11 +89,11 @@ struct HomeView: View {
     private func updateNavigationTitle() {
         appState.updateNavigationTitle(with: activeTab.navigationTitle, trigger: trigger)
     }
-
+    
     @ViewBuilder
     private func summaryView() -> some View {
-        let sessionsToUse = sessions.isEmpty ? HomeView.createMockSessions() : sessions
-        let averageValue = NumberHelper.calculateAverageValue(for: activeTab, in: sessionsToUse)
+        let sessionsToUse = sessions.isEmpty ? MockSessionGenerator.createMockSessions() : sessions
+            let averageValue = NumberHelper.calculateAverageValue(for: activeTab, in: sessionsToUse)
         
         HStack(spacing: 0) {
             ForEach(Tab.allCases, id: \.rawValue) { tab in
@@ -95,7 +122,7 @@ struct HomeView: View {
                     .background {
                         if activeTab == tab {
                             Capsule()
-                                .fill(colorForTab(activeTab))
+                                .fill(.starMain)
                                 .matchedGeometryEffect(id: "ACTIVE_TAB", in: tabAnimation)
                         }
                     }
@@ -103,6 +130,42 @@ struct HomeView: View {
             }
         }
         .animation(.smooth(duration: 0.3, extraBounce: 0), value: activeTab)
+    }
+    
+    private func totalValue(for tab: Tab, in sessions: [Session]) -> String {
+        let total: Double
+        switch tab {
+        case .lactate:
+            total = sessions.compactMap { $0.lactate }.reduce(0, +)
+            return String(format: "%.0f mM", total)
+        case .duration:
+            total = sessions.compactMap { $0.duration }.reduce(0, +) // Duration is in minutes
+            let hours = Int(total) / 60
+            let minutes = Int(total) % 60
+            if hours > 0 {
+                return String(format: "%d:%02d h:min", hours, minutes)
+            } else {
+                return "\(minutes) min"
+            }
+        case .distance:
+            total = sessions.compactMap { $0.distance }.reduce(0, +)
+            return String(format: "%.0f km", total)
+        case .heartRate:
+                let average = sessions.compactMap { $0.heartRate }.compactMap(Double.init).reduce(0, +) / Double(sessions.count)
+                let betterSessions = sessions.compactMap { $0.heartRate }.filter { Double($0) > average }
+                let percentage = (Double(betterSessions.count) / Double(sessions.count)) * 100
+                return String(format: "%.0f%% over avg.", percentage)
+            case .pace:
+                let average = sessions.compactMap { $0.pace }.reduce(0, +) / Double(sessions.count)
+                let betterSessions = sessions.compactMap { $0.pace }.filter { $0 < average }
+                let percentage = (Double(betterSessions.count) / Double(sessions.count)) * 100
+                return String(format: "%.0f%% over avg.", percentage)
+            case .power:
+                let average = sessions.compactMap { $0.power }.compactMap(Double.init).reduce(0, +) / Double(sessions.count)
+                let betterSessions = sessions.compactMap { $0.power }.filter { Double($0) > average }
+                let percentage = (Double(betterSessions.count) / Double(sessions.count)) * 100
+                return String(format: "%.0f%% over avg.", percentage)
+            }
     }
     
     @ViewBuilder
@@ -117,7 +180,7 @@ struct HomeView: View {
                 case .lactate:
                     return $0.lactate
                 case .duration:
-                    return $0.duration.map { $0 / 60 } // converting to minutes for display
+                    return $0.duration.map { $0 / 60 }
                 case .distance:
                     return $0.distance
                 case .heartRate:
@@ -146,101 +209,25 @@ struct HomeView: View {
         let heightRatio = 1 - CGFloat(maxMagnitude / magnitude(of: overallRange))
         
         GeometryReader { proxy in
-            let sessionCount = dailyAverages.count
-            let additionalCapsules = max(0, 30 - sessionCount)
-
+            let maxCapsuleWidth: CGFloat = 10
             HStack(alignment: .bottom, spacing: proxy.size.width / 120) {
-                ForEach(0..<(sessionCount + additionalCapsules), id: \.self) { index in
-                    if index < sessionCount {
-                        let averageValue = dailyAverages[index][keyPath: keyPath]
-                        let range = ranges[index]
-                        HomeCapsuleGraph(
-                            index: index,
-                            color: colorForTab(activeTab),
-                            height: proxy.size.height,
-                            range: range,
-                            overallRange: overallRange
-                        )
-                        .animation(.ripple(index: index), value: averageValue)
-                    } else {
-                        Capsule()
-                            .fill(Color.starBlack)
-                    }
+                ForEach(0..<dailyAverages.count, id: \.self) { index in
+                    let averageValue = dailyAverages[index][keyPath: keyPath]
+                    let range = ranges[index]
+                    HomeCapsuleGraph(
+                        index: index,
+                        color: .gray,
+                        height: proxy.size.height,
+                        range: range,
+                        overallRange: overallRange
+                    )
+                    .frame(maxWidth: maxCapsuleWidth)
+                    .animation(.ripple(index: index), value: averageValue)
                 }
+                .frame(maxWidth: .infinity, alignment: .center)
                 .offset(x: 0, y: proxy.size.height * heightRatio)
             }
         }
-    }
-
-    
-    func rangeOfRanges<C: Collection>(_ ranges: C) -> Range<Double>
-    where C.Element == Range<Double> {
-        guard !ranges.isEmpty else { return 0..<1 } // Default to a small range if empty
-        let low = ranges.lazy.map { $0.lowerBound }.min()!
-        let high = ranges.lazy.map { $0.upperBound }.max()!
-        return low..<high
-    }
-    
-    private func colorForTab(_ tab: Tab) -> Color {
-        switch tab {
-        case .lactate:
-            return .yellow
-        case .duration:
-            return .blue
-        case .distance:
-            return .green
-        case .heartRate:
-            return .red
-        case .pace:
-            return .purple
-        case .power:
-            return .orange
-        }
-    }
-    
-    @ViewBuilder
-    private func selectedDateAnnotation(for date: Date) -> some View {
-        if let session = sessions.first(where: { Calendar.current.isDate($0.date ?? Date(), inSameDayAs: date) }) {
-            VStack {
-                Text(Date().formatDayMonth(date: session.date))
-            }
-            .font(.system(size: 14))
-            .foregroundStyle(.gray)
-        }
-    }
-    
-    @ViewBuilder
-    private func sessionScrollView() -> some View {
-        ScrollView(.horizontal) {
-            HStack(spacing: 35) {
-                ForEach(sessions) { session in
-                    sessionView(for: session)
-                }
-            }
-            .padding(.horizontal)
-        }
-    }
-    
-    @ViewBuilder
-    private func sessionView(for session: Session) -> some View {
-        let intensity = LactateHelper.intensity(for: session.lactate)
-        VStack {
-            Text("\(session.lactate ?? 0.0, specifier: "%.1f") mM")
-                .font(.system(size: 14))
-                .foregroundStyle(intensity.color)
-            Image(systemName: intensity.icon)
-                .font(.system(size: 24, weight: .bold))
-                .foregroundStyle(intensity.color)
-                .aspectRatio(contentMode: .fill)
-            Text("\(session.date?.formattedAsRelative() ?? "N/A")")
-                .font(.system(size: 14))
-                .foregroundStyle(.gray)
-        }
-    }
-    
-    static func createMockSessions() -> [Session] {
-        // Use the new MockSessionGenerator
-        return MockSessionGenerator.createMockSessions()
     }
 }
 
@@ -258,15 +245,15 @@ enum Tab: String, CaseIterable {
     case power = "bolt"
     
     func title(with averageValue: Double) -> String {
-        guard averageValue.isFinite else { return "Invalid value" }
+        guard averageValue.isFinite else { return "N/A" }
         
         switch self {
         case .lactate:
             return String(format: "%.1f mM", locale: Locale(identifier: "de_DE"), averageValue)
         case .duration:
-            let totalMinutes = Int(round(averageValue))
-            let hours = totalMinutes / 60
-            let minutes = totalMinutes % 60
+            let roundedMinutes = Int(round(averageValue))
+            let hours = roundedMinutes / 60
+            let minutes = roundedMinutes % 60
             
             if hours > 0 {
                 return String(format: "%d:%02d h:min", hours, minutes)
@@ -281,7 +268,7 @@ enum Tab: String, CaseIterable {
         case .pace:
             let minutes = Int(averageValue)
             let seconds = Int((averageValue - Double(minutes)) * 60)
-            return String(format: minutes > 9 ? "%d:%02d min/km" : "%d:%02d min/km", minutes, seconds)
+            return String(format: "%d:%02d min/km", minutes, seconds)
         case .power:
             return String(format: "%.0f W", averageValue)
         }
@@ -296,14 +283,5 @@ enum Tab: String, CaseIterable {
         case .pace: return "Pace"
         case .power: return "Power"
         }
-    }
-}
-
-
-extension Animation {
-    static func ripple(index: Int) -> Animation {
-        Animation.spring(dampingFraction: 0.5)
-            .speed(2)
-            .delay(0.03 * Double(index))
     }
 }

@@ -31,3 +31,18 @@ func magnitude(of range: Range<Double>) -> Double {
     range.upperBound - range.lowerBound
 }
 
+func rangeOfRanges<C: Collection>(_ ranges: C) -> Range<Double>
+where C.Element == Range<Double> {
+    guard !ranges.isEmpty else { return 0..<1 } // Default to a small range if empty
+    let low = ranges.lazy.map { $0.lowerBound }.min()!
+    let high = ranges.lazy.map { $0.upperBound }.max()!
+    return low..<high
+}
+
+extension Animation {
+    static func ripple(index: Int) -> Animation {
+        Animation.spring(dampingFraction: 0.5)
+            .speed(2)
+            .delay(0.03 * Double(index))
+    }
+}
