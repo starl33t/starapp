@@ -1,43 +1,37 @@
 import Foundation
 import SwiftUI
 
-// Generate 50 mock sessions using your existing Session model
 struct MockSessionGenerator {
     static func createMockSessions() -> [Session] {
-        var sessions: [Session] = []
         let calendar = Calendar.current
+        let titles = ["Morning Run", "Evening Jog", "Afternoon Training", "Recovery Run", "Speed Workout", "Hill Repeats", "Long Run"]
 
-        for i in 0..<30 {
+        // Define fixed values for each session
+        let fixedSessionsData: [(distance: Double, duration: Double, pace: Double, power: Int, heartRate: Int, lactate: Double)] = [
+            (distance: 5.0, duration: 45.0, pace: 5.2, power: 180, heartRate: 130, lactate: 3.0),
+            (distance: 10.0, duration: 90.0, pace: 5.5, power: 220, heartRate: 145, lactate: 4.2),
+            (distance: 6.0, duration: 50.0, pace: 5.0, power: 190, heartRate: 140, lactate: 3.5),
+            (distance: 4.0, duration: 35.0, pace: 5.8, power: 170, heartRate: 135, lactate: 2.8),
+            (distance: 8.0, duration: 75.0, pace: 5.3, power: 210, heartRate: 150, lactate: 4.5),
+            (distance: 7.0, duration: 60.0, pace: 4.8, power: 230, heartRate: 155, lactate: 3.8),
+            (distance: 12.0, duration: 110.0, pace: 5.4, power: 240, heartRate: 160, lactate: 5.0)
+        ]
+
+        var sessions: [Session] = []
+
+        for i in 0..<7 {
             let date = calendar.date(byAdding: .day, value: -i, to: Date())!
+            let data = fixedSessionsData[i]
 
-            // Create lower and upper bounds for each metric
-            let distanceLower = Double.random(in: 3.0...6.0)
-            let distanceUpper = Double.random(in: 6.0...12.0)
-            let durationLower = Double.random(in: 30...60) // 30 min to 60 min
-            let durationUpper = Double.random(in: 60...120) // 60 min to 120 min
-            let paceLower = Double.random(in: 4.0...5.0)
-            let paceUpper = Double.random(in: 5.0...7.0)
-            let powerLower = Int.random(in: 150...200)
-            let powerUpper = Int.random(in: 200...300)
-            let heartRateLower = Int.random(in: 120...150)
-            let heartRateUpper = Int.random(in: 150...180)
-            let lactateLower = Double.random(in: 2.0...4.0)
-            let lactateUpper = Double.random(in: 4.0...7.0)
-
-            // Generate a random title
-            let titles = ["Morning Run", "Evening Jog", "Afternoon Training", "Recovery Run", "Speed Workout"]
-            let title = titles.randomElement()!
-
-            // Create the session using your existing model
             let session = Session(
-                distance: Double.random(in: distanceLower...distanceUpper),
-                duration: Double.random(in: durationLower...durationUpper),
-                pace: Double.random(in: paceLower...paceUpper),
-                power: Int.random(in: powerLower...powerUpper),
-                heartRate: Int.random(in: heartRateLower...heartRateUpper),
-                lactate: Double.random(in: lactateLower...lactateUpper),
+                distance: data.distance,
+                duration: data.duration,
+                pace: data.pace,
+                power: data.power,
+                heartRate: data.heartRate,
+                lactate: data.lactate,
                 date: date,
-                title: title,
+                title: titles[i],
                 user: nil // Assuming no user relationship needed for mock data
             )
 

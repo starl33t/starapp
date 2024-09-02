@@ -100,4 +100,10 @@ extension Date {
             return dateFormatter.string(from: self)
         }
     
+    //Homeview
+   func formattedDayOfWeek(from date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE" // "EEE" gives the abbreviation of the day of the week (e.g., "Mon", "Tue")
+        return dateFormatter.string(from: date)
+    }
 }

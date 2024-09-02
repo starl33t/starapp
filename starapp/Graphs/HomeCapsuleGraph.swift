@@ -8,14 +8,18 @@ struct HomeCapsuleGraph: View, Equatable {
     var height: CGFloat
     var range: Range<Double>
     var overallRange: Range<Double>
+    var isPace: Bool = false
     
     var heightRatio: CGFloat {
-            // Ensure that the ratio is not negative and has a minimum value
-            let ratio = CGFloat(magnitude(of: range) / magnitude(of: overallRange))
-            return max(ratio, 0.15) // Set a minimum ratio of 0.15
-        }
+        // Ensure that the ratio is not negative and has a minimum value
+        let ratio = CGFloat(magnitude(of: range) / magnitude(of: overallRange))
+        return max(ratio, 0.15) // Set a minimum ratio of 0.15
+    }
     
     var offsetRatio: CGFloat {
+        // Invert the offset for pace to place faster paces higher on the screen
+        return isPace ?
+        CGFloat((overallRange.upperBound - range.upperBound) / magnitude(of: overallRange)) :
         CGFloat((range.lowerBound - overallRange.lowerBound) / magnitude(of: overallRange))
     }
     
