@@ -1,5 +1,3 @@
-
-
 import SwiftUI
 
 struct HomeCapsuleGraph: View, Equatable {
@@ -11,13 +9,13 @@ struct HomeCapsuleGraph: View, Equatable {
     var isPace: Bool = false
     
     var heightRatio: CGFloat {
-        // Ensure that the ratio is not negative and has a minimum value
+        guard magnitude(of: overallRange) > 0 else { return 0 } // Avoid division by zero
         let ratio = CGFloat(magnitude(of: range) / magnitude(of: overallRange))
-        return max(ratio, 0.15) // Set a minimum ratio of 0.15
+        return max(ratio, 0.15) // Ensure minimum ratio of 0.15
     }
     
     var offsetRatio: CGFloat {
-        // Invert the offset for pace to place faster paces higher on the screen
+        guard magnitude(of: overallRange) > 0 else { return 0 } // Avoid division by zero
         return isPace ?
         CGFloat((overallRange.upperBound - range.upperBound) / magnitude(of: overallRange)) :
         CGFloat((range.lowerBound - overallRange.lowerBound) / magnitude(of: overallRange))
@@ -32,14 +30,16 @@ struct HomeCapsuleGraph: View, Equatable {
 }
 
 func magnitude(of range: Range<Double>) -> Double {
-    range.upperBound - range.lowerBound
+    return range.upperBound - range.lowerBound
 }
 
 func rangeOfRanges<C: Collection>(_ ranges: C) -> Range<Double>
 where C.Element == Range<Double> {
-    guard !ranges.isEmpty else { return 0..<1 } // Default to a small range if empty
-    let low = ranges.lazy.map { $0.lowerBound }.min()!
-    let high = ranges.lazy.map { $0.upperBound }.max()!
+    guard let low = ranges.lazy.map({ $0.lowerBound }).min(),
+          let high = ranges.lazy.map({ $0.upperBound }).max(),
+          low < high else {
+        return 0..<1 // Return a default valid range if invalid
+    }
     return low..<high
 }
 

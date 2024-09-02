@@ -196,7 +196,6 @@ struct TrainingView: View {
     
     private func calculatePace() {
         if let distance = distance, let duration = duration, distance > 0, duration > 0 {
-            // Calculate pace based on distance and duration
             pace = NumberHelper.calculatePace(distance: distance, duration: duration)
             
             if let pace = pace {
@@ -204,15 +203,11 @@ struct TrainingView: View {
                 paceSeconds = Int((pace - Double(paceMinutes)) * 60)
             }
         } else {
-            // Do not reset pace; rely on user input for pace
-            if let pace = pace {
-                paceMinutes = Int(pace)
-                paceSeconds = Int((pace - Double(paceMinutes)) * 60)
-            }
+            // Handle cases where pace can't be calculated
+            paceMinutes = 0
+            paceSeconds = 0
         }
     }
-
-
     
     private func updatePace() {
         pace = Double(paceMinutes) + Double(paceSeconds) / 60.0

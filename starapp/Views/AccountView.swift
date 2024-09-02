@@ -7,7 +7,7 @@ struct AccountView: View {
     @State private var showingSheet = false
     @State private var startPositionPercentage: CGFloat = 0.025
     @State private var deleteUser = false
-    @AppStorage("Notifications") var notificationsToggle: Bool = false
+    @AppStorage("Notifications") var notificationsToggle: Bool = true
     @AppStorage("Pace") var paceToggle: Bool = true
     @AppStorage("Power") var powerToggle: Bool = true
     @AppStorage("Heartrate") var heartRateToggle: Bool = true
@@ -162,12 +162,12 @@ struct AccountView: View {
                 print("User data and all sessions reset successfully")
                 
                 // Reset all AppStorage values
-                notificationsToggle = false
-                paceToggle = false
-                powerToggle = false
-                heartRateToggle = false
-                distanceToggle = false
-                durationToggle = false
+                notificationsToggle = true
+                paceToggle = true
+                powerToggle = true
+                heartRateToggle = true
+                distanceToggle = true
+                durationToggle = true
                 
                 dismiss()
             } catch {

@@ -38,7 +38,7 @@ struct MockSessionGenerator {
             sessions.append(session)
         }
 
-        return sessions
+        return sessions.sorted(by: { $0.date ?? Date() < $1.date ?? Date() })
     }
 }
 
