@@ -13,6 +13,7 @@ struct ContentView: View {
                 Color.starBlack.ignoresSafeArea()
                 TabView(selection: $appState.selectedTab) {
                     HomeView()
+                        .environmentObject(viewModel)
                         .tabItem {
                             Image(systemName: "sum")
                             Text("Home")

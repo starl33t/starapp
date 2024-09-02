@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BF0ED3B92C8234E100ADB94C /* HomeCapsuleGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0ED3B82C8234E000ADB94C /* HomeCapsuleGraph.swift */; };
+		BF14E3402C863AB8007FE41D /* HomeTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF14E33F2C863AB5007FE41D /* HomeTab.swift */; };
 		BF1A81532C542C280057D87D /* HomeToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1A81522C542C280057D87D /* HomeToolBar.swift */; };
 		BF31F0AB2C48FDAD000C005C /* EmailHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF31F0AA2C48FDA9000C005C /* EmailHelper.swift */; };
 		BF3700882C47B60900CF255D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3700872C47B60600CF255D /* User.swift */; };
@@ -74,6 +75,7 @@
 
 /* Begin PBXFileReference section */
 		BF0ED3B82C8234E000ADB94C /* HomeCapsuleGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCapsuleGraph.swift; sourceTree = "<group>"; };
+		BF14E33F2C863AB5007FE41D /* HomeTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTab.swift; sourceTree = "<group>"; };
 		BF1A81522C542C280057D87D /* HomeToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeToolBar.swift; sourceTree = "<group>"; };
 		BF31F0AA2C48FDA9000C005C /* EmailHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailHelper.swift; sourceTree = "<group>"; };
 		BF3700872C47B60600CF255D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -158,6 +160,14 @@
 				BF0ED3B82C8234E000ADB94C /* HomeCapsuleGraph.swift */,
 			);
 			path = Graphs;
+			sourceTree = "<group>";
+		};
+		BF14E33E2C863AA3007FE41D /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				BF14E33F2C863AB5007FE41D /* HomeTab.swift */,
+			);
+			path = Tabs;
 			sourceTree = "<group>";
 		};
 		BF4A81932C3B04D900D4CAF1 /* Views */ = {
@@ -251,6 +261,7 @@
 				BF4A81962C3B065500D4CAF1 /* Toolbars */,
 				BF6744CF2C3FCA5A00A23D76 /* Models */,
 				BF0ED3BA2C8235EC00ADB94C /* Graphs */,
+				BF14E33E2C863AA3007FE41D /* Tabs */,
 				BF7342082C3AE74A00911375 /* ContentView.swift */,
 				BF7342062C3AE74A00911375 /* starleetApp.swift */,
 				BF87F7B82C79C69A00B35F6A /* AppState.swift */,
@@ -438,6 +449,7 @@
 				BF87F7BB2C79C6CC00B35F6A /* LoadingView.swift in Sources */,
 				BFDE40532C591F8200733888 /* CalendarHelper.swift in Sources */,
 				BF4A81632C3AF53200D4CAF1 /* ProfileView.swift in Sources */,
+				BF14E3402C863AB8007FE41D /* HomeTab.swift in Sources */,
 				BF91AC6E2C45405C0028BC41 /* NumberHelper.swift in Sources */,
 				BF4A81672C3AF5D500D4CAF1 /* CalendarToolBar.swift in Sources */,
 				BFE876062C6E7DA9006725A6 /* StringHelper.swift in Sources */,

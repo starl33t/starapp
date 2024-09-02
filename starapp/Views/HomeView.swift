@@ -12,10 +12,11 @@ import SwiftData
 
 struct HomeView: View {
     @EnvironmentObject var appState: AppState
+    @EnvironmentObject var viewModel: MessageHelper
     @Namespace private var tabAnimation
     @State private var trigger = false
     @Query private var sessions: [Session]
-    @State private var activeTab: Tab = .lactate
+    @State private var activeTab: HomeTab = .lactate
     @State private var selectedCapsuleIndex: Int? = nil
     @State private var selectedSession: Session? = nil
     
@@ -34,7 +35,7 @@ struct HomeView: View {
     
     var body: some View {
         ZStack {
-            Color.starBlack.ignoresSafeArea() // Background color
+            Color.starBlack.ignoresSafeArea()
             VStack {
                 Divider()
                 summaryView()
@@ -52,7 +53,7 @@ struct HomeView: View {
                         Text(sessionDisplayText)
                     }
                     .foregroundStyle(.whiteOne)
-                    .padding()
+                    
                     VStack(alignment: .leading) {
                         Text("Renato")
                             .font(.headline)
@@ -63,7 +64,7 @@ struct HomeView: View {
                             .background(.darkTwo)
                             .cornerRadius(10)
                     }
-                    .padding()
+                    promptButtons1
                 } else {
                     HStack{
                         Text("This Week")
@@ -71,18 +72,25 @@ struct HomeView: View {
                     }
                     .foregroundStyle(.whiteOne)
                     .padding()
-                    sessionChartView(sessions: filteredSessions(for: activeTab, in: sessions))
+                    sessionChartView(sessions: NumberHelper.filteredSessions(for: activeTab, in: sessions))
                         .frame(height: 100)
                     HStack{
                         Spacer()
                         Text(sessionDisplayText)
                     }
                     .foregroundStyle(.whiteOne)
-                    .padding()
+                    VStack(alignment: .leading) {
+                        Text("Renato")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                        Text("Great! Let's go on with the next steps. We can talk over chat or you can use one of the ready-made prompts below")
+                            .foregroundColor(.white)
+                            .padding(10)
+                            .background(.darkTwo)
+                            .cornerRadius(10)
+                    }
+                    promptButtons2
                 }
-                
-                Spacer()
-                
             }
             .contentShape(Rectangle())
             .onTapGesture {
@@ -92,7 +100,11 @@ struct HomeView: View {
         }
         .onAppear {
             updateNavigationTitle()
+            updateActiveTabIfNeeded()
             
+        }
+        .onChange(of: sessions) {
+            updateActiveTabIfNeeded()
         }
     }
     
@@ -100,48 +112,37 @@ struct HomeView: View {
         appState.updateNavigationTitle(with: activeTab.navigationTitle, trigger: trigger)
     }
     
-    private var availableTabs: [Tab] {
-        return Tab.allCases.filter { tab in
-            !filteredSessions(for: tab, in: sessions).isEmpty
+    private func updateActiveTabIfNeeded() {
+        let sessionsToCheck = sessions.isEmpty ? MockSessionGenerator.createMockSessions() : sessions
+        if NumberHelper.filteredSessions(for: activeTab, in: sessionsToCheck).isEmpty {
+            activeTab = availableTabs.first ?? .lactate
         }
     }
+    
+    
+    
+    private var availableTabs: [HomeTab] {  // Updated from Tab to HomeTab
+        let sessionsToCheck = sessions.isEmpty ? MockSessionGenerator.createMockSessions() : sessions
+        return HomeTab.allCases.filter { tab in  // Updated from Tab to HomeTab
+            !NumberHelper.filteredSessions(for: tab, in: sessionsToCheck).isEmpty
+        }
+    }
+    
     
     private var sessionDisplayText: String {
         let sessionsToUse = sessions.isEmpty ? MockSessionGenerator.createMockSessions() : sessions
         
         if let selectedSession = selectedSession, let date = selectedSession.date {
-            // Format the date and display it along with the value for the selected session
             return "\(date.formatAsDayMonthYear()): \(NumberHelper.valueForTab(activeTab, in: selectedSession))"
         } else {
-            // Display "Total" and the total value when no capsule is selected
             return "Total: \(NumberHelper.totalValue(for: activeTab, in: sessionsToUse))"
-        }
-    }
-    
-    private func filteredSessions(for tab: Tab, in sessions: [Session]) -> [Session] {
-        return sessions.filter { session in
-            switch tab {
-            case .lactate:
-                return (session.lactate ?? 0) > 0
-            case .duration:
-                return (session.duration ?? 0) > 0
-            case .distance:
-                return (session.distance ?? 0) > 0
-            case .heartRate:
-                return (session.heartRate ?? 0) > 0
-            case .pace:
-                return (session.pace ?? 0) > 0
-            case .power:
-                return (session.power ?? 0) > 0
-            }
         }
     }
     
     @ViewBuilder
     private func summaryView() -> some View {
-        let sessionsToUse = sessions.isEmpty ? MockSessionGenerator.createMockSessions() : filteredSessions(for: activeTab, in: sessions)
+        let sessionsToUse = sessions.isEmpty ? MockSessionGenerator.createMockSessions() : NumberHelper.filteredSessions(for: activeTab, in: sessions)
         let averageValue = NumberHelper.calculateAverageValue(for: activeTab, in: sessionsToUse)
-        
         
         HStack(spacing: 0) {
             ForEach(availableTabs, id: \.rawValue) { tab in
@@ -175,7 +176,7 @@ struct HomeView: View {
                         }
                     }
                 }
-                .disabled(filteredSessions(for: tab, in: sessions).isEmpty)
+                .disabled(NumberHelper.filteredSessions(for: tab, in: sessionsToUse).isEmpty)
             }
         }
         .animation(.smooth(duration: 0.3, extraBounce: 0), value: activeTab)
@@ -183,46 +184,19 @@ struct HomeView: View {
     
     @ViewBuilder
     private func sessionChartView(sessions: [Session]) -> some View {
-        let filteredSessions = filteredSessions(for: activeTab, in: sessions)
-        
-        let groupedSessions = Dictionary(grouping: filteredSessions) { session in
-            Calendar.current.startOfDay(for: session.date ?? Date())
-        }
-        
-        let dailyAverages = groupedSessions.map { (date, sessions) -> (Date, Double) in
-            let values = sessions.compactMap {
-                switch activeTab {
-                case .lactate:
-                    return $0.lactate
-                case .duration:
-                    return $0.duration.map { $0 / 60 }
-                case .distance:
-                    return $0.distance
-                case .heartRate:
-                    return $0.heartRate.map(Double.init)
-                case .pace:
-                    return $0.pace
-                case .power:
-                    return $0.power.map(Double.init)
-                }
-            }
-            let average = values.isEmpty ? 0.0 : values.reduce(0, +) / Double(values.count)
-            return (date, average)
-        }.sorted(by: { $0.0 < $1.0 })
+        let filteredSessions = NumberHelper.filteredSessions(for: activeTab, in: sessions)
+        let dailyAverages = NumberHelper.calculateDailyAverages(for: activeTab, in: filteredSessions)
         
         let keyPath = \ (Date, Double).1
-        
         let ranges = dailyAverages.map { (element: (Date, Double)) -> Range<Double> in
             let averageValue = element[keyPath: keyPath]
             let lowerBound = averageValue - (averageValue * 0.1)
             let upperBound = averageValue + (averageValue * 0.1)
             return lowerBound..<upperBound
         }
-        
         if let maxMagnitude = ranges.map({ magnitude(of: $0) }).max(), maxMagnitude > 0 {
             let overallRange = rangeOfRanges(ranges)
             let heightRatio = 1 - CGFloat(maxMagnitude / magnitude(of: overallRange))
-            
             GeometryReader { proxy in
                 let maxCapsuleWidth: CGFloat = 10
                 HStack(alignment: .bottom, spacing: proxy.size.width / 120) {
@@ -244,13 +218,11 @@ struct HomeView: View {
                         .animation(.ripple(index: index), value: averageValue)
                         .onTapGesture {
                             if selectedCapsuleIndex == index {
-                                // Deselect if the capsule is already selected
                                 selectedCapsuleIndex = nil
                                 selectedSession = nil
                             } else {
-                                // Select the capsule and update the selected session
                                 selectedCapsuleIndex = index
-                                selectedSession = session  // Assign the selected session
+                                selectedSession = session
                             }
                         }
                     }
@@ -259,9 +231,133 @@ struct HomeView: View {
                 }
             }
         } else {
-            Text("No valid data available")
-                .foregroundColor(.white)
+            ContentUnavailableView("No Sessions Found", systemImage: "exclamationmark.triangle")
+                .foregroundStyle(.whiteOne)
         }
+    }
+    
+    private var promptButtons1: some View {
+        VStack{
+            HStack {
+                Button(action: {
+                    Task {
+                        await navigateToChatWithPrompt("Explain what lactate threshold is")
+                    }
+                }) {
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 4)
+                            .stroke(Color.whiteOne, lineWidth: 2)
+                            .frame(width: 170, height: 24)
+                        Text("What's lactate threshold?")
+                            .font(.system(size: 14))
+                            .frame(maxWidth: .infinity)
+                            .foregroundStyle(.whiteOne)
+                    }
+                }
+                
+                Button(action: {
+                    Task {
+                        await navigateToChatWithPrompt("How can I get started?")
+                    }
+                }) {
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 4)
+                            .stroke(Color.whiteOne, lineWidth: 2)
+                            .frame(width: 150, height: 24)
+                        Text("How can I get started?")
+                            .font(.system(size: 14))
+                            .frame(maxWidth: .infinity)
+                            .foregroundStyle(.whiteOne)
+                    }
+                    
+                }
+            }
+            Button(action: {
+                Task {
+                    await navigateToChatWithPrompt("Make me a training plan")
+                }
+            }) {
+                ZStack{
+                    RoundedRectangle(cornerRadius: 4)
+                        .stroke(Color.whiteOne, lineWidth: 2)
+                        .frame(width: 150, height: 24)
+                    Text("Make a training plan")
+                        .font(.system(size: 14))
+                        .frame(maxWidth: .infinity)
+                        .foregroundStyle(.whiteOne)
+                }
+                
+            }
+        }
+    }
+    
+    private var promptButtons2: some View {
+        VStack{
+            HStack {
+                Button(action: {
+                    Task {
+                        await navigateToChatWithPrompt("Make me a training plan")
+                    }
+                }) {
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 4)
+                            .stroke(Color.whiteOne, lineWidth: 2)
+                            .frame(width: 150, height: 24)
+                        Text("Make a training plan")
+                            .font(.system(size: 14))
+                            .frame(maxWidth: .infinity)
+                            .foregroundStyle(.whiteOne)
+                    }
+                }
+                
+                Button(action: {
+                    Task {
+                        await navigateToChatWithPrompt("What's my lactate threshold?")
+                    }
+                }) {
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 4)
+                            .stroke(Color.whiteOne, lineWidth: 2)
+                            .frame(width: 150, height: 24)
+                        Text("What's my threshold?")
+                            .font(.system(size: 14))
+                            .frame(maxWidth: .infinity)
+                            .foregroundStyle(.whiteOne)
+                    }
+                    
+                }
+            }
+            Button(action: {
+                Task {
+                    await navigateToChatWithPrompt("I have an upcoming race")
+                }
+            }) {
+                ZStack{
+                    RoundedRectangle(cornerRadius: 4)
+                        .stroke(Color.whiteOne, lineWidth: 2)
+                        .frame(width: 150, height: 24)
+                    Text("I'm going to race soon")
+                        .font(.system(size: 14))
+                        .frame(maxWidth: .infinity)
+                        .foregroundStyle(.whiteOne)
+                }
+                
+            }
+        }
+    }
+    
+   
+    
+    private func navigateToChatWithPrompt(_ prompt: String) async {
+        if let threadId = viewModel.threadId {
+            await viewModel.createMessage(threadId: threadId, content: prompt)
+        } else {
+            await viewModel.createThread()
+            if let threadId = viewModel.threadId {
+                await viewModel.createMessage(threadId: threadId, content: prompt)
+            }
+        }
+        appState.selectedTab = 3
     }
 }
 
@@ -269,54 +365,4 @@ struct HomeView: View {
 #Preview {
     HomeView()
         .environmentObject(AppState())
-}
-
-enum Tab: String, CaseIterable {
-    case lactate = "gauge.with.dots.needle.67percent"
-    case duration = "stopwatch"
-    case distance = "road.lanes"
-    case heartRate = "heart"
-    case pace = "hare"
-    case power = "bolt"
-    
-    func title(with averageValue: Double) -> String {
-        guard averageValue.isFinite else { return "N/A" }
-        
-        switch self {
-        case .lactate:
-            return String(format: "%.1f mM", locale: Locale(identifier: "de_DE"), averageValue)
-        case .duration:
-            let roundedMinutes = Int(round(averageValue))
-            let hours = roundedMinutes / 60
-            let minutes = roundedMinutes % 60
-            
-            if hours > 0 {
-                return String(format: "%d:%02d h:min", hours, minutes)
-            } else {
-                return "\(minutes) min"
-            }
-        case .distance:
-            let roundedDistance = Int(ceil(averageValue))
-            return "\(roundedDistance) km"
-        case .heartRate:
-            return String(format: "%.0f BPM", averageValue)
-        case .pace:
-            let minutes = Int(averageValue)
-            let seconds = Int((averageValue - Double(minutes)) * 60)
-            return String(format: "%d:%02d min/km", minutes, seconds)
-        case .power:
-            return String(format: "%.0f W", averageValue)
-        }
-    }
-    
-    var navigationTitle: String {
-        switch self {
-        case .lactate: return "Lactate"
-        case .duration: return "Duration"
-        case .distance: return "Distance"
-        case .heartRate: return "Heart Rate"
-        case .pace: return "Pace"
-        case .power: return "Power"
-        }
-    }
 }

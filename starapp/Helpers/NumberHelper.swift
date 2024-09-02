@@ -1,9 +1,8 @@
-// NumberFormatterHelper.swift
 import Foundation
 import SwiftUI
 
 struct NumberHelper {
-    
+
     static func customFormatter() -> NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -11,7 +10,7 @@ struct NumberHelper {
         formatter.zeroSymbol = ""
         return formatter
     }
-    
+
     static func calculatePace(distance: Double?, duration: Double?) -> Double? {
         if let distance = distance, let duration = duration, distance > 0, duration > 0 {
             return duration / distance
@@ -19,8 +18,8 @@ struct NumberHelper {
             return nil
         }
     }
-    
-    static func calculateAverageValue(for tab: Tab, in sessions: [Session]) -> Double {
+
+    static func calculateAverageValue(for tab: HomeTab, in sessions: [Session]) -> Double {
         let values = sessions.compactMap { session in
             switch tab {
             case .lactate:
@@ -40,9 +39,9 @@ struct NumberHelper {
         guard !values.isEmpty else { return 0.0 }
         return values.reduce(0, +) / Double(values.count)
     }
-    
-    static func totalValue(for tab: Tab, in sessions: [Session], selectedSession: Session? = nil) -> String {
-        let filteredSessions = sessions.filter { session in
+
+    static func filteredSessions(for tab: HomeTab, in sessions: [Session]) -> [Session] {
+        return sessions.filter { session in
             switch tab {
             case .lactate:
                 return (session.lactate ?? 0) > 0
@@ -58,7 +57,40 @@ struct NumberHelper {
                 return (session.power ?? 0) > 0
             }
         }
-        
+    }
+
+    static func calculateDailyAverages(for tab: HomeTab, in sessions: [Session]) -> [(Date, Double)] {
+        let groupedSessions = Dictionary(grouping: sessions) { session in
+            Calendar.current.startOfDay(for: session.date ?? Date())
+        }
+
+        let dailyAverages = groupedSessions.map { (date, sessions) -> (Date, Double) in
+            let values = sessions.compactMap {
+                switch tab {
+                case .lactate:
+                    return $0.lactate
+                case .duration:
+                    return $0.duration.map { $0 / 60 }
+                case .distance:
+                    return $0.distance
+                case .heartRate:
+                    return $0.heartRate.map(Double.init)
+                case .pace:
+                    return $0.pace
+                case .power:
+                    return $0.power.map(Double.init)
+                }
+            }
+            let average = values.isEmpty ? 0.0 : values.reduce(0, +) / Double(values.count)
+            return (date, average)
+        }.sorted(by: { $0.0 < $1.0 })
+
+        return dailyAverages
+    }
+
+    static func totalValue(for tab: HomeTab, in sessions: [Session], selectedSession: Session? = nil) -> String { // Updated to HomeTab
+        let filteredSessions = filteredSessions(for: tab, in: sessions)
+
         if let selectedSession = selectedSession {
             return valueForTab(tab, in: selectedSession)
         } else {
@@ -96,8 +128,8 @@ struct NumberHelper {
             }
         }
     }
-    
-    static func valueForTab(_ tab: Tab, in session: Session) -> String {
+
+    static func valueForTab(_ tab: HomeTab, in session: Session) -> String { // Updated to HomeTab
         switch tab {
         case .lactate:
             return String(format: "%.1f mM", locale: Locale(identifier: "de_DE"), session.lactate ?? 0)

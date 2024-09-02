@@ -11,7 +11,7 @@ struct LactateView: View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
             if sessions.isEmpty {
-                ContentUnavailableView("No Sessions Found", systemImage: "figure.run")
+                ContentUnavailableView("No Sessions Found", systemImage: "exclamationmark.triangle")
                     .foregroundStyle(.whiteOne)
             } else {
                 List {
