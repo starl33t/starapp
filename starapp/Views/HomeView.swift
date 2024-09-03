@@ -15,17 +15,36 @@ struct HomeView: View {
     
     @Query private var allSessions: [Session]
     
-    var sessions: [Session] {
-        let startDate = startDate(for: selectedDateRange)
-        let endDate = endDate(for: selectedDateRange)
-        return allSessions.filter { session in
-            if let date = session.date {
-                return date >= startDate && date <= endDate
-            } else {
-                return false
-            }
-        }
-    }
+    init() {
+           let startOfLast7Days = Calendar.current.date(byAdding: .day, value: -365, to: Date())!
+           let endOfValidPeriod = Date() // Today
+
+           _allSessions = Query(
+               filter: #Predicate<Session> { session in
+                   if let date = session.date {
+                       return date >= startOfLast7Days && date <= endOfValidPeriod
+                   } else {
+                       return false
+                   }
+               },
+               sort: \Session.date, order: .forward
+           )
+       }
+
+       var sessions: [Session] {
+           let startDate = startDate(for: selectedDateRange)
+           let endDate = endDate(for: selectedDateRange)
+
+           // Filter sessions based on the selected date range
+           return allSessions.filter { session in
+               if let date = session.date {
+                   return date >= startDate && date <= endDate
+               } else {
+                   return false
+               }
+           }
+       }
+
     
     var body: some View {
         ZStack {
