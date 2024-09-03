@@ -83,7 +83,7 @@ struct DayView: View {
             }
             VStack {
                 ZStack {
-                    if Calendar.current.isDateInToday(day) {
+                    if Calendar.current.isDate(day, inSameDayAs: Date()) {
                         RoundedRectangle(cornerRadius: 4)
                             .stroke(Color.whiteTwo, lineWidth: 2)
                             .frame(width: 26, height: 22)

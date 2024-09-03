@@ -21,6 +21,7 @@ struct CalendarToolbar: View {
         }
         .sheet(isPresented: $showDatePicker) {
             datePicker()
+                .modifier(CloseButtonModifier(isPresented: $showDatePicker))
                 .presentationDetents([.fraction(0.3)])
         }
     }

@@ -1,36 +1,30 @@
-//
-//  HomeView.swift
-//  starapp
-//
-//  Created by Peter Tran on 07/07/2024.
-//
-
 import SwiftUI
 import Charts
 import SwiftData
-
 
 struct HomeView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var viewModel: MessageHelper
     @Namespace private var tabAnimation
     @State private var trigger = false
-    @Query private var sessions: [Session]
     @State private var activeTab: HomeTab = .lactate
     @State private var selectedCapsuleIndex: Int? = nil
     @State private var selectedSession: Session? = nil
+    @State private var showDatePicker: Bool = false
+    @State private var selectedDateRange: DateRangeOption = .thisWeek
     
-    init() {
-        let startOfLast7Days = Calendar.current.date(byAdding: .day, value: -7, to: Date())!
-        let endOfValidPeriod = Calendar.current.date(byAdding: .day, value: 0, to: Date())!
-        
-        _sessions = Query(filter: #Predicate<Session> { session in
+    @Query private var allSessions: [Session]
+    
+    var sessions: [Session] {
+        let startDate = startDate(for: selectedDateRange)
+        let endDate = endDate(for: selectedDateRange)
+        return allSessions.filter { session in
             if let date = session.date {
-                return date >= startOfLast7Days && date <= endOfValidPeriod
+                return date >= startDate && date <= endDate
             } else {
                 return false
             }
-        }, sort: \Session.date, order: .forward)
+        }
     }
     
     var body: some View {
@@ -41,14 +35,14 @@ struct HomeView: View {
                 summaryView()
                 
                 if sessions.isEmpty {
-                    HStack{
-                        Text("This Week")
+                    HStack {
+                        Text("This week")
                     }
                     .foregroundStyle(.whiteOne)
                     .padding()
                     sessionChartView(sessions: MockSessionGenerator.createMockSessions())
                         .frame(height: 100)
-                    HStack{
+                    HStack {
                         Spacer()
                         Text(sessionDisplayText)
                     }
@@ -66,15 +60,18 @@ struct HomeView: View {
                     }
                     promptButtons1
                 } else {
-                    HStack{
-                        Text("This Week")
-                        Spacer()
+                    HStack {
+                        Button {
+                            showDatePicker = true
+                        } label: {
+                            Text(selectedDateRange.displayText)
+                        }
                     }
                     .foregroundStyle(.whiteOne)
                     .padding()
                     sessionChartView(sessions: NumberHelper.filteredSessions(for: activeTab, in: sessions))
                         .frame(height: 100)
-                    HStack{
+                    HStack {
                         Spacer()
                         Text(sessionDisplayText)
                     }
@@ -91,6 +88,7 @@ struct HomeView: View {
                     }
                     promptButtons2
                 }
+                Spacer()
             }
             .contentShape(Rectangle())
             .onTapGesture {
@@ -101,12 +99,68 @@ struct HomeView: View {
         .onAppear {
             updateNavigationTitle()
             updateActiveTabIfNeeded()
-            
         }
-        .onChange(of: sessions) {
+        .onChange(of: selectedDateRange) {
             updateActiveTabIfNeeded()
         }
+        .sheet(isPresented: $showDatePicker) {
+            datePicker()
+                .modifier(CloseButtonModifier(isPresented: $showDatePicker))
+                .presentationDetents([.fraction(0.3)])
+        }
     }
+    
+    private func datePicker() -> some View {
+        return ZStack {
+            Color.starBlack.ignoresSafeArea()
+            VStack {
+                Picker("Date Range", selection: $selectedDateRange) {
+                    ForEach(DateRangeOption.allCases, id: \.self) { option in
+                        Text(option.rawValue).tag(option)
+                    }
+                }
+                .pickerStyle(WheelPickerStyle())
+                .labelsHidden()
+                .environment(\.colorScheme, .dark)
+            }
+            .frame(maxWidth: .infinity)
+        }
+    }
+    
+    private func startDate(for dateRange: DateRangeOption) -> Date {
+        switch dateRange {
+        case .thisWeek:
+            return Date().startOfWeek
+        case .thisMonth:
+            return Date().startOfMonth
+        case .thisYear:
+            return Date().startOfYear
+        case .last7Days:
+            return Date().addingTimeInterval(-7 * 24 * 60 * 60) // 7 days ago2
+        case .last30Days:
+            return Date().addingTimeInterval(-30 * 24 * 60 * 60) // 30 days ago
+        case .last365Days:
+            return Date().addingTimeInterval(-365 * 24 * 60 * 60) // 365 days ago
+        }
+    }
+    
+    private func endDate(for dateRange: DateRangeOption) -> Date {
+        switch dateRange {
+        case .thisWeek:
+            return Date().endOfWeek
+        case .thisMonth:
+            return Date().endOfMonth
+        case .thisYear:
+            return Date().endOfYear
+        case .last7Days:
+            return Date() // Today
+        case .last30Days:
+            return Date() // Today
+        case .last365Days:
+            return Date() // Today
+        }
+    }
+    
     
     private func updateNavigationTitle() {
         appState.updateNavigationTitle(with: activeTab.navigationTitle, trigger: trigger)
@@ -119,15 +173,12 @@ struct HomeView: View {
         }
     }
     
-    
-    
-    private var availableTabs: [HomeTab] {  // Updated from Tab to HomeTab
+    private var availableTabs: [HomeTab] {
         let sessionsToCheck = sessions.isEmpty ? MockSessionGenerator.createMockSessions() : sessions
-        return HomeTab.allCases.filter { tab in  // Updated from Tab to HomeTab
+        return HomeTab.allCases.filter { tab in
             !NumberHelper.filteredSessions(for: tab, in: sessionsToCheck).isEmpty
         }
     }
-    
     
     private var sessionDisplayText: String {
         let sessionsToUse = sessions.isEmpty ? MockSessionGenerator.createMockSessions() : sessions
@@ -346,8 +397,6 @@ struct HomeView: View {
         }
     }
     
-   
-    
     private func navigateToChatWithPrompt(_ prompt: String) async {
         if let threadId = viewModel.threadId {
             await viewModel.createMessage(threadId: threadId, content: prompt)
@@ -361,8 +410,33 @@ struct HomeView: View {
     }
 }
 
-
 #Preview {
     HomeView()
         .environmentObject(AppState())
+}
+
+enum DateRangeOption: String, CaseIterable {
+    case thisWeek = "This Week"
+    case thisMonth = "This Month"
+    case thisYear = "This Year"
+    case last7Days = "Last 7 Days"
+    case last30Days = "Last 30 Days"
+    case last365Days = "Last 365 Days"
+    
+    var displayText: String {
+        switch self {
+        case .thisWeek:
+            return "This Week"
+        case .thisMonth:
+            return "This Month"
+        case .thisYear:
+            return "This Year"
+        case .last7Days:
+            return "Last 7 Days"
+        case .last30Days:
+            return "Last 30 Days"
+        case .last365Days:
+            return "Last 365 Days"
+        }
+    }
 }

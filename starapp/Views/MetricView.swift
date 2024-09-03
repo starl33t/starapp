@@ -34,18 +34,23 @@ struct MetricView: View {
     var body: some View {
             ZStack {
                 Color.starBlack.ignoresSafeArea()
-                VStack {
-                    TabView(selection: $selectedChart) {
-                        lineChart
-                            .tag(ChartType.lineChart)
-                        barChart
-                            .tag(ChartType.barChart)
-                        pieChart
-                            .tag(ChartType.pieChart)
-                        scatterPlot
-                            .tag(ChartType.scatterPlot)
+                if sessions.isEmpty {
+                    ContentUnavailableView("No Sessions Found", systemImage: "exclamationmark.triangle")
+                        .foregroundStyle(.whiteOne)
+                } else {
+                    VStack {
+                        TabView(selection: $selectedChart) {
+                            lineChart
+                                .tag(ChartType.lineChart)
+                            barChart
+                                .tag(ChartType.barChart)
+                            pieChart
+                                .tag(ChartType.pieChart)
+                            scatterPlot
+                                .tag(ChartType.scatterPlot)
+                        }
+                        .tabViewStyle(PageTabViewStyle())
                     }
-                    .tabViewStyle(PageTabViewStyle())
                 }
             }
             .onAppear {
@@ -54,7 +59,6 @@ struct MetricView: View {
             .onChange(of: selectedChart) {
                 updateNavigationTitleForSelectedChart()
             }
-        
         }
     
     private func updateNavigationTitleForSelectedChart() {

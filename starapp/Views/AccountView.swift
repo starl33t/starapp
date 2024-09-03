@@ -159,9 +159,6 @@ struct AccountView: View {
             
             do {
                 try modelContext.save()
-                print("User data and all sessions reset successfully")
-                
-                // Reset all AppStorage values
                 notificationsToggle = true
                 paceToggle = true
                 powerToggle = true

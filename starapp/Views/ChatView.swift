@@ -25,13 +25,6 @@ struct ChatView: View {
                         }
                     }
                 }
-                // Error message view
-                if let errorMessage = viewModel.errorMessage {
-                    Text(errorMessage)
-                        .foregroundColor(.red)
-                        .padding()
-                        .multilineTextAlignment(.center)
-                }
                 HStack {
                     clearButton()
                     messageInputField()

@@ -55,10 +55,10 @@ extension Date {
     
     //Calendarview's todays date button
     var daySquareIcon: String {
-            let calendar = Calendar.current
-            let day = calendar.component(.day, from: self)
-            return "\(day).square"
-        }
+        let calendar = Calendar.current
+        let day = calendar.component(.day, from: self)
+        return "\(day).square"
+    }
     
     //LactateView
     func formattedAsRelative() -> String {
@@ -79,14 +79,14 @@ extension Date {
             return "N/A"
         }
     }
-
+    
     //CalendarView
     func formatDayMonth(date: Date?) -> String {
-            guard let date = date else { return "N/A" }
-            let formatter = DateFormatter()
-            formatter.dateFormat = "d MMM"
-            return formatter.string(from: date)
-        }
+        guard let date = date else { return "N/A" }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d MMM"
+        return formatter.string(from: date)
+    }
     func formatYear(date: Date?) -> String {
         guard let date = date else { return "N/A" }
         let formatter = DateFormatter()
@@ -94,16 +94,44 @@ extension Date {
         return formatter.string(from: date)
     }
     func formatSessionDate() -> String {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "d MMM yyyy (HH:mm)"
-            dateFormatter.timeZone = TimeZone.current
-            return dateFormatter.string(from: self)
-        }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "d MMM yyyy (HH:mm)"
+        dateFormatter.timeZone = TimeZone.current
+        return dateFormatter.string(from: self)
+    }
     
     //Homeview
     func formatAsDayMonthYear() -> String {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "E dd MMM" // Format: "Mon 02 Feb"
-            return dateFormatter.string(from: self)
-        }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "E dd MMM" // Format: "Mon 02 Feb"
+        return dateFormatter.string(from: self)
+    }
+    
+    // Start of current week
+    var startOfWeek: Date {
+        let components = Date.calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)
+        return Date.calendar.date(from: components)!
+    }
+    
+    // End of current week
+    var endOfWeek: Date {
+        return Date.calendar.date(byAdding: .day, value: 6, to: startOfWeek)!
+    }
+    
+    // Start of current month
+    var startOfMonth: Date {
+        let components = Date.calendar.dateComponents([.year, .month], from: self)
+        return Date.calendar.date(from: components)!
+    }
+    
+    // End of current month
+    var endOfMonth: Date {
+        let startOfNextMonth = Date.calendar.date(byAdding: .month, value: 1, to: startOfMonth)!
+        return Date.calendar.date(byAdding: .day, value: -1, to: startOfNextMonth)!
+    }
+    
+    // Last 30 days
+    static func startOfLast30Days() -> Date {
+        return Calendar.current.date(byAdding: .day, value: -29, to: Date())!
+    }
 }

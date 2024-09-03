@@ -15,12 +15,11 @@ struct Message: Codable, Equatable {
 class MessageHelper: ObservableObject {
     @Published var currentMessage: Message?
     @Published var threadId: String?
-    @Published var errorMessage: String?
     
     let assistantId = "asst_LQa6lUG4q2TN2mdatyXXI490"
     let apiKey: String
     private let maxRetryCount = 3
-
+    
     init() {
         guard let key = Bundle.main.object(forInfoDictionaryKey: "OpenAIAPIKey") as? String else {
             fatalError("API Key not found in Info.plist")
@@ -62,9 +61,7 @@ class MessageHelper: ObservableObject {
                     self.threadId = threadId
                 }
             } catch {
-                DispatchQueue.main.async {
-                    self.errorMessage = "Failed to create thread: \(error.localizedDescription)"
-                }
+                print("Failed to create thread: \(error.localizedDescription)")
             }
         }.value
     }
@@ -94,9 +91,7 @@ class MessageHelper: ObservableObject {
                 // Stream assistant response
                 try await self.streamAssistantResponse(threadId: threadId)
             } catch {
-                DispatchQueue.main.async {
-                    self.errorMessage = "Failed to create message: \(error.localizedDescription)"
-                }
+                print("Failed to create message: \(error.localizedDescription)")
             }
         }.value
     }
@@ -145,9 +140,7 @@ class MessageHelper: ObservableObject {
                     }
                 }
             } catch {
-                DispatchQueue.main.async {
-                    self.errorMessage = "Failed to stream assistant response: \(error.localizedDescription)"
-                }
+                print("Failed to stream assistant response: \(error.localizedDescription)")
             }
         }
     }
