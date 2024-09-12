@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct HomeToolBar: View {
+struct HomeToolBarTrail: View {
     @AppStorage("Notifications") private var Notifications = false
     var body: some View {
         HStack {

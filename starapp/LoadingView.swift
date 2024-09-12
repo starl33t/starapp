@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct LoadingView: View {
+    @EnvironmentObject var appState: AppState
     var body: some View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
             VStack {
-                HackerTextView(text: "Welcome to starleet", trigger: true)
+                Text("Welcome to Starleet")
+                //HackerTextView(text: "Welcome to Starleet", trigger: appState.trigger)
             }
             .font(.title)
             .foregroundStyle(.whiteOne)
@@ -22,4 +24,5 @@ struct LoadingView: View {
 
 #Preview {
     LoadingView()
+        .environmentObject(AppState())
 }

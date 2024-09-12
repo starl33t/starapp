@@ -6,8 +6,6 @@ struct HomeView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var viewModel: MessageHelper
     @Namespace private var tabAnimation
-    @State private var trigger = false
-    @State private var activeTab: HomeTab = .lactate
     @State private var selectedCapsuleIndex: Int? = nil
     @State private var selectedSession: Session? = nil
     @State private var showDatePicker: Bool = false
@@ -16,107 +14,109 @@ struct HomeView: View {
     @Query private var allSessions: [Session]
     
     init() {
-           let startOfLast7Days = Calendar.current.date(byAdding: .day, value: -365, to: Date())!
-           let endOfValidPeriod = Date() // Today
-
-           _allSessions = Query(
-               filter: #Predicate<Session> { session in
-                   if let date = session.date {
-                       return date >= startOfLast7Days && date <= endOfValidPeriod
-                   } else {
-                       return false
-                   }
-               },
-               sort: \Session.date, order: .forward
-           )
-       }
-
-       var sessions: [Session] {
-           let startDate = startDate(for: selectedDateRange)
-           let endDate = endDate(for: selectedDateRange)
-
-           // Filter sessions based on the selected date range
-           return allSessions.filter { session in
-               if let date = session.date {
-                   return date >= startDate && date <= endDate
-               } else {
-                   return false
-               }
-           }
-       }
-
+        let startOfLast7Days = Calendar.current.date(byAdding: .day, value: -365, to: Date())!
+        let endOfValidPeriod = Date() // Today
+        
+        _allSessions = Query(
+            filter: #Predicate<Session> { session in
+                if let date = session.date {
+                    return date >= startOfLast7Days && date <= endOfValidPeriod
+                } else {
+                    return false
+                }
+            },
+            sort: \Session.date, order: .forward
+        )
+    }
+    
+    var sessions: [Session] {
+        let startDate = startDate(for: selectedDateRange)
+        let endDate = endDate(for: selectedDateRange)
+        
+        // Filter sessions based on the selected date range
+        return allSessions.filter { session in
+            if let date = session.date {
+                return date >= startDate && date <= endDate
+            } else {
+                return false
+            }
+        }
+    }
     
     var body: some View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
-            VStack {
-                Divider()
-                summaryView()
-                
-                if sessions.isEmpty {
-                    HStack {
-                        Text("This week")
-                    }
-                    .foregroundStyle(.whiteOne)
-                    .padding()
-                    sessionChartView(sessions: MockSessionGenerator.createMockSessions())
-                        .frame(height: 100)
-                    HStack {
-                        Spacer()
-                        Text(sessionDisplayText)
-                    }
-                    .foregroundStyle(.whiteOne)
-                    
-                    VStack(alignment: .leading) {
-                        Text("Renato")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                        Text("Hello, I'm Renato CanovAI. Your AI-Coach. You didn't have any sessions so I gave you some examples to play around with. Whenever you're ready then let's get started! You can add new sessions with lactate and/or talk with me in the chat.")
-                            .foregroundColor(.white)
-                            .padding(10)
-                            .background(.darkTwo)
-                            .cornerRadius(10)
-                    }
-                    promptButtons1
-                } else {
-                    HStack {
-                        Button {
-                            showDatePicker = true
-                        } label: {
-                            Text(selectedDateRange.displayText)
+            ScrollView {
+                LazyVStack {
+                    summaryView()
+                    if sessions.isEmpty {
+                        HStack {
+                            Text("This week")
                         }
+                        .foregroundStyle(.whiteOne)
+                        .padding()
+                        sessionChartView(sessions: MockSessionGenerator.createMockSessions())
+                            .frame(height: 100)
+                        HStack {
+                            Spacer()
+                            Text(sessionDisplayText)
+                        }
+                        .padding()
+                        .foregroundStyle(.whiteOne)
+                        
+                        VStack(alignment: .leading) {
+                            Text("Renato")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                            Text("Hello, I'm Renato CanovAI. Your AI-Coach. You didn't have any sessions so I gave you some examples to play around with. We can talk over chat or you can use one of the ready-made prompts below.")
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(.darkTwo)
+                                .cornerRadius(10)
+                        }
+                        .padding()
+                        promptButtons1
+                    } else {
+                        HStack {
+                            Button {
+                                showDatePicker = true
+                            } label: {
+                                Text(selectedDateRange.displayText)
+                            }
+                        }
+                        .foregroundStyle(.whiteOne)
+                        .padding()
+                        sessionChartView(sessions: NumberHelper.filteredSessions(for: appState.homeActiveTab, in: sessions))
+                            .frame(height: 100)
+                        HStack {
+                            Spacer()
+                            Text(sessionDisplayText)
+                        }
+                        .padding()
+                        .foregroundStyle(.whiteOne)
+                        VStack(alignment: .leading) {
+                            Text("Renato")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                            Text("Great! Let's go on with the next steps. We can talk over chat or you can use one of the ready-made prompts below.")
+                                .foregroundColor(.white)
+                                .padding(10)
+                                .background(.darkTwo)
+                                .cornerRadius(10)
+                        }
+                        .padding()
+                        promptButtons2
                     }
-                    .foregroundStyle(.whiteOne)
-                    .padding()
-                    sessionChartView(sessions: NumberHelper.filteredSessions(for: activeTab, in: sessions))
-                        .frame(height: 100)
-                    HStack {
-                        Spacer()
-                        Text(sessionDisplayText)
-                    }
-                    .foregroundStyle(.whiteOne)
-                    VStack(alignment: .leading) {
-                        Text("Renato")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                        Text("Great! Let's go on with the next steps. We can talk over chat or you can use one of the ready-made prompts below")
-                            .foregroundColor(.white)
-                            .padding(10)
-                            .background(.darkTwo)
-                            .cornerRadius(10)
-                    }
-                    promptButtons2
                 }
-                Spacer()
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    selectedCapsuleIndex = nil
+                    selectedSession = nil
+                }
             }
-            .contentShape(Rectangle())
-            .onTapGesture {
-                selectedCapsuleIndex = nil
-                selectedSession = nil
-            }
+            .padding(.top)
         }
         .onAppear {
-            updateNavigationTitle()
             updateActiveTabIfNeeded()
         }
         .onChange(of: selectedDateRange) {
@@ -172,23 +172,18 @@ struct HomeView: View {
         case .thisYear:
             return Date().endOfYear
         case .last7Days:
-            return Date() // Today
+            return Date()
         case .last30Days:
-            return Date() // Today
+            return Date()
         case .last365Days:
-            return Date() // Today
+            return Date()
         }
-    }
-    
-    
-    private func updateNavigationTitle() {
-        appState.updateNavigationTitle(with: activeTab.navigationTitle, trigger: trigger)
     }
     
     private func updateActiveTabIfNeeded() {
         let sessionsToCheck = sessions.isEmpty ? MockSessionGenerator.createMockSessions() : sessions
-        if NumberHelper.filteredSessions(for: activeTab, in: sessionsToCheck).isEmpty {
-            activeTab = availableTabs.first ?? .lactate
+        if NumberHelper.filteredSessions(for: appState.homeActiveTab, in: sessionsToCheck).isEmpty {
+            appState.homeActiveTab = availableTabs.first ?? .lactate
         }
     }
     
@@ -203,22 +198,21 @@ struct HomeView: View {
         let sessionsToUse = sessions.isEmpty ? MockSessionGenerator.createMockSessions() : sessions
         
         if let selectedSession = selectedSession, let date = selectedSession.date {
-            return "\(date.formatAsDayMonthYear()): \(NumberHelper.valueForTab(activeTab, in: selectedSession))"
+            return "\(date.formatAsDayMonthYear()): \(NumberHelper.valueForTab(appState.homeActiveTab, in: selectedSession))"
         } else {
-            return "Total: \(NumberHelper.totalValue(for: activeTab, in: sessionsToUse))"
+            return "Total: \(NumberHelper.totalValue(for: appState.homeActiveTab, in: sessionsToUse))"
         }
     }
     
     @ViewBuilder
     private func summaryView() -> some View {
-        let sessionsToUse = sessions.isEmpty ? MockSessionGenerator.createMockSessions() : NumberHelper.filteredSessions(for: activeTab, in: sessions)
-        let averageValue = NumberHelper.calculateAverageValue(for: activeTab, in: sessionsToUse)
+        let sessionsToUse = sessions.isEmpty ? MockSessionGenerator.createMockSessions() : NumberHelper.filteredSessions(for: appState.homeActiveTab, in: sessions)
+        let averageValue = NumberHelper.calculateAverageValue(for: appState.homeActiveTab, in: sessionsToUse)
         
         HStack(spacing: 0) {
             ForEach(availableTabs, id: \.rawValue) { tab in
                 Button {
-                    activeTab = tab
-                    updateNavigationTitle()
+                    appState.homeActiveTab = tab
                 } label: {
                     HStack(spacing: 5) {
                         Image(systemName: tab.rawValue)
@@ -226,20 +220,20 @@ struct HomeView: View {
                             .foregroundColor(.whiteOne)
                             .frame(height: 30)
                         
-                        if activeTab == tab {
+                        if appState.homeActiveTab == tab {
                             Text(tab.title(with: averageValue))
                                 .font(.caption)
                                 .fontWeight(.semibold)
                                 .lineLimit(1)
                         }
                     }
-                    .foregroundColor(activeTab == tab ? .whiteOne : .gray)
+                    .foregroundColor(appState.homeActiveTab == tab ? .whiteOne : .gray)
                     .padding(.vertical, 2)
                     .padding(.leading, 10)
                     .padding(.trailing, 15)
                     .contentShape(Rectangle())
                     .background {
-                        if activeTab == tab {
+                        if appState.homeActiveTab == tab {
                             Capsule()
                                 .fill(.starMain)
                                 .matchedGeometryEffect(id: "ACTIVE_TAB", in: tabAnimation)
@@ -249,13 +243,13 @@ struct HomeView: View {
                 .disabled(NumberHelper.filteredSessions(for: tab, in: sessionsToUse).isEmpty)
             }
         }
-        .animation(.smooth(duration: 0.3, extraBounce: 0), value: activeTab)
+        .animation(.smooth(duration: 0.3, extraBounce: 0), value: appState.homeActiveTab)
     }
     
     @ViewBuilder
     private func sessionChartView(sessions: [Session]) -> some View {
-        let filteredSessions = NumberHelper.filteredSessions(for: activeTab, in: sessions)
-        let dailyAverages = NumberHelper.calculateDailyAverages(for: activeTab, in: filteredSessions)
+        let filteredSessions = NumberHelper.filteredSessions(for: appState.homeActiveTab, in: sessions)
+        let dailyAverages = NumberHelper.calculateDailyAverages(for: appState.homeActiveTab, in: filteredSessions)
         
         let keyPath = \ (Date, Double).1
         let ranges = dailyAverages.map { (element: (Date, Double)) -> Range<Double> in
@@ -274,7 +268,7 @@ struct HomeView: View {
                         let averageValue = dailyAverages[index][keyPath: keyPath]
                         let range = ranges[index]
                         let session = filteredSessions[index]
-                        let isPaceTab = activeTab == .pace
+                        let isPaceTab = appState.homeActiveTab == .pace
                         
                         HomeCapsuleGraph(
                             index: index,
@@ -315,7 +309,7 @@ struct HomeView: View {
                     }
                 }) {
                     ZStack{
-                        RoundedRectangle(cornerRadius: 4)
+                        RoundedRectangle(cornerRadius: 10)
                             .stroke(Color.whiteOne, lineWidth: 2)
                             .frame(width: 170, height: 24)
                         Text("What's lactate threshold?")
@@ -331,7 +325,7 @@ struct HomeView: View {
                     }
                 }) {
                     ZStack{
-                        RoundedRectangle(cornerRadius: 4)
+                        RoundedRectangle(cornerRadius: 10)
                             .stroke(Color.whiteOne, lineWidth: 2)
                             .frame(width: 150, height: 24)
                         Text("How can I get started?")
@@ -348,7 +342,7 @@ struct HomeView: View {
                 }
             }) {
                 ZStack{
-                    RoundedRectangle(cornerRadius: 4)
+                    RoundedRectangle(cornerRadius: 10)
                         .stroke(Color.whiteOne, lineWidth: 2)
                         .frame(width: 150, height: 24)
                     Text("Make a training plan")
@@ -370,7 +364,7 @@ struct HomeView: View {
                     }
                 }) {
                     ZStack{
-                        RoundedRectangle(cornerRadius: 4)
+                        RoundedRectangle(cornerRadius: 10)
                             .stroke(Color.whiteOne, lineWidth: 2)
                             .frame(width: 150, height: 24)
                         Text("Make a training plan")
@@ -386,7 +380,7 @@ struct HomeView: View {
                     }
                 }) {
                     ZStack{
-                        RoundedRectangle(cornerRadius: 4)
+                        RoundedRectangle(cornerRadius: 10)
                             .stroke(Color.whiteOne, lineWidth: 2)
                             .frame(width: 150, height: 24)
                         Text("What's my threshold?")
@@ -403,7 +397,7 @@ struct HomeView: View {
                 }
             }) {
                 ZStack{
-                    RoundedRectangle(cornerRadius: 4)
+                    RoundedRectangle(cornerRadius: 10)
                         .stroke(Color.whiteOne, lineWidth: 2)
                         .frame(width: 150, height: 24)
                     Text("I'm going to race soon")

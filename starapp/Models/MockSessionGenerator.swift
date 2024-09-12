@@ -8,11 +8,11 @@ struct MockSessionGenerator {
 
         // Define fixed values for each session
         let fixedSessionsData: [(distance: Double, duration: Double, pace: Double, power: Int, heartRate: Int, lactate: Double)] = [
-            (distance: 5.0, duration: 45.0, pace: 5.2, power: 180, heartRate: 130, lactate: 3.0),
+            (distance: 5.0, duration: 45.0, pace: 5.0, power: 180, heartRate: 130, lactate: 3.0),
             (distance: 10.0, duration: 90.0, pace: 5.5, power: 220, heartRate: 145, lactate: 4.2),
-            (distance: 6.0, duration: 50.0, pace: 5.0, power: 190, heartRate: 140, lactate: 3.5),
+            (distance: 6.0, duration: 50.0, pace: 4.7, power: 190, heartRate: 140, lactate: 3.5),
             (distance: 4.0, duration: 35.0, pace: 5.8, power: 170, heartRate: 135, lactate: 2.8),
-            (distance: 8.0, duration: 75.0, pace: 5.3, power: 210, heartRate: 150, lactate: 4.5),
+            (distance: 8.0, duration: 75.0, pace: 4.2, power: 210, heartRate: 150, lactate: 4.5),
             (distance: 7.0, duration: 60.0, pace: 4.8, power: 230, heartRate: 155, lactate: 3.8),
             (distance: 12.0, duration: 110.0, pace: 5.4, power: 240, heartRate: 160, lactate: 5.0)
         ]

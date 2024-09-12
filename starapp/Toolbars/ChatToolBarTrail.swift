@@ -1,7 +1,7 @@
 import SwiftUI
 import SwiftData
 
-struct ChatToolbar: View {
+struct ChatToolbarTrail: View {
     @EnvironmentObject var appState: AppState
     @ObservedObject var viewModel: MessageHelper
     @Query(sort: \Session.date, order: .reverse) private var sessions: [Session]

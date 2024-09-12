@@ -134,4 +134,5 @@ extension Date {
     static func startOfLast30Days() -> Date {
         return Calendar.current.date(byAdding: .day, value: -29, to: Date())!
     }
+    
 }

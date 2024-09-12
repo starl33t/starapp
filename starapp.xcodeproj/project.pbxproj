@@ -9,20 +9,20 @@
 /* Begin PBXBuildFile section */
 		BF0ED3B92C8234E100ADB94C /* HomeCapsuleGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0ED3B82C8234E000ADB94C /* HomeCapsuleGraph.swift */; };
 		BF14E3402C863AB8007FE41D /* HomeTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF14E33F2C863AB5007FE41D /* HomeTab.swift */; };
-		BF1A81532C542C280057D87D /* HomeToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1A81522C542C280057D87D /* HomeToolBar.swift */; };
+		BF1A81532C542C280057D87D /* HomeToolBarTrail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1A81522C542C280057D87D /* HomeToolBarTrail.swift */; };
 		BF31F0AB2C48FDAD000C005C /* EmailHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF31F0AA2C48FDA9000C005C /* EmailHelper.swift */; };
 		BF3700882C47B60900CF255D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3700872C47B60600CF255D /* User.swift */; };
 		BF4A81352C3AEC4D00D4CAF1 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81342C3AEC4D00D4CAF1 /* CalendarView.swift */; };
 		BF4A813F2C3AEE0900D4CAF1 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A813E2C3AEE0900D4CAF1 /* DateHelper.swift */; };
 		BF4A81412C3AEE1500D4CAF1 /* HackerTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81402C3AEE1500D4CAF1 /* HackerTextView.swift */; };
-		BF4A81452C3AEE6C00D4CAF1 /* LactateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81442C3AEE6C00D4CAF1 /* LactateView.swift */; };
+		BF4A81452C3AEE6C00D4CAF1 /* LiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81442C3AEE6C00D4CAF1 /* LiveView.swift */; };
 		BF4A81492C3AEFCE00D4CAF1 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81482C3AEFCE00D4CAF1 /* ChatView.swift */; };
 		BF4A814D2C3AF03B00D4CAF1 /* MetricView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A814C2C3AF03B00D4CAF1 /* MetricView.swift */; };
 		BF4A81632C3AF53200D4CAF1 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81622C3AF53200D4CAF1 /* ProfileView.swift */; };
-		BF4A81672C3AF5D500D4CAF1 /* CalendarToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81662C3AF5D500D4CAF1 /* CalendarToolBar.swift */; };
-		BF4A816F2C3AF8DA00D4CAF1 /* LactateToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A816E2C3AF8DA00D4CAF1 /* LactateToolBar.swift */; };
-		BF4A81772C3AFA1700D4CAF1 /* ChatToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81762C3AFA1700D4CAF1 /* ChatToolBar.swift */; };
-		BF4A817F2C3AFB8600D4CAF1 /* MetricToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A817E2C3AFB8600D4CAF1 /* MetricToolBar.swift */; };
+		BF4A81672C3AF5D500D4CAF1 /* CalendarToolBarTrail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81662C3AF5D500D4CAF1 /* CalendarToolBarTrail.swift */; };
+		BF4A816F2C3AF8DA00D4CAF1 /* LiveToolBarTrail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A816E2C3AF8DA00D4CAF1 /* LiveToolBarTrail.swift */; };
+		BF4A81772C3AFA1700D4CAF1 /* ChatToolBarTrail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81762C3AFA1700D4CAF1 /* ChatToolBarTrail.swift */; };
+		BF4A817F2C3AFB8600D4CAF1 /* MetricToolBarTrail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A817E2C3AFB8600D4CAF1 /* MetricToolBarTrail.swift */; };
 		BF4A81892C3AFDDE00D4CAF1 /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81882C3AFDDE00D4CAF1 /* SubscriptionView.swift */; };
 		BF4A818B2C3AFDF500D4CAF1 /* ColorOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A818A2C3AFDF500D4CAF1 /* ColorOptionView.swift */; };
 		BF4A818F2C3AFFDD00D4CAF1 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A818E2C3AFFDD00D4CAF1 /* HomeView.swift */; };
@@ -49,12 +49,22 @@
 		BF8D6ADC2C41A9DF000269F1 /* TrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */; };
 		BF91AC6E2C45405C0028BC41 /* NumberHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF91AC6D2C4540530028BC41 /* NumberHelper.swift */; };
 		BFAAEC612C81F736008E6FB7 /* MockSessionGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAEC602C81F72F008E6FB7 /* MockSessionGenerator.swift */; };
+		BFABBD4C2C885F6100A10182 /* PromptHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFABBD4B2C885F5D00A10182 /* PromptHelper.swift */; };
 		BFBBD9582C55869200671197 /* MessageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBBD9572C55868F00671197 /* MessageHelper.swift */; };
+		BFC38D082C935ED900E93826 /* LocationEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC38D072C935ECC00E93826 /* LocationEvents.swift */; };
 		BFDE40512C591A1200733888 /* CSVDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE40502C591A0900733888 /* CSVDocument.swift */; };
 		BFDE40532C591F8200733888 /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE40522C591F7B00733888 /* CalendarHelper.swift */; };
+		BFDE77422C91D284000D4373 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE77412C91D284000D4373 /* LocationManager.swift */; };
 		BFDEB5FE2C497D3900D32736 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDEB5FD2C497D3100D32736 /* UserService.swift */; };
 		BFDEB6042C49994C00D32736 /* SupportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDEB6032C49994900D32736 /* SupportView.swift */; };
 		BFE876062C6E7DA9006725A6 /* StringHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE876052C6E7DA6006725A6 /* StringHelper.swift */; };
+		BFEAE8592C92C348006F6285 /* LiveToolBarPrin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEAE8582C92C338006F6285 /* LiveToolBarPrin.swift */; };
+		BFEAE85B2C92C538006F6285 /* ChatToolBarPrin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEAE85A2C92C52E006F6285 /* ChatToolBarPrin.swift */; };
+		BFEAE85D2C92C5A3006F6285 /* MetricToolBarPrin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEAE85C2C92C59A006F6285 /* MetricToolBarPrin.swift */; };
+		BFECC9672C8EC8130081B617 /* ProfileToolBarLead.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFECC9662C8EC7FF0081B617 /* ProfileToolBarLead.swift */; };
+		BFECC9692C8ECE060081B617 /* HomeToolBarPrin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFECC9682C8ECDF30081B617 /* HomeToolBarPrin.swift */; };
+		BFF251622C9025EA00389A3D /* CalendarToolBarPrin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF251612C9025E100389A3D /* CalendarToolBarPrin.swift */; };
+		BFF251662C90C59E00389A3D /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF251652C90C59800389A3D /* FloatingButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,21 +87,21 @@
 /* Begin PBXFileReference section */
 		BF0ED3B82C8234E000ADB94C /* HomeCapsuleGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCapsuleGraph.swift; sourceTree = "<group>"; };
 		BF14E33F2C863AB5007FE41D /* HomeTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTab.swift; sourceTree = "<group>"; };
-		BF1A81522C542C280057D87D /* HomeToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeToolBar.swift; sourceTree = "<group>"; };
+		BF1A81522C542C280057D87D /* HomeToolBarTrail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeToolBarTrail.swift; sourceTree = "<group>"; };
 		BF31F0AA2C48FDA9000C005C /* EmailHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailHelper.swift; sourceTree = "<group>"; };
 		BF3700872C47B60600CF255D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BF3F6CAD2C3F23280087DF5A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		BF4A81342C3AEC4D00D4CAF1 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		BF4A813E2C3AEE0900D4CAF1 /* DateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		BF4A81402C3AEE1500D4CAF1 /* HackerTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HackerTextView.swift; sourceTree = "<group>"; };
-		BF4A81442C3AEE6C00D4CAF1 /* LactateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LactateView.swift; sourceTree = "<group>"; };
+		BF4A81442C3AEE6C00D4CAF1 /* LiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveView.swift; sourceTree = "<group>"; };
 		BF4A81482C3AEFCE00D4CAF1 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		BF4A814C2C3AF03B00D4CAF1 /* MetricView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricView.swift; sourceTree = "<group>"; };
 		BF4A81622C3AF53200D4CAF1 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
-		BF4A81662C3AF5D500D4CAF1 /* CalendarToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarToolBar.swift; sourceTree = "<group>"; };
-		BF4A816E2C3AF8DA00D4CAF1 /* LactateToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LactateToolBar.swift; sourceTree = "<group>"; };
-		BF4A81762C3AFA1700D4CAF1 /* ChatToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatToolBar.swift; sourceTree = "<group>"; };
-		BF4A817E2C3AFB8600D4CAF1 /* MetricToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricToolBar.swift; sourceTree = "<group>"; };
+		BF4A81662C3AF5D500D4CAF1 /* CalendarToolBarTrail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarToolBarTrail.swift; sourceTree = "<group>"; };
+		BF4A816E2C3AF8DA00D4CAF1 /* LiveToolBarTrail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveToolBarTrail.swift; sourceTree = "<group>"; };
+		BF4A81762C3AFA1700D4CAF1 /* ChatToolBarTrail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatToolBarTrail.swift; sourceTree = "<group>"; };
+		BF4A817E2C3AFB8600D4CAF1 /* MetricToolBarTrail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricToolBarTrail.swift; sourceTree = "<group>"; };
 		BF4A81882C3AFDDE00D4CAF1 /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
 		BF4A818A2C3AFDF500D4CAF1 /* ColorOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorOptionView.swift; sourceTree = "<group>"; };
 		BF4A818E2C3AFFDD00D4CAF1 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -122,12 +132,22 @@
 		BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingView.swift; sourceTree = "<group>"; };
 		BF91AC6D2C4540530028BC41 /* NumberHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberHelper.swift; sourceTree = "<group>"; };
 		BFAAEC602C81F72F008E6FB7 /* MockSessionGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSessionGenerator.swift; sourceTree = "<group>"; };
+		BFABBD4B2C885F5D00A10182 /* PromptHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptHelper.swift; sourceTree = "<group>"; };
 		BFBBD9572C55868F00671197 /* MessageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHelper.swift; sourceTree = "<group>"; };
+		BFC38D072C935ECC00E93826 /* LocationEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationEvents.swift; sourceTree = "<group>"; };
 		BFDE40502C591A0900733888 /* CSVDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVDocument.swift; sourceTree = "<group>"; };
 		BFDE40522C591F7B00733888 /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
+		BFDE77412C91D284000D4373 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		BFDEB5FD2C497D3100D32736 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		BFDEB6032C49994900D32736 /* SupportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportView.swift; sourceTree = "<group>"; };
 		BFE876052C6E7DA6006725A6 /* StringHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHelper.swift; sourceTree = "<group>"; };
+		BFEAE8582C92C338006F6285 /* LiveToolBarPrin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveToolBarPrin.swift; sourceTree = "<group>"; };
+		BFEAE85A2C92C52E006F6285 /* ChatToolBarPrin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatToolBarPrin.swift; sourceTree = "<group>"; };
+		BFEAE85C2C92C59A006F6285 /* MetricToolBarPrin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricToolBarPrin.swift; sourceTree = "<group>"; };
+		BFECC9662C8EC7FF0081B617 /* ProfileToolBarLead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileToolBarLead.swift; sourceTree = "<group>"; };
+		BFECC9682C8ECDF30081B617 /* HomeToolBarPrin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeToolBarPrin.swift; sourceTree = "<group>"; };
+		BFF251612C9025E100389A3D /* CalendarToolBarPrin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarToolBarPrin.swift; sourceTree = "<group>"; };
+		BFF251652C90C59800389A3D /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,7 +204,7 @@
 				BF6C84172C3D1C6D00032E93 /* LearnView.swift */,
 				BF6C84192C3D1E5200032E93 /* PrivacyView.swift */,
 				BF4A81342C3AEC4D00D4CAF1 /* CalendarView.swift */,
-				BF4A81442C3AEE6C00D4CAF1 /* LactateView.swift */,
+				BF4A81442C3AEE6C00D4CAF1 /* LiveView.swift */,
 				BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */,
 				BF4A81482C3AEFCE00D4CAF1 /* ChatView.swift */,
 				BF4A814C2C3AF03B00D4CAF1 /* MetricView.swift */,
@@ -195,11 +215,17 @@
 		BF4A81962C3B065500D4CAF1 /* Toolbars */ = {
 			isa = PBXGroup;
 			children = (
-				BF1A81522C542C280057D87D /* HomeToolBar.swift */,
-				BF4A81662C3AF5D500D4CAF1 /* CalendarToolBar.swift */,
-				BF4A816E2C3AF8DA00D4CAF1 /* LactateToolBar.swift */,
-				BF4A81762C3AFA1700D4CAF1 /* ChatToolBar.swift */,
-				BF4A817E2C3AFB8600D4CAF1 /* MetricToolBar.swift */,
+				BF1A81522C542C280057D87D /* HomeToolBarTrail.swift */,
+				BF4A81662C3AF5D500D4CAF1 /* CalendarToolBarTrail.swift */,
+				BF4A816E2C3AF8DA00D4CAF1 /* LiveToolBarTrail.swift */,
+				BF4A81762C3AFA1700D4CAF1 /* ChatToolBarTrail.swift */,
+				BF4A817E2C3AFB8600D4CAF1 /* MetricToolBarTrail.swift */,
+				BFECC9662C8EC7FF0081B617 /* ProfileToolBarLead.swift */,
+				BFECC9682C8ECDF30081B617 /* HomeToolBarPrin.swift */,
+				BFF251612C9025E100389A3D /* CalendarToolBarPrin.swift */,
+				BFEAE8582C92C338006F6285 /* LiveToolBarPrin.swift */,
+				BFEAE85A2C92C52E006F6285 /* ChatToolBarPrin.swift */,
+				BFEAE85C2C92C59A006F6285 /* MetricToolBarPrin.swift */,
 			);
 			path = Toolbars;
 			sourceTree = "<group>";
@@ -214,6 +240,7 @@
 				BF6359712C78C758006F8CB4 /* CloudHelper.swift */,
 				BFDEB5FD2C497D3100D32736 /* UserService.swift */,
 				BF31F0AA2C48FDA9000C005C /* EmailHelper.swift */,
+				BFABBD4B2C885F5D00A10182 /* PromptHelper.swift */,
 				BFDE40522C591F7B00733888 /* CalendarHelper.swift */,
 				BF91AC6D2C4540530028BC41 /* NumberHelper.swift */,
 				BF4A818A2C3AFDF500D4CAF1 /* ColorOptionView.swift */,
@@ -236,6 +263,7 @@
 		BF6F84002C8793FA0081838D /* SharedUi */ = {
 			isa = PBXGroup;
 			children = (
+				BFF251652C90C59800389A3D /* FloatingButton.swift */,
 				BF6F84012C87945B0081838D /* Sheet.swift */,
 			);
 			path = SharedUi;
@@ -275,6 +303,8 @@
 				BF6F84002C8793FA0081838D /* SharedUi */,
 				BF7342082C3AE74A00911375 /* ContentView.swift */,
 				BF7342062C3AE74A00911375 /* starleetApp.swift */,
+				BFC38D072C935ECC00E93826 /* LocationEvents.swift */,
+				BFDE77412C91D284000D4373 /* LocationManager.swift */,
 				BF87F7B82C79C69A00B35F6A /* AppState.swift */,
 				BF87F7BA2C79C6C900B35F6A /* LoadingView.swift */,
 				BF73F4582C6BD8F600922B9B /* Starleet.storekit */,
@@ -452,6 +482,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFDE77422C91D284000D4373 /* LocationManager.swift in Sources */,
 				BF7342092C3AE74A00911375 /* ContentView.swift in Sources */,
 				BF4A818B2C3AFDF500D4CAF1 /* ColorOptionView.swift in Sources */,
 				BF4A814D2C3AF03B00D4CAF1 /* MetricView.swift in Sources */,
@@ -461,38 +492,47 @@
 				BFDE40532C591F8200733888 /* CalendarHelper.swift in Sources */,
 				BF4A81632C3AF53200D4CAF1 /* ProfileView.swift in Sources */,
 				BF14E3402C863AB8007FE41D /* HomeTab.swift in Sources */,
+				BFEAE85D2C92C5A3006F6285 /* MetricToolBarPrin.swift in Sources */,
+				BFECC9692C8ECE060081B617 /* HomeToolBarPrin.swift in Sources */,
 				BF91AC6E2C45405C0028BC41 /* NumberHelper.swift in Sources */,
-				BF4A81672C3AF5D500D4CAF1 /* CalendarToolBar.swift in Sources */,
+				BF4A81672C3AF5D500D4CAF1 /* CalendarToolBarTrail.swift in Sources */,
 				BFE876062C6E7DA9006725A6 /* StringHelper.swift in Sources */,
 				BF73F45B2C6BE63500922B9B /* StarStore.swift in Sources */,
 				BF31F0AB2C48FDAD000C005C /* EmailHelper.swift in Sources */,
-				BF4A816F2C3AF8DA00D4CAF1 /* LactateToolBar.swift in Sources */,
+				BF4A816F2C3AF8DA00D4CAF1 /* LiveToolBarTrail.swift in Sources */,
 				BF4A818F2C3AFFDD00D4CAF1 /* HomeView.swift in Sources */,
 				BF3700882C47B60900CF255D /* User.swift in Sources */,
 				BFDEB5FE2C497D3900D32736 /* UserService.swift in Sources */,
+				BFC38D082C935ED900E93826 /* LocationEvents.swift in Sources */,
 				BF6C84122C3D16D600032E93 /* IntegrationsView.swift in Sources */,
+				BFEAE85B2C92C538006F6285 /* ChatToolBarPrin.swift in Sources */,
+				BFABBD4C2C885F6100A10182 /* PromptHelper.swift in Sources */,
 				BF6C84182C3D1C6D00032E93 /* LearnView.swift in Sources */,
 				BF4A81492C3AEFCE00D4CAF1 /* ChatView.swift in Sources */,
 				BF6F84022C8794660081838D /* Sheet.swift in Sources */,
 				BFDEB6042C49994C00D32736 /* SupportView.swift in Sources */,
 				BF6359722C78C75B006F8CB4 /* CloudHelper.swift in Sources */,
 				BF8D6ADC2C41A9DF000269F1 /* TrainingView.swift in Sources */,
-				BF1A81532C542C280057D87D /* HomeToolBar.swift in Sources */,
+				BFEAE8592C92C348006F6285 /* LiveToolBarPrin.swift in Sources */,
+				BF1A81532C542C280057D87D /* HomeToolBarTrail.swift in Sources */,
 				BF4A81352C3AEC4D00D4CAF1 /* CalendarView.swift in Sources */,
 				BF0ED3B92C8234E100ADB94C /* HomeCapsuleGraph.swift in Sources */,
 				BFDE40512C591A1200733888 /* CSVDocument.swift in Sources */,
 				BFAAEC612C81F736008E6FB7 /* MockSessionGenerator.swift in Sources */,
 				BF7342072C3AE74A00911375 /* starleetApp.swift in Sources */,
 				BF6C840E2C3C5E8100032E93 /* AccountView.swift in Sources */,
-				BF4A817F2C3AFB8600D4CAF1 /* MetricToolBar.swift in Sources */,
+				BFF251622C9025EA00389A3D /* CalendarToolBarPrin.swift in Sources */,
+				BF4A817F2C3AFB8600D4CAF1 /* MetricToolBarTrail.swift in Sources */,
 				BF4A81892C3AFDDE00D4CAF1 /* SubscriptionView.swift in Sources */,
 				BF4A81412C3AEE1500D4CAF1 /* HackerTextView.swift in Sources */,
 				BFBBD9582C55869200671197 /* MessageHelper.swift in Sources */,
 				BF6C841A2C3D1E5200032E93 /* PrivacyView.swift in Sources */,
-				BF4A81452C3AEE6C00D4CAF1 /* LactateView.swift in Sources */,
+				BF4A81452C3AEE6C00D4CAF1 /* LiveView.swift in Sources */,
 				BF4A813F2C3AEE0900D4CAF1 /* DateHelper.swift in Sources */,
+				BFECC9672C8EC8130081B617 /* ProfileToolBarLead.swift in Sources */,
+				BFF251662C90C59E00389A3D /* FloatingButton.swift in Sources */,
 				BF57B8A92C541365000F24BB /* LactateHelper.swift in Sources */,
-				BF4A81772C3AFA1700D4CAF1 /* ChatToolBar.swift in Sources */,
+				BF4A81772C3AFA1700D4CAF1 /* ChatToolBarTrail.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -654,7 +694,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = starapp/starapp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 155;
+				CURRENT_PROJECT_VERSION = 178;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"starapp/Preview Content\"";
 				DEVELOPMENT_TEAM = 7F33N9HZ63;
@@ -675,11 +715,11 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 2.1.5;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starappv01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -698,7 +738,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = starapp/starapp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 155;
+				CURRENT_PROJECT_VERSION = 178;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"starapp/Preview Content\"";
 				DEVELOPMENT_TEAM = 7F33N9HZ63;
@@ -719,11 +759,11 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 2.1.5;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starappv01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;

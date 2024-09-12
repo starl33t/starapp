@@ -8,6 +8,7 @@
 import SwiftUI
 
 enum LactateIntensity: String {
+    case noValue = "No Value"
     case recovery = "Recovery"
     case light = "Light"
     case moderate = "Moderate"
@@ -16,6 +17,7 @@ enum LactateIntensity: String {
     
     var icon: String {
         switch self {
+        case .noValue: return "questionmark.circle"
         case .recovery: return "tortoise.fill"
         case .light: return "leaf.fill"
         case .moderate: return "wind"
@@ -26,6 +28,7 @@ enum LactateIntensity: String {
     
     var color: Color {
         switch self {
+        case .noValue: return .gray
         case .recovery: return .blue
         case .light: return .green
         case .moderate: return .yellow
@@ -40,7 +43,8 @@ struct LactateHelper {
         guard let lactate = lactate else { return .recovery }
         
         switch lactate {
-        case ..<1.0: return .recovery
+        case ..<0.1: return .noValue
+        case 0.1...1.0: return .recovery
         case 1.0...1.5: return .light
         case 1.5...3.0: return .moderate
         case 3.0...4.9: return .hard

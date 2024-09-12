@@ -7,14 +7,26 @@ class AppState: ObservableObject {
             // Set tier and tagName when currentUser is set
             tier = currentUser?.tier ?? 0
             tagName = currentUser?.tagName ?? ""
+            currentUser?.latitude = currentUser?.latitude ?? 0.0
+            currentUser?.longitude = currentUser?.longitude ?? 0.0
         }
     }
     @Published var tier: Int = 0
     @Published var tagName: String = ""
     @Published var selectedDate: Date = Date()
     @Published var days: [Date] = Date().daysInYear
-    @Published var navigationTitle: String = "Home" //Homescreen
-    @Published var trigger: Bool = false //Homescreen
+    @Published var homeTitle: String = "Lactate" //Homescreen
+    @Published var metricTitle: String = "Line Chart" //Homescreen
+    @Published var trigger: Bool = true //Homescreen
+    @Published var homeActiveTab: HomeTab = .lactate // Homescreen
+    @Published var animatedText: String = ""
+    @Published var todayTitle: String = "" // New property for CalendarView
+    @Published var todayChat: String = "AI Coach"
+    @Published var liveTitle: String = "Athletes" //Homescreen
+    @Published var selectedChart: MetricView.ChartType = .lineChart //metricview
+    @Published var selectedLive: LiveToolBarPrin.FindLive = .athletes // liveview
+    @AppStorage("Athletes") var athletesToggle: Bool = false
+    @AppStorage("Events") var eventsToggle: Bool = false
     
     func loadOrCreateUser() {
         // 1) Load the user from cache
@@ -73,8 +85,46 @@ class AppState: ObservableObject {
         }
     }
     
-    func updateNavigationTitle(with newTitle: String, trigger: Bool) {
-        self.navigationTitle = newTitle
-        self.trigger = trigger
+    func updateHomeNavigationTitle() {
+        // Centralize logic for updating the home navigation title
+        self.homeTitle = self.homeActiveTab.navigationTitle
+        self.trigger = true
+    }
+    
+    func updateTodayTitle() {
+        let today = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .long
+        let dateString = dateFormatter.string(from: today)
+        self.todayTitle = dateString
+        self.trigger = true
+    }
+    
+    func updateMetricTitle() {
+        switch selectedChart {
+        case .lineChart:
+            metricTitle = "Line Chart"
+        case .barChart:
+            metricTitle = "Bar Chart"
+        case .pieChart:
+            metricTitle = "Pie Chart"
+        case .scatterPlot:
+            metricTitle = "Scatter Plot"
+        }
+        self.trigger = true
+    }
+    
+    func todayLive() {
+        switch selectedLive {
+        case .athletes:
+            liveTitle = "Athletes"
+            athletesToggle = true
+            eventsToggle = false  // Make sure eventsToggle is false when athletes are selected
+        case .events:
+            liveTitle = "Events"
+            athletesToggle = false  // Make sure athletesToggle is false when events are selected
+            eventsToggle = true
+        }
+        trigger = true  // Trigger any necessary UI updates
     }
 }

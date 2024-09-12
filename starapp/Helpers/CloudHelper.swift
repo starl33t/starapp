@@ -1,6 +1,7 @@
 import CloudKit
 
 class CloudHelper {
+    static var lastChangeToken: CKServerChangeToken?
     
     // Fetch user record from CloudKit using recordName
     static func fetchUserRecord(completion: @escaping (CKRecord?, Error?) -> Void) {
@@ -57,6 +58,8 @@ class CloudHelper {
                     record["CD_userName"] = user.userName
                     record["CD_tagName"] = user.tagName
                     record["CD_tier"] = user.tier
+                    record["CD_latitude"] = user.latitude
+                    record["CD_longitude"] = user.longitude
                     
                     container.publicCloudDatabase.save(record) { savedRecord, error in
                         if let error = error {
@@ -74,7 +77,7 @@ class CloudHelper {
             }
         }
     }
-
+    
     // Save an existing user record to CloudKit
     static func saveUserRecord(record: CKRecord, completion: @escaping (Error?) -> Void) {
         print("Debug: Saving record with recordName: \(record.recordID.recordName)")
@@ -95,7 +98,9 @@ class CloudHelper {
         let userDict: [String: Any] = [
             "userName": user.userName ?? "",
             "tagName": user.tagName ?? "",
-            "tier": user.tier ?? 0
+            "tier": user.tier ?? 0,
+            "latitude": user.latitude ?? 0.0,
+            "longitude": user.longitude ?? 0.0
         ]
         UserDefaults.standard.set(userDict, forKey: "user")
     }
@@ -106,7 +111,9 @@ class CloudHelper {
             return User(
                 userName: userDict["userName"] as? String,
                 tagName: userDict["tagName"] as? String,
-                tier: userDict["tier"] as? Int
+                tier: userDict["tier"] as? Int,
+                latitude: userDict["latitude"] as? Double,
+                longitude: userDict["longitude"] as? Double
             )
         }
         return nil
@@ -114,26 +121,28 @@ class CloudHelper {
     
     // Sync local changes to CloudKit
     static func syncLocalChangesToCloudKit(user: User?, completion: @escaping () -> Void) {
-           guard let user = user else { return }
-           
-           fetchUserRecord { record, error in
-               if let record = record {
-                   // Update existing CloudKit record with local changes
-                   record["CD_userName"] = user.userName
-                   record["CD_tagName"] = user.tagName
-                   record["CD_tier"] = user.tier
-                   
-                   saveUserRecord(record: record) { error in
-                       completion()
-                   }
-               } else {
-                   // No record found, create a new one only if none exists
-                   createUserRecord(user: user) { _, error in
-                       completion()
-                   }
-               }
-           }
-       }
+        guard let user = user else { return }
+        
+        fetchUserRecord { record, error in
+            if let record = record {
+                // Update existing CloudKit record with local changes
+                record["CD_userName"] = user.userName
+                record["CD_tagName"] = user.tagName
+                record["CD_tier"] = user.tier
+                record["CD_latitude"] = user.latitude
+                record["CD_longitude"] = user.longitude
+                
+                saveUserRecord(record: record) { error in
+                    completion()
+                }
+            } else {
+                // No record found, create a new one only if none exists
+                createUserRecord(user: user) { _, error in
+                    completion()
+                }
+            }
+        }
+    }
     
     // Sync with CloudKit and update local cache
     static func syncWithCloudKit(completion: @escaping (User?) -> Void) {
@@ -142,7 +151,9 @@ class CloudHelper {
                 let user = User(
                     userName: record["CD_userName"] as? String ?? "defaultUserName",
                     tagName: record["CD_tagName"] as? String ?? "Enter Tag",
-                    tier: record["CD_tier"] as? Int ?? 0
+                    tier: record["CD_tier"] as? Int ?? 0,
+                    latitude: record["CD_latitude"] as? Double,
+                    longitude: record["CD_longitude"] as? Double
                 )
                 saveToLocalCache(user: user)
                 completion(user)
@@ -157,7 +168,9 @@ class CloudHelper {
         let newUser = User(
             userName: "defaultUserName",
             tagName: "defaultTagName",
-            tier: 0
+            tier: 0,
+            latitude: 0.0,
+            longitude: 0.0
         )
         saveToLocalCache(user: newUser)
         completion(newUser)
@@ -175,5 +188,57 @@ class CloudHelper {
             }
         }
     }
+    
+    // Fetch only the changes in user records, focusing on latitude and longitude
+    static func fetchUserLocationChanges(completion: @escaping ([CKRecord]?, Error?) -> Void) {
+        let container = CKContainer.default()
+        let publicDatabase = container.publicCloudDatabase
+        
+        // Create the operation to fetch record changes in the zone
+        let fetchChangesOperation = CKFetchRecordZoneChangesOperation(recordZoneIDs: [CKRecordZone.default().zoneID], configurationsByRecordZoneID: [
+            CKRecordZone.default().zoneID: CKFetchRecordZoneChangesOperation.ZoneConfiguration(previousServerChangeToken: lastChangeToken)
+        ])
+        
+        var changedRecords: [CKRecord] = []
+        
+        fetchChangesOperation.recordWasChangedBlock = { recordID, result in
+            switch result {
+            case .success(let record):
+                // Correctly access fields in the record
+                if let latitude = record["latitude"] as? Double,
+                   let longitude = record["longitude"] as? Double {
+                    // Use the values as needed
+                    print("Latitude: \(latitude), Longitude: \(longitude)")
+                    changedRecords.append(record)
+                }
+            case .failure(let error):
+                print("Error fetching record with ID \(recordID): \(error.localizedDescription)")
+            }
+        }
 
+        
+        // This block provides the new serverChangeToken, called after the zone fetch is complete
+        fetchChangesOperation.recordZoneFetchResultBlock = { recordZoneID, result in
+            switch result {
+            case .success(let (serverChangeToken, _, _)):
+                lastChangeToken = serverChangeToken // Save the new change token
+            case .failure(let error):
+                print("Error during zone fetch result: \(error.localizedDescription)")
+            }
+        }
+        
+        // Use fetchRecordZoneChangesResultBlock to handle the entire operation
+        fetchChangesOperation.fetchRecordZoneChangesResultBlock = { result in
+            switch result {
+            case .success:
+                completion(changedRecords, nil)
+            case .failure(let error):
+                print("Error fetching changes: \(error.localizedDescription)")
+                completion(nil, error)
+            }
+        }
+        
+        // Add the operation to the public database
+        publicDatabase.add(fetchChangesOperation)
+    }
 }

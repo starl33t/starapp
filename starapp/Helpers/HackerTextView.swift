@@ -8,37 +8,35 @@
 import SwiftUI
 
 struct HackerTextView: View {
-    //config
+    @EnvironmentObject var appState: AppState
     var text: String
     var trigger: Bool
     var transition: ContentTransition = .interpolate
     var duration: CGFloat = 1.0
     var speed: CGFloat = 0.1
-    //view properties
-    @State private var animatedText: String = ""
     @State private var randomCharacters: [Character] = {
         let string = "opwqdklvknsoiuosdfosdpfldksdmfnasxhcvkax"
         return Array(string)
     }()
     @State private var animationID: String = UUID().uuidString
     var body: some View {
-        Text(animatedText)
+        Text(appState.animatedText)
             .fontDesign(.monospaced)
-            .truncationMode(/*@START_MENU_TOKEN@*/.tail/*@END_MENU_TOKEN@*/)
+            .fixedSize(horizontal: true, vertical: false) 
             .contentTransition(transition)
-            .animation(.easeInOut(duration: 0.1), value: animatedText)
+            .animation(.easeInOut(duration: 0.1), value: appState.animatedText)
             .onAppear{
-                guard animatedText.isEmpty else {
-                    return
+                if appState.animatedText != text {
+                    setRandomCharacters()
+                    animateText()
                 }
-                setRandomCharacters()
-                animateText()
             }
             .onChange(of: trigger) { oldValue, newValue in
                 animateText()
+                animationID = UUID().uuidString
             }
             .onChange(of: text) { oldValue, newValue in
-                animatedText = text
+                appState.animatedText = text
                 animationID = UUID().uuidString
                 setRandomCharacters()
                 animateText()
@@ -77,18 +75,19 @@ struct HackerTextView: View {
     }
     
     private func setRandomCharacters(){
-        animatedText=text
-        for index in animatedText.indices {
+        appState.animatedText=text
+        for index in appState.animatedText.indices {
             guard let randomCharacter = randomCharacters.randomElement() else {return}
             replaceCharacter(at: index, character: randomCharacter)
             
         }
     }
+    
     func replaceCharacter(at index: String.Index, character: Character){
-        guard animatedText.indices.contains(index) else {return}
-        let indexCharacter = String(animatedText[index])
+        guard appState.animatedText.indices.contains(index) else {return}
+        let indexCharacter = String(appState.animatedText[index])
         if indexCharacter.trimmingCharacters(in: .whitespacesAndNewlines) != ""{
-            animatedText.replaceSubrange(index...index, with: String(character))
+            appState.animatedText.replaceSubrange(index...index, with: String(character))
         }
     }
 }

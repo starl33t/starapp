@@ -44,7 +44,7 @@ struct ChatView: View {
         .onAppear {
             updateCanSendMessage()
             resetMessageCountIfNeeded()
-            updateNavigationTitleToAICoach()
+            //updateNavigationTitleToAICoach()
         }
         .onChange(of: appState.tier) { _,newTier in
             updateCanSendMessage()
@@ -52,10 +52,6 @@ struct ChatView: View {
         .onTapGesture {
             textFieldIsFocused = false
         }
-    }
-    
-    private func updateNavigationTitleToAICoach() {
-        appState.updateNavigationTitle(with: "AI Coach", trigger: appState.trigger)
     }
     
     private var placeholderText: String {

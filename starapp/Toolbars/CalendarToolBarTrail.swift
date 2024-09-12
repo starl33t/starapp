@@ -1,18 +1,23 @@
 import SwiftUI
 
-struct CalendarToolbar: View {
+struct CalendarToolbarTrail: View {
     @EnvironmentObject var appState: AppState
+    @Environment(\.dismiss) var dismiss
+    @Environment(\.modelContext) var context
+    @State var trainingSheet: Bool = false
+    @State private var lactate: Double?
+    @State private var date: Date = Date()
     @State private var showDatePicker: Bool = false
+    @AppStorage("showTrainingList") var showTrainingList = false
     
     var body: some View {
         HStack {
             Button(action: {
-                let today = Date()
-                appState.selectedDate = today
-                appState.days = today.daysInYear
+                showTrainingList.toggle()
             }) {
-                Image(systemName: Date().daySquareIcon)
+                Label("List", systemImage: showTrainingList ? "square.grid.3x3" : "line.3.horizontal")
             }
+ 
             Button(action: {
                 showDatePicker = true
             }) {

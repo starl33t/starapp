@@ -10,8 +10,7 @@ struct starappApp: App {
         WindowGroup {
             if appState.currentUser != nil {
                 ContentView()
-                    .environmentObject(appState)
-                    .environmentObject(starStore)
+                   
             } else {
                 LoadingView()
                     .onAppear {
@@ -19,6 +18,8 @@ struct starappApp: App {
                     }
             }
         }
+        .environmentObject(appState)
+        .environmentObject(starStore)
         .modelContainer(for: [User.self])
     }
 }

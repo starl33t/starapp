@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftData
 import UniformTypeIdentifiers
 
-struct MetricToolBar: View {
+struct MetricToolBarTrail: View {
     @Query private var sessions: [Session]
     @AppStorage("showAnnotations") var showAnnotations = true
     @State private var isExporting = false

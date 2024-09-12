@@ -25,10 +25,10 @@ struct ContentView: View {
                             Text("Calendar")
                         }
                         .tag(1)
-                    LactateView()
+                    LiveView()
                         .tabItem {
                             Image(systemName: "dot.radiowaves.left.and.right")
-                            Text("Lactate")
+                            Text("Live")
                         }
                         .tag(2)
                     ChatView(viewModel: viewModel)
@@ -47,29 +47,50 @@ struct ContentView: View {
                 .tint(.starMain)
             }
             .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(Color.starBlack, for: .navigationBar)
             .toolbar {
-                ToolbarItem(placement: .principal) {
-                    HackerTextView(text: appState.navigationTitle, trigger: appState.trigger)
-                        .font(.headline)
-                        .foregroundColor(.whiteOne) 
+                ToolbarItemGroup(placement: .principal) {
+                    switch appState.selectedTab {
+                    case 0:
+                        HomeToolBarPrin()
+                    case 1:
+                        CalendarToolBarPrin()
+                    case 2:
+                        LiveToolBarPrin()
+                    case 3:
+                        ChatToolBarPrin()
+                    case 4:
+                        MetricToolBarPrin()
+                    default:
+                        CalendarToolBarPrin()
+                    }
                 }
-                ToolbarItem(placement: .navigationBarLeading) {
-                    NavigationLink(destination: ProfileView()) {
-                        Label("Profile", systemImage: "person.fill")
+                ToolbarItemGroup(placement: .navigationBarLeading) {
+                    switch appState.selectedTab {
+                    case 1:
+                        ProfileToolBarLead()
+                    case 2:
+                        ProfileToolBarLead()
+                    case 3:
+                        ProfileToolBarLead()
+                    case 4:
+                        ProfileToolBarLead()
+                    default:
+                        ProfileToolBarLead()
                     }
                 }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     switch appState.selectedTab {
                     case 1:
-                        CalendarToolbar()
+                        CalendarToolbarTrail()
                     case 2:
-                        LactateToolbar()
+                        LiveToolbarTrail()
                     case 3:
-                        ChatToolbar(viewModel: viewModel)
+                        ChatToolbarTrail(viewModel: viewModel)
                     case 4:
-                        MetricToolBar()
+                        MetricToolBarTrail()
                     default:
-                        HomeToolBar()
+                        HomeToolBarTrail()
                     }
                 }
             }

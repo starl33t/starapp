@@ -14,11 +14,10 @@ struct MetricView: View {
     @EnvironmentObject var appState: AppState
     @Query(sort: \Session.lactate, order: .reverse) private var sessions: [Session]
     @State private var barSelection: Date?
-    @State private var selectedChart: ChartType = .lineChart
     
     enum ChartType {
-            case lineChart, barChart, pieChart, scatterPlot
-        }
+        case lineChart, barChart, pieChart, scatterPlot
+    }
     
     init() {
         let startOfLast28Days = Date.startOfLast28Days()
@@ -32,47 +31,31 @@ struct MetricView: View {
     }
     
     var body: some View {
-            ZStack {
-                Color.starBlack.ignoresSafeArea()
-                if sessions.isEmpty {
-                    ContentUnavailableView("No Sessions Found", systemImage: "exclamationmark.triangle")
-                        .foregroundStyle(.whiteOne)
-                } else {
-                    VStack {
-                        TabView(selection: $selectedChart) {
-                            lineChart
-                                .tag(ChartType.lineChart)
-                            barChart
-                                .tag(ChartType.barChart)
-                            pieChart
-                                .tag(ChartType.pieChart)
-                            scatterPlot
-                                .tag(ChartType.scatterPlot)
-                        }
-                        .tabViewStyle(PageTabViewStyle())
+        ZStack {
+            Color.starBlack.ignoresSafeArea()
+            if sessions.isEmpty {
+                ContentUnavailableView("No Sessions Found", systemImage: "exclamationmark.triangle")
+                    .foregroundStyle(.whiteOne)
+            } else {
+                VStack {
+                    TabView(selection: $appState.selectedChart) {
+                        lineChart
+                            .tag(ChartType.lineChart)
+                        barChart
+                            .tag(ChartType.barChart)
+                        pieChart
+                            .tag(ChartType.pieChart)
+                        scatterPlot
+                            .tag(ChartType.scatterPlot)
                     }
+                    .tabViewStyle(PageTabViewStyle())
+                }
+                .onChange(of: appState.selectedChart) { oldValue, newValue in
+                    appState.updateMetricTitle()
                 }
             }
-            .onAppear {
-                updateNavigationTitleForSelectedChart()
-            }
-            .onChange(of: selectedChart) {
-                updateNavigationTitleForSelectedChart()
-            }
         }
-    
-    private func updateNavigationTitleForSelectedChart() {
-            switch selectedChart {
-            case .lineChart:
-                appState.updateNavigationTitle(with: "Linechart", trigger: appState.trigger)
-            case .barChart:
-                appState.updateNavigationTitle(with: "Barchart", trigger: appState.trigger)
-            case .pieChart:
-                appState.updateNavigationTitle(with: "Piechart", trigger: appState.trigger)
-            case .scatterPlot:
-                appState.updateNavigationTitle(with: "Scatterplot", trigger: appState.trigger)
-            }
-        }
+    }
     
     private var lineChart: some View {
         Chart(sessions) { session in
