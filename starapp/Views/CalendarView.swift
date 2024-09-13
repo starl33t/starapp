@@ -48,7 +48,6 @@ struct CalendarView: View {
                         .fontWeight(.semibold)
                         .foregroundStyle(.whiteOne)
                         .rotationEffect(.init(degrees: isExpanded ? 135 : 0))
-                        .scaleEffect(1.02)
                         .scaleEffect(isExpanded ? 0.9 : 1)
                 }
                 .padding()
@@ -154,7 +153,9 @@ struct CalendarView: View {
                 }
             }
             .onAppear {
-                CalendarHelper.scrollToDay(Date(), using: proxy, in: appState.days, calendar: calendar)
+                DispatchQueue.main.async {
+                    CalendarHelper.scrollToDay(Date(), using: proxy, in: appState.days, calendar: calendar)
+                }
                 sessionCache = CalendarHelper.buildSessionCache(for: appState.days, with: sessions)
             }
             .onChange(of: appState.selectedDate) { oldDate, newDate in

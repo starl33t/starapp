@@ -30,8 +30,8 @@ struct HomeView: View {
     }
     
     var sessions: [Session] {
-        let startDate = startDate(for: selectedDateRange)
-        let endDate = endDate(for: selectedDateRange)
+        let startDate = Date().startDate(for: selectedDateRange)
+        let endDate = Date().endDate(for: selectedDateRange)
         
         // Filter sessions based on the selected date range
         return allSessions.filter { session in
@@ -51,19 +51,14 @@ struct HomeView: View {
                     summaryView()
                     if sessions.isEmpty {
                         HStack {
-                            Text("This week")
+                            Text("Example by AI")
+                            Spacer()
+                            Text(sessionDisplayText)
                         }
                         .foregroundStyle(.whiteOne)
                         .padding()
                         sessionChartView(sessions: MockSessionGenerator.createMockSessions())
                             .frame(height: 100)
-                        HStack {
-                            Spacer()
-                            Text(sessionDisplayText)
-                        }
-                        .padding()
-                        .foregroundStyle(.whiteOne)
-                        
                         VStack(alignment: .leading) {
                             Text("Renato")
                                 .font(.headline)
@@ -83,17 +78,13 @@ struct HomeView: View {
                             } label: {
                                 Text(selectedDateRange.displayText)
                             }
+                            Spacer()
+                            Text(sessionDisplayText)
                         }
                         .foregroundStyle(.whiteOne)
                         .padding()
                         sessionChartView(sessions: NumberHelper.filteredSessions(for: appState.homeActiveTab, in: sessions))
                             .frame(height: 100)
-                        HStack {
-                            Spacer()
-                            Text(sessionDisplayText)
-                        }
-                        .padding()
-                        .foregroundStyle(.whiteOne)
                         VStack(alignment: .leading) {
                             Text("Renato")
                                 .font(.headline)
@@ -115,6 +106,28 @@ struct HomeView: View {
                 }
             }
             .padding(.top)
+            .overlay(alignment: .bottomTrailing) {
+                FloatingButton {
+                    FloatingAction(text: "4x6'") {
+                        print("4x6")
+                    }
+                    
+                    FloatingAction(text: "7x4'") {
+                        print("4x6")
+                    }
+                    FloatingAction(symbols: ["plus.square.dashed"]) {
+                        print("4x6")
+                    }
+                } label: { isExpanded in
+                    Image(systemName: isExpanded ? "text.bubble" : "bubble.left")
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.whiteOne)
+                        .scaleEffect(isExpanded ? 1 : 0.9)
+                }
+                .padding()
+                
+            }
         }
         .onAppear {
             updateActiveTabIfNeeded()
@@ -143,40 +156,6 @@ struct HomeView: View {
                 .environment(\.colorScheme, .dark)
             }
             .frame(maxWidth: .infinity)
-        }
-    }
-    
-    private func startDate(for dateRange: DateRangeOption) -> Date {
-        switch dateRange {
-        case .thisWeek:
-            return Date().startOfWeek
-        case .thisMonth:
-            return Date().startOfMonth
-        case .thisYear:
-            return Date().startOfYear
-        case .last7Days:
-            return Date().addingTimeInterval(-7 * 24 * 60 * 60) // 7 days ago2
-        case .last30Days:
-            return Date().addingTimeInterval(-30 * 24 * 60 * 60) // 30 days ago
-        case .last365Days:
-            return Date().addingTimeInterval(-365 * 24 * 60 * 60) // 365 days ago
-        }
-    }
-    
-    private func endDate(for dateRange: DateRangeOption) -> Date {
-        switch dateRange {
-        case .thisWeek:
-            return Date().endOfWeek
-        case .thisMonth:
-            return Date().endOfMonth
-        case .thisYear:
-            return Date().endOfYear
-        case .last7Days:
-            return Date()
-        case .last30Days:
-            return Date()
-        case .last365Days:
-            return Date()
         }
     }
     
@@ -428,28 +407,4 @@ struct HomeView: View {
         .environmentObject(AppState())
 }
 
-enum DateRangeOption: String, CaseIterable {
-    case thisWeek = "This Week"
-    case thisMonth = "This Month"
-    case thisYear = "This Year"
-    case last7Days = "Last 7 Days"
-    case last30Days = "Last 30 Days"
-    case last365Days = "Last 365 Days"
-    
-    var displayText: String {
-        switch self {
-        case .thisWeek:
-            return "This Week"
-        case .thisMonth:
-            return "This Month"
-        case .thisYear:
-            return "This Year"
-        case .last7Days:
-            return "Last 7 Days"
-        case .last30Days:
-            return "Last 30 Days"
-        case .last365Days:
-            return "Last 365 Days"
-        }
-    }
-}
+

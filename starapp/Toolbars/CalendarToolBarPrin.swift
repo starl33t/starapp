@@ -12,8 +12,15 @@ struct CalendarToolBarPrin: View {
                 appState.selectedDate = today
                 appState.days = today.daysInYear
             }) {
-                HackerTextView(text: appState.todayTitle, trigger: true) 
-                    .foregroundColor(.whiteOne)
+                ZStack{
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color.whiteOne, lineWidth: 2)
+                        .frame(width: 160, height: 32)
+                    Text(appState.todayTitle)
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(.whiteOne)
+                }
             }
         }
         .font(.headline)

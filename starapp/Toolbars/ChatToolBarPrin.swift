@@ -12,12 +12,10 @@ struct ChatToolBarPrin: View {
     
     var body: some View {
         HStack {
-            HackerTextView(text: appState.todayChat, trigger: true)
+            Text(appState.todayChat)
+                .font(.headline)
                 .foregroundColor(.whiteOne)
         }
         .font(.headline)
-        .onAppear {
-            appState.updateTodayTitle()
-        }
     }
 }

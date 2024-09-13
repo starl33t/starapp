@@ -87,6 +87,14 @@ extension Date {
         formatter.dateFormat = "d MMM"
         return formatter.string(from: date)
     }
+    
+    func formatDayMonthLong(date: Date?) -> String {
+        guard let date = date else { return "N/A" }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "E dd MMMM"
+        return formatter.string(from: date)
+    }
+    
     func formatYear(date: Date?) -> String {
         guard let date = date else { return "N/A" }
         let formatter = DateFormatter()
@@ -135,4 +143,59 @@ extension Date {
         return Calendar.current.date(byAdding: .day, value: -29, to: Date())!
     }
     
+    func startDate(for dateRange: DateRangeOption) -> Date {
+            switch dateRange {
+            case .thisWeek:
+                return self.startOfWeek
+            case .thisMonth:
+                return self.startOfMonth
+            case .thisYear:
+                return self.startOfYear
+            case .last7Days:
+                return self.addingTimeInterval(-7 * 24 * 60 * 60)
+            case .last30Days:
+                return self.addingTimeInterval(-30 * 24 * 60 * 60)
+            case .last365Days:
+                return self.addingTimeInterval(-365 * 24 * 60 * 60)
+            }
+        }
+        
+        func endDate(for dateRange: DateRangeOption) -> Date {
+            switch dateRange {
+            case .thisWeek:
+                return self.endOfWeek
+            case .thisMonth:
+                return self.endOfMonth
+            case .thisYear:
+                return self.endOfYear
+            case .last7Days, .last30Days, .last365Days:
+                return Date()
+            }
+        }
+}
+
+enum DateRangeOption: String, CaseIterable {
+    case thisWeek = "This Week"
+    case thisMonth = "This Month"
+    case thisYear = "This Year"
+    case last7Days = "Last 7 Days"
+    case last30Days = "Last 30 Days"
+    case last365Days = "Last 365 Days"
+    
+    var displayText: String {
+        switch self {
+        case .thisWeek:
+            return "This Week"
+        case .thisMonth:
+            return "This Month"
+        case .thisYear:
+            return "This Year"
+        case .last7Days:
+            return "Last 7 Days"
+        case .last30Days:
+            return "Last 30 Days"
+        case .last365Days:
+            return "Last 365 Days"
+        }
+    }
 }

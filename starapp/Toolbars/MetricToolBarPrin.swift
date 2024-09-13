@@ -12,8 +12,8 @@ struct MetricToolBarPrin: View {
     
     var body: some View {
         HStack {
-            // Use appState.navigationTitle instead of calling the updateMetricTitle function directly
-            HackerTextView(text: appState.metricTitle, trigger: appState.trigger)
+            Text(appState.metricTitle)
+                .font(.headline)
                 .foregroundColor(.whiteOne)
         }
         .font(.headline)

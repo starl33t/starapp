@@ -11,7 +11,7 @@ struct HomeToolBarPrin: View {
     @EnvironmentObject var appState: AppState
     var body: some View {
         HStack {
-            HackerTextView(text:appState.homeTitle, trigger: true)
+            Text(appState.homeTitle)
         }
         .font(.headline)
         .foregroundColor(.whiteOne)

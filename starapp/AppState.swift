@@ -16,7 +16,7 @@ class AppState: ObservableObject {
     @Published var selectedDate: Date = Date()
     @Published var days: [Date] = Date().daysInYear
     @Published var homeTitle: String = "Lactate" //Homescreen
-    @Published var metricTitle: String = "Line Chart" //Homescreen
+    @Published var metricTitle: String = "Line Chart" //Metric
     @Published var trigger: Bool = true //Homescreen
     @Published var homeActiveTab: HomeTab = .lactate // Homescreen
     @Published var animatedText: String = ""
@@ -86,18 +86,12 @@ class AppState: ObservableObject {
     }
     
     func updateHomeNavigationTitle() {
-        // Centralize logic for updating the home navigation title
         self.homeTitle = self.homeActiveTab.navigationTitle
-        self.trigger = true
     }
     
     func updateTodayTitle() {
         let today = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .long
-        let dateString = dateFormatter.string(from: today)
-        self.todayTitle = dateString
-        self.trigger = true
+        self.todayTitle = today.formatDayMonthLong(date: today)
     }
     
     func updateMetricTitle() {
@@ -111,7 +105,6 @@ class AppState: ObservableObject {
         case .scatterPlot:
             metricTitle = "Scatter Plot"
         }
-        self.trigger = true
     }
     
     func todayLive() {
@@ -125,6 +118,5 @@ class AppState: ObservableObject {
             athletesToggle = false  // Make sure athletesToggle is false when events are selected
             eventsToggle = true
         }
-        trigger = true  // Trigger any necessary UI updates
     }
 }
