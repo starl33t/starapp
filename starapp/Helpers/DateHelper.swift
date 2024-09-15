@@ -123,7 +123,7 @@ extension Date {
     
     // End of current week
     var endOfWeek: Date {
-        return Date.calendar.date(byAdding: .day, value: 6, to: startOfWeek)!
+        return Date.calendar.date(byAdding: .day, value: 7, to: startOfWeek)!
     }
     
     // Start of current month

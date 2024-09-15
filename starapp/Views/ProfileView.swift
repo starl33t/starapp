@@ -105,7 +105,7 @@ struct ProfileView: View {
         }
         .sheet(isPresented: $showAccountSheet) {
             AccountView()
-                .modifier(CloseButtonModifier(isPresented: $showAccountSheet))
+                .modifier(CloseButtonModifier(onClose: { showAccountSheet = false }))
         }
         .sheet(isPresented: $showSubscriptionSheet) {
             SubscriptionView()
@@ -119,19 +119,19 @@ struct ProfileView: View {
         }
         .sheet(isPresented: $showIntegrationsSheet) {
             IntegrationsView()
-                .modifier(CloseButtonModifier(isPresented: $showIntegrationsSheet))
+                .modifier(CloseButtonModifier(onClose: {showIntegrationsSheet = false}))
         }
         .sheet(isPresented: $showSupportSheet) {
             SupportView()
-                .modifier(CloseButtonModifier(isPresented: $showSupportSheet))
+                .modifier(CloseButtonModifier(onClose: {showSupportSheet = false}))
         }
         .sheet(isPresented: $showLearnSheet) {
             LearnView()
-                .modifier(CloseButtonModifier(isPresented: $showLearnSheet))
+                .modifier(CloseButtonModifier(onClose: {showLearnSheet = false}))
         }
         .sheet(isPresented: $showPrivacySheet) {
             PrivacyView()
-                .modifier(CloseButtonModifier(isPresented: $showPrivacySheet))
+                .modifier(CloseButtonModifier(onClose: {showPrivacySheet = false}))
         }
     }
     

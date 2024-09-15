@@ -26,7 +26,7 @@ struct CalendarToolbarTrail: View {
         }
         .sheet(isPresented: $showDatePicker) {
             datePicker()
-                .modifier(CloseButtonModifier(isPresented: $showDatePicker))
+                .modifier(CloseButtonModifier(onClose: {showDatePicker = false}))
                 .presentationDetents([.fraction(0.3)])
         }
     }
@@ -42,14 +42,12 @@ struct CalendarToolbarTrail: View {
         }()
         return ZStack {
             Color.starBlack.ignoresSafeArea()
-            VStack {
-                DatePicker("Select Date", selection: $appState.selectedDate, in: dateRange, displayedComponents: .date)
-                    .datePickerStyle(WheelDatePickerStyle())
-                    .labelsHidden()
-                    .environment(\.colorScheme, .dark)
-            }
-            .frame(maxWidth: .infinity)
-            
+                VStack {
+                    DatePicker("Select Date", selection: $appState.selectedDate, in: dateRange, displayedComponents: .date)
+                        .datePickerStyle(WheelDatePickerStyle())
+                        .labelsHidden()
+                        .environment(\.colorScheme, .dark)
+                }
         }
     }
 }

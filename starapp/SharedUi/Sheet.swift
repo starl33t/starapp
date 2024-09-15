@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct CloseButtonModifier: ViewModifier {
-    @Binding var isPresented: Bool
-    
+    let onClose: () -> Void
+
     func body(content: Content) -> some View {
         ZStack(alignment: .topLeading) {
             content
-            
-            Button(action: { isPresented = false }) {
+
+            Button(action: onClose) {
                 Image(systemName: "xmark")
                     .font(.system(size: 22))
                     .foregroundStyle(.whiteOne)
@@ -23,6 +23,7 @@ struct CloseButtonModifier: ViewModifier {
         }
     }
 }
+
 
 struct SubscriptionCloseButtonModifier: ViewModifier {
     @Binding var isPresented: Bool

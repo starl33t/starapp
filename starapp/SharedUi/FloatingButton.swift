@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FloatingButton<Label: View>: View {
-    
+    @EnvironmentObject var appState: AppState
     var buttonSize: CGFloat
     var actions: [FloatingAction]
     var label: (Bool) -> Label
@@ -18,13 +18,11 @@ struct FloatingButton<Label: View>: View {
         self.label = label
     }
     
-    @State private var isExpanded: Bool = false
-    
     var body: some View {
         Button {
-            isExpanded.toggle()
+            appState.isExpanded.toggle()
         } label: {
-            label(isExpanded)
+            label(appState.isExpanded)
                 .frame(width: buttonSize, height: buttonSize)
                 .background(Circle().fill(Color.darkOne))
                 .contentShape(.rect)
@@ -38,14 +36,14 @@ struct FloatingButton<Label: View>: View {
             }
             .frame(width: buttonSize, height: buttonSize)
         }
-        .animation(.snappy(duration: 0.4, extraBounce: 0), value: isExpanded)
+        .animation(.snappy(duration: 0.4, extraBounce: 0), value: appState.isExpanded)
     }
     
     @ViewBuilder
     func ActionView(_ action: FloatingAction) -> some View {
         Button {
             action.action()
-            isExpanded = false
+            appState.isExpanded = false
         } label: {
             ZStack {
                 if let symbols = action.symbols {
@@ -67,9 +65,9 @@ struct FloatingButton<Label: View>: View {
             .contentShape(.circle)
         }
         .buttonStyle(PressableButtonStyle())
-        .disabled(!isExpanded)
+        .disabled(!appState.isExpanded)
         .rotationEffect(.init(degrees: progress(action) * -90))
-        .offset(x: isExpanded ? -offset / 2 : 0)
+        .offset(x: appState.isExpanded ? -offset / 2 : 0)
         .rotationEffect(.init(degrees: progress(action) * 90))
     }
     

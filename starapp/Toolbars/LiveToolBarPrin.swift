@@ -32,8 +32,7 @@ struct LiveToolBarPrin: View {
             .font(.headline)
             .foregroundColor(appState.selectedLive == tab ? .whiteOne : .gray)
             .padding(.vertical, 2)
-            .padding(.leading, 10)
-            .padding(.trailing, 15)
+            .padding(.horizontal, 10)
             .contentShape(Rectangle())
             .background {
                 if appState.selectedLive == tab {

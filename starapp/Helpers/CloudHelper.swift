@@ -1,7 +1,6 @@
 import CloudKit
 
 class CloudHelper {
-    static var lastChangeToken: CKServerChangeToken?
     
     // Fetch user record from CloudKit using recordName
     static func fetchUserRecord(completion: @escaping (CKRecord?, Error?) -> Void) {
@@ -189,56 +188,33 @@ class CloudHelper {
         }
     }
     
-    // Fetch only the changes in user records, focusing on latitude and longitude
-    static func fetchUserLocationChanges(completion: @escaping ([CKRecord]?, Error?) -> Void) {
+    static func fetchUserLocations(completion: @escaping ([CKRecord]?, Error?) -> Void) {
         let container = CKContainer.default()
         let publicDatabase = container.publicCloudDatabase
-        
-        // Create the operation to fetch record changes in the zone
-        let fetchChangesOperation = CKFetchRecordZoneChangesOperation(recordZoneIDs: [CKRecordZone.default().zoneID], configurationsByRecordZoneID: [
-            CKRecordZone.default().zoneID: CKFetchRecordZoneChangesOperation.ZoneConfiguration(previousServerChangeToken: lastChangeToken)
-        ])
-        
-        var changedRecords: [CKRecord] = []
-        
-        fetchChangesOperation.recordWasChangedBlock = { recordID, result in
-            switch result {
-            case .success(let record):
-                // Correctly access fields in the record
-                if let latitude = record["latitude"] as? Double,
-                   let longitude = record["longitude"] as? Double {
-                    // Use the values as needed
-                    print("Latitude: \(latitude), Longitude: \(longitude)")
-                    changedRecords.append(record)
-                }
-            case .failure(let error):
-                print("Error fetching record with ID \(recordID): \(error.localizedDescription)")
-            }
-        }
 
-        
-        // This block provides the new serverChangeToken, called after the zone fetch is complete
-        fetchChangesOperation.recordZoneFetchResultBlock = { recordZoneID, result in
+        // Create a query to fetch all "CD_User" records
+        let predicate = NSPredicate(value: true) // Fetch all records
+        let query = CKQuery(recordType: "CD_User", predicate: predicate)
+
+        var records: [CKRecord] = []
+
+        // Fetch records using the new API
+        publicDatabase.fetch(withQuery: query, inZoneWith: nil, desiredKeys: nil, resultsLimit: CKQueryOperation.maximumResults) { result in
             switch result {
-            case .success(let (serverChangeToken, _, _)):
-                lastChangeToken = serverChangeToken // Save the new change token
+            case .success(let (matchedResults, _)):
+                for (_, recordResult) in matchedResults {
+                    switch recordResult {
+                    case .success(let record):
+                        records.append(record)
+                    case .failure(let error):
+                        print("Error fetching record: \(error.localizedDescription)")
+                    }
+                }
+                completion(records, nil)
             case .failure(let error):
-                print("Error during zone fetch result: \(error.localizedDescription)")
-            }
-        }
-        
-        // Use fetchRecordZoneChangesResultBlock to handle the entire operation
-        fetchChangesOperation.fetchRecordZoneChangesResultBlock = { result in
-            switch result {
-            case .success:
-                completion(changedRecords, nil)
-            case .failure(let error):
-                print("Error fetching changes: \(error.localizedDescription)")
+                print("Error fetching user locations: \(error.localizedDescription)")
                 completion(nil, error)
             }
         }
-        
-        // Add the operation to the public database
-        publicDatabase.add(fetchChangesOperation)
     }
 }

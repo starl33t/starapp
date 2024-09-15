@@ -1,6 +1,7 @@
 import SwiftUI
 import MapKit
 import CloudKit
+import Combine
 
 // Create a custom annotation for other users
 struct UserLocationAnnotation: Identifiable {
@@ -14,10 +15,12 @@ struct LiveView: View {
     @AppStorage("Events") var eventsToggle: Bool = false
     @State var position: MapCameraPosition = .userLocation(fallback: .automatic)
     @State private var userAnnotations: [UserLocationAnnotation] = []
+    @State private var selectedEvent: EventMarker?
+    @State private var fetchTimer: AnyCancellable?
     
     var body: some View {
         VStack {
-            Map(position: $position) {
+            Map(position: $position, selection: $selectedEvent) {
                 // Annotation for the current user's location
                 UserAnnotation()
                 if athletesToggle {
@@ -30,12 +33,34 @@ struct LiveView: View {
                     }
                 }
                 if eventsToggle {
-                    Marker(coordinate: .parkrun1) {
-                        Label("Parkrun Fælledparken", systemImage: "figure.run")
+                    ForEach(LocationEvents.allEventMarkers(), id: \.self) { event in
+                        Group {
+                            if event.systemImage != "" {
+                                Marker(coordinate: event.coordinate) {
+                                    Label(event.label, systemImage: event.systemImage)
+                                }
+                                .tint(.starMain)
+                            }
+                        }
+                        .tag(event)
                     }
-                
-                    .tint(.starMain)
                 }
+                
+            }
+            .sheet(item: $selectedEvent) { event in
+                ZStack {
+                    Color.starBlack.ignoresSafeArea()
+                    VStack(spacing: 20) {
+                        Text(event.label)
+                            .font(.headline)
+                        Text(event.metadata)
+                            .font(.body)
+                    }
+                    .foregroundStyle(.whiteOne)
+                    .frame(maxWidth: .infinity)
+                }
+                .presentationDetents([.fraction(0.3)])
+                .modifier(CloseButtonModifier(onClose: { selectedEvent = nil }))
             }
             .mapStyle(.imagery(elevation: .realistic))
             .mapControls {
@@ -49,20 +74,20 @@ struct LiveView: View {
             Task {
                 await locationManager.startLocationUpdates()
             }
-            CloudHelper.fetchUserLocationChanges { records, error in
-                if let error = error {
-                    print("Error fetching user locations: \(error.localizedDescription)")
-                    return
+            startFetchingUserLocations()
+        }
+        .onDisappear {
+                    stopFetchingUserLocations()
                 }
-                if let records = records {
-                    self.userAnnotations = records.compactMap { record in
-                        if let latitude = record["latitude"] as? Double, let longitude = record["longitude"] as? Double {
-                            let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                            return UserLocationAnnotation(coordinate: coordinate)
-                        }
-                        return nil
-                    }
-                }
+        .onChange(of: selectedEvent) { oldSelection, newSelection in
+            if let selectedEvent = newSelection {
+                let camera = MapCamera(
+                    centerCoordinate: selectedEvent.coordinate,
+                    distance: 4000,
+                    heading: .zero,
+                    pitch: .zero
+                )
+                position = .camera(camera)
             }
         }
     }
@@ -70,4 +95,57 @@ struct LiveView: View {
 
 #Preview {
     LiveView(position: .automatic)
+}
+
+
+//Experimental fetching every 10 seconds
+extension LiveView {
+    func startFetchingUserLocations() {
+        // Fetch immediately on start
+        fetchUserLocations()
+        
+        // Set up a timer to fetch every 10 seconds
+        fetchTimer = Timer.publish(every: 1, on: .main, in: .common)
+            .autoconnect()
+            .sink { _ in
+                fetchUserLocations()
+            }
+    }
+
+    func stopFetchingUserLocations() {
+        fetchTimer?.cancel()
+        fetchTimer = nil
+    }
+}
+
+extension LiveView {
+    func fetchUserLocations() {
+        CloudHelper.fetchUserLocations { records, error in
+            if let error = error {
+                print("Error fetching user locations: \(error.localizedDescription)")
+                return
+            }
+            if let records = records {
+                // Exclude current user's location
+                let container = CKContainer.default()
+                container.fetchUserRecordID { userRecordID, error in
+                    var currentUserID: String?
+                    if let userRecordID = userRecordID {
+                        currentUserID = userRecordID.recordName
+                    }
+                    DispatchQueue.main.async {
+                        self.userAnnotations = records.compactMap { record in
+                            if record.recordID.recordName != currentUserID,
+                               let latitude = record["CD_latitude"] as? Double,
+                               let longitude = record["CD_longitude"] as? Double {
+                                let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                                return UserLocationAnnotation(coordinate: coordinate)
+                            }
+                            return nil
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

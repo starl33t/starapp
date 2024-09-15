@@ -1,5 +1,5 @@
 import SwiftUI
-import Charts
+import MapKit
 import SwiftData
 
 struct HomeView: View {
@@ -12,6 +12,15 @@ struct HomeView: View {
     @State private var selectedDateRange: DateRangeOption = .thisWeek
     
     @Query private var allSessions: [Session]
+    
+    @State private var position = MapCameraPosition.region(
+        MKCoordinateRegion(
+            center: CLLocationCoordinate2D(latitude: 0, longitude: 0),
+            span: MKCoordinateSpan(latitudeDelta: 180, longitudeDelta: 360) // Maximum zoom out to show the globe
+        )
+    )
+    @State private var selectedEvent: EventMarker?
+    @State private var showEventDetails = false
     
     init() {
         let startOfLast7Days = Calendar.current.date(byAdding: .day, value: -365, to: Date())!
@@ -47,87 +56,24 @@ struct HomeView: View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
             ScrollView {
-                LazyVStack {
-                    summaryView()
+                VStack {
                     if sessions.isEmpty {
-                        HStack {
-                            Text("Example by AI")
-                            Spacer()
-                            Text(sessionDisplayText)
-                        }
-                        .foregroundStyle(.whiteOne)
-                        .padding()
-                        sessionChartView(sessions: MockSessionGenerator.createMockSessions())
-                            .frame(height: 100)
-                        VStack(alignment: .leading) {
-                            Text("Renato")
-                                .font(.headline)
-                                .foregroundColor(.white)
-                            Text("Hello, I'm Renato CanovAI. Your AI-Coach. You didn't have any sessions so I gave you some examples to play around with. We can talk over chat or you can use one of the ready-made prompts below.")
-                                .foregroundColor(.white)
-                                .padding(10)
-                                .background(.darkTwo)
-                                .cornerRadius(10)
-                        }
-                        .padding()
-                        promptButtons1
+                        emptySessionsView()
                     } else {
-                        HStack {
-                            Button {
-                                showDatePicker = true
-                            } label: {
-                                Text(selectedDateRange.displayText)
-                            }
-                            Spacer()
-                            Text(sessionDisplayText)
-                        }
-                        .foregroundStyle(.whiteOne)
-                        .padding()
-                        sessionChartView(sessions: NumberHelper.filteredSessions(for: appState.homeActiveTab, in: sessions))
-                            .frame(height: 100)
-                        VStack(alignment: .leading) {
-                            Text("Renato")
-                                .font(.headline)
-                                .foregroundColor(.white)
-                            Text("Great! Let's go on with the next steps. We can talk over chat or you can use one of the ready-made prompts below.")
-                                .foregroundColor(.white)
-                                .padding(10)
-                                .background(.darkTwo)
-                                .cornerRadius(10)
-                        }
-                        .padding()
-                        promptButtons2
+                        realSessionsView()
                     }
                 }
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    selectedCapsuleIndex = nil
-                    selectedSession = nil
-                }
             }
+            .animation(.easeInOut(duration: 1.4), value:  appState.isTextExpanded)
             .padding(.top)
             .overlay(alignment: .bottomTrailing) {
-                FloatingButton {
-                    FloatingAction(text: "4x6'") {
-                        print("4x6")
-                    }
-                    
-                    FloatingAction(text: "7x4'") {
-                        print("4x6")
-                    }
-                    FloatingAction(symbols: ["plus.square.dashed"]) {
-                        print("4x6")
-                    }
-                } label: { isExpanded in
-                    Image(systemName: isExpanded ? "text.bubble" : "bubble.left")
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.whiteOne)
-                        .scaleEffect(isExpanded ? 1 : 0.9)
-                }
-                .padding()
-                
+                floatingActionButton() // Call the refactored function
             }
+        }
+        .onTapGesture {
+            selectedCapsuleIndex = nil
+            selectedSession = nil
+            appState.isTextExpanded = false
         }
         .onAppear {
             updateActiveTabIfNeeded()
@@ -137,10 +83,139 @@ struct HomeView: View {
         }
         .sheet(isPresented: $showDatePicker) {
             datePicker()
-                .modifier(CloseButtonModifier(isPresented: $showDatePicker))
+                .modifier(CloseButtonModifier(onClose: {showDatePicker = false}))
                 .presentationDetents([.fraction(0.3)])
         }
     }
+    
+    @ViewBuilder
+    private func realSessionsView() -> some View {
+        if appState.isTextExpanded {
+            VStack(alignment: .leading) {
+                Text("Great! Let's go on with the next steps. We can talk over chat or you can use one of the ready-made prompts below.")
+                    .foregroundStyle(.whiteOne)
+            }
+            .padding()
+        } else {
+            summaryView()
+            HStack {
+                Button {
+                    showDatePicker = true
+                } label: {
+                    Text(selectedDateRange.displayText)
+                }
+                Spacer()
+                Text(sessionDisplayText)
+            }
+            .foregroundStyle(.whiteOne)
+            .padding()
+            sessionChartView(sessions: NumberHelper.filteredSessions(for: appState.homeActiveTab, in: sessions))
+                .frame(height: 100)
+            mapView()
+        }
+        
+    }
+    
+    @ViewBuilder
+    private func emptySessionsView() -> some View {
+        if appState.isTextExpanded {
+            VStack(alignment: .leading) {
+                Text("Hello, I'm Renato CanovAI. Your AI-Coach. You didn't have any sessions so I gave you some examples to play around with. We can talk over chat or you can use one of the ready-made prompts below. Also, you can play around with the globe to see the latest races and active athletes. If you want to join them then head over to Live.")
+                    .foregroundStyle(.whiteOne)
+            }
+            .padding()
+        } else {
+            summaryView()
+            HStack {
+                Text("Example by AI")
+                Spacer()
+                Text(sessionDisplayText)
+            }
+            .foregroundStyle(.whiteOne)
+            .padding()
+            
+            sessionChartView(sessions: MockSessionGenerator.createMockSessions())
+                .frame(height: 100)
+            ContentUnavailableView {
+                Label("Get started", systemImage: "brain.head.profile")
+            } description: {
+                Text("Chat with our AI-Coach by tapping the bubble icon on the bottom right corner or locate your favorite events on the globe below.")
+            }
+            .foregroundStyle(.whiteOne)
+            .padding()
+            mapView()
+        }
+    }
+    
+    @ViewBuilder
+    private func mapView() -> some View {
+        Map(position: $position, selection: $selectedEvent) {
+            // Display event markers
+            ForEach(LocationEvents.allEventMarkers(), id: \.self) { event in
+                Group {
+                    if event.systemImage != "" {
+                        Marker(coordinate: event.coordinate) {
+                            Label(event.label, systemImage: event.systemImage)
+                        }
+                        .tint(.starMain)
+                    }
+                }
+                .tag(event)
+            }
+        }
+        .mapStyle(.imagery(elevation: .realistic))
+        .frame(height: 400)  // Set height of the map
+    }
+    
+    
+    @ViewBuilder
+    private func floatingActionButton() -> some View {
+        FloatingButtonText {
+            FloatingActionText(text: " What is lactate threshold") {
+                Task {
+                    await navigateToChatWithPrompt("Explain what lactate threshold is")
+                }
+            }
+            FloatingActionText(text: "          Help me get started") {
+                Task {
+                    await navigateToChatWithPrompt("How can I get started?")
+                }
+            }
+            FloatingActionText(text: "     Make me a training plan") {
+                Task {
+                    await navigateToChatWithPrompt("Make me a training plan")
+                }
+            }
+            FloatingActionText(text:"Estimate lactate threshold") {
+                Task {
+                    await navigateToChatWithPrompt("Estimate my lactate threshold")
+                }
+            }
+            FloatingActionText(text: "    I need to taper for a race") {
+                Task {
+                    await navigateToChatWithPrompt("I need to taper for a race")
+                }
+            }
+            FloatingActionText(text: "        I need help to recover") {
+                Task {
+                    await navigateToChatWithPrompt("I need help to recover")
+                }
+            }
+            FloatingActionText(text: "Help me get over my injury") {
+                Task {
+                    await navigateToChatWithPrompt("Help me get over my injury")
+                }
+            }
+        } label: { isExpanded in
+            Image(systemName: isExpanded ? "text.bubble" : "bubble.left")
+                .font(.title3)
+                .fontWeight(.semibold)
+                .foregroundStyle(.whiteOne)
+                .scaleEffect(isExpanded ? 1 : 0.9)
+        }
+        .padding()
+    }
+    
     
     private func datePicker() -> some View {
         return ZStack {
@@ -276,116 +351,6 @@ struct HomeView: View {
         } else {
             ContentUnavailableView("No Sessions Found", systemImage: "exclamationmark.triangle")
                 .foregroundStyle(.whiteOne)
-        }
-    }
-    
-    private var promptButtons1: some View {
-        VStack{
-            HStack {
-                Button(action: {
-                    Task {
-                        await navigateToChatWithPrompt("Explain what lactate threshold is")
-                    }
-                }) {
-                    ZStack{
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.whiteOne, lineWidth: 2)
-                            .frame(width: 170, height: 24)
-                        Text("What's lactate threshold?")
-                            .font(.system(size: 14))
-                            .frame(maxWidth: .infinity)
-                            .foregroundStyle(.whiteOne)
-                    }
-                }
-                
-                Button(action: {
-                    Task {
-                        await navigateToChatWithPrompt("How can I get started?")
-                    }
-                }) {
-                    ZStack{
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.whiteOne, lineWidth: 2)
-                            .frame(width: 150, height: 24)
-                        Text("How can I get started?")
-                            .font(.system(size: 14))
-                            .frame(maxWidth: .infinity)
-                            .foregroundStyle(.whiteOne)
-                    }
-                    
-                }
-            }
-            Button(action: {
-                Task {
-                    await navigateToChatWithPrompt("Make me a training plan")
-                }
-            }) {
-                ZStack{
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.whiteOne, lineWidth: 2)
-                        .frame(width: 150, height: 24)
-                    Text("Make a training plan")
-                        .font(.system(size: 14))
-                        .frame(maxWidth: .infinity)
-                        .foregroundStyle(.whiteOne)
-                }
-                
-            }
-        }
-    }
-    
-    private var promptButtons2: some View {
-        VStack{
-            HStack {
-                Button(action: {
-                    Task {
-                        await navigateToChatWithPrompt("Make me a training plan")
-                    }
-                }) {
-                    ZStack{
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.whiteOne, lineWidth: 2)
-                            .frame(width: 150, height: 24)
-                        Text("Make a training plan")
-                            .font(.system(size: 14))
-                            .frame(maxWidth: .infinity)
-                            .foregroundStyle(.whiteOne)
-                    }
-                }
-                
-                Button(action: {
-                    Task {
-                        await navigateToChatWithPrompt("What's my lactate threshold?")
-                    }
-                }) {
-                    ZStack{
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.whiteOne, lineWidth: 2)
-                            .frame(width: 150, height: 24)
-                        Text("What's my threshold?")
-                            .font(.system(size: 14))
-                            .frame(maxWidth: .infinity)
-                            .foregroundStyle(.whiteOne)
-                    }
-                    
-                }
-            }
-            Button(action: {
-                Task {
-                    await navigateToChatWithPrompt("I have an upcoming race")
-                }
-            }) {
-                ZStack{
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.whiteOne, lineWidth: 2)
-                        .frame(width: 150, height: 24)
-                    Text("I'm going to race soon")
-                        .font(.system(size: 14))
-                        .frame(maxWidth: .infinity)
-                        .foregroundStyle(.whiteOne)
-                }
-                
-            }
         }
     }
     

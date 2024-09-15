@@ -23,10 +23,13 @@ class AppState: ObservableObject {
     @Published var todayTitle: String = "" // New property for CalendarView
     @Published var todayChat: String = "AI Coach"
     @Published var liveTitle: String = "Athletes" //Homescreen
+    @Published var isTextExpanded: Bool = false //FloatingButtonText
+    @Published var isExpanded: Bool = false // floatingbutton
     @Published var selectedChart: MetricView.ChartType = .lineChart //metricview
     @Published var selectedLive: LiveToolBarPrin.FindLive = .athletes // liveview
     @AppStorage("Athletes") var athletesToggle: Bool = false
     @AppStorage("Events") var eventsToggle: Bool = false
+   
     
     func loadOrCreateUser() {
         // 1) Load the user from cache

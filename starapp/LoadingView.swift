@@ -14,7 +14,6 @@ struct LoadingView: View {
             Color.starBlack.ignoresSafeArea()
             VStack {
                 Text("Welcome to Starleet")
-                //HackerTextView(text: "Welcome to Starleet", trigger: appState.trigger)
             }
             .font(.title)
             .foregroundStyle(.whiteOne)
