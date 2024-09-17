@@ -67,7 +67,7 @@ struct HomeView: View {
             .animation(.easeInOut(duration: 1.4), value:  appState.isTextExpanded)
             .padding(.top)
             .overlay(alignment: .bottomTrailing) {
-                floatingActionButton() // Call the refactored function
+                floatingActionButton() 
             }
         }
         .onTapGesture {

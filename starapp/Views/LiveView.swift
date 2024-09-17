@@ -17,6 +17,8 @@ struct LiveView: View {
     @State private var userAnnotations: [UserLocationAnnotation] = []
     @State private var selectedEvent: EventMarker?
     @State private var fetchTimer: AnyCancellable?
+    @State private var currentUserID: String?
+    
     
     var body: some View {
         VStack {
@@ -74,11 +76,16 @@ struct LiveView: View {
             Task {
                 await locationManager.startLocationUpdates()
             }
+            CKContainer.default().fetchUserRecordID { userRecordID, error in
+                if let userRecordID = userRecordID {
+                    currentUserID = userRecordID.recordName
+                }
+            }
             startFetchingUserLocations()
         }
         .onDisappear {
-                    stopFetchingUserLocations()
-                }
+            stopFetchingUserLocations()
+        }
         .onChange(of: selectedEvent) { oldSelection, newSelection in
             if let selectedEvent = newSelection {
                 let camera = MapCamera(
@@ -111,7 +118,7 @@ extension LiveView {
                 fetchUserLocations()
             }
     }
-
+    
     func stopFetchingUserLocations() {
         fetchTimer?.cancel()
         fetchTimer = nil

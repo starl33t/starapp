@@ -1,7 +1,7 @@
 import CoreLocation
 
 extension CLLocationCoordinate2D {
-    static let parkrun1: Self = .init(
+    static let FaelledparkenParkrun: Self = .init(
         latitude: 55.700064,
         longitude: 12.572480
     )
@@ -116,8 +116,8 @@ struct LocationEvents {
     static func allEventMarkers() -> [EventMarker] {
         return [
             EventMarker(
-                coordinate: .parkrun1,
-                label: "Parkrun Fælledparken",
+                coordinate: .FaelledparkenParkrun,
+                label: "Faelledparken Parkrun",
                 systemImage: "figure.run",
                 metadata: "Start: 9 AM, every Sunday"
             ),
