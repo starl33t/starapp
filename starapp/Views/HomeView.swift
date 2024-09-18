@@ -58,15 +58,15 @@ struct HomeView: View {
                 }
             }
             .tint(.starMain)
-            .animation(.easeInOut(duration: 1.4), value:  isFloatingChatExpanded)
+            .animation(.easeInOut(duration: 0.3), value:  isFloatingChatExpanded)
             .overlay(alignment: .bottomTrailing) {
                 floatingActionButton()
             }
         }
         .onTapGesture {
             selectedCapsuleIndex = nil
-            selectedSession = nil
             isFloatingChatExpanded = false
+            isGraphExpanded = false
         }
         .onAppear {
             updateActiveTabIfNeeded()
@@ -102,9 +102,8 @@ struct HomeView: View {
             .cornerRadius(24)
             Button(action: {
                 Task {
-                    // Navigate using the user's input in newMessageContent
                     await navigateToChatWithPrompt(newMessageContent)
-                    newMessageContent = "" // Clear the input after sending
+                    newMessageContent = ""
                 }
             }) {
                 Image(systemName: "arrow.up.circle.fill")
@@ -138,7 +137,8 @@ struct HomeView: View {
                         .padding()
                 }
             }
-            .background(Color.starBlack.opacity(1.0)) // Make sure it's visible over the map
+            .animation(.easeInOut(duration: 0.3), value:  isGraphExpanded)
+            .background(Color.starBlack.opacity(0.9)) // Make sure it's visible over the map
         }
     }
     
@@ -333,7 +333,9 @@ struct HomeView: View {
                 await viewModel.createMessage(threadId: threadId, content: prompt)
             }
         }
-        appState.selectedTab = 3
+        withAnimation(.easeInOut(duration: 0.3)) {
+            appState.selectedTab = 3
+        }
         isFloatingChatExpanded = false
     }
 }

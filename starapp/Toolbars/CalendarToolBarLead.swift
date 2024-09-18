@@ -9,7 +9,9 @@ struct CalendarToolBarLead: View {
                 Label("Profile", systemImage: "person.fill")
             }
             Button {
-                appState.selectedTab = 0
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    appState.selectedTab = 0
+                }
             } label: {
                 Label("Globe", systemImage: "globe")
             }

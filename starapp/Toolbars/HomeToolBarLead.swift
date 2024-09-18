@@ -15,7 +15,9 @@ struct HomeToolBarLead: View {
                 Label("Profile", systemImage: "person.fill")
             }
             Button {
-                appState.selectedTab = 1
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    appState.selectedTab = 1
+                }
             } label: {
                 Label("Calendar", systemImage: "calendar")
             }

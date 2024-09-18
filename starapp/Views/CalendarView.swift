@@ -30,6 +30,7 @@ struct CalendarView: View {
                 }
                 
             }
+            .animation(.easeInOut(duration: 0.3), value:  showTrainingList)
             .foregroundStyle(.whiteTwo)
             .overlay(alignment: .bottomTrailing) {
                 FloatingButton {

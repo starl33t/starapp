@@ -67,7 +67,7 @@ struct LiveView: View {
         }
         .onAppear {
             Task {
-                await locationManager.startLocationUpdates()
+               // await locationManager.startLocationUpdates()
             }
         }
         .onChange(of: selectedEvent) { oldSelection, newSelection in

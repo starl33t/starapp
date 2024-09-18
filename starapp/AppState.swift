@@ -17,7 +17,6 @@ class AppState: ObservableObject {
     @Published var days: [Date] = Date().daysInYear
     @Published var homeTitle: String = "Lactate" //Homescreen
     @Published var metricTitle: String = "Line Chart" //Metric
-    @Published var trigger: Bool = true //Homescreen
     @Published var homeActiveTab: HomeTab = .lactate // Homescreen
     @Published var todayTitle: String = "" // New property for CalendarView
     @Published var todayChat: String = "AI Coach"

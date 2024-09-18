@@ -9,10 +9,17 @@ import SwiftUI
 
 struct HomeToolBarPrin: View {
     @EnvironmentObject var appState: AppState
+    @AppStorage("isGraphExpanded") private var isGraphExpanded = false
     var body: some View {
         HStack {
-            Text(appState.homeTitle)
+            if isGraphExpanded {
+                Text(appState.homeTitle)
+            } else {
+                Text("Events")
+            }
+            
         }
+        .animation(.easeInOut(duration: 0.3), value:  isGraphExpanded)
         .font(.headline)
         .foregroundColor(.whiteOne)
         .onChange(of: appState.homeActiveTab) { oldTab, newTab in
