@@ -12,11 +12,19 @@ struct LiveView: View {
     @StateObject var locationManager = LocationManager()
     @AppStorage("Athletes") var athletesToggle: Bool = false
     @AppStorage("Events") var eventsToggle: Bool = true
-    @State var position: MapCameraPosition = .userLocation(fallback: .automatic)
+    //@State var position: MapCameraPosition = .userLocation(fallback: .automatic)
     @State private var userAnnotations: [UserLocationAnnotation] = []
     @State private var selectedEvent: EventMarker?
     
-    
+    @State private var position = MapCameraPosition.camera(
+        MapCamera(
+            centerCoordinate: CLLocationCoordinate2D(latitude: -1.2921, longitude: 36.8219), // Rift Valley
+            distance: 90000000, 
+            heading: 0,
+            pitch: 0
+        )
+    )
+
     var body: some View {
         ZStack(alignment: .top) { 
             Map(position: $position, selection: $selectedEvent) {
@@ -76,6 +84,3 @@ struct LiveView: View {
     }
 }
 
-#Preview {
-    LiveView(position: .automatic)
-}

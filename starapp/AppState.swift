@@ -21,8 +21,6 @@ class AppState: ObservableObject {
     @Published var homeActiveTab: HomeTab = .lactate // Homescreen
     @Published var todayTitle: String = "" // New property for CalendarView
     @Published var todayChat: String = "AI Coach"
-    @Published var isTextExpanded: Bool = false //FloatingButtonText
-    @Published var isExpanded: Bool = false // floatingbutton
     @Published var selectedChart: MetricView.ChartType = .lineChart //metricview
     
     func loadOrCreateUser() {

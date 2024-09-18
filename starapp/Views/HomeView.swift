@@ -11,16 +11,9 @@ struct HomeView: View {
     @State private var showDatePicker: Bool = false
     @State private var selectedDateRange: DateRangeOption = .thisWeek
     @AppStorage("isGraphExpanded") private var isGraphExpanded = false
+    @AppStorage("isFloatingChatExpanded") private var isFloatingChatExpanded = false
     @Query private var allSessions: [Session]
-    
-    @State private var position = MapCameraPosition.region(
-        MKCoordinateRegion(
-            center: CLLocationCoordinate2D(latitude: 0, longitude: 0),
-            span: MKCoordinateSpan(latitudeDelta: 180, longitudeDelta: 360) // Maximum zoom out to show the globe
-        )
-    )
-    @State private var selectedEvent: EventMarker?
-    @State private var showEventDetails = false
+
     
     init() {
         let startOfLast7Days = Calendar.current.date(byAdding: .day, value: -365, to: Date())!
@@ -59,7 +52,7 @@ struct HomeView: View {
                 mapView()
             }
             .tint(.starMain)
-            .animation(.easeInOut(duration: 1.4), value:  appState.isTextExpanded)
+            .animation(.easeInOut(duration: 1.4), value:  isFloatingChatExpanded)
             .overlay(alignment: .bottomTrailing) {
                 floatingActionButton()
             }
@@ -67,7 +60,7 @@ struct HomeView: View {
         .onTapGesture {
             selectedCapsuleIndex = nil
             selectedSession = nil
-            appState.isTextExpanded = false
+            isFloatingChatExpanded = false
         }
         .onAppear {
             updateActiveTabIfNeeded()
@@ -81,13 +74,11 @@ struct HomeView: View {
                 .presentationDetents([.fraction(0.3)])
         }
     }
-    
+      
     @ViewBuilder
     private func mapView() -> some View {
         ZStack(alignment: .top) {
           LiveView()
-            
-            // Overlay content at the top
             VStack {
                 if isGraphExpanded {
                     summaryView()
@@ -104,16 +95,13 @@ struct HomeView: View {
                     .padding()
                     sessionChartView(sessions: NumberHelper.filteredSessions(for: appState.homeActiveTab, in: sessions))
                         .frame(height: 100)
-//                    sessionChartView(sessions: MockSessionGenerator.createMockSessions())
-//                                       .frame(height: 100)
+                        .padding()
                 }
             }
             .background(Color.starBlack.opacity(1.0)) // Make sure it's visible over the map
         }
     }
 
-    
-    
     @ViewBuilder
     private func floatingActionButton() -> some View {
         FloatingButtonText {
@@ -159,7 +147,7 @@ struct HomeView: View {
                 .foregroundStyle(.whiteOne)
                 .scaleEffect(isExpanded ? 1 : 0.9)
         }
-        .padding()
+        .padding(.bottom, 50)
     }
     
     
@@ -181,32 +169,28 @@ struct HomeView: View {
     }
     
     private func updateActiveTabIfNeeded() {
-        let sessionsToCheck = sessions.isEmpty ? MockSessionGenerator.createMockSessions() : sessions
-        if NumberHelper.filteredSessions(for: appState.homeActiveTab, in: sessionsToCheck).isEmpty {
+        if NumberHelper.filteredSessions(for: appState.homeActiveTab, in: sessions).isEmpty {
             appState.homeActiveTab = availableTabs.first ?? .lactate
         }
     }
     
     private var availableTabs: [HomeTab] {
-        let sessionsToCheck = sessions.isEmpty ? MockSessionGenerator.createMockSessions() : sessions
         return HomeTab.allCases.filter { tab in
-            !NumberHelper.filteredSessions(for: tab, in: sessionsToCheck).isEmpty
+            !NumberHelper.filteredSessions(for: tab, in: sessions).isEmpty
         }
     }
     
     private var sessionDisplayText: String {
-        let sessionsToUse = sessions.isEmpty ? MockSessionGenerator.createMockSessions() : sessions
-        
         if let selectedSession = selectedSession, let date = selectedSession.date {
             return "\(date.formatAsDayMonthYear()): \(NumberHelper.valueForTab(appState.homeActiveTab, in: selectedSession))"
         } else {
-            return "Total: \(NumberHelper.totalValue(for: appState.homeActiveTab, in: sessionsToUse))"
+            return "Total: \(NumberHelper.totalValue(for: appState.homeActiveTab, in: sessions))"
         }
     }
     
     @ViewBuilder
     private func summaryView() -> some View {
-        let sessionsToUse = sessions.isEmpty ? MockSessionGenerator.createMockSessions() : NumberHelper.filteredSessions(for: appState.homeActiveTab, in: sessions)
+        let sessionsToUse = NumberHelper.filteredSessions(for: appState.homeActiveTab, in: sessions)
         let averageValue = NumberHelper.calculateAverageValue(for: appState.homeActiveTab, in: sessionsToUse)
         
         HStack(spacing: 0) {

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		BF0ED3B92C8234E100ADB94C /* HomeCapsuleGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0ED3B82C8234E000ADB94C /* HomeCapsuleGraph.swift */; };
 		BF14E3402C863AB8007FE41D /* HomeTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF14E33F2C863AB5007FE41D /* HomeTab.swift */; };
+		BF19035C2C9ADB4E00B0E581 /* ChatToolBarLead.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF19035B2C9ADB4600B0E581 /* ChatToolBarLead.swift */; };
 		BF1A81532C542C280057D87D /* HomeToolBarTrail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1A81522C542C280057D87D /* HomeToolBarTrail.swift */; };
 		BF2265BC2C943BD600A1203C /* FloatingButtonText.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2265BB2C943BCE00A1203C /* FloatingButtonText.swift */; };
 		BF31F0AB2C48FDAD000C005C /* EmailHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF31F0AA2C48FDA9000C005C /* EmailHelper.swift */; };
@@ -88,6 +89,7 @@
 /* Begin PBXFileReference section */
 		BF0ED3B82C8234E000ADB94C /* HomeCapsuleGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCapsuleGraph.swift; sourceTree = "<group>"; };
 		BF14E33F2C863AB5007FE41D /* HomeTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTab.swift; sourceTree = "<group>"; };
+		BF19035B2C9ADB4600B0E581 /* ChatToolBarLead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatToolBarLead.swift; sourceTree = "<group>"; };
 		BF1A81522C542C280057D87D /* HomeToolBarTrail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeToolBarTrail.swift; sourceTree = "<group>"; };
 		BF2265BB2C943BCE00A1203C /* FloatingButtonText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButtonText.swift; sourceTree = "<group>"; };
 		BF31F0AA2C48FDA9000C005C /* EmailHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailHelper.swift; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 				BF4A817E2C3AFB8600D4CAF1 /* MetricToolBarTrail.swift */,
 				BFECC9662C8EC7FF0081B617 /* HomeToolBarLead.swift */,
 				BFECC9682C8ECDF30081B617 /* HomeToolBarPrin.swift */,
+				BF19035B2C9ADB4600B0E581 /* ChatToolBarLead.swift */,
 				BFF251612C9025E100389A3D /* CalendarToolBarPrin.swift */,
 				BFEAE8582C92C338006F6285 /* LiveToolBarPrin.swift */,
 				BFEAE85A2C92C52E006F6285 /* ChatToolBarPrin.swift */,
@@ -537,6 +540,7 @@
 				BF57B8A92C541365000F24BB /* LactateHelper.swift in Sources */,
 				BF4A81772C3AFA1700D4CAF1 /* ChatToolBarTrail.swift in Sources */,
 				BF2265BC2C943BD600A1203C /* FloatingButtonText.swift in Sources */,
+				BF19035C2C9ADB4E00B0E581 /* ChatToolBarLead.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

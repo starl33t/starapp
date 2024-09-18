@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FloatingButton<Label: View>: View {
     @EnvironmentObject var appState: AppState
+    @AppStorage("isFloatingTrainingExpanded") private var isFloatingTrainingExpanded = false
     var buttonSize: CGFloat
     var actions: [FloatingAction]
     var label: (Bool) -> Label
@@ -20,9 +21,9 @@ struct FloatingButton<Label: View>: View {
     
     var body: some View {
         Button {
-            appState.isExpanded.toggle()
+            isFloatingTrainingExpanded.toggle()
         } label: {
-            label(appState.isExpanded)
+            label(isFloatingTrainingExpanded)
                 .frame(width: buttonSize, height: buttonSize)
                 .background(Circle().fill(Color.darkOne))
                 .contentShape(.rect)
@@ -36,14 +37,14 @@ struct FloatingButton<Label: View>: View {
             }
             .frame(width: buttonSize, height: buttonSize)
         }
-        .animation(.snappy(duration: 0.4, extraBounce: 0), value: appState.isExpanded)
+        .animation(.snappy(duration: 0.4, extraBounce: 0), value: isFloatingTrainingExpanded)
     }
     
     @ViewBuilder
     func ActionView(_ action: FloatingAction) -> some View {
         Button {
             action.action()
-            appState.isExpanded = false
+            isFloatingTrainingExpanded = false
         } label: {
             ZStack {
                 if let symbols = action.symbols {
@@ -65,9 +66,9 @@ struct FloatingButton<Label: View>: View {
             .contentShape(.circle)
         }
         .buttonStyle(PressableButtonStyle())
-        .disabled(!appState.isExpanded)
+        .disabled(!isFloatingTrainingExpanded)
         .rotationEffect(.init(degrees: progress(action) * -90))
-        .offset(x: appState.isExpanded ? -offset / 2 : 0)
+        .offset(x: isFloatingTrainingExpanded ? -offset / 2 : 0)
         .rotationEffect(.init(degrees: progress(action) * 90))
     }
     

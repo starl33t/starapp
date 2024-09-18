@@ -2,6 +2,7 @@ import SwiftUI
 
 struct FloatingButtonText<Label: View>: View {
     @EnvironmentObject var appState: AppState
+    @AppStorage("isFloatingChatExpanded") private var isFloatingChatExpanded = false
     
     var buttonSize: CGFloat
     var actions: [FloatingActionText]
@@ -21,9 +22,9 @@ struct FloatingButtonText<Label: View>: View {
     
     var body: some View {
         Button {
-            appState.isTextExpanded.toggle()
+            isFloatingChatExpanded.toggle()
         } label: {
-            label(appState.isTextExpanded)
+            label(isFloatingChatExpanded)
                 .frame(width: buttonSize, height: buttonSize)
                 .background(Circle().fill(Color.darkOne))
                 .contentShape(.rect)
@@ -37,7 +38,7 @@ struct FloatingButtonText<Label: View>: View {
                 }
             }
         }
-        .animation(.snappy(duration: 0.4, extraBounce: 0), value:  appState.isTextExpanded)
+        .animation(.snappy(duration: 0.4, extraBounce: 0), value:  isFloatingChatExpanded)
     }
     
     @ViewBuilder
@@ -45,11 +46,11 @@ struct FloatingButtonText<Label: View>: View {
         let maxAngle: Double = 75 
         // Rotate 180 degrees: distribute buttons between 270° and 360°
         let angle: Double = 180 + maxAngle * Double(index) / Double(actions.count - 1)
-        let radius: CGFloat =  appState.isTextExpanded ? baseRadius + expandedRadius : 0 // Add base radius to prevent overlap near main button
+        let radius: CGFloat =  isFloatingChatExpanded ? baseRadius + expandedRadius : 0 // Add base radius to prevent overlap near main button
         
         Button {
             action.action()
-            appState.isTextExpanded = false
+            isFloatingChatExpanded = false
         } label: {
             if let text = action.text {
                 Text(text)
@@ -61,7 +62,7 @@ struct FloatingButtonText<Label: View>: View {
         }
         .buttonStyle(PressableButtonStyle())
         .offset(x: cos(angle * .pi / 180) * radius, y: sin(angle * .pi / 180) * radius) // Correctly position buttons in an arc
-        .opacity( appState.isTextExpanded ? 1 : 0) // Fade in and out based on expansion state
+        .opacity( isFloatingChatExpanded ? 1 : 0) // Fade in and out based on expansion state
     }
 }
 

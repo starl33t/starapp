@@ -38,7 +38,7 @@ struct ContentView: View {
                     case 2:
                         HomeToolBarLead()
                     case 3:
-                        HomeToolBarLead()
+                        ChatToolBarLead()
                     case 4:
                         HomeToolBarLead()
                     default:

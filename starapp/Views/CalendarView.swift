@@ -10,6 +10,7 @@ struct CalendarView: View {
     @State private var currentDate = Date()
     @State private var headerOffset: CGFloat = 0
     @AppStorage("showTrainingList") var showTrainingList = false
+    @AppStorage("isFloatingTrainingExpanded") private var isFloatingTrainingExpanded = false
     
     private let columns = Array(repeating: GridItem(.flexible()), count: 7)
     private let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
@@ -42,15 +43,15 @@ struct CalendarView: View {
                     FloatingAction(symbols: ["plus.square.dashed"]) {
                         createNewSession(title: "Title")
                     }
-                } label: { isExpanded in
+                } label: { isFloatingTrainingExpanded in
                     Image(systemName: "plus")
                         .font(.title3)
                         .fontWeight(.semibold)
                         .foregroundStyle(.whiteOne)
-                        .rotationEffect(.init(degrees: isExpanded ? 135 : 0))
-                        .scaleEffect(isExpanded ? 0.9 : 1)
+                        .rotationEffect(.init(degrees: isFloatingTrainingExpanded ? 135 : 0))
+                        .scaleEffect(isFloatingTrainingExpanded ? 0.9 : 1)
                 }
-                .padding()
+                .padding(.bottom, 50)
                 
             }
             

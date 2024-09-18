@@ -44,7 +44,6 @@ struct ChatView: View {
         .onAppear {
             updateCanSendMessage()
             resetMessageCountIfNeeded()
-            //updateNavigationTitleToAICoach()
         }
         .onChange(of: appState.tier) { _,newTier in
             updateCanSendMessage()
