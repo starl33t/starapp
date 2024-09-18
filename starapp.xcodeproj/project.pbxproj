@@ -50,6 +50,7 @@
 		BF91AC6E2C45405C0028BC41 /* NumberHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF91AC6D2C4540530028BC41 /* NumberHelper.swift */; };
 		BFAAEC612C81F736008E6FB7 /* MockSessionGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAEC602C81F72F008E6FB7 /* MockSessionGenerator.swift */; };
 		BFABBD4C2C885F6100A10182 /* PromptHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFABBD4B2C885F5D00A10182 /* PromptHelper.swift */; };
+		BFB6603F2C99717F005E0C29 /* CalendarToolBarLead.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB6603E2C997178005E0C29 /* CalendarToolBarLead.swift */; };
 		BFBBD9582C55869200671197 /* MessageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBBD9572C55868F00671197 /* MessageHelper.swift */; };
 		BFC38D082C935ED900E93826 /* LocationEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC38D072C935ECC00E93826 /* LocationEvents.swift */; };
 		BFDE40512C591A1200733888 /* CSVDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE40502C591A0900733888 /* CSVDocument.swift */; };
@@ -61,7 +62,7 @@
 		BFEAE8592C92C348006F6285 /* LiveToolBarPrin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEAE8582C92C338006F6285 /* LiveToolBarPrin.swift */; };
 		BFEAE85B2C92C538006F6285 /* ChatToolBarPrin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEAE85A2C92C52E006F6285 /* ChatToolBarPrin.swift */; };
 		BFEAE85D2C92C5A3006F6285 /* MetricToolBarPrin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEAE85C2C92C59A006F6285 /* MetricToolBarPrin.swift */; };
-		BFECC9672C8EC8130081B617 /* ProfileToolBarLead.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFECC9662C8EC7FF0081B617 /* ProfileToolBarLead.swift */; };
+		BFECC9672C8EC8130081B617 /* HomeToolBarLead.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFECC9662C8EC7FF0081B617 /* HomeToolBarLead.swift */; };
 		BFECC9692C8ECE060081B617 /* HomeToolBarPrin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFECC9682C8ECDF30081B617 /* HomeToolBarPrin.swift */; };
 		BFF251622C9025EA00389A3D /* CalendarToolBarPrin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF251612C9025E100389A3D /* CalendarToolBarPrin.swift */; };
 		BFF251662C90C59E00389A3D /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF251652C90C59800389A3D /* FloatingButton.swift */; };
@@ -133,6 +134,7 @@
 		BF91AC6D2C4540530028BC41 /* NumberHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberHelper.swift; sourceTree = "<group>"; };
 		BFAAEC602C81F72F008E6FB7 /* MockSessionGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSessionGenerator.swift; sourceTree = "<group>"; };
 		BFABBD4B2C885F5D00A10182 /* PromptHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptHelper.swift; sourceTree = "<group>"; };
+		BFB6603E2C997178005E0C29 /* CalendarToolBarLead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarToolBarLead.swift; sourceTree = "<group>"; };
 		BFBBD9572C55868F00671197 /* MessageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHelper.swift; sourceTree = "<group>"; };
 		BFC38D072C935ECC00E93826 /* LocationEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationEvents.swift; sourceTree = "<group>"; };
 		BFDE40502C591A0900733888 /* CSVDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVDocument.swift; sourceTree = "<group>"; };
@@ -144,7 +146,7 @@
 		BFEAE8582C92C338006F6285 /* LiveToolBarPrin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveToolBarPrin.swift; sourceTree = "<group>"; };
 		BFEAE85A2C92C52E006F6285 /* ChatToolBarPrin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatToolBarPrin.swift; sourceTree = "<group>"; };
 		BFEAE85C2C92C59A006F6285 /* MetricToolBarPrin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricToolBarPrin.swift; sourceTree = "<group>"; };
-		BFECC9662C8EC7FF0081B617 /* ProfileToolBarLead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileToolBarLead.swift; sourceTree = "<group>"; };
+		BFECC9662C8EC7FF0081B617 /* HomeToolBarLead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeToolBarLead.swift; sourceTree = "<group>"; };
 		BFECC9682C8ECDF30081B617 /* HomeToolBarPrin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeToolBarPrin.swift; sourceTree = "<group>"; };
 		BFF251612C9025E100389A3D /* CalendarToolBarPrin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarToolBarPrin.swift; sourceTree = "<group>"; };
 		BFF251652C90C59800389A3D /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
@@ -219,8 +221,9 @@
 				BF4A81662C3AF5D500D4CAF1 /* CalendarToolBarTrail.swift */,
 				BF4A816E2C3AF8DA00D4CAF1 /* LiveToolBarTrail.swift */,
 				BF4A81762C3AFA1700D4CAF1 /* ChatToolBarTrail.swift */,
+				BFB6603E2C997178005E0C29 /* CalendarToolBarLead.swift */,
 				BF4A817E2C3AFB8600D4CAF1 /* MetricToolBarTrail.swift */,
-				BFECC9662C8EC7FF0081B617 /* ProfileToolBarLead.swift */,
+				BFECC9662C8EC7FF0081B617 /* HomeToolBarLead.swift */,
 				BFECC9682C8ECDF30081B617 /* HomeToolBarPrin.swift */,
 				BFF251612C9025E100389A3D /* CalendarToolBarPrin.swift */,
 				BFEAE8582C92C338006F6285 /* LiveToolBarPrin.swift */,
@@ -491,6 +494,7 @@
 				BF87F7BB2C79C6CC00B35F6A /* LoadingView.swift in Sources */,
 				BFDE40532C591F8200733888 /* CalendarHelper.swift in Sources */,
 				BF4A81632C3AF53200D4CAF1 /* ProfileView.swift in Sources */,
+				BFB6603F2C99717F005E0C29 /* CalendarToolBarLead.swift in Sources */,
 				BF14E3402C863AB8007FE41D /* HomeTab.swift in Sources */,
 				BFEAE85D2C92C5A3006F6285 /* MetricToolBarPrin.swift in Sources */,
 				BFECC9692C8ECE060081B617 /* HomeToolBarPrin.swift in Sources */,
@@ -528,7 +532,7 @@
 				BF6C841A2C3D1E5200032E93 /* PrivacyView.swift in Sources */,
 				BF4A81452C3AEE6C00D4CAF1 /* LiveView.swift in Sources */,
 				BF4A813F2C3AEE0900D4CAF1 /* DateHelper.swift in Sources */,
-				BFECC9672C8EC8130081B617 /* ProfileToolBarLead.swift in Sources */,
+				BFECC9672C8EC8130081B617 /* HomeToolBarLead.swift in Sources */,
 				BFF251662C90C59E00389A3D /* FloatingButton.swift in Sources */,
 				BF57B8A92C541365000F24BB /* LactateHelper.swift in Sources */,
 				BF4A81772C3AFA1700D4CAF1 /* ChatToolBarTrail.swift in Sources */,

@@ -11,44 +11,40 @@ struct ContentView: View {
         NavigationStack {
             ZStack {
                 Color.starBlack.ignoresSafeArea()
-                TabView(selection: $appState.selectedTab) {
-                    HomeView()
-                        .environmentObject(viewModel)
-                        .tabItem {
-                            Image(systemName: "sum")
-                            Text("Home")
-                        }
-                        .tag(0)
+                switch appState.selectedTab {
+                case 0:
+                    HomeView().environmentObject(viewModel)
+                case 1:
                     CalendarView()
-                        .tabItem {
-                            Image(systemName: "calendar")
-                            Text("Calendar")
-                        }
-                        .tag(1)
+                case 2:
                     LiveView()
-                        .tabItem {
-                            Image(systemName: "dot.radiowaves.left.and.right")
-                            Text("Live")
-                        }
-                        .tag(2)
+                case 3:
                     ChatView(viewModel: viewModel)
-                        .tabItem {
-                            Image(systemName: "person.2")
-                            Text("Chat")
-                        }
-                        .tag(3)
+                case 4:
                     MetricView()
-                        .tabItem {
-                            Image(systemName: "chart.xyaxis.line")
-                            Text("Metrics")
-                        }
-                        .tag(4)
+                default:
+                    HomeView().environmentObject(viewModel)
                 }
-                .tint(.starMain)
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(Color.starBlack, for: .navigationBar)
             .toolbar {
+                ToolbarItemGroup(placement: .navigationBarLeading) {
+                    switch appState.selectedTab {
+                    case 0:
+                        HomeToolBarLead()
+                    case 1:
+                        CalendarToolBarLead()
+                    case 2:
+                        HomeToolBarLead()
+                    case 3:
+                        HomeToolBarLead()
+                    case 4:
+                        HomeToolBarLead()
+                    default:
+                        HomeToolBarLead()
+                    }
+                }
                 ToolbarItemGroup(placement: .principal) {
                     switch appState.selectedTab {
                     case 0:
@@ -65,22 +61,10 @@ struct ContentView: View {
                         CalendarToolBarPrin()
                     }
                 }
-                ToolbarItemGroup(placement: .navigationBarLeading) {
-                    switch appState.selectedTab {
-                    case 1:
-                        ProfileToolBarLead()
-                    case 2:
-                        ProfileToolBarLead()
-                    case 3:
-                        ProfileToolBarLead()
-                    case 4:
-                        ProfileToolBarLead()
-                    default:
-                        ProfileToolBarLead()
-                    }
-                }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     switch appState.selectedTab {
+                    case 0:
+                        HomeToolBarTrail()
                     case 1:
                         CalendarToolbarTrail()
                     case 2:

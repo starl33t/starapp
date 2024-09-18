@@ -10,7 +10,7 @@ struct HomeView: View {
     @State private var selectedSession: Session? = nil
     @State private var showDatePicker: Bool = false
     @State private var selectedDateRange: DateRangeOption = .thisWeek
-    
+    @AppStorage("isGraphExpanded") private var isGraphExpanded = false
     @Query private var allSessions: [Session]
     
     @State private var position = MapCameraPosition.region(
@@ -55,19 +55,13 @@ struct HomeView: View {
     var body: some View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
-            ScrollView {
-                VStack {
-                    if sessions.isEmpty {
-                        emptySessionsView()
-                    } else {
-                        realSessionsView()
-                    }
-                }
+            VStack {
+                mapView()
             }
+            .tint(.starMain)
             .animation(.easeInOut(duration: 1.4), value:  appState.isTextExpanded)
-            .padding(.top)
             .overlay(alignment: .bottomTrailing) {
-                floatingActionButton() 
+                floatingActionButton()
             }
         }
         .onTapGesture {
@@ -89,83 +83,35 @@ struct HomeView: View {
     }
     
     @ViewBuilder
-    private func realSessionsView() -> some View {
-        if appState.isTextExpanded {
-            VStack(alignment: .leading) {
-                Text("Great! Let's go on with the next steps. We can talk over chat or you can use one of the ready-made prompts below.")
-                    .foregroundStyle(.whiteOne)
-            }
-            .padding()
-        } else {
-            summaryView()
-            HStack {
-                Button {
-                    showDatePicker = true
-                } label: {
-                    Text(selectedDateRange.displayText)
-                }
-                Spacer()
-                Text(sessionDisplayText)
-            }
-            .foregroundStyle(.whiteOne)
-            .padding()
-            sessionChartView(sessions: NumberHelper.filteredSessions(for: appState.homeActiveTab, in: sessions))
-                .frame(height: 100)
-            mapView()
-        }
-        
-    }
-    
-    @ViewBuilder
-    private func emptySessionsView() -> some View {
-        if appState.isTextExpanded {
-            VStack(alignment: .leading) {
-                Text("Hello, I'm Renato CanovAI. Your AI-Coach. You didn't have any sessions so I gave you some examples to play around with. We can talk over chat or you can use one of the ready-made prompts below. Also, you can play around with the globe to see the latest races and active athletes. If you want to join them then head over to Live.")
-                    .foregroundStyle(.whiteOne)
-            }
-            .padding()
-        } else {
-            summaryView()
-            HStack {
-                Text("Example by AI")
-                Spacer()
-                Text(sessionDisplayText)
-            }
-            .foregroundStyle(.whiteOne)
-            .padding()
-            
-            sessionChartView(sessions: MockSessionGenerator.createMockSessions())
-                .frame(height: 100)
-            ContentUnavailableView {
-                Label("Get started", systemImage: "brain.head.profile")
-            } description: {
-                Text("Chat with our AI-Coach by tapping the bubble icon on the bottom right corner or locate your favorite events on the globe below.")
-            }
-            .foregroundStyle(.whiteOne)
-            .padding()
-            mapView()
-        }
-    }
-    
-    @ViewBuilder
     private func mapView() -> some View {
-        Map(position: $position, selection: $selectedEvent) {
-            // Display event markers
-            ForEach(LocationEvents.allEventMarkers(), id: \.self) { event in
-                Group {
-                    if event.systemImage != "" {
-                        Marker(coordinate: event.coordinate) {
-                            Label(event.label, systemImage: event.systemImage)
+        ZStack(alignment: .top) {
+          LiveView()
+            
+            // Overlay content at the top
+            VStack {
+                if isGraphExpanded {
+                    summaryView()
+                    HStack {
+                        Button {
+                            showDatePicker = true
+                        } label: {
+                            Text(selectedDateRange.displayText)
                         }
-                        .tint(.starMain)
+                        Spacer()
+                        Text(sessionDisplayText)
                     }
+                    .foregroundStyle(.whiteOne)
+                    .padding()
+                    sessionChartView(sessions: NumberHelper.filteredSessions(for: appState.homeActiveTab, in: sessions))
+                        .frame(height: 100)
+//                    sessionChartView(sessions: MockSessionGenerator.createMockSessions())
+//                                       .frame(height: 100)
                 }
-                .tag(event)
             }
+            .background(Color.starBlack.opacity(1.0)) // Make sure it's visible over the map
         }
-        .mapStyle(.imagery(elevation: .realistic))
-        .frame(height: 400)  // Set height of the map
     }
+
     
     
     @ViewBuilder

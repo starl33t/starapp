@@ -19,17 +19,11 @@ class AppState: ObservableObject {
     @Published var metricTitle: String = "Line Chart" //Metric
     @Published var trigger: Bool = true //Homescreen
     @Published var homeActiveTab: HomeTab = .lactate // Homescreen
-    @Published var animatedText: String = ""
     @Published var todayTitle: String = "" // New property for CalendarView
     @Published var todayChat: String = "AI Coach"
-    @Published var liveTitle: String = "Athletes" //Homescreen
     @Published var isTextExpanded: Bool = false //FloatingButtonText
     @Published var isExpanded: Bool = false // floatingbutton
     @Published var selectedChart: MetricView.ChartType = .lineChart //metricview
-    @Published var selectedLive: LiveToolBarPrin.FindLive = .athletes // liveview
-    @AppStorage("Athletes") var athletesToggle: Bool = false
-    @AppStorage("Events") var eventsToggle: Bool = false
-   
     
     func loadOrCreateUser() {
         // 1) Load the user from cache
@@ -107,19 +101,6 @@ class AppState: ObservableObject {
             metricTitle = "Pie Chart"
         case .scatterPlot:
             metricTitle = "Scatter Plot"
-        }
-    }
-    
-    func todayLive() {
-        switch selectedLive {
-        case .athletes:
-            liveTitle = "Athletes"
-            athletesToggle = true
-            eventsToggle = false  // Make sure eventsToggle is false when athletes are selected
-        case .events:
-            liveTitle = "Events"
-            athletesToggle = false  // Make sure athletesToggle is false when events are selected
-            eventsToggle = true
         }
     }
 }

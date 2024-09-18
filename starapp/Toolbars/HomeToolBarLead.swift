@@ -7,11 +7,17 @@
 
 import SwiftUI
 
-struct ProfileToolBarLead: View {
+struct HomeToolBarLead: View {
+    @EnvironmentObject var appState: AppState
     var body: some View {
         HStack {
             NavigationLink(destination: ProfileView()) {
                 Label("Profile", systemImage: "person.fill")
+            }
+            Button {
+                appState.selectedTab = 1
+            } label: {
+                Label("Calendar", systemImage: "calendar")
             }
         }
     }

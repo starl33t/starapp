@@ -2,27 +2,24 @@ import SwiftUI
 
 struct HomeToolBarTrail: View {
     @AppStorage("Notifications") private var Notifications = false
+    @AppStorage("isGraphExpanded") private var isGraphExpanded = false
     var body: some View {
         HStack {
             Menu {
                 Button(action: {
                     // Action 1
                 }) {
-                    Text("AI Model: Nola 1.0")
+                    Text("Park Runs")
                 }
             } label: {
-                Label("AI", systemImage: "cpu")
+                Label("Settings", systemImage: "gear")
             }
-
-            Menu {
-                Button(action: {
-                    // Action 1
-                }) {
-                    Text("No Notifications!")
-                }
+            Button {
+                isGraphExpanded.toggle() // Toggles the boolean value
             } label: {
-                Label("Notifications", systemImage: Notifications ? "bell" : "bell.slash")
+                Label("Notifications", systemImage: "chart.xyaxis.line")
             }
+            .foregroundStyle(isGraphExpanded ? .starMain : .whiteTwo)
         }
     }
 }
