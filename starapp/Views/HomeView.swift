@@ -13,7 +13,8 @@ struct HomeView: View {
     @AppStorage("isGraphExpanded") private var isGraphExpanded = false
     @AppStorage("isFloatingChatExpanded") private var isFloatingChatExpanded = false
     @Query private var allSessions: [Session]
-
+    @State private var newMessageContent: String = ""
+    
     
     init() {
         let startOfLast7Days = Calendar.current.date(byAdding: .day, value: -365, to: Date())!
@@ -49,7 +50,12 @@ struct HomeView: View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
             VStack {
-                mapView()
+                if isFloatingChatExpanded {
+                    Spacer()
+                    chatViewBar()
+                } else {
+                    mapView()
+                }
             }
             .tint(.starMain)
             .animation(.easeInOut(duration: 1.4), value:  isFloatingChatExpanded)
@@ -74,11 +80,45 @@ struct HomeView: View {
                 .presentationDetents([.fraction(0.3)])
         }
     }
-      
+    
+    @ViewBuilder
+    private func chatViewBar() -> some View {
+        HStack {
+            Button(action: {
+                newMessageContent = "" // Clear the message input
+            }) {
+                Image(systemName: "xmark.circle.fill")
+                    .font(.system(size: 30))
+                    .foregroundColor(newMessageContent.isEmpty ? .gray : .whiteOne)
+                    .padding(.trailing, 5)
+            }
+            ZStack(alignment: .leading) {
+                TextField("", text: $newMessageContent, axis: .vertical)
+                    .foregroundStyle(.whiteOne)
+                    .padding(.horizontal)
+            }
+            .padding(.vertical, 4)
+            .background(.darkOne)
+            .cornerRadius(24)
+            Button(action: {
+                Task {
+                    // Navigate using the user's input in newMessageContent
+                    await navigateToChatWithPrompt(newMessageContent)
+                    newMessageContent = "" // Clear the input after sending
+                }
+            }) {
+                Image(systemName: "arrow.up.circle.fill")
+                    .foregroundColor(newMessageContent.isEmpty ? .gray : .starMain)
+                    .font(.system(size: 30))
+                
+            }
+        }
+    }
+    
     @ViewBuilder
     private func mapView() -> some View {
         ZStack(alignment: .top) {
-          LiveView()
+            LiveView()
             VStack {
                 if isGraphExpanded {
                     summaryView()
@@ -101,7 +141,7 @@ struct HomeView: View {
             .background(Color.starBlack.opacity(1.0)) // Make sure it's visible over the map
         }
     }
-
+    
     @ViewBuilder
     private func floatingActionButton() -> some View {
         FloatingButtonText {
@@ -140,12 +180,12 @@ struct HomeView: View {
                     await navigateToChatWithPrompt("Help me get over my injury")
                 }
             }
-        } label: { isExpanded in
-            Image(systemName: isExpanded ? "text.bubble" : "bubble.left")
+        } label: { isFloatingChatExpanded in
+            Image(systemName: isFloatingChatExpanded ? "text.bubble" : "bubble.left")
                 .font(.title3)
                 .fontWeight(.semibold)
                 .foregroundStyle(.whiteOne)
-                .scaleEffect(isExpanded ? 1 : 0.9)
+                .scaleEffect(isFloatingChatExpanded ? 1 : 0.9)
         }
         .padding(.bottom, 50)
     }
@@ -294,6 +334,7 @@ struct HomeView: View {
             }
         }
         appState.selectedTab = 3
+        isFloatingChatExpanded = false
     }
 }
 
