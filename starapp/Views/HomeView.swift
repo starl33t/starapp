@@ -64,9 +64,9 @@ struct HomeView: View {
             }
         }
         .onTapGesture {
+            selectedSession = nil
             selectedCapsuleIndex = nil
             isFloatingChatExpanded = false
-            isGraphExpanded = false
         }
         .onAppear {
             updateActiveTabIfNeeded()
@@ -118,6 +118,9 @@ struct HomeView: View {
     private func mapView() -> some View {
         ZStack(alignment: .top) {
             LiveView()
+                .onTapGesture {
+                    isGraphExpanded = false
+                }
             VStack {
                 if isGraphExpanded {
                     summaryView()
@@ -125,7 +128,12 @@ struct HomeView: View {
                         Button {
                             showDatePicker = true
                         } label: {
-                            Text(selectedDateRange.displayText)
+                            ZStack{
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.whiteOne, lineWidth: 2)
+                                    .frame(width: 130, height: 32)
+                                Text(selectedDateRange.displayText)
+                            }
                         }
                         Spacer()
                         Text(sessionDisplayText)
@@ -136,9 +144,10 @@ struct HomeView: View {
                         .frame(height: 100)
                         .padding()
                 }
+                
             }
             .animation(.easeInOut(duration: 0.3), value:  isGraphExpanded)
-            .background(Color.starBlack.opacity(0.9)) // Make sure it's visible over the map
+            .background(Color.starBlack.opacity(0.9))
         }
     }
     

@@ -5,8 +5,7 @@ struct ContentView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var starStore: StarStore
     @StateObject private var viewModel = MessageHelper()
-    
-    
+
     var body: some View {
         NavigationStack {
             ZStack {
