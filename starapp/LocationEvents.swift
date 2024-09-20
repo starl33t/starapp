@@ -3,8 +3,8 @@ import CoreLocation
 extension CLLocationCoordinate2D {
     //Denmark
     static let FælledparkenParkrun: Self = .init(
-        latitude: 55.681448628636566,
-        longitude: 12.47360436040206
+        latitude: 55.70046882339936,
+        longitude: 12.572115273336172
     )
     static let DamhusengenParkrun: Self = .init(
         latitude: 55.68147264125531,

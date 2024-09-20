@@ -50,23 +50,22 @@ struct HomeView: View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
             VStack {
-                if isFloatingChatExpanded {
-                    Spacer()
-                    chatViewBar()
-                } else {
-                    mapView()
-                }
+                mapView()
             }
             .tint(.starMain)
             .animation(.easeInOut(duration: 0.3), value:  isFloatingChatExpanded)
             .overlay(alignment: .bottomTrailing) {
                 floatingActionButton()
             }
+            .overlay(alignment: .bottom){
+                if isFloatingChatExpanded {
+                    chatViewBar()
+                }
+            }
         }
         .onTapGesture {
             selectedSession = nil
             selectedCapsuleIndex = nil
-            isFloatingChatExpanded = false
         }
         .onAppear {
             updateActiveTabIfNeeded()
@@ -121,6 +120,11 @@ struct HomeView: View {
                 .onTapGesture {
                     isGraphExpanded = false
                 }
+                .overlay{
+                    if isFloatingChatExpanded {
+                        Color.starBlack.opacity(0.9).edgesIgnoringSafeArea(.all)
+                    }
+                }
             VStack {
                 if isGraphExpanded {
                     summaryView()
@@ -148,6 +152,9 @@ struct HomeView: View {
             }
             .animation(.easeInOut(duration: 0.3), value:  isGraphExpanded)
             .background(Color.starBlack.opacity(0.9))
+        }
+        .onTapGesture {
+            isFloatingChatExpanded = false
         }
     }
     
@@ -197,6 +204,7 @@ struct HomeView: View {
                 .scaleEffect(isFloatingChatExpanded ? 1 : 0.9)
         }
         .padding(.bottom, 50)
+        .padding()
     }
     
     

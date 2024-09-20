@@ -53,6 +53,7 @@ struct CalendarView: View {
                         .scaleEffect(isFloatingTrainingExpanded ? 0.9 : 1)
                 }
                 .padding(.bottom, 50)
+                .padding()
                 
             }
             
