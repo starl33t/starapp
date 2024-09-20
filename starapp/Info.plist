@@ -2,8 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleIdentifier</key>
+	<string></string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string></string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string></string>
+	<key>OpenAIAPIKey</key>
+	<string>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</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
