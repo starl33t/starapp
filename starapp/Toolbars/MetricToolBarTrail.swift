@@ -1,6 +1,6 @@
 import SwiftUI
 import SwiftData
-import UniformTypeIdentifiers
+//import UniformTypeIdentifiers
 
 struct MetricToolBarTrail: View {
     @Query private var sessions: [Session]

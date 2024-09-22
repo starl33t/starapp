@@ -132,7 +132,15 @@ extension CLLocationCoordinate2D {
         latitude: 59.91851102866657,
         longitude: 10.777812975309919
     )
-    //59.91851102866657, 10.777812975309919
+    //Races
+    static let ValenciaMarathon: Self = .init(
+        latitude: 39.45745962326484,
+        longitude: -0.354545215737104
+    )
+    static let BerlinMarathon: Self = .init(
+        latitude: 52.51617661248418,
+        longitude: 13.375276081182008
+    )
 }
 
 struct EventMarker: Identifiable, Hashable, Equatable {
@@ -159,7 +167,7 @@ struct EventMarker: Identifiable, Hashable, Equatable {
     }
 }
 
-struct LocationEvents {
+struct parkRunLocationEvents {
     // Return event markers with coordinates, labels, subtitles, and system images
     static func allEventMarkers() -> [EventMarker] {
         return [
@@ -356,6 +364,27 @@ struct LocationEvents {
                 label: "Tøyen Parkrun",
                 systemImage: "figure.run",
                 metadata: "Start: 09:30, every Saturday"
+            ),
+        ]
+    }
+}
+
+
+struct raceRunLocationEvents {
+    // Return event markers with coordinates, labels, subtitles, and system images
+    static func allEventMarkers() -> [EventMarker] {
+        return [
+            EventMarker(
+                coordinate: .ValenciaMarathon,
+                label: "Valencia Marathon",
+                systemImage: "figure.run",
+                metadata: "Start: 08:15, 01-Dec-2024"
+            ),
+            EventMarker(
+                coordinate: .BerlinMarathon,
+                label: "Berlin Marathon",
+                systemImage: "figure.run",
+                metadata: "Start: 09:15, 29-Sep-2024"
             ),
         ]
     }
