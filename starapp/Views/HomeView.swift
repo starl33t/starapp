@@ -152,6 +152,11 @@ struct HomeView: View {
             }
             .animation(.easeInOut(duration: 0.3), value:  isGraphExpanded)
             .background(Color.starBlack.opacity(0.9))
+            .onTapGesture {
+                selectedSession = nil
+                selectedCapsuleIndex = nil
+            }
+            
         }
         .onTapGesture {
             isFloatingChatExpanded = false

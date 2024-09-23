@@ -9,16 +9,15 @@ struct UserLocationAnnotation: Identifiable {
 }
 
 struct LiveView: View {
-    @State var locationManager = LocationManager()
+    @EnvironmentObject var locationManager: LocationManager
     @AppStorage("Athletes") var athletesToggle: Bool = false
     @AppStorage("Events") var eventsToggle: Bool = true
+    @AppStorage("isAuthorizedLocation") var isAuthorizedLocation: Bool = true
     @State var position: MapCameraPosition = .userLocation(fallback: .automatic)
     @State private var userAnnotations: [UserLocationAnnotation] = []
     @State private var selectedEvent: EventMarker?
-    //route
-    @State private var showRoute: Bool = false
+    @State private var lastSelectedEvent: EventMarker?
     @State private var route: MKRoute?
-    @State private var routeDestination: MKMapItem?
     @State private var travelInterval: TimeInterval?
     @State private var routeDisplaying: Bool = false
     @State private var currentEvent: EventMarker?
@@ -26,7 +25,6 @@ struct LiveView: View {
     var body: some View {
         ZStack(alignment: .top) {
             Map(position: $position, selection: $selectedEvent) {
-                // Annotation for the current user's location
                 UserAnnotation()
                 
                 ForEach(parkRunLocationEvents.allEventMarkers(), id: \.self) { event in
@@ -43,9 +41,20 @@ struct LiveView: View {
                     .tint(.red)
                     .tag(event)
                 }
+                // Display the sublocations for the last selected event
+                if let lastSelectedEvent = lastSelectedEvent, let sublocations = lastSelectedEvent.sublocations {
+                    ForEach(sublocations, id: \.self) { sublocation in
+                        Marker(coordinate: sublocation.coordinate) {
+                            Label(sublocation.title, systemImage: sublocation.systemImage)  // Use the sublocation image
+                        }
+                        .tint(sublocation.color)
+                    }
+                }
+
+                
                 if let route, routeDisplaying {
                     MapPolyline(route.polyline)
-                        .stroke(Color.red, lineWidth: 2) // Set to bright red with a thicker width
+                        .stroke(Color.red, lineWidth: 2)
                 }
             }
             .sheet(item: $selectedEvent) { event in
@@ -56,26 +65,42 @@ struct LiveView: View {
                             .font(.headline)
                         Text(event.metadata)
                             .font(.body)
-                        
-//                        Button(action: {
-//                            if currentEvent == event {
-//                                routeDisplaying.toggle()
-//                                if !routeDisplaying {
-//                                    route = nil
-//                                    position = .userLocation(fallback: .automatic) // Reset to user location
-//                                }
-//                            } else {
-//                                routeDisplaying = false
-//                                route = nil
-//                                currentEvent = event
-//                                Task {
-//                                    await fetchRoute(to: event)
-//                                }
-//                            }
-//                        }) {
-//                            Image(systemName: routeDisplaying && currentEvent == event ? "mappin.slash" : "mappin")
-//                                .font(.title)
-//                        }
+                        Button(action: {
+                            if isAuthorizedLocation == false {
+                                // Open the app's settings for the user to allow location access
+                                if let appSettings = URL(string: UIApplication.openSettingsURLString) {
+                                    UIApplication.shared.open(appSettings)
+                                }
+                            } else {
+                                if currentEvent == event {
+                                    routeDisplaying.toggle()
+                                    if routeDisplaying {
+                                        currentEvent = event
+                                    } else {
+                                        route = nil
+                                    }
+                                } else {
+                                    routeDisplaying = false
+                                    route = nil
+                                    currentEvent = event
+                                    Task {
+                                        await fetchRoute(to: event)
+                                    }
+                                }
+                            }
+                            
+                        }) {
+                            if isAuthorizedLocation == false {
+                                Label("Turn On Location", systemImage: "gear")
+                                    .padding()
+                                    .background(.starMain)
+                                    .foregroundStyle(.whiteOne)
+                                    .cornerRadius(10)
+                            } else {
+                                Image(systemName: routeDisplaying && currentEvent == event ? "mappin.slash" : "mappin")
+                                    .font(.title)
+                            }
+                        }
                     }
                     .foregroundStyle(.whiteOne)
                     .frame(maxWidth: .infinity)
@@ -91,15 +116,9 @@ struct LiveView: View {
                 MapPitchToggle()
             }
         }
-        .onAppear {
-            Task {
-                try await locationManager.requestUserAuthorization()
-                try await locationManager.startCurrentLocationUpdates()
-            }
-        }
         .onChange(of: selectedEvent) { oldSelection, newSelection in
             if let selectedEvent = newSelection {
-                
+                lastSelectedEvent = newSelection
                 let camera = MapCamera(
                     centerCoordinate: selectedEvent.coordinate,
                     distance: 4000,
@@ -110,9 +129,9 @@ struct LiveView: View {
             }
         }
     }
-  
+    
     func fetchRoute(to event: EventMarker) async {
-        if let userLocation = locationManager.location {
+        if let userLocation = locationManager.userLocation {
             let sourcePlacemark = MKPlacemark(coordinate: userLocation.coordinate)
             let routeSource = MKMapItem(placemark: sourcePlacemark)
             let destinationPlacemark = MKPlacemark(coordinate: event.coordinate)
@@ -128,7 +147,7 @@ struct LiveView: View {
                 if let route = result.routes.first {
                     self.route = route
                     travelInterval = route.expectedTravelTime
-
+                    
                     withAnimation {
                         routeDisplaying = true
                         position = .rect(route.polyline.boundingMapRect)
@@ -140,4 +159,3 @@ struct LiveView: View {
         }
     }
 }
-

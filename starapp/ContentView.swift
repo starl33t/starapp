@@ -4,6 +4,7 @@ import CloudKit
 struct ContentView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var starStore: StarStore
+    @EnvironmentObject var locationManager: LocationManager
     @StateObject private var viewModel = MessageHelper()
 
     var body: some View {
@@ -16,7 +17,7 @@ struct ContentView: View {
                 case 1:
                     CalendarView()
                 case 2:
-                    LiveView()
+                    LiveView().environmentObject(locationManager)
                 case 3:
                     ChatView(viewModel: viewModel)
                 case 4:
@@ -95,4 +96,5 @@ struct ContentView: View {
     ContentView()
         .environmentObject(AppState())
         .environmentObject(StarStore())
+        .environmentObject(LocationManager())
 }

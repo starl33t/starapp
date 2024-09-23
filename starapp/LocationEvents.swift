@@ -1,7 +1,8 @@
 import CoreLocation
+import SwiftUI
 
 extension CLLocationCoordinate2D {
-    //Denmark
+    //Denmark Parkrun
     static let FælledparkenParkrun: Self = .init(
         latitude: 55.70046882339936,
         longitude: 12.572115273336172
@@ -42,7 +43,7 @@ extension CLLocationCoordinate2D {
         latitude: 55.482346267778304,
         longitude: 8.44269300848907
     )
-    //Sweden
+    //Sweden Parkrun
     static let MalmöRibersborgParkrun: Self = .init(
         latitude: 55.602047940580206,
         longitude: 12.966789299854284
@@ -91,7 +92,7 @@ extension CLLocationCoordinate2D {
         latitude: 59.354546523729,
         longitude: 18.03930483388854
     )
-    //Norway
+    //Norway Parkrun
     static let StavangerParkrun: Self = .init(
         latitude: 58.952623724071714,
         longitude: 5.717140397535771
@@ -133,37 +134,92 @@ extension CLLocationCoordinate2D {
         longitude: 10.777812975309919
     )
     //Races
+    //Valencia Marathon
     static let ValenciaMarathon: Self = .init(
         latitude: 39.45745962326484,
         longitude: -0.354545215737104
     )
+    //Berlin Marathon
     static let BerlinMarathon: Self = .init(
-        latitude: 52.51617661248418,
-        longitude: 13.375276081182008
+        latitude: 52.515203511716805,
+        longitude: 13.359978579961368
     )
+    static let BerlinMarathonStartA: Self = .init(
+        latitude: 52.51522386313827,
+        longitude: 13.360294015720854
+    )
+    static let BerlinMarathonStartB: Self = .init(
+        latitude: 52.51530894005177,
+        longitude: 13.361293762858303
+    )
+    static let BerlinMarathonStartC: Self = .init(
+        latitude: 52.515355414467,
+        longitude: 13.36208308320724
+    )
+    static let BerlinMarathonStartD: Self = .init(
+        latitude: 52.51543862169678,
+        longitude: 13.363447044354164
+    )
+    static let BerlinMarathonStartE: Self = .init(
+        latitude: 52.515410153226746,
+        longitude: 13.364295246981447
+    )
+    static let BerlinMarathonStartF: Self = .init(
+        latitude: 52.515586914659146,
+        longitude: 13.366054554935163
+    )
+    static let BerlinMarathonStartG: Self = .init(
+        latitude: 52.515627557497154,
+        longitude: 13.36672196140192
+    )
+    static let BerlinMarathonStartH: Self = .init(
+        latitude: 52.51566498108242,
+        longitude: 13.367445895301845
+    )
+    static let BerlinMarathonStartJ: Self = .init(
+        latitude: 52.51576538552799,
+        longitude: 13.369177133846899
+    )
+    //52.51566498108242, 13.367445895301845
+}
+
+
+struct Sublocation: Identifiable, Hashable, Equatable {
+    let id = UUID()
+    let coordinate: CLLocationCoordinate2D
+    let title: String
+    let systemImage: String
+    let color: Color  // New property for custom color
+    
+    // Conformance to Equatable
+    static func == (lhs: Sublocation, rhs: Sublocation) -> Bool {
+        return lhs.id == rhs.id && lhs.coordinate.latitude == rhs.coordinate.latitude && lhs.coordinate.longitude == rhs.coordinate.longitude && lhs.title == rhs.title && lhs.systemImage == rhs.systemImage && lhs.color == rhs.color
+    }
+    
+    // Conformance to Hashable
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(coordinate.latitude)
+        hasher.combine(coordinate.longitude)
+        hasher.combine(title)
+        hasher.combine(systemImage)
+        hasher.combine(color)
+    }
 }
 
 struct EventMarker: Identifiable, Hashable, Equatable {
     let id = UUID()
     let coordinate: CLLocationCoordinate2D
-    let label: String      // First line (title)
+    let label: String
     let systemImage: String
-    let metadata: String  // Add this property
-    
-    // Manually conform to Equatable
+    let metadata: String
+    var sublocations: [Sublocation]?
     static func == (lhs: EventMarker, rhs: EventMarker) -> Bool {
-        return lhs.coordinate.latitude == rhs.coordinate.latitude &&
-        lhs.coordinate.longitude == rhs.coordinate.longitude &&
-        lhs.label == rhs.label &&
-        lhs.systemImage == rhs.systemImage
+        return lhs.id == rhs.id
     }
     
-    // Manually conform to Hashable
     func hash(into hasher: inout Hasher) {
-        hasher.combine(coordinate.latitude)
-        hasher.combine(coordinate.longitude)
-        hasher.combine(label)
-        hasher.combine(systemImage)
+        hasher.combine(id)
     }
 }
 
@@ -374,17 +430,30 @@ struct raceRunLocationEvents {
     // Return event markers with coordinates, labels, subtitles, and system images
     static func allEventMarkers() -> [EventMarker] {
         return [
+            //Valencia Marathon
             EventMarker(
                 coordinate: .ValenciaMarathon,
                 label: "Valencia Marathon",
                 systemImage: "figure.run",
                 metadata: "Start: 08:15, 01-Dec-2024"
             ),
+            //Berlin Marathon
             EventMarker(
                 coordinate: .BerlinMarathon,
                 label: "Berlin Marathon",
                 systemImage: "figure.run",
-                metadata: "Start: 09:15, 29-Sep-2024"
+                metadata: "Start: 09:15, 29-Sep-2024",
+                sublocations: [
+                    Sublocation(coordinate: .BerlinMarathonStartA, title: "Start box A", systemImage: "a.circle", color: .red),
+                    Sublocation(coordinate: .BerlinMarathonStartB,title: "Start box B", systemImage: "b.circle", color: .green),
+                    Sublocation(coordinate: .BerlinMarathonStartC,title: "Start box C", systemImage: "c.circle", color: .yellow),
+                    Sublocation(coordinate: .BerlinMarathonStartD,title: "Start box D", systemImage: "d.circle", color: .blue),
+                    Sublocation(coordinate: .BerlinMarathonStartE,title: "Start box E", systemImage: "e.circle", color: .gray),
+                    Sublocation(coordinate: .BerlinMarathonStartF,title: "Start box F", systemImage: "f.circle", color: .teal),
+                    Sublocation(coordinate: .BerlinMarathonStartG,title: "Start box G", systemImage: "g.circle", color: .pink),
+                    Sublocation(coordinate: .BerlinMarathonStartH,title: "Start box H", systemImage: "h.circle", color: .purple),
+                    Sublocation(coordinate: .BerlinMarathonStartJ,title: "Start box J", systemImage: "j.circle", color: .orange)
+                ]
             ),
         ]
     }
