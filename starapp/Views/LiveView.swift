@@ -11,15 +11,15 @@ struct UserLocationAnnotation: Identifiable {
 struct LiveView: View {
     @EnvironmentObject var locationManager: LocationManager
     @AppStorage("Athletes") var athletesToggle: Bool = false
-    @AppStorage("Events") var eventsToggle: Bool = true
     @AppStorage("isAuthorizedLocation") var isAuthorizedLocation: Bool = true
+    @AppStorage("persistedEventLabel") private var persistedEventLabel: String? // Use label for persistence
+    @AppStorage("routeDisplaying") private var routeDisplaying: Bool = false
     @State var position: MapCameraPosition = .userLocation(fallback: .automatic)
     @State private var userAnnotations: [UserLocationAnnotation] = []
     @State private var selectedEvent: EventMarker?
     @State private var lastSelectedEvent: EventMarker?
     @State private var route: MKRoute?
     @State private var travelInterval: TimeInterval?
-    @State private var routeDisplaying: Bool = false
     @State private var currentEvent: EventMarker?
     
     var body: some View {
@@ -41,20 +41,42 @@ struct LiveView: View {
                     .tint(.red)
                     .tag(event)
                 }
-                // Display the sublocations for the last selected event
-                if let lastSelectedEvent = lastSelectedEvent, let sublocations = lastSelectedEvent.sublocations {
-                    ForEach(sublocations, id: \.self) { sublocation in
-                        Marker(coordinate: sublocation.coordinate) {
-                            Label(sublocation.title, systemImage: sublocation.systemImage)  // Use the sublocation image
+                // Display sublocations and subpolylines if available
+                if let lastSelectedEvent = lastSelectedEvent {
+                    // Display sublocations
+                    if let sublocations = lastSelectedEvent.sublocations {
+                        ForEach(sublocations, id: \.self) { sublocation in
+                            Marker(coordinate: sublocation.coordinate) {
+                                Label(sublocation.title, systemImage: sublocation.systemImage)
+                            }
+                            .tint(sublocation.color)
                         }
-                        .tint(sublocation.color)
+                    }
+                    
+                    // Display subpolylines
+                    if let subpolylines = lastSelectedEvent.subpolylines {
+                        ForEach(subpolylines) { subpolyline in
+                            MapPolyline(MKPolyline(coordinates: subpolyline.coordinates, count: subpolyline.coordinates.count))
+                                .stroke(subpolyline.color, lineWidth: 3)
+                        }
                     }
                 }
-
                 
                 if let route, routeDisplaying {
                     MapPolyline(route.polyline)
-                        .stroke(Color.red, lineWidth: 2)
+                        .stroke(Color.starMain.opacity(0.5), lineWidth: 2)
+                }
+            }
+            .onAppear {
+                if routeDisplaying {
+                    if let persistedEventLabel = persistedEventLabel, let restoredEvent = findEventByLabel(persistedEventLabel) {
+                        currentEvent = restoredEvent
+                        Task {
+                            await fetchRoute(to: restoredEvent)
+                        }
+                    }
+                } else {
+                    route = nil
                 }
             }
             .sheet(item: $selectedEvent) { event in
@@ -72,10 +94,12 @@ struct LiveView: View {
                                     UIApplication.shared.open(appSettings)
                                 }
                             } else {
-                                if currentEvent == event {
+                                if currentEvent?.label == event.label {
                                     routeDisplaying.toggle()
                                     if routeDisplaying {
-                                        currentEvent = event
+                                        Task {
+                                            await fetchRoute(to: event)
+                                        }
                                     } else {
                                         route = nil
                                     }
@@ -83,12 +107,12 @@ struct LiveView: View {
                                     routeDisplaying = false
                                     route = nil
                                     currentEvent = event
+                                    persistedEventLabel = event.label
                                     Task {
                                         await fetchRoute(to: event)
                                     }
                                 }
                             }
-                            
                         }) {
                             if isAuthorizedLocation == false {
                                 Label("Turn On Location", systemImage: "gear")
@@ -157,5 +181,9 @@ struct LiveView: View {
                 print("Error fetching route: \(error.localizedDescription)")
             }
         }
+    }
+    func findEventByLabel(_ label: String) -> EventMarker? {
+        return parkRunLocationEvents.allEventMarkers().first { $0.label == label } ??
+        raceRunLocationEvents.allEventMarkers().first { $0.label == label }
     }
 }

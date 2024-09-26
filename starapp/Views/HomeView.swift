@@ -12,6 +12,7 @@ struct HomeView: View {
     @State private var selectedDateRange: DateRangeOption = .thisWeek
     @AppStorage("isGraphExpanded") private var isGraphExpanded = false
     @AppStorage("isFloatingChatExpanded") private var isFloatingChatExpanded = false
+    @AppStorage("chatWithSapiens") private var chatWithSapiens: Bool = false
     @Query private var allSessions: [Session]
     @State private var newMessageContent: String = ""
     
@@ -359,6 +360,7 @@ struct HomeView: View {
             appState.selectedTab = 3
         }
         isFloatingChatExpanded = false
+        chatWithSapiens = false
     }
 }
 

@@ -141,46 +141,48 @@ extension CLLocationCoordinate2D {
     )
     //Berlin Marathon
     static let BerlinMarathon: Self = .init(
-        latitude: 52.515203511716805,
-        longitude: 13.359978579961368
+        latitude: 52.515250494579725,
+        longitude: 13.360404278790226
     )
-    static let BerlinMarathonStartA: Self = .init(
-        latitude: 52.51522386313827,
-        longitude: 13.360294015720854
+    static let BerlinMarathonStartGroupStart: Self = .init(
+        latitude: 52.5152476846892,
+        longitude: 13.360620891966786
     )
-    static let BerlinMarathonStartB: Self = .init(
-        latitude: 52.51530894005177,
-        longitude: 13.361293762858303
+    static let BerlinMarathonStartGroupEnd: Self = .init(
+        latitude: 52.515805289852146,
+        longitude: 13.369203498208657
     )
-    static let BerlinMarathonStartC: Self = .init(
-        latitude: 52.515355414467,
-        longitude: 13.36208308320724
+    static let BerlinMarathonEntrance: Self = .init(
+        latitude: 52.51868637197913,
+        longitude: 13.3731926535664
     )
-    static let BerlinMarathonStartD: Self = .init(
-        latitude: 52.51543862169678,
-        longitude: 13.363447044354164
+    static let BerlinMarathonBagDrop3: Self = .init(
+        latitude: 52.52011545875589,
+        longitude: 13.372071023756304
     )
-    static let BerlinMarathonStartE: Self = .init(
-        latitude: 52.515410153226746,
-        longitude: 13.364295246981447
+    static let BerlinMarathonBagDrop2: Self = .init(
+        latitude: 52.51936152846556,
+        longitude: 13.371415675656783
     )
-    static let BerlinMarathonStartF: Self = .init(
-        latitude: 52.515586914659146,
-        longitude: 13.366054554935163
+    static let BerlinMarathonBagDrop1: Self = .init(
+        latitude: 52.51766580099817,
+        longitude: 13.368332792630026
     )
-    static let BerlinMarathonStartG: Self = .init(
-        latitude: 52.515627557497154,
-        longitude: 13.36672196140192
-    )
-    static let BerlinMarathonStartH: Self = .init(
-        latitude: 52.51566498108242,
-        longitude: 13.367445895301845
-    )
-    static let BerlinMarathonStartJ: Self = .init(
-        latitude: 52.51576538552799,
-        longitude: 13.369177133846899
-    )
-    //52.51566498108242, 13.367445895301845
+    //52.51766580099817, 13.368332792630026
+}
+struct SubPolyline: Identifiable, Hashable, Equatable {
+    let id = UUID()
+    let coordinates: [CLLocationCoordinate2D]
+    let title: String
+    let color: Color
+    
+    static func == (lhs: SubPolyline, rhs: SubPolyline) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }
 
 
@@ -208,12 +210,14 @@ struct Sublocation: Identifiable, Hashable, Equatable {
 }
 
 struct EventMarker: Identifiable, Hashable, Equatable {
-    let id = UUID()
+    var id: String { label } // Use label as the id
     let coordinate: CLLocationCoordinate2D
     let label: String
     let systemImage: String
     let metadata: String
     var sublocations: [Sublocation]?
+    var subpolylines: [SubPolyline]?
+    
     static func == (lhs: EventMarker, rhs: EventMarker) -> Bool {
         return lhs.id == rhs.id
     }
@@ -427,34 +431,71 @@ struct parkRunLocationEvents {
 
 
 struct raceRunLocationEvents {
-    // Return event markers with coordinates, labels, subtitles, and system images
     static func allEventMarkers() -> [EventMarker] {
         return [
-            //Valencia Marathon
+            // Valencia Marathon
             EventMarker(
                 coordinate: .ValenciaMarathon,
                 label: "Valencia Marathon",
                 systemImage: "figure.run",
                 metadata: "Start: 08:15, 01-Dec-2024"
             ),
-            //Berlin Marathon
+            // Berlin Marathon
             EventMarker(
                 coordinate: .BerlinMarathon,
                 label: "Berlin Marathon",
                 systemImage: "figure.run",
                 metadata: "Start: 09:15, 29-Sep-2024",
                 sublocations: [
-                    Sublocation(coordinate: .BerlinMarathonStartA, title: "Start box A", systemImage: "a.circle", color: .red),
-                    Sublocation(coordinate: .BerlinMarathonStartB,title: "Start box B", systemImage: "b.circle", color: .green),
-                    Sublocation(coordinate: .BerlinMarathonStartC,title: "Start box C", systemImage: "c.circle", color: .yellow),
-                    Sublocation(coordinate: .BerlinMarathonStartD,title: "Start box D", systemImage: "d.circle", color: .blue),
-                    Sublocation(coordinate: .BerlinMarathonStartE,title: "Start box E", systemImage: "e.circle", color: .gray),
-                    Sublocation(coordinate: .BerlinMarathonStartF,title: "Start box F", systemImage: "f.circle", color: .teal),
-                    Sublocation(coordinate: .BerlinMarathonStartG,title: "Start box G", systemImage: "g.circle", color: .pink),
-                    Sublocation(coordinate: .BerlinMarathonStartH,title: "Start box H", systemImage: "h.circle", color: .purple),
-                    Sublocation(coordinate: .BerlinMarathonStartJ,title: "Start box J", systemImage: "j.circle", color: .orange)
+                    Sublocation(
+                        coordinate: .BerlinMarathonEntrance,
+                        title: "Entrance",
+                        systemImage: "figure.walk.arrival",
+                        color: .blue
+                    ),
+                    Sublocation(
+                        coordinate: .BerlinMarathonBagDrop1,
+                        title: "Bag Drop I-III",
+                        systemImage: "hanger",
+                        color: .cyan
+                    ),
+                    Sublocation(
+                        coordinate: .BerlinMarathonBagDrop2,
+                        title: "Bag Drop V",
+                        systemImage: "hanger",
+                        color: .cyan
+                    ),
+                    Sublocation(
+                        coordinate: .BerlinMarathonBagDrop3,
+                        title: "Bag Drop VII",
+                        systemImage: "hanger",
+                        color: .cyan
+                    ),
+                    Sublocation(
+                        coordinate: .BerlinMarathonStartGroupStart,
+                        title: "Start Group A",
+                        systemImage: "a.circle",
+                        color: .red
+                    ),
+                    Sublocation(
+                        coordinate: .BerlinMarathonStartGroupEnd,
+                        title: "Start Group J",
+                        systemImage: "j.circle",
+                        color: .orange
+                    )
+                ],
+                subpolylines: [
+                    SubPolyline(
+                        coordinates: [
+                            .BerlinMarathonStartGroupStart,
+                            .BerlinMarathonStartGroupEnd
+                        ],
+                        title: "Start Groups Line",
+                        color: .red
+                    )
                 ]
             ),
+
         ]
     }
 }

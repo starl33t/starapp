@@ -16,13 +16,6 @@ struct MetricToolBarPrin: View {
                 .font(.headline)
                 .foregroundColor(.whiteOne)
         }
-        .font(.headline)
-        .onAppear {
-            appState.updateMetricTitle()
-        }
-        .onChange(of: appState.selectedChart) { oldValue, newValue in
-            appState.updateMetricTitle()
-        }
     }
 }
 

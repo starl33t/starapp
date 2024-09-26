@@ -12,15 +12,15 @@ class AppState: ObservableObject {
         }
     }
     @Published var tier: Int = 0
+    @Published var ban: Int = 0
     @Published var tagName: String = ""
+    @Published var tagNamePreview: String = ""
     @Published var selectedDate: Date = Date()
     @Published var days: [Date] = Date().daysInYear
     @Published var homeTitle: String = "Lactate" //Homescreen
     @Published var metricTitle: String = "Line Chart" //Metric
     @Published var homeActiveTab: HomeTab = .lactate // Homescreen
     @Published var todayTitle: String = "" // New property for CalendarView
-    @Published var todayChat: String = "AI Coach"
-    @Published var selectedChart: MetricView.ChartType = .lineChart //metricview
     
     func loadOrCreateUser() {
         // 1) Load the user from cache
@@ -86,18 +86,5 @@ class AppState: ObservableObject {
     func updateTodayTitle() {
         let today = Date()
         self.todayTitle = today.formatDayMonthLong(date: today)
-    }
-    
-    func updateMetricTitle() {
-        switch selectedChart {
-        case .lineChart:
-            metricTitle = "Line Chart"
-        case .barChart:
-            metricTitle = "Bar Chart"
-        case .pieChart:
-            metricTitle = "Pie Chart"
-        case .scatterPlot:
-            metricTitle = "Scatter Plot"
-        }
     }
 }

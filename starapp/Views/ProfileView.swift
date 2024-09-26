@@ -27,7 +27,7 @@ struct ProfileView: View {
                         .font(.system(size: 24, weight: .bold))
                     ZStack {
                         if appState.tagName.isEmpty {
-                            Text("@Tag")
+                            Text("Enter Tag")
                                 .foregroundColor(.gray)
                                 .frame(maxWidth: .infinity)
                                 .multilineTextAlignment(.center)

@@ -19,7 +19,7 @@ struct HomeToolBarLead: View {
                     appState.selectedTab = 1
                 }
             } label: {
-                Label("Calendar", systemImage: "calendar")
+                Label("Calendar", systemImage: "list.clipboard")
             }
         }
     }

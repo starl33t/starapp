@@ -57,7 +57,6 @@
 		BFDE40512C591A1200733888 /* CSVDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE40502C591A0900733888 /* CSVDocument.swift */; };
 		BFDE40532C591F8200733888 /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE40522C591F7B00733888 /* CalendarHelper.swift */; };
 		BFDE77422C91D284000D4373 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE77412C91D284000D4373 /* LocationManager.swift */; };
-		BFDEB5FE2C497D3900D32736 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDEB5FD2C497D3100D32736 /* UserService.swift */; };
 		BFDEB6042C49994C00D32736 /* SupportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDEB6032C49994900D32736 /* SupportView.swift */; };
 		BFE876062C6E7DA9006725A6 /* StringHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE876052C6E7DA6006725A6 /* StringHelper.swift */; };
 		BFEAE8592C92C348006F6285 /* LiveToolBarPrin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEAE8582C92C338006F6285 /* LiveToolBarPrin.swift */; };
@@ -142,7 +141,6 @@
 		BFDE40502C591A0900733888 /* CSVDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVDocument.swift; sourceTree = "<group>"; };
 		BFDE40522C591F7B00733888 /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
 		BFDE77412C91D284000D4373 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		BFDEB5FD2C497D3100D32736 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		BFDEB6032C49994900D32736 /* SupportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportView.swift; sourceTree = "<group>"; };
 		BFE876052C6E7DA6006725A6 /* StringHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHelper.swift; sourceTree = "<group>"; };
 		BFEAE8582C92C338006F6285 /* LiveToolBarPrin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveToolBarPrin.swift; sourceTree = "<group>"; };
@@ -244,7 +242,6 @@
 				BF57B8A82C541360000F24BB /* LactateHelper.swift */,
 				BFE876052C6E7DA6006725A6 /* StringHelper.swift */,
 				BF6359712C78C758006F8CB4 /* CloudHelper.swift */,
-				BFDEB5FD2C497D3100D32736 /* UserService.swift */,
 				BF31F0AA2C48FDA9000C005C /* EmailHelper.swift */,
 				BFABBD4B2C885F5D00A10182 /* PromptHelper.swift */,
 				BFDE40522C591F7B00733888 /* CalendarHelper.swift */,
@@ -509,7 +506,6 @@
 				BF4A816F2C3AF8DA00D4CAF1 /* LiveToolBarTrail.swift in Sources */,
 				BF4A818F2C3AFFDD00D4CAF1 /* HomeView.swift in Sources */,
 				BF3700882C47B60900CF255D /* User.swift in Sources */,
-				BFDEB5FE2C497D3900D32736 /* UserService.swift in Sources */,
 				BFC38D082C935ED900E93826 /* LocationEvents.swift in Sources */,
 				BF6C84122C3D16D600032E93 /* IntegrationsView.swift in Sources */,
 				BFEAE85B2C92C538006F6285 /* ChatToolBarPrin.swift in Sources */,
@@ -713,6 +709,8 @@
 				INFOPLIST_FILE = starapp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Starleet;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "So you can plan your routes";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "So you can plan your routes";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -727,7 +725,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 2.2.2;
+				MARKETING_VERSION = 2.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starappv01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -757,6 +755,8 @@
 				INFOPLIST_FILE = starapp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Starleet;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "So you can plan your routes";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "So you can plan your routes";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -771,7 +771,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 2.2.2;
+				MARKETING_VERSION = 2.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starappv01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;

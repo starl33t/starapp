@@ -11,7 +11,7 @@ struct starappApp: App {
         WindowGroup {
             if appState.currentUser != nil {
                 ContentView()
-                    .environmentObject(locationManager)
+                    
             } else {
                 LoadingView()
                     .onAppear {
@@ -19,6 +19,7 @@ struct starappApp: App {
                     }
             }
         }
+        .environmentObject(locationManager)
         .environmentObject(appState)
         .environmentObject(starStore)
         .modelContainer(for: [User.self])

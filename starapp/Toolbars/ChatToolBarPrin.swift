@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct ChatToolBarPrin: View {
-    @EnvironmentObject var appState: AppState
-    
     var body: some View {
         HStack {
-            Text(appState.todayChat)
-                .font(.headline)
-                .foregroundColor(.whiteOne)
+            Text("AI Coach")
         }
+        .foregroundColor(.whiteOne)
         .font(.headline)
     }
 }
+
+
+

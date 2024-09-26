@@ -53,7 +53,7 @@ class CloudHelper {
                     
                     print("Debug: No existing record found, creating new record.")
                     
-                    let record = CKRecord(recordType: "CD_User", recordID: recordID)
+                    let record = CKRecord(recordType: "User", recordID: recordID)
                     record["CD_userName"] = user.userName
                     record["CD_tagName"] = user.tagName
                     record["CD_tier"] = user.tier
@@ -126,7 +126,7 @@ class CloudHelper {
             if let record = record {
                 // Update existing CloudKit record with local changes
                 record["CD_userName"] = user.userName
-                record["CD_tagName"] = user.tagName
+                record["CD_tagNamePreview"] = user.tagNamePreview
                 record["CD_tier"] = user.tier
                 record["CD_latitude"] = user.latitude
                 record["CD_longitude"] = user.longitude
@@ -148,8 +148,8 @@ class CloudHelper {
         fetchUserRecord { record, error in
             if let record = record {
                 let user = User(
-                    userName: record["CD_userName"] as? String ?? "defaultUserName",
-                    tagName: record["CD_tagName"] as? String ?? "Enter Tag",
+                    userName: record["CD_userName"] as? String ?? "",
+                    tagName: record["CD_tagName"] as? String ?? "",
                     tier: record["CD_tier"] as? Int ?? 0,
                     latitude: record["CD_latitude"] as? Double,
                     longitude: record["CD_longitude"] as? Double
@@ -165,8 +165,8 @@ class CloudHelper {
     // Create a new user locally and save it
     static func createUserLocally(completion: @escaping (User) -> Void) {
         let newUser = User(
-            userName: "defaultUserName",
-            tagName: "defaultTagName",
+            userName: "",
+            tagName: "",
             tier: 0,
             latitude: 0.0,
             longitude: 0.0
@@ -184,36 +184,6 @@ class CloudHelper {
                 if updatedUser == nil {
                     // Handle the error if needed
                 }
-            }
-        }
-    }
-    
-    static func fetchUserLocations(completion: @escaping ([CKRecord]?, Error?) -> Void) {
-        let container = CKContainer.default()
-        let publicDatabase = container.publicCloudDatabase
-
-        // Create a query to fetch all "CD_User" records
-        let predicate = NSPredicate(value: true) // Fetch all records
-        let query = CKQuery(recordType: "CD_User", predicate: predicate)
-
-        var records: [CKRecord] = []
-
-        // Fetch records using the new API
-        publicDatabase.fetch(withQuery: query, inZoneWith: nil, desiredKeys: nil, resultsLimit: CKQueryOperation.maximumResults) { result in
-            switch result {
-            case .success(let (matchedResults, _)):
-                for (_, recordResult) in matchedResults {
-                    switch recordResult {
-                    case .success(let record):
-                        records.append(record)
-                    case .failure(let error):
-                        print("Error fetching record: \(error.localizedDescription)")
-                    }
-                }
-                completion(records, nil)
-            case .failure(let error):
-                print("Error fetching user locations: \(error.localizedDescription)")
-                completion(nil, error)
             }
         }
     }

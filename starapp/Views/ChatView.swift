@@ -1,6 +1,6 @@
 import SwiftUI
-import SwiftData
-import Combine
+//import SwiftData
+//import Combine
 
 struct ChatView: View {
     @EnvironmentObject var appState: AppState
@@ -39,9 +39,8 @@ struct ChatView: View {
                 if viewModel.threadId == nil {
                     await viewModel.createThread()
                 }
+                
             }
-        }
-        .onAppear {
             updateCanSendMessage()
             resetMessageCountIfNeeded()
         }
@@ -54,6 +53,7 @@ struct ChatView: View {
     }
     
     private var placeholderText: String {
+        
         let maxMessages = appState.tier == 1 ? 500 : 10
         let messagesLeft = maxMessages - dailyMessageCount
         
@@ -64,6 +64,7 @@ struct ChatView: View {
         } else {
             return "Ask Renato CanovAI"
         }
+        
     }
     
     private func updateCanSendMessage() {
@@ -164,9 +165,11 @@ struct MessageRowView: View {
             if message.role == "user" {
                 Spacer()
                 VStack(alignment: .trailing) {
-                    Text(appState.tagName.isEmpty ? "Unknown" : appState.tagName)
-                        .font(.headline)
-                        .foregroundColor(.white)
+                    if !appState.tagName.isEmpty {
+                        Text(appState.tagName)
+                            .font(.headline)
+                            .foregroundColor(.white)
+                    }
                     Text(message.content)
                         .foregroundColor(.white)
                         .padding(10)
