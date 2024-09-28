@@ -25,30 +25,6 @@ struct ProfileView: View {
                         .foregroundColor(.whiteOne)
                         .multilineTextAlignment(.center)
                         .font(.system(size: 24, weight: .bold))
-                    ZStack {
-                        if appState.tagName.isEmpty {
-                            Text("Enter Tag")
-                                .foregroundColor(.gray)
-                                .frame(maxWidth: .infinity)
-                                .multilineTextAlignment(.center)
-                        }
-                        TextField("", text: $appState.tagName, onCommit: {
-                            // Ensure the tag name is not more than 20 characters
-                            if appState.tagName.count > 20 {
-                                appState.tagName = String(appState.tagName.prefix(20))
-                            }
-                            appState.updateTagName(appState.tagName)
-                        })
-                        .foregroundColor(.gray)
-                        .multilineTextAlignment(.center)
-                        .onChange(of: appState.tagName) { _,newValue in
-                            if newValue.count > 20 {
-                                appState.tagName = String(newValue.prefix(20))
-                            }
-                        }
-                    }
-                    .font(.system(size: 14))
-                    .frame(maxWidth: .infinity)
                 }
                 .padding(.bottom)
                 
@@ -154,7 +130,7 @@ struct ProfileView: View {
     func buy(product: Product) async {
         do {
             if try await starStore.purchase(product) != nil {
-                appState.updateTier(1)
+                appState.tier = 1
             }
         } catch {
             print("purchase failed")

@@ -39,7 +39,6 @@ struct ChatView: View {
                 if viewModel.threadId == nil {
                     await viewModel.createThread()
                 }
-                
             }
             updateCanSendMessage()
             resetMessageCountIfNeeded()
@@ -165,11 +164,6 @@ struct MessageRowView: View {
             if message.role == "user" {
                 Spacer()
                 VStack(alignment: .trailing) {
-                    if !appState.tagName.isEmpty {
-                        Text(appState.tagName)
-                            .font(.headline)
-                            .foregroundColor(.white)
-                    }
                     Text(message.content)
                         .foregroundColor(.white)
                         .padding(10)
@@ -179,9 +173,6 @@ struct MessageRowView: View {
                 .padding()
             } else {
                 VStack(alignment: .leading) {
-                    Text("Renato")
-                        .font(.headline)
-                        .foregroundColor(.white)
                     Text(message.content)
                         .foregroundColor(.white)
                         .padding(10)

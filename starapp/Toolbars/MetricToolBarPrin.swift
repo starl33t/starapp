@@ -12,7 +12,7 @@ struct MetricToolBarPrin: View {
     
     var body: some View {
         HStack {
-            Text(appState.metricTitle)
+            Text("Metric")
                 .font(.headline)
                 .foregroundColor(.whiteOne)
         }

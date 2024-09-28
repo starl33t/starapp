@@ -28,7 +28,6 @@
 		BF4A818B2C3AFDF500D4CAF1 /* ColorOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A818A2C3AFDF500D4CAF1 /* ColorOptionView.swift */; };
 		BF4A818F2C3AFFDD00D4CAF1 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A818E2C3AFFDD00D4CAF1 /* HomeView.swift */; };
 		BF57B8A92C541365000F24BB /* LactateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF57B8A82C541360000F24BB /* LactateHelper.swift */; };
-		BF6359722C78C75B006F8CB4 /* CloudHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6359712C78C758006F8CB4 /* CloudHelper.swift */; };
 		BF6744D12C3FCAE900A23D76 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6744D02C3FCAE400A23D76 /* Session.swift */; };
 		BF6C840E2C3C5E8100032E93 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C840D2C3C5E8100032E93 /* AccountView.swift */; };
 		BF6C84122C3D16D600032E93 /* IntegrationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C84112C3D16D600032E93 /* IntegrationsView.swift */; };
@@ -48,7 +47,6 @@
 		BF87F7BB2C79C6CC00B35F6A /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF87F7BA2C79C6C900B35F6A /* LoadingView.swift */; };
 		BF8D6ADC2C41A9DF000269F1 /* TrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */; };
 		BF91AC6E2C45405C0028BC41 /* NumberHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF91AC6D2C4540530028BC41 /* NumberHelper.swift */; };
-		BFAAEC612C81F736008E6FB7 /* MockSessionGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAEC602C81F72F008E6FB7 /* MockSessionGenerator.swift */; };
 		BFABBD4C2C885F6100A10182 /* PromptHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFABBD4B2C885F5D00A10182 /* PromptHelper.swift */; };
 		BFB6603F2C99717F005E0C29 /* CalendarToolBarLead.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB6603E2C997178005E0C29 /* CalendarToolBarLead.swift */; };
 		BFBBD9582C55869200671197 /* MessageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBBD9572C55868F00671197 /* MessageHelper.swift */; };
@@ -121,7 +119,6 @@
 		BF4A818A2C3AFDF500D4CAF1 /* ColorOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorOptionView.swift; sourceTree = "<group>"; };
 		BF4A818E2C3AFFDD00D4CAF1 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		BF57B8A82C541360000F24BB /* LactateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LactateHelper.swift; sourceTree = "<group>"; };
-		BF6359712C78C758006F8CB4 /* CloudHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudHelper.swift; sourceTree = "<group>"; };
 		BF6744D02C3FCAE400A23D76 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		BF6C840D2C3C5E8100032E93 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		BF6C84112C3D16D600032E93 /* IntegrationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationsView.swift; sourceTree = "<group>"; };
@@ -146,7 +143,6 @@
 		BF87F7BA2C79C6C900B35F6A /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingView.swift; sourceTree = "<group>"; };
 		BF91AC6D2C4540530028BC41 /* NumberHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberHelper.swift; sourceTree = "<group>"; };
-		BFAAEC602C81F72F008E6FB7 /* MockSessionGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSessionGenerator.swift; sourceTree = "<group>"; };
 		BFABBD4B2C885F5D00A10182 /* PromptHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptHelper.swift; sourceTree = "<group>"; };
 		BFB6603E2C997178005E0C29 /* CalendarToolBarLead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarToolBarLead.swift; sourceTree = "<group>"; };
 		BFBBD9572C55868F00671197 /* MessageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHelper.swift; sourceTree = "<group>"; };
@@ -254,7 +250,6 @@
 				BFBBD9572C55868F00671197 /* MessageHelper.swift */,
 				BF57B8A82C541360000F24BB /* LactateHelper.swift */,
 				BFE876052C6E7DA6006725A6 /* StringHelper.swift */,
-				BF6359712C78C758006F8CB4 /* CloudHelper.swift */,
 				BF31F0AA2C48FDA9000C005C /* EmailHelper.swift */,
 				BFABBD4B2C885F5D00A10182 /* PromptHelper.swift */,
 				BFDE40522C591F7B00733888 /* CalendarHelper.swift */,
@@ -269,7 +264,6 @@
 			isa = PBXGroup;
 			children = (
 				BF3700872C47B60600CF255D /* User.swift */,
-				BFAAEC602C81F72F008E6FB7 /* MockSessionGenerator.swift */,
 				BF6744D02C3FCAE400A23D76 /* Session.swift */,
 			);
 			path = Models;
@@ -528,14 +522,12 @@
 				BF4A81492C3AEFCE00D4CAF1 /* ChatView.swift in Sources */,
 				BF6F84022C8794660081838D /* Sheet.swift in Sources */,
 				BFDEB6042C49994C00D32736 /* SupportView.swift in Sources */,
-				BF6359722C78C75B006F8CB4 /* CloudHelper.swift in Sources */,
 				BF8D6ADC2C41A9DF000269F1 /* TrainingView.swift in Sources */,
 				BFEAE8592C92C348006F6285 /* LiveToolBarPrin.swift in Sources */,
 				BF1A81532C542C280057D87D /* HomeToolBarTrail.swift in Sources */,
 				BF4A81352C3AEC4D00D4CAF1 /* CalendarView.swift in Sources */,
 				BF0ED3B92C8234E100ADB94C /* HomeCapsuleGraph.swift in Sources */,
 				BFDE40512C591A1200733888 /* CSVDocument.swift in Sources */,
-				BFAAEC612C81F736008E6FB7 /* MockSessionGenerator.swift in Sources */,
 				BF7342072C3AE74A00911375 /* starleetApp.swift in Sources */,
 				BF6C840E2C3C5E8100032E93 /* AccountView.swift in Sources */,
 				BFF251622C9025EA00389A3D /* CalendarToolBarPrin.swift in Sources */,

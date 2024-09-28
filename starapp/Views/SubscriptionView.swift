@@ -55,7 +55,7 @@ struct SubscriptionView: View {
                                 .font(.body)
                                 .padding(.top, 10)
                             }
-                            .padding()
+                                .padding()
                         )
                 }
                 Button(action: {
@@ -84,7 +84,7 @@ struct SubscriptionView: View {
     func buy(product: Product) async {
         do {
             if try await starStore.purchase(product) != nil {
-                appState.updateTier(1)
+                appState.tier = 1
             }
         } catch {
             print("purchase failed")

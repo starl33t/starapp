@@ -146,17 +146,6 @@ struct AccountView: View {
             for session in allSessions {
                 modelContext.delete(session)
             }
-            
-            if let user = user.first {
-                // Reset all user properties to nil or default values
-                user.userName = nil
-                user.tagName = nil
-                user.tier = nil
-                user.sessions = []
-            } else {
-                print("No user found to reset")
-            }
-            
             do {
                 try modelContext.save()
                 notificationsToggle = true

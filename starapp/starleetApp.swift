@@ -9,15 +9,7 @@ struct starappApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if appState.currentUser != nil {
-                ContentView()
-                    
-            } else {
-                LoadingView()
-                    .onAppear {
-                        appState.loadOrCreateUser()
-                    }
-            }
+            ContentView()
         }
         .environmentObject(locationManager)
         .environmentObject(appState)

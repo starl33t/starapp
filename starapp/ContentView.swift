@@ -5,7 +5,7 @@ struct ContentView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var starStore: StarStore
     @EnvironmentObject var locationManager: LocationManager
-    @StateObject private var viewModel = MessageHelper()
+    @StateObject private var messageManager = MessageHelper()
 
     var body: some View {
         NavigationStack {
@@ -13,17 +13,17 @@ struct ContentView: View {
                 Color.starBlack.ignoresSafeArea()
                 switch appState.selectedTab {
                 case 0:
-                    HomeView().environmentObject(viewModel)
+                    HomeView().environmentObject(messageManager)
                 case 1:
                     CalendarView()
                 case 2:
                     LiveView().environmentObject(locationManager)
                 case 3:
-                    ChatView(viewModel: viewModel)
+                    ChatView(viewModel: messageManager)
                 case 4:
                     MetricView()
                 default:
-                    HomeView().environmentObject(viewModel)
+                    HomeView().environmentObject(messageManager)
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
@@ -70,7 +70,7 @@ struct ContentView: View {
                     case 2:
                         LiveToolbarTrail()
                     case 3:
-                        ChatToolbarTrail(viewModel: viewModel)
+                        ChatToolbarTrail(viewModel: messageManager)
                     case 4:
                         MetricToolBarTrail()
                     default:
@@ -81,7 +81,6 @@ struct ContentView: View {
             .tint(.whiteTwo)
         }
         .onAppear {
-            // Check the subscription status when ContentView appears
             if appState.currentUser != nil {
                 Task {
                     await appState.updateSubscriptionStatus(starStore: starStore)
@@ -90,11 +89,4 @@ struct ContentView: View {
         }
         .tint(.starMain)
     }
-}
-
-#Preview {
-    ContentView()
-        .environmentObject(AppState())
-        .environmentObject(StarStore())
-        .environmentObject(LocationManager())
 }

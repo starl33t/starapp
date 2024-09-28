@@ -32,8 +32,6 @@ class StarStore: ObservableObject {
         updateListenerTask?.cancel()
     }
     
-    
-    
     func listenForTransactions() -> Task<Void, Error> {
         return Task.detached {
             //Iterate through any transactions that don't come from a direct call to `purchase()`.
@@ -130,10 +128,6 @@ class StarStore: ObservableObject {
             
             for product in subscriptions {
                 await getSubscriptionStatus(product: product, user: user)
-            }
-            
-            DispatchQueue.main.async {
-                CloudHelper.saveUserChanges(user: user)
             }
         }
     }
