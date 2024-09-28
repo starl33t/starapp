@@ -54,15 +54,21 @@ struct HomeView: View {
                 mapView()
             }
             .tint(.starMain)
-            .animation(.easeInOut(duration: 0.3), value:  isFloatingChatExpanded)
             .overlay(alignment: .bottomTrailing) {
-                floatingActionButton()
+                VStack (spacing: 0) {
+                    if isFloatingChatExpanded {
+                        floatingSupportButton()
+                    }
+                    floatingActionButton()
+                }
+                
             }
             .overlay(alignment: .bottom){
                 if isFloatingChatExpanded {
                     chatViewBar()
                 }
             }
+            .animation(.easeInOut(duration: 0.3), value:  isFloatingChatExpanded)
         }
         .onTapGesture {
             selectedSession = nil
@@ -165,6 +171,25 @@ struct HomeView: View {
     }
     
     @ViewBuilder
+    private func floatingSupportButton() -> some View {
+        Button(action: {
+            if let url = URL(string: "https://t.me/starleetproject") {
+                UIApplication.shared.open(url)
+            }
+        }) {
+            Image(systemName: "paperplane.fill")
+                .font(.title3)
+                .fontWeight(.semibold)
+                .foregroundStyle(.whiteOne)
+                .frame(width: 50, height: 50)
+                .clipShape(Circle())
+                .background(
+                    Circle().fill(Color.darkOne)
+                )
+        }
+    }
+    
+    @ViewBuilder
     private func floatingActionButton() -> some View {
         FloatingButtonText {
             FloatingActionText(text: " What is lactate threshold") {
@@ -192,12 +217,12 @@ struct HomeView: View {
                     await navigateToChatWithPrompt("I need to taper for a race")
                 }
             }
-            FloatingActionText(text: "        I need help to recover") {
+            FloatingActionText(text: "       I need help to recover") {
                 Task {
                     await navigateToChatWithPrompt("I need help to recover")
                 }
             }
-            FloatingActionText(text: "Help me get over my injury") {
+            FloatingActionText(text: "    Help me with my injury") {
                 Task {
                     await navigateToChatWithPrompt("Help me get over my injury")
                 }

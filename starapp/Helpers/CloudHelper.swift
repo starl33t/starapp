@@ -126,7 +126,6 @@ class CloudHelper {
             if let record = record {
                 // Update existing CloudKit record with local changes
                 record["CD_userName"] = user.userName
-                record["CD_tagNamePreview"] = user.tagNamePreview
                 record["CD_tier"] = user.tier
                 record["CD_latitude"] = user.latitude
                 record["CD_longitude"] = user.longitude

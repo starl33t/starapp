@@ -37,7 +37,6 @@ struct CalendarView: View {
                     FloatingAction(text: "4x6'") {
                         createNewSession(title: "4x6 min")
                     }
-                    
                     FloatingAction(text: "7x4'") {
                         createNewSession(title: "7x4 min")
                     }

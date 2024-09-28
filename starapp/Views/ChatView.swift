@@ -119,7 +119,7 @@ struct ChatView: View {
                 Task {
                     let contentToSend = newMessageContent
                     newMessageContent = ""
-                    textFieldIsFocused = false
+                    isWaitingForResponse = false
                     if let threadId = viewModel.threadId {
                         isWaitingForResponse = true
                         await viewModel.createMessage(threadId: threadId, content: contentToSend)
