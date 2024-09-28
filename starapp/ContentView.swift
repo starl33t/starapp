@@ -6,7 +6,8 @@ struct ContentView: View {
     @EnvironmentObject var starStore: StarStore
     @EnvironmentObject var locationManager: LocationManager
     @StateObject private var messageManager = MessageHelper()
-
+    @AppStorage("userTier") private var userTier: Int = 0
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -81,10 +82,8 @@ struct ContentView: View {
             .tint(.whiteTwo)
         }
         .onAppear {
-            if appState.currentUser != nil {
-                Task {
-                    await appState.updateSubscriptionStatus(starStore: starStore)
-                }
+            Task {
+                await appState.checkSubscriptionStatus(starStore: starStore)
             }
         }
         .tint(.starMain)

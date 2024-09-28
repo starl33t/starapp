@@ -32,6 +32,8 @@ class StarStore: ObservableObject {
         updateListenerTask?.cancel()
     }
     
+    
+    
     func listenForTransactions() -> Task<Void, Error> {
         return Task.detached {
             //Iterate through any transactions that don't come from a direct call to `purchase()`.
@@ -122,49 +124,6 @@ class StarStore: ObservableObject {
         }
     }
     
-    func checkSubscriptionStatus(for user: User) async {
-        Task {
-            await updateCustomerProductStatus()
-            
-            for product in subscriptions {
-                await getSubscriptionStatus(product: product, user: user)
-            }
-        }
-    }
-    
-    
-    func getSubscriptionStatus(product: Product, user: User) async {
-        guard let subscription = product.subscription else {
-            return
-        }
-        do {
-            let statuses = try await subscription.status
-            
-            for status in statuses {
-                let info = try checkVerified(status.renewalInfo)
-                switch status.state {
-                case .subscribed:
-                    if info.willAutoRenew {
-                        user.tier = 1
-                    } else {
-                        user.tier = 1
-                    }
-                case .inGracePeriod:
-                    user.tier = 1
-                case .inBillingRetryPeriod:
-                    user.tier = 0
-                case .expired:
-                    user.tier = 0
-                case .revoked:
-                    user.tier = 0
-                default:
-                    user.tier = 0
-                }
-            }
-        } catch {
-            debugPrint("Failed to get subscription status: \(error)")
-        }
-    }
 }
 
 

@@ -5,6 +5,7 @@ import StoreKit
 struct SubscriptionView: View {
     @EnvironmentObject var starStore: StarStore
     @EnvironmentObject var appState: AppState
+    @Environment(\.modelContext) private var modelContext
     
     var body: some View {
         ZStack {
@@ -84,7 +85,7 @@ struct SubscriptionView: View {
     func buy(product: Product) async {
         do {
             if try await starStore.purchase(product) != nil {
-                appState.tier = 1
+                try? modelContext.save()
             }
         } catch {
             print("purchase failed")

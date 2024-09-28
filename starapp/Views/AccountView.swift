@@ -147,13 +147,13 @@ struct AccountView: View {
                 modelContext.delete(session)
             }
             do {
-                try modelContext.save()
                 notificationsToggle = true
                 paceToggle = true
                 powerToggle = true
                 heartRateToggle = true
                 distanceToggle = true
                 durationToggle = true
+                try modelContext.save()
                 
                 dismiss()
             } catch {

@@ -39,6 +39,7 @@ struct ChatView: View {
                 if viewModel.threadId == nil {
                     await viewModel.createThread()
                 }
+                
             }
             updateCanSendMessage()
             resetMessageCountIfNeeded()
@@ -125,7 +126,7 @@ struct ChatView: View {
                         dailyMessageCount += 1
                         updateCanSendMessage()
                         isWaitingForResponse = false
-                        await appState.updateSubscriptionStatus(starStore: starStore)
+                        await appState.checkSubscriptionStatus(starStore: starStore)
                     } else {
                         print("Thread ID not available.")
                     }

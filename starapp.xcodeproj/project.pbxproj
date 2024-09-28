@@ -44,7 +44,6 @@
 		BF73F4592C6BD8F600922B9B /* Starleet.storekit in Resources */ = {isa = PBXBuildFile; fileRef = BF73F4582C6BD8F600922B9B /* Starleet.storekit */; };
 		BF73F45B2C6BE63500922B9B /* StarStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF73F45A2C6BE62D00922B9B /* StarStore.swift */; };
 		BF87F7B92C79C69D00B35F6A /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF87F7B82C79C69A00B35F6A /* AppState.swift */; };
-		BF87F7BB2C79C6CC00B35F6A /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF87F7BA2C79C6C900B35F6A /* LoadingView.swift */; };
 		BF8D6ADC2C41A9DF000269F1 /* TrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */; };
 		BF91AC6E2C45405C0028BC41 /* NumberHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF91AC6D2C4540530028BC41 /* NumberHelper.swift */; };
 		BFABBD4C2C885F6100A10182 /* PromptHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFABBD4B2C885F5D00A10182 /* PromptHelper.swift */; };
@@ -140,7 +139,6 @@
 		BF73F4582C6BD8F600922B9B /* Starleet.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Starleet.storekit; sourceTree = "<group>"; };
 		BF73F45A2C6BE62D00922B9B /* StarStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarStore.swift; sourceTree = "<group>"; };
 		BF87F7B82C79C69A00B35F6A /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
-		BF87F7BA2C79C6C900B35F6A /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingView.swift; sourceTree = "<group>"; };
 		BF91AC6D2C4540530028BC41 /* NumberHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberHelper.swift; sourceTree = "<group>"; };
 		BFABBD4B2C885F5D00A10182 /* PromptHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptHelper.swift; sourceTree = "<group>"; };
@@ -316,7 +314,6 @@
 				BFC38D072C935ECC00E93826 /* LocationEvents.swift */,
 				BFDE77412C91D284000D4373 /* LocationManager.swift */,
 				BF87F7B82C79C69A00B35F6A /* AppState.swift */,
-				BF87F7BA2C79C6C900B35F6A /* LoadingView.swift */,
 				BF73F4582C6BD8F600922B9B /* Starleet.storekit */,
 				BF73F45A2C6BE62D00922B9B /* StarStore.swift */,
 				BF73420C2C3AE74C00911375 /* Assets.xcassets */,
@@ -499,7 +496,6 @@
 				BF4A814D2C3AF03B00D4CAF1 /* MetricView.swift in Sources */,
 				BF87F7B92C79C69D00B35F6A /* AppState.swift in Sources */,
 				BF6744D12C3FCAE900A23D76 /* Session.swift in Sources */,
-				BF87F7BB2C79C6CC00B35F6A /* LoadingView.swift in Sources */,
 				BFDE40532C591F8200733888 /* CalendarHelper.swift in Sources */,
 				BF4A81632C3AF53200D4CAF1 /* ProfileView.swift in Sources */,
 				BFB6603F2C99717F005E0C29 /* CalendarToolBarLead.swift in Sources */,

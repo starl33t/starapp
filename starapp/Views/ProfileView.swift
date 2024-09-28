@@ -4,6 +4,7 @@ import StoreKit
 struct ProfileView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var starStore: StarStore
+    @AppStorage("userTier") private var userTier: Int = 0
     @State private var showAccountSheet = false
     @State private var showSubscriptionSheet = false
     @State private var showIntegrationsSheet = false
@@ -72,11 +73,8 @@ struct ProfileView: View {
             .tint(.whiteTwo)
         }
         .onAppear {
-            // Check the subscription status when the view appears
-            if let currentUser = appState.currentUser {
-                Task {
-                    await starStore.checkSubscriptionStatus(for: currentUser)
-                }
+            Task {
+                await appState.checkSubscriptionStatus(starStore: starStore)
             }
         }
         .sheet(isPresented: $showAccountSheet) {
@@ -130,7 +128,7 @@ struct ProfileView: View {
     func buy(product: Product) async {
         do {
             if try await starStore.purchase(product) != nil {
-                appState.tier = 1
+                userTier = 1
             }
         } catch {
             print("purchase failed")
