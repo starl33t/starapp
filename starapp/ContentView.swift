@@ -6,7 +6,6 @@ struct ContentView: View {
     @EnvironmentObject var starStore: StarStore
     @EnvironmentObject var locationManager: LocationManager
     @StateObject private var messageManager = MessageHelper()
-    @AppStorage("userTier") private var userTier: Int = 0
     
     var body: some View {
         NavigationStack {
@@ -20,7 +19,7 @@ struct ContentView: View {
                 case 2:
                     LiveView().environmentObject(locationManager)
                 case 3:
-                    ChatView(viewModel: messageManager)
+                    ChatView().environmentObject(messageManager)
                 case 4:
                     MetricView()
                 default:

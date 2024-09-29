@@ -16,7 +16,4 @@ struct MetricView: View {
             
         }
     }
-    
-    
-    
 }

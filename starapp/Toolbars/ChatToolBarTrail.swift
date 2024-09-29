@@ -5,7 +5,7 @@ struct ChatToolbarTrail: View {
     @EnvironmentObject var appState: AppState
     @ObservedObject var viewModel: MessageHelper
     @Query(sort: \Session.date, order: .reverse) private var sessions: [Session]
-    
+    @AppStorage("userTier") private var userTier: Int = 0
     @AppStorage("isWaitingForResponse") private var isWaitingForResponse: Bool = false
     @AppStorage("dailyMessageCount") private var dailyMessageCount: Int = 0
     @AppStorage("lastMessageDate") private var lastMessageDate: String = Date().formatted()
@@ -65,6 +65,7 @@ struct ChatToolbarTrail: View {
                     isWaitingForResponse = true
                     await viewModel.createMessage(threadId: threadId, content: fullMessage)
                     updateCanSendMessage()
+                    dailyMessageCount += 1
                     isWaitingForResponse = false
                 } else {
                     print("Thread ID not available.")
@@ -79,7 +80,7 @@ struct ChatToolbarTrail: View {
         dailyMessageCount += 1
         lastMessageDate = Date().formatDayMonth(date: Date())
 
-        let maxMessages = appState.tier == 1 ? 500 : 10
+        let maxMessages = userTier == 1 ? 500 : 10
         canSendMessage = dailyMessageCount < maxMessages
     }
     

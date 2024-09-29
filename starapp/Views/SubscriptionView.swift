@@ -3,8 +3,8 @@ import StoreKit
 
 
 struct SubscriptionView: View {
+    @AppStorage("userTier") private var userTier: Int = 0
     @EnvironmentObject var starStore: StarStore
-    @EnvironmentObject var appState: AppState
     @Environment(\.modelContext) private var modelContext
     
     var body: some View {
@@ -66,7 +66,7 @@ struct SubscriptionView: View {
                         }
                     }
                 }) {
-                    Text(appState.tier == 1 ? "Subscribed" : "Get Tier 1 for US$ 4.99/m")
+                    Text(userTier == 1 ? "Subscribed" : "Get Tier 1 for US$ 4.99/m")
                         .font(.headline)
                         .foregroundStyle(.whiteOne)
                         .padding()

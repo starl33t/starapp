@@ -17,12 +17,12 @@ struct ProfileView: View {
             Color.starBlack.ignoresSafeArea()
             VStack {
                 VStack {
-                    Image(systemName: appState.tier == 0 ? "person.circle.fill" : "star.fill")
+                    Image(systemName: userTier == 0 ? "person.circle.fill" : "star.fill")
                         .font(.system(size: 74))
                         .foregroundStyle(.whiteOne)
                         .padding(.bottom, 8)
                     
-                    Text(appState.tier == 0 ? "Tier 0" : "Tier 1")
+                    Text(userTier == 0 ? "Tier 0" : "Tier 1")
                         .foregroundColor(.whiteOne)
                         .multilineTextAlignment(.center)
                         .font(.system(size: 24, weight: .bold))

@@ -11,8 +11,6 @@ class Session {
     var lactate: Double?
     var date: Date?
     var title: String?
-    
-    @Relationship(inverse: \User.sessions) var user: User?
 
     init(
         distance: Double? = nil,
@@ -22,8 +20,7 @@ class Session {
         heartRate: Int? = nil,
         lactate: Double? = nil,
         date: Date? = nil,
-        title: String? = nil,
-        user: User? = nil
+        title: String? = nil
     ) {
         self.distance = distance
         self.duration = duration
@@ -33,6 +30,5 @@ class Session {
         self.lactate = lactate
         self.date = date
         self.title = title
-        self.user = user
     }
 }

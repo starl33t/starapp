@@ -2,7 +2,7 @@ import SwiftUI
 
 class AppState: ObservableObject {
     @Published var selectedTab: Int = 0
-    @AppStorage("userTier") var tier: Int = 0
+    @AppStorage("userTier") private var userTier: Int = 0
     @Published var selectedDate: Date = Date()
     @Published var days: [Date] = Date().daysInYear
     @Published var homeTitle: String = "Lactate"
@@ -14,9 +14,9 @@ class AppState: ObservableObject {
         
         DispatchQueue.main.async {
             if starStore.purchasedSubscriptions.contains(where: { $0.id == "tier1" }) {
-                self.tier = 1
+                self.userTier = 1
             } else {
-                self.tier = 0
+                self.userTier = 0
             }
         }
     }

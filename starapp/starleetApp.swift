@@ -14,6 +14,6 @@ struct starappApp: App {
         .environmentObject(locationManager)
         .environmentObject(appState)
         .environmentObject(starStore)
-        .modelContainer(for: [User.self])
+        .modelContainer(for: [Session.self])
     }
 }

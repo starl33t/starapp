@@ -4,8 +4,9 @@ import SwiftUI
 
 struct ChatView: View {
     @EnvironmentObject var appState: AppState
+    @AppStorage("userTier") private var userTier: Int = 0
     @EnvironmentObject var starStore: StarStore
-    @ObservedObject var viewModel: MessageHelper = MessageHelper()
+    @EnvironmentObject var viewModel: MessageHelper
     @State private var newMessageContent: String = ""
     @FocusState private var textFieldIsFocused: Bool
     @AppStorage("isWaitingForResponse") private var isWaitingForResponse: Bool = false
@@ -16,7 +17,7 @@ struct ChatView: View {
     
     var body: some View {
         ZStack {
-            Color.starBlack.ignoresSafeArea()
+           
             VStack {
                 ScrollView {
                     LazyVStack {
@@ -39,12 +40,11 @@ struct ChatView: View {
                 if viewModel.threadId == nil {
                     await viewModel.createThread()
                 }
-                
             }
             updateCanSendMessage()
             resetMessageCountIfNeeded()
         }
-        .onChange(of: appState.tier) { _,newTier in
+        .onChange(of: userTier) {
             updateCanSendMessage()
         }
         .onTapGesture {
@@ -54,7 +54,7 @@ struct ChatView: View {
     
     private var placeholderText: String {
         
-        let maxMessages = appState.tier == 1 ? 500 : 10
+        let maxMessages = userTier == 1 ? 500 : 10
         let messagesLeft = maxMessages - dailyMessageCount
         
         if messagesLeft <= 5 && messagesLeft > 0 {
@@ -68,7 +68,7 @@ struct ChatView: View {
     }
     
     private func updateCanSendMessage() {
-        let maxMessages = appState.tier == 1 ? 500 : 10
+        let maxMessages = userTier == 1 ? 500 : 10
         canSendMessage = dailyMessageCount < maxMessages
     }
     
@@ -119,7 +119,6 @@ struct ChatView: View {
                 Task {
                     let contentToSend = newMessageContent
                     newMessageContent = ""
-                    isWaitingForResponse = false
                     if let threadId = viewModel.threadId {
                         isWaitingForResponse = true
                         await viewModel.createMessage(threadId: threadId, content: contentToSend)
@@ -157,7 +156,6 @@ struct ChatView: View {
 }
 
 struct MessageRowView: View {
-    @EnvironmentObject var appState: AppState
     let message: Message
     
     var body: some View {

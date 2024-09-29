@@ -12,7 +12,6 @@ struct HomeView: View {
     @State private var selectedDateRange: DateRangeOption = .thisWeek
     @AppStorage("isGraphExpanded") private var isGraphExpanded = false
     @AppStorage("isFloatingChatExpanded") private var isFloatingChatExpanded = false
-    @AppStorage("chatWithSapiens") private var chatWithSapiens: Bool = false
     @Query private var allSessions: [Session]
     @State private var newMessageContent: String = ""
     
@@ -51,24 +50,14 @@ struct HomeView: View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
             VStack {
-                mapView()
+                ZStack(alignment: .top) {
+                    mapView()
+                }
+                .onTapGesture {
+                    isFloatingChatExpanded = false
+                }
             }
             .tint(.starMain)
-            .overlay(alignment: .bottomTrailing) {
-                VStack (spacing: 0) {
-                    if isFloatingChatExpanded {
-                        floatingSupportButton()
-                    }
-                    floatingActionButton()
-                }
-                
-            }
-            .overlay(alignment: .bottom){
-                if isFloatingChatExpanded {
-                    chatViewBar()
-                }
-            }
-            .animation(.easeInOut(duration: 0.3), value:  isFloatingChatExpanded)
         }
         .onTapGesture {
             selectedSession = nil
@@ -88,85 +77,56 @@ struct HomeView: View {
     }
     
     @ViewBuilder
-    private func chatViewBar() -> some View {
-        HStack {
-            Button(action: {
-                newMessageContent = "" // Clear the message input
-            }) {
-                Image(systemName: "xmark.circle.fill")
-                    .font(.system(size: 30))
-                    .foregroundColor(newMessageContent.isEmpty ? .gray : .whiteOne)
-                    .padding(.trailing, 5)
-            }
-            ZStack(alignment: .leading) {
-                TextField("", text: $newMessageContent, axis: .vertical)
-                    .foregroundStyle(.whiteOne)
-                    .padding(.horizontal)
-            }
-            .padding(.vertical, 4)
-            .background(.darkOne)
-            .cornerRadius(24)
-            Button(action: {
-                Task {
-                    await navigateToChatWithPrompt(newMessageContent)
-                    newMessageContent = ""
-                }
-            }) {
-                Image(systemName: "arrow.up.circle.fill")
-                    .foregroundColor(newMessageContent.isEmpty ? .gray : .starMain)
-                    .font(.system(size: 30))
-                
-            }
-        }
-    }
-    
-    @ViewBuilder
     private func mapView() -> some View {
-        ZStack(alignment: .top) {
-            LiveView()
-                .onTapGesture {
-                    isGraphExpanded = false
-                }
-                .overlay{
-                    if isFloatingChatExpanded {
-                        Color.starBlack.opacity(0.9).edgesIgnoringSafeArea(.all)
-                    }
-                }
-            VStack {
-                if isGraphExpanded {
-                    summaryView()
-                    HStack {
-                        Button {
-                            showDatePicker = true
-                        } label: {
-                            ZStack{
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.whiteOne, lineWidth: 2)
-                                    .frame(width: 130, height: 32)
-                                Text(selectedDateRange.displayText)
-                            }
-                        }
-                        Spacer()
-                        Text(sessionDisplayText)
-                    }
-                    .foregroundStyle(.whiteOne)
-                    .padding()
-                    sessionChartView(sessions: NumberHelper.filteredSessions(for: appState.homeActiveTab, in: sessions))
-                        .frame(height: 100)
-                        .padding()
-                }
-                
-            }
-            .animation(.easeInOut(duration: 0.3), value:  isGraphExpanded)
-            .background(Color.starBlack.opacity(0.9))
+        LiveView()
             .onTapGesture {
-                selectedSession = nil
-                selectedCapsuleIndex = nil
+                isGraphExpanded = false
+                isFloatingChatExpanded = false
             }
-            
+        VStack {
+            if isGraphExpanded {
+                summaryView()
+                HStack {
+                    Button {
+                        showDatePicker = true
+                    } label: {
+                        ZStack{
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.whiteOne, lineWidth: 2)
+                                .frame(width: 130, height: 32)
+                            Text(selectedDateRange.displayText)
+                        }
+                    }
+                    Spacer()
+                    Text(sessionDisplayText)
+                }
+                .foregroundStyle(.whiteOne)
+                .padding()
+                sessionChartView(sessions: NumberHelper.filteredSessions(for: appState.homeActiveTab, in: sessions))
+                    .frame(height: 100)
+                    .padding()
+            }
         }
+        .animation(.easeInOut(duration: 0.3), value: isGraphExpanded)
+        .background(Color.starBlack.opacity(0.9))
         .onTapGesture {
-            isFloatingChatExpanded = false
+            selectedSession = nil
+            selectedCapsuleIndex = nil
+        }
+        
+        if isFloatingChatExpanded {
+            VStack {
+                Spacer()
+                ZStack(alignment: .topTrailing) {
+                    ChatView()
+                        .frame(height: 200)
+                        .background(Color.starBlack.opacity(0.9))
+                    floatingSupportButton()
+                    
+                }
+            }
+            .transition(.move(edge: .bottom))
+            .animation(.easeInOut(duration: 0.3), value: isFloatingChatExpanded)
         }
     }
     
@@ -180,64 +140,9 @@ struct HomeView: View {
             Image(systemName: "paperplane.fill")
                 .font(.title3)
                 .fontWeight(.semibold)
-                .foregroundStyle(.whiteOne)
-                .frame(width: 50, height: 50)
-                .clipShape(Circle())
-                .background(
-                    Circle().fill(Color.darkOne)
-                )
+                .foregroundStyle(.starMain)
         }
     }
-    
-    @ViewBuilder
-    private func floatingActionButton() -> some View {
-        FloatingButtonText {
-            FloatingActionText(text: " What is lactate threshold") {
-                Task {
-                    await navigateToChatWithPrompt("Explain what lactate threshold is")
-                }
-            }
-            FloatingActionText(text: "          Help me get started") {
-                Task {
-                    await navigateToChatWithPrompt("How can I get started?")
-                }
-            }
-            FloatingActionText(text: "     Make me a training plan") {
-                Task {
-                    await navigateToChatWithPrompt("Make me a training plan")
-                }
-            }
-            FloatingActionText(text:"Estimate lactate threshold") {
-                Task {
-                    await navigateToChatWithPrompt("Estimate my lactate threshold")
-                }
-            }
-            FloatingActionText(text: "    I need to taper for a race") {
-                Task {
-                    await navigateToChatWithPrompt("I need to taper for a race")
-                }
-            }
-            FloatingActionText(text: "       I need help to recover") {
-                Task {
-                    await navigateToChatWithPrompt("I need help to recover")
-                }
-            }
-            FloatingActionText(text: "    Help me with my injury") {
-                Task {
-                    await navigateToChatWithPrompt("Help me get over my injury")
-                }
-            }
-        } label: { isFloatingChatExpanded in
-            Image(systemName: isFloatingChatExpanded ? "text.bubble" : "bubble.left")
-                .font(.title3)
-                .fontWeight(.semibold)
-                .foregroundStyle(.whiteOne)
-                .scaleEffect(isFloatingChatExpanded ? 1 : 0.9)
-        }
-        .padding(.bottom, 50)
-        .padding()
-    }
-    
     
     private func datePicker() -> some View {
         return ZStack {
@@ -370,22 +275,6 @@ struct HomeView: View {
             ContentUnavailableView("No Sessions Found", systemImage: "exclamationmark.triangle")
                 .foregroundStyle(.whiteOne)
         }
-    }
-    
-    private func navigateToChatWithPrompt(_ prompt: String) async {
-        if let threadId = viewModel.threadId {
-            await viewModel.createMessage(threadId: threadId, content: prompt)
-        } else {
-            await viewModel.createThread()
-            if let threadId = viewModel.threadId {
-                await viewModel.createMessage(threadId: threadId, content: prompt)
-            }
-        }
-        withAnimation(.easeInOut(duration: 0.3)) {
-            appState.selectedTab = 3
-        }
-        isFloatingChatExpanded = false
-        chatWithSapiens = false
     }
 }
 
