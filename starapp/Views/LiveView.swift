@@ -21,10 +21,11 @@ struct LiveView: View {
     @State private var route: MKRoute?
     @State private var travelInterval: TimeInterval?
     @State private var currentEvent: EventMarker?
+    @Namespace private var mapScope
     
     var body: some View {
         ZStack(alignment: .top) {
-            Map(position: $position, selection: $selectedEvent) {
+            Map(position: $position, selection: $selectedEvent, scope: mapScope) {
                 UserAnnotation()
                 
                 ForEach(parkRunLocationEvents.allEventMarkers(), id: \.self) { event in
@@ -133,12 +134,20 @@ struct LiveView: View {
                 .modifier(CloseButtonModifier(onClose: { selectedEvent = nil }))
             }
             .mapStyle(.imagery(elevation: .realistic))
-            .mapControls {
-                MapUserLocationButton()
-                MapScaleView()
-                MapCompass()
-                MapPitchToggle()
+            .overlay {
+                HStack{
+                    Spacer()
+                    VStack{
+                        MapUserLocationButton(scope: mapScope)
+                        MapPitchToggle(scope: mapScope)
+                        MapCompass(scope: mapScope)
+                    }
+                    .mapControlVisibility(.automatic)
+                    .buttonBorderShape(.circle)
+                }
+                .padding(.horizontal)
             }
+            .mapScope(mapScope)
         }
         .onChange(of: selectedEvent) { oldSelection, newSelection in
             if let selectedEvent = newSelection {

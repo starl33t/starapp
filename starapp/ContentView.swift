@@ -8,7 +8,7 @@ struct ContentView: View {
     @StateObject private var messageManager = MessageHelper()
     
     var body: some View {
-        NavigationStack {
+        NavigationStack{
             ZStack {
                 Color.starBlack.ignoresSafeArea()
                 switch appState.selectedTab {
@@ -26,65 +26,61 @@ struct ContentView: View {
                     HomeView().environmentObject(messageManager)
                 }
             }
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(Color.starBlack, for: .navigationBar)
-            .toolbar {
-                ToolbarItemGroup(placement: .navigationBarLeading) {
-                    switch appState.selectedTab {
-                    case 0:
-                        HomeToolBarLead()
-                    case 1:
-                        CalendarToolBarLead()
-                    case 2:
-                        HomeToolBarLead()
-                    case 3:
-                        ChatToolBarLead()
-                    case 4:
-                        HomeToolBarLead()
-                    default:
-                        HomeToolBarLead()
-                    }
-                }
-                ToolbarItemGroup(placement: .principal) {
-                    switch appState.selectedTab {
-                    case 0:
-                        HomeToolBarPrin()
-                    case 1:
-                        CalendarToolBarPrin()
-                    case 2:
-                        LiveToolBarPrin()
-                    case 3:
-                        ChatToolBarPrin()
-                    case 4:
-                        MetricToolBarPrin()
-                    default:
-                        CalendarToolBarPrin()
-                    }
-                }
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    switch appState.selectedTab {
-                    case 0:
-                        HomeToolBarTrail()
-                    case 1:
-                        CalendarToolbarTrail()
-                    case 2:
-                        LiveToolbarTrail()
-                    case 3:
-                        ChatToolbarTrail(viewModel: messageManager)
-                    case 4:
-                        MetricToolBarTrail()
-                    default:
-                        HomeToolBarTrail()
-                    }
-                }
+            .navigationBarHidden(true)
+        }
+        .tint(.starMain)
+        .overlay(alignment: .topLeading) {
+            switch appState.selectedTab {
+            case 0:
+                HomeToolBarLead()
+            case 1:
+                CalendarToolBarLead()
+            case 2:
+                HomeToolBarLead()
+            case 3:
+                ChatToolBarLead()
+            case 4:
+                HomeToolBarLead()
+            default:
+                HomeToolBarLead()
             }
-            .tint(.whiteTwo)
+        }
+        .overlay(alignment: .top) {
+            switch appState.selectedTab {
+            case 0:
+                HomeToolBarPrin()
+            case 1:
+                CalendarToolBarPrin()
+            case 2:
+                LiveToolBarPrin()
+            case 3:
+                ChatToolBarPrin()
+            case 4:
+                MetricToolBarPrin()
+            default:
+                CalendarToolBarPrin()
+            }
+        }
+        .overlay(alignment: .topTrailing) {
+            switch appState.selectedTab {
+            case 0:
+                HomeToolBarTrail()
+            case 1:
+                CalendarToolBarTrail()
+            case 2:
+                LiveToolbarTrail()
+            case 3:
+                ChatToolbarTrail(viewModel: messageManager)
+            case 4:
+                MetricToolBarTrail()
+            default:
+                HomeToolBarTrail()
+            }
         }
         .onAppear {
             Task {
                 await appState.checkSubscriptionStatus(starStore: starStore)
             }
         }
-        .tint(.starMain)
     }
 }

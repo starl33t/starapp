@@ -9,8 +9,10 @@ struct CalendarView: View {
     @State private var sessionCache: [Date: [Session]] = [:]
     @State private var currentDate = Date()
     @State private var headerOffset: CGFloat = 0
-    @AppStorage("showTrainingList") var showTrainingList = false
     @AppStorage("isFloatingTrainingExpanded") private var isFloatingTrainingExpanded = false
+    @AppStorage("showTrainingList") var showTrainingList = false
+    @AppStorage("showSpecificTrainingView") var showSpecificTrainingView = false
+    
     
     private let columns = Array(repeating: GridItem(.flexible()), count: 7)
     private let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
@@ -19,6 +21,25 @@ struct CalendarView: View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
             VStack {
+                HStack {
+                    Button(action: {
+                        let today = Date()
+                        appState.selectedDate = today
+                        appState.days = today.daysInYear
+                    }) {
+                        ZStack{
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.whiteOne, lineWidth: 2)
+                                .frame(width: 160, height: 32)
+                            Text(appState.todayTitle)
+                                .font(.headline)
+                                .frame(maxWidth: .infinity)
+                                .foregroundColor(.whiteOne)
+                        }
+                    }
+                }
+                .font(.headline)
+                .padding()
                 if showTrainingList {
                     listTrainingView()
                 } else {
@@ -43,13 +64,13 @@ struct CalendarView: View {
                     FloatingAction(symbols: ["plus.square.dashed"]) {
                         createNewSession(title: "Title")
                     }
-                } label: { isFloatingTrainingExpanded in
+                } label: { isExpanded in
                     Image(systemName: "plus")
                         .font(.title3)
                         .fontWeight(.semibold)
                         .foregroundStyle(.whiteOne)
-                        .rotationEffect(.init(degrees: isFloatingTrainingExpanded ? 135 : 0))
-                        .scaleEffect(isFloatingTrainingExpanded ? 0.9 : 1)
+                        .rotationEffect(.init(degrees: isExpanded ? 135 : 0))
+                        .scaleEffect(isExpanded ? 0.9 : 1)
                 }
                 .padding(.bottom, 50)
                 .padding()
@@ -58,89 +79,95 @@ struct CalendarView: View {
             
         }
         .onAppear {
+            showSpecificTrainingView = false
+            appState.updateTodayTitle()
             currentDate = Date()
         }
     }
     
-    private func createNewSession(title: String) {
-            let newSession = Session(
-                lactate: 0.0,  // Set default values or user input
-                date: Date(),  // Use today's date
-                title: title   // Set the session title from the FloatingAction text
-            )
-            context.insert(newSession)
-            try? context.save()  // Save the new session to the context
-            sessionCache[Date(), default: []].append(newSession)  // Optionally update session cache
-        }
+    
     
     private func listTrainingView() -> some View {
-        List {
-            ForEach(sessions) { session in
-                NavigationLink(destination: TrainingView(session: session)) {
-                    HStack {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.whiteOne, lineWidth: 2)
-                                .frame(width: 100, height: 48)
-                            Text("\(session.duration ?? 0.0, specifier: "%.0f") min")
-                                .font(.system(size: 22, weight: .bold))
-                                .foregroundColor(.whiteOne)
-                                .multilineTextAlignment(.center)
-                        }
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("\(session.lactate ?? 0.0, specifier: "%.1f") mM")
-                                .font(.system(size: 22, weight: .bold))
-                                .foregroundStyle(.whiteOne)
-                            Text("\(session.date?.formattedAsRelative() ?? "N/A")")
-                                .font(.system(size: 14))
-                                .foregroundStyle(.gray)
-                        }
-                        .foregroundStyle(.whiteOne)
-                        .padding(.leading, 20)
-                        .frame(minWidth: 110)
-                        HStack {
-                            let intensity = LactateHelper.intensity(for: session.lactate)
-                            VStack {
-                                Image(systemName: intensity.icon)
-                                    .font(.system(size: 24, weight: .bold))
-                                    .foregroundStyle(intensity.color)
-                                Text(intensity.rawValue)
-                                    .foregroundStyle(intensity.color)
-                                    .font(.system(size: 14))
-                            }
-                            .padding(.leading, 20)
-                            
-                        }
-                        .frame(maxWidth: .infinity, alignment: .center)
-                    }
-                }
-                .padding()
-                .background(Color.starBlack)
-                .listRowInsets(EdgeInsets())
-            }
-            .onDelete { indexSet in
-                indexSet.forEach { index in
-                    let session = sessions[index]
-                    context.delete(session)
-                }
-            }
-        }
-        .listStyle(PlainListStyle())
-        .scrollIndicators(.hidden)
-        .scrollContentBackground(.hidden)
-        .padding(.top)
-        
+           List {
+               ForEach(sessions) { session in
+                   NavigationLink(destination: TrainingView(session: session)) {
+                       HStack {
+                           ZStack {
+                               RoundedRectangle(cornerRadius: 8)
+                                   .stroke(Color.whiteOne, lineWidth: 2)
+                                   .frame(width: 100, height: 48)
+                               Text("\(session.duration ?? 0.0, specifier: "%.0f") min")
+                                   .font(.system(size: 22, weight: .bold))
+                                   .foregroundColor(.whiteOne)
+                                   .multilineTextAlignment(.center)
+                           }
+                           VStack(alignment: .leading, spacing: 4) {
+                               Text("\(session.lactate ?? 0.0, specifier: "%.1f") mM")
+                                   .font(.system(size: 22, weight: .bold))
+                                   .foregroundStyle(.whiteOne)
+                               Text("\(session.date?.formattedAsRelative() ?? "N/A")")
+                                   .font(.system(size: 14))
+                                   .foregroundStyle(.gray)
+                           }
+                           .foregroundStyle(.whiteOne)
+                           .padding(.leading, 20)
+                           .frame(minWidth: 110)
+                           HStack {
+                               let intensity = LactateHelper.intensity(for: session.lactate)
+                               VStack {
+                                   Image(systemName: intensity.icon)
+                                       .font(.system(size: 24, weight: .bold))
+                                       .foregroundStyle(intensity.color)
+                                   Text(intensity.rawValue)
+                                       .foregroundStyle(intensity.color)
+                                       .font(.system(size: 14))
+                               }
+                               .padding(.leading, 20)
+                               
+                           }
+                           .frame(maxWidth: .infinity, alignment: .center)
+                       }
+                   }
+                   .padding()
+                   .background(Color.starBlack)
+                   .listRowInsets(EdgeInsets())
+               }
+               .onDelete { indexSet in
+                   indexSet.forEach { index in
+                       let session = sessions[index]
+                       context.delete(session)
+                   }
+               }
+           }
+           .listStyle(PlainListStyle())
+           .scrollIndicators(.hidden)
+           .scrollContentBackground(.hidden)
+           .padding(.top)
+           
+       }
+    
+    private func createNewSession(title: String) {
+        let newSession = Session(
+            lactate: 0.0,  // Set default values or user input
+            date: Date(),  // Use today's date
+            title: title   // Set the session title from the FloatingAction text
+        )
+        context.insert(newSession)
+        try? context.save()  // Save the new session to the context
+        sessionCache[Date(), default: []].append(newSession)  // Optionally update session cache
     }
     
     private func daysOfWeekHeader() -> some View {
-        HStack {
-            ForEach(daysOfWeek, id: \.self) { dayOfWeek in
-                Text(dayOfWeek)
-                    .frame(maxWidth: .infinity)
+        VStack{
+            HStack {
+                ForEach(daysOfWeek, id: \.self) { dayOfWeek in
+                    Text(dayOfWeek)
+                        .frame(maxWidth: .infinity)
+                }
             }
+            .fontWeight(.black)
+            .padding(.bottom, 8)
         }
-        .fontWeight(.black)
-        .padding(.bottom, 8)
     }
     
     private var dateScrollView: some View {

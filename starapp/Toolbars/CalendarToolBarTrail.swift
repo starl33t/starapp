@@ -1,7 +1,7 @@
 import SwiftUI
 import SwiftData
 
-struct CalendarToolbarTrail: View {
+struct CalendarToolBarTrail: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) var context
@@ -11,29 +11,57 @@ struct CalendarToolbarTrail: View {
     @State private var date: Date = Date()
     @State private var showDatePicker: Bool = false
     @AppStorage("showTrainingList") var showTrainingList = false
+    @AppStorage("showSpecificTrainingView") var showSpecificTrainingView = false
     @State private var isExporting = false
     
     var body: some View {
         HStack {
-            Button(action: {
-                showTrainingList.toggle()
-            }) {
-                Label("List", systemImage: showTrainingList ? "square.grid.3x3" : "line.3.horizontal")
-            }
-            if showTrainingList {
-                Button(action: {
-                    isExporting = true
-                }) {
-                    Label("CSV Export", systemImage: "arrow.down.to.line.compact")
-                }
+            if showSpecificTrainingView {
+                HStack{}
             } else {
-                Button(action: {
-                    showDatePicker = true
-                }) {
-                    Label("Calendar", systemImage: "calendar")
+                Button {
+                    showTrainingList.toggle()
+                } label: {
+                    Image(systemName: showTrainingList ? "square.grid.3x3" : "line.3.horizontal")
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.whiteOne)
+                        .frame(width: 50, height: 50)
+                        .background(Circle().fill(Color.darkOne))
+                        .contentShape(Circle())
+                }
+                if showTrainingList {
+                    Button {
+                        isExporting = true
+                    }  label: {
+                        Image(systemName: "arrow.down.to.line.compact")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(isExporting ? .starMain : .whiteOne)
+                            .symbolEffect(.bounce, value: isExporting)
+                            .frame(width: 50, height: 50) // Matching button size
+                            .background(Circle().fill(Color.darkOne))
+                            .contentShape(Circle())
+                    }
+                } else {
+                    Button {
+                        showDatePicker = true
+                    }  label: {
+                        Image(systemName: "calendar")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(showDatePicker ? .starMain : .whiteOne)
+                            .symbolEffect(.bounce, value: showDatePicker)
+                            .frame(width: 50, height: 50) // Matching button size
+                            .background(Circle().fill(Color.darkOne))
+                            .contentShape(Circle())
+                    }
                 }
             }
+          
+            
         }
+        .padding(.horizontal, 4)
         .sheet(isPresented: $showDatePicker) {
             datePicker()
                 .modifier(CloseButtonModifier(onClose: {showDatePicker = false}))
@@ -65,12 +93,12 @@ struct CalendarToolbarTrail: View {
         }()
         return ZStack {
             Color.starBlack.ignoresSafeArea()
-                VStack {
-                    DatePicker("Select Date", selection: $appState.selectedDate, in: dateRange, displayedComponents: .date)
-                        .datePickerStyle(WheelDatePickerStyle())
-                        .labelsHidden()
-                        .environment(\.colorScheme, .dark)
-                }
+            VStack {
+                DatePicker("Select Date", selection: $appState.selectedDate, in: dateRange, displayedComponents: .date)
+                    .datePickerStyle(WheelDatePickerStyle())
+                    .labelsHidden()
+                    .environment(\.colorScheme, .dark)
+            }
         }
     }
 }

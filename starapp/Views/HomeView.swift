@@ -5,6 +5,7 @@ import SwiftData
 struct HomeView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var viewModel: MessageHelper
+    @EnvironmentObject var starStore: StarStore
     @Namespace private var tabAnimation
     @State private var selectedCapsuleIndex: Int? = nil
     @State private var selectedSession: Session? = nil
@@ -12,9 +13,9 @@ struct HomeView: View {
     @State private var selectedDateRange: DateRangeOption = .thisWeek
     @AppStorage("isGraphExpanded") private var isGraphExpanded = false
     @AppStorage("isFloatingChatExpanded") private var isFloatingChatExpanded = false
+    @AppStorage("isCalendarSelected") private var isCalendarSelected = false
     @Query private var allSessions: [Session]
     @State private var newMessageContent: String = ""
-    
     
     init() {
         let startOfLast7Days = Calendar.current.date(byAdding: .day, value: -365, to: Date())!
@@ -65,6 +66,7 @@ struct HomeView: View {
         }
         .onAppear {
             updateActiveTabIfNeeded()
+            isCalendarSelected = false
         }
         .onChange(of: selectedDateRange) {
             updateActiveTabIfNeeded()
@@ -76,6 +78,7 @@ struct HomeView: View {
         }
     }
     
+    
     @ViewBuilder
     private func mapView() -> some View {
         LiveView()
@@ -85,6 +88,10 @@ struct HomeView: View {
             }
         VStack {
             if isGraphExpanded {
+                Text(appState.homeTitle)
+                    .font(.headline)
+                    .foregroundStyle(.whiteOne)
+                    .padding()
                 summaryView()
                 HStack {
                     Button {
@@ -121,7 +128,7 @@ struct HomeView: View {
                     ChatView()
                         .frame(height: 200)
                         .background(Color.starBlack.opacity(0.9))
-                    floatingSupportButton()
+                    chatSupportButton()
                     
                 }
             }
@@ -131,7 +138,7 @@ struct HomeView: View {
     }
     
     @ViewBuilder
-    private func floatingSupportButton() -> some View {
+    private func chatSupportButton() -> some View {
         Button(action: {
             if let url = URL(string: "https://t.me/starleetproject") {
                 UIApplication.shared.open(url)

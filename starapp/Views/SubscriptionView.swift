@@ -56,7 +56,7 @@ struct SubscriptionView: View {
                                 .font(.body)
                                 .padding(.top, 10)
                             }
-                                .padding()
+                            .padding()
                         )
                 }
                 Button(action: {
@@ -77,8 +77,21 @@ struct SubscriptionView: View {
                 Text("Tier 1 is charged monthly. Read and agree to our [Terms & Conditions](https://www.apple.com/legal/internet-services/itunes/dev/stdeula/) and [Privacy Policy](https://www.apple.com/legal/privacy/pdfs/apple-privacy-policy-en-ww.pdf).")
                     .font(.system(size: 14))
                     .foregroundColor(.gray)
-                    .padding(.horizontal)
+                    .padding()
+                
+                Button(action: {
+                    Task {
+                        if let product = starStore.subscriptions.first {
+                            await buy(product: product)
+                        }
+                    }
+                }) {
+                    Text("Restore Buy?")
+                        .foregroundStyle(.whiteOne)
+                        .padding()
+                }
             }
+            
         }
     }
     

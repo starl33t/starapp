@@ -1,4 +1,11 @@
 //
+//  FloatingButtonVertical.swift
+//  starapp
+//
+//  Created by Peter Tran on 30/09/2024.
+//
+
+//
 //  FloatingButton.swift
 //  starapp
 //
@@ -7,12 +14,12 @@
 
 import SwiftUI
 
-struct FloatingButton<Label: View>: View {
+struct FloatingButtonVertical<Label: View>: View {
     @State private var isExpanded = false
     var buttonSize: CGFloat
-    var actions: [FloatingAction]
+    var actions: [FloatingActionVertical]
     var label: (Bool) -> Label
-    init(buttonSize: CGFloat = 50, @FloatingActionBuilder actions: @escaping () -> [FloatingAction], @ViewBuilder label: @escaping (Bool) -> Label) {
+    init(buttonSize: CGFloat = 50, @FloatingActionBuilderVertical actions: @escaping () -> [FloatingActionVertical], @ViewBuilder label: @escaping (Bool) -> Label) {
         self.buttonSize = buttonSize
         self.actions = actions()
         self.label = label
@@ -40,35 +47,36 @@ struct FloatingButton<Label: View>: View {
     }
     
     @ViewBuilder
-    func ActionView(_ action: FloatingAction) -> some View {
+    func ActionView(_ action: FloatingActionVertical) -> some View {
         Button {
             action.action()
             isExpanded = false
         } label: {
-            ZStack {
-                if let symbols = action.symbols {
-                    ForEach(Array(symbols.enumerated()), id: \.offset) { index, symbol in
-                        Image(systemName: symbol)
-                            .font(action.font)
-                            .foregroundStyle(action.tint)
-                            .offset(x: CGFloat(index) * 10, y: 0) // Adjust the offset to position symbols
+                ZStack {
+                    if let symbols = action.symbols {
+                        ForEach(Array(symbols.enumerated()), id: \.offset) { index, symbol in
+                            Image(systemName: symbol)
+                                .font(action.font)
+                                .foregroundStyle(action.tint)
+                                .offset(x: CGFloat(index) * 10, y: 0) // Adjust the offset to position symbols
+                        }
                     }
-                } else if let text = action.text {
-                    Text(text)
+                }
+                .frame(width: buttonSize, height: buttonSize)
+                .background(action.background, in: Circle())
+                .contentShape(.circle)
+                .overlay(
+                    Text(action.text ?? "")
                         .font(action.textFont)
                         .foregroundStyle(action.tint)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                }
-            }
-            .frame(width: buttonSize, height: buttonSize)
-            .background(action.background, in: Circle())
-            .contentShape(.circle)
+                        .offset(x: buttonSize + 10)
+                        .opacity(isExpanded ? 1 : 0)
+                        .animation(.easeInOut(duration: 0.3), value:  isExpanded)
+                )
         }
         .buttonStyle(PressableButtonStyle())
         .disabled(!isExpanded)
-        .rotationEffect(.init(degrees: progress(action) * -90))
-        .offset(x: isExpanded ? -offset / 2 : 0)
-        .rotationEffect(.init(degrees: progress(action) * 90))
+        .offset(y: isExpanded ? progress(for: action) : 0)
     }
     
     private var offset: CGFloat {
@@ -76,9 +84,10 @@ struct FloatingButton<Label: View>: View {
         return Double(actions.count) * (actions.count == 1 ? buttonSize * 2 : (actions.count == 2 ? buttonSize * 1.25 : buttonSize))
     }
     
-    private func progress(_ action: FloatingAction) -> CGFloat {
-        let index = CGFloat(actions.firstIndex(where: { $0.id == action.id}) ?? 0)
-        return actions.count == 1 ? 1 : (index / CGFloat(actions.count - 1))
+    private func progress(for action: FloatingActionVertical) -> CGFloat {
+        let index = CGFloat(actions.firstIndex(where: { $0.id == action.id }) ?? 0)
+        let spacing = buttonSize + 10 // Same spacing logic as the original code
+        return (index + 1) * spacing // Return the vertical offset
     }
 }
 
@@ -96,20 +105,20 @@ fileprivate struct PressableButtonStyle: ButtonStyle {
     }
 }
 
-struct FloatingAction: Identifiable {
+struct FloatingActionVertical: Identifiable {
     private(set) var id: UUID = .init()
     var symbols: [String]?
     var text: String? // Text option is added
     var font: Font = .title3
-    var textFont: Font = .system(size: 14)
+    var textFont: Font = .system(size: 14, weight: .bold)
     var tint: Color = .whiteOne
     var background: Color = .darkOne
     var action: () -> ()
 }
 
 @resultBuilder
-struct FloatingActionBuilder {
-    static func buildBlock(_ components: FloatingAction...) -> [FloatingAction] {
+struct FloatingActionBuilderVertical {
+    static func buildBlock(_ components: FloatingActionVertical...) -> [FloatingActionVertical] {
         components.compactMap({ $0 })
     }
     

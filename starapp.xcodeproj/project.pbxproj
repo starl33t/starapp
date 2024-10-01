@@ -13,12 +13,12 @@
 		BF1A81532C542C280057D87D /* HomeToolBarTrail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1A81522C542C280057D87D /* HomeToolBarTrail.swift */; };
 		BF2265BC2C943BD600A1203C /* FloatingButtonText.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2265BB2C943BCE00A1203C /* FloatingButtonText.swift */; };
 		BF31F0AB2C48FDAD000C005C /* EmailHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF31F0AA2C48FDA9000C005C /* EmailHelper.swift */; };
+		BF42BE502CAA8C5D00ECBB17 /* FloatingButtonVertical.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF42BE4F2CAA8C5600ECBB17 /* FloatingButtonVertical.swift */; };
 		BF4A81352C3AEC4D00D4CAF1 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81342C3AEC4D00D4CAF1 /* CalendarView.swift */; };
 		BF4A813F2C3AEE0900D4CAF1 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A813E2C3AEE0900D4CAF1 /* DateHelper.swift */; };
 		BF4A81452C3AEE6C00D4CAF1 /* LiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81442C3AEE6C00D4CAF1 /* LiveView.swift */; };
 		BF4A81492C3AEFCE00D4CAF1 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81482C3AEFCE00D4CAF1 /* ChatView.swift */; };
 		BF4A814D2C3AF03B00D4CAF1 /* MetricView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A814C2C3AF03B00D4CAF1 /* MetricView.swift */; };
-		BF4A81632C3AF53200D4CAF1 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81622C3AF53200D4CAF1 /* ProfileView.swift */; };
 		BF4A81672C3AF5D500D4CAF1 /* CalendarToolBarTrail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81662C3AF5D500D4CAF1 /* CalendarToolBarTrail.swift */; };
 		BF4A816F2C3AF8DA00D4CAF1 /* LiveToolBarTrail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A816E2C3AF8DA00D4CAF1 /* LiveToolBarTrail.swift */; };
 		BF4A81772C3AFA1700D4CAF1 /* ChatToolBarTrail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81762C3AFA1700D4CAF1 /* ChatToolBarTrail.swift */; };
@@ -29,9 +29,6 @@
 		BF57B8A92C541365000F24BB /* LactateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF57B8A82C541360000F24BB /* LactateHelper.swift */; };
 		BF6744D12C3FCAE900A23D76 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6744D02C3FCAE400A23D76 /* Session.swift */; };
 		BF6C840E2C3C5E8100032E93 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C840D2C3C5E8100032E93 /* AccountView.swift */; };
-		BF6C84122C3D16D600032E93 /* IntegrationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C84112C3D16D600032E93 /* IntegrationsView.swift */; };
-		BF6C84182C3D1C6D00032E93 /* LearnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C84172C3D1C6D00032E93 /* LearnView.swift */; };
-		BF6C841A2C3D1E5200032E93 /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6C84192C3D1E5200032E93 /* PrivacyView.swift */; };
 		BF6F84022C8794660081838D /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6F84012C87945B0081838D /* Sheet.swift */; };
 		BF7342072C3AE74A00911375 /* starleetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7342062C3AE74A00911375 /* starleetApp.swift */; };
 		BF7342092C3AE74A00911375 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7342082C3AE74A00911375 /* ContentView.swift */; };
@@ -48,6 +45,7 @@
 		BFABBD4C2C885F6100A10182 /* PromptHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFABBD4B2C885F5D00A10182 /* PromptHelper.swift */; };
 		BFB6603F2C99717F005E0C29 /* CalendarToolBarLead.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB6603E2C997178005E0C29 /* CalendarToolBarLead.swift */; };
 		BFBBD9582C55869200671197 /* MessageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBBD9572C55868F00671197 /* MessageHelper.swift */; };
+		BFBF2C9D2CABDB1A004EC7A2 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBF2C9C2CABDB18004EC7A2 /* ListView.swift */; };
 		BFC38D082C935ED900E93826 /* LocationEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC38D072C935ECC00E93826 /* LocationEvents.swift */; };
 		BFDE40512C591A1200733888 /* CSVDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE40502C591A0900733888 /* CSVDocument.swift */; };
 		BFDE40532C591F8200733888 /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE40522C591F7B00733888 /* CalendarHelper.swift */; };
@@ -102,12 +100,12 @@
 		BF2265BB2C943BCE00A1203C /* FloatingButtonText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButtonText.swift; sourceTree = "<group>"; };
 		BF31F0AA2C48FDA9000C005C /* EmailHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailHelper.swift; sourceTree = "<group>"; };
 		BF3F6CAD2C3F23280087DF5A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		BF42BE4F2CAA8C5600ECBB17 /* FloatingButtonVertical.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButtonVertical.swift; sourceTree = "<group>"; };
 		BF4A81342C3AEC4D00D4CAF1 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		BF4A813E2C3AEE0900D4CAF1 /* DateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		BF4A81442C3AEE6C00D4CAF1 /* LiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveView.swift; sourceTree = "<group>"; };
 		BF4A81482C3AEFCE00D4CAF1 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		BF4A814C2C3AF03B00D4CAF1 /* MetricView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricView.swift; sourceTree = "<group>"; };
-		BF4A81622C3AF53200D4CAF1 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		BF4A81662C3AF5D500D4CAF1 /* CalendarToolBarTrail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarToolBarTrail.swift; sourceTree = "<group>"; };
 		BF4A816E2C3AF8DA00D4CAF1 /* LiveToolBarTrail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveToolBarTrail.swift; sourceTree = "<group>"; };
 		BF4A81762C3AFA1700D4CAF1 /* ChatToolBarTrail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatToolBarTrail.swift; sourceTree = "<group>"; };
@@ -118,9 +116,6 @@
 		BF57B8A82C541360000F24BB /* LactateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LactateHelper.swift; sourceTree = "<group>"; };
 		BF6744D02C3FCAE400A23D76 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		BF6C840D2C3C5E8100032E93 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
-		BF6C84112C3D16D600032E93 /* IntegrationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationsView.swift; sourceTree = "<group>"; };
-		BF6C84172C3D1C6D00032E93 /* LearnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnView.swift; sourceTree = "<group>"; };
-		BF6C84192C3D1E5200032E93 /* PrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyView.swift; sourceTree = "<group>"; };
 		BF6F84012C87945B0081838D /* Sheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
 		BF7342032C3AE74A00911375 /* starapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = starapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF7342062C3AE74A00911375 /* starleetApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = starleetApp.swift; sourceTree = "<group>"; };
@@ -142,6 +137,7 @@
 		BFABBD4B2C885F5D00A10182 /* PromptHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptHelper.swift; sourceTree = "<group>"; };
 		BFB6603E2C997178005E0C29 /* CalendarToolBarLead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarToolBarLead.swift; sourceTree = "<group>"; };
 		BFBBD9572C55868F00671197 /* MessageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHelper.swift; sourceTree = "<group>"; };
+		BFBF2C9C2CABDB18004EC7A2 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		BFC38D072C935ECC00E93826 /* LocationEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationEvents.swift; sourceTree = "<group>"; };
 		BFDE40502C591A0900733888 /* CSVDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVDocument.swift; sourceTree = "<group>"; };
 		BFDE40522C591F7B00733888 /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
@@ -202,17 +198,14 @@
 		BF4A81932C3B04D900D4CAF1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				BF4A81622C3AF53200D4CAF1 /* ProfileView.swift */,
 				BF4A81882C3AFDDE00D4CAF1 /* SubscriptionView.swift */,
 				BF6C840D2C3C5E8100032E93 /* AccountView.swift */,
 				BFDEB6032C49994900D32736 /* SupportView.swift */,
-				BF6C84112C3D16D600032E93 /* IntegrationsView.swift */,
 				BF4A818E2C3AFFDD00D4CAF1 /* HomeView.swift */,
-				BF6C84172C3D1C6D00032E93 /* LearnView.swift */,
-				BF6C84192C3D1E5200032E93 /* PrivacyView.swift */,
 				BF4A81342C3AEC4D00D4CAF1 /* CalendarView.swift */,
 				BF4A81442C3AEE6C00D4CAF1 /* LiveView.swift */,
 				BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */,
+				BFBF2C9C2CABDB18004EC7A2 /* ListView.swift */,
 				BF4A81482C3AEFCE00D4CAF1 /* ChatView.swift */,
 				BF4A814C2C3AF03B00D4CAF1 /* MetricView.swift */,
 			);
@@ -222,19 +215,19 @@
 		BF4A81962C3B065500D4CAF1 /* Toolbars */ = {
 			isa = PBXGroup;
 			children = (
-				BF1A81522C542C280057D87D /* HomeToolBarTrail.swift */,
-				BF4A81662C3AF5D500D4CAF1 /* CalendarToolBarTrail.swift */,
-				BF4A816E2C3AF8DA00D4CAF1 /* LiveToolBarTrail.swift */,
-				BF4A81762C3AFA1700D4CAF1 /* ChatToolBarTrail.swift */,
-				BFB6603E2C997178005E0C29 /* CalendarToolBarLead.swift */,
-				BF4A817E2C3AFB8600D4CAF1 /* MetricToolBarTrail.swift */,
 				BFECC9662C8EC7FF0081B617 /* HomeToolBarLead.swift */,
 				BFECC9682C8ECDF30081B617 /* HomeToolBarPrin.swift */,
-				BF19035B2C9ADB4600B0E581 /* ChatToolBarLead.swift */,
+				BF1A81522C542C280057D87D /* HomeToolBarTrail.swift */,
+				BFB6603E2C997178005E0C29 /* CalendarToolBarLead.swift */,
 				BFF251612C9025E100389A3D /* CalendarToolBarPrin.swift */,
+				BF4A81662C3AF5D500D4CAF1 /* CalendarToolBarTrail.swift */,
 				BFEAE8582C92C338006F6285 /* LiveToolBarPrin.swift */,
+				BF4A816E2C3AF8DA00D4CAF1 /* LiveToolBarTrail.swift */,
+				BF19035B2C9ADB4600B0E581 /* ChatToolBarLead.swift */,
 				BFEAE85A2C92C52E006F6285 /* ChatToolBarPrin.swift */,
+				BF4A81762C3AFA1700D4CAF1 /* ChatToolBarTrail.swift */,
 				BFEAE85C2C92C59A006F6285 /* MetricToolBarPrin.swift */,
+				BF4A817E2C3AFB8600D4CAF1 /* MetricToolBarTrail.swift */,
 			);
 			path = Toolbars;
 			sourceTree = "<group>";
@@ -267,6 +260,7 @@
 		BF6F84002C8793FA0081838D /* SharedUi */ = {
 			isa = PBXGroup;
 			children = (
+				BF42BE4F2CAA8C5600ECBB17 /* FloatingButtonVertical.swift */,
 				BFF251652C90C59800389A3D /* FloatingButton.swift */,
 				BF2265BB2C943BCE00A1203C /* FloatingButtonText.swift */,
 				BF6F84012C87945B0081838D /* Sheet.swift */,
@@ -494,10 +488,10 @@
 				BF87F7B92C79C69D00B35F6A /* AppState.swift in Sources */,
 				BF6744D12C3FCAE900A23D76 /* Session.swift in Sources */,
 				BFDE40532C591F8200733888 /* CalendarHelper.swift in Sources */,
-				BF4A81632C3AF53200D4CAF1 /* ProfileView.swift in Sources */,
 				BFB6603F2C99717F005E0C29 /* CalendarToolBarLead.swift in Sources */,
 				BF14E3402C863AB8007FE41D /* HomeTab.swift in Sources */,
 				BFEAE85D2C92C5A3006F6285 /* MetricToolBarPrin.swift in Sources */,
+				BF42BE502CAA8C5D00ECBB17 /* FloatingButtonVertical.swift in Sources */,
 				BFECC9692C8ECE060081B617 /* HomeToolBarPrin.swift in Sources */,
 				BF91AC6E2C45405C0028BC41 /* NumberHelper.swift in Sources */,
 				BF4A81672C3AF5D500D4CAF1 /* CalendarToolBarTrail.swift in Sources */,
@@ -507,10 +501,8 @@
 				BF4A816F2C3AF8DA00D4CAF1 /* LiveToolBarTrail.swift in Sources */,
 				BF4A818F2C3AFFDD00D4CAF1 /* HomeView.swift in Sources */,
 				BFC38D082C935ED900E93826 /* LocationEvents.swift in Sources */,
-				BF6C84122C3D16D600032E93 /* IntegrationsView.swift in Sources */,
 				BFEAE85B2C92C538006F6285 /* ChatToolBarPrin.swift in Sources */,
 				BFABBD4C2C885F6100A10182 /* PromptHelper.swift in Sources */,
-				BF6C84182C3D1C6D00032E93 /* LearnView.swift in Sources */,
 				BF4A81492C3AEFCE00D4CAF1 /* ChatView.swift in Sources */,
 				BF6F84022C8794660081838D /* Sheet.swift in Sources */,
 				BFDEB6042C49994C00D32736 /* SupportView.swift in Sources */,
@@ -519,6 +511,7 @@
 				BF1A81532C542C280057D87D /* HomeToolBarTrail.swift in Sources */,
 				BF4A81352C3AEC4D00D4CAF1 /* CalendarView.swift in Sources */,
 				BF0ED3B92C8234E100ADB94C /* HomeCapsuleGraph.swift in Sources */,
+				BFBF2C9D2CABDB1A004EC7A2 /* ListView.swift in Sources */,
 				BFDE40512C591A1200733888 /* CSVDocument.swift in Sources */,
 				BF7342072C3AE74A00911375 /* starleetApp.swift in Sources */,
 				BF6C840E2C3C5E8100032E93 /* AccountView.swift in Sources */,
@@ -526,7 +519,6 @@
 				BF4A817F2C3AFB8600D4CAF1 /* MetricToolBarTrail.swift in Sources */,
 				BF4A81892C3AFDDE00D4CAF1 /* SubscriptionView.swift in Sources */,
 				BFBBD9582C55869200671197 /* MessageHelper.swift in Sources */,
-				BF6C841A2C3D1E5200032E93 /* PrivacyView.swift in Sources */,
 				BF4A81452C3AEE6C00D4CAF1 /* LiveView.swift in Sources */,
 				BF4A813F2C3AEE0900D4CAF1 /* DateHelper.swift in Sources */,
 				BFECC9672C8EC8130081B617 /* HomeToolBarLead.swift in Sources */,

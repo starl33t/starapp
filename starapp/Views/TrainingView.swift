@@ -26,6 +26,7 @@ struct TrainingView: View {
     @AppStorage("Power") private var showPower = true
     @AppStorage("Heartrate") private var showHeartRate = true
     @AppStorage("Duration") private var showDuration = true
+    @AppStorage("showSpecificTrainingView") var showSpecificTrainingView = true
     
     var body: some View {
         ZStack {
@@ -49,8 +50,6 @@ struct TrainingView: View {
                             }
                             
                         }
-                    
-                    
                     HStack {
                         if showDistance {
                             HStack {
@@ -93,7 +92,6 @@ struct TrainingView: View {
                                 Spacer()
                             }
                         }
-                        
                         if showPower {
                             HStack {
                                 Text("Power:")
@@ -105,7 +103,6 @@ struct TrainingView: View {
                             
                         }
                     }
-                    
                 } header: {
                     ZStack {
                         if title.isEmpty {
@@ -137,6 +134,7 @@ struct TrainingView: View {
                     .presentationDetents([.fraction(0.3)])
             }
             .onAppear {
+                showSpecificTrainingView = true
                 date = session.date ?? Date()
                 title = session.title ?? ""
                 distance = session.distance
@@ -184,6 +182,8 @@ struct TrainingView: View {
             }
         }
     }
+    
+    
     private func updateDistance() {
         distance = Double(kilometers) + Double(hundredMeters) / 1000.0
         calculatePace()

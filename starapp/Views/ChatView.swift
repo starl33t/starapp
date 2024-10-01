@@ -17,7 +17,6 @@ struct ChatView: View {
     
     var body: some View {
         ZStack {
-           
             VStack {
                 ScrollView {
                     LazyVStack {
