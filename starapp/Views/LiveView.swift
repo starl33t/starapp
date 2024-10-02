@@ -147,8 +147,9 @@ struct LiveView: View {
                 }
                 .padding(.horizontal)
             }
-            .mapScope(mapScope)
+            
         }
+        .mapScope(mapScope)
         .onChange(of: selectedEvent) { oldSelection, newSelection in
             if let selectedEvent = newSelection {
                 lastSelectedEvent = newSelection

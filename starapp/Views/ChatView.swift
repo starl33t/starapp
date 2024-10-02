@@ -14,10 +14,16 @@ struct ChatView: View {
     @AppStorage("lastMessageDate") private var lastMessageDate: String = Date().formatted()
     @AppStorage("showAlert") private var showAlert: Bool = false
     @AppStorage("canSendMessage") private var canSendMessage: Bool = true
+    @AppStorage("isprofileSelected") private var isprofileSelected = false
     
     var body: some View {
         ZStack {
             VStack {
+                HStack (spacing: 18){
+                    Text("           ")
+                    socialTelegram()
+                    socialReddit()
+                }
                 ScrollView {
                     LazyVStack {
                         if let latestMessage = viewModel.currentMessage {
@@ -40,6 +46,7 @@ struct ChatView: View {
                     await viewModel.createThread()
                 }
             }
+            isprofileSelected = false
             updateCanSendMessage()
             resetMessageCountIfNeeded()
         }
@@ -50,6 +57,43 @@ struct ChatView: View {
             textFieldIsFocused = false
         }
     }
+    
+    @ViewBuilder
+    private func socialTelegram() -> some View {
+        HStack {
+            Button(action: {
+                if let url = URL(string: "https://t.me/starleetproject") {
+                    UIApplication.shared.open(url)
+                }
+            }) {
+                Image(systemName: "paperplane.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 18, height: 18)
+                    .foregroundStyle(.whiteOne)
+                    .padding(6)
+                    .background(Circle().fill(Color.blue))
+                    
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func socialReddit() -> some View {
+        HStack {
+            Button(action: {
+                if let url = URL(string: "https://www.reddit.com/r/starleet/") {
+                    UIApplication.shared.open(url)
+                }
+            }) {
+                Image("reddit")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 30, height: 30)
+            }
+        }
+    }
+    
     
     private var placeholderText: String {
         

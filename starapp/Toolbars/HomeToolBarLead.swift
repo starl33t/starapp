@@ -13,6 +13,7 @@ struct HomeToolBarLead: View {
     @State private var showSubscriptionSheet = false
     @State private var showSupportSheet = false
     @AppStorage("isCalendarSelected") private var isCalendarSelected = false
+
     var body: some View {
         HStack {
             FloatingButtonVertical {
@@ -34,7 +35,7 @@ struct HomeToolBarLead: View {
                     .scaleEffect(isExpanded ? 1 : 1.2 )
             }
             Button {
-                isCalendarSelected.toggle()
+                isCalendarSelected = true
                 appState.selectedTab = 1
             }  label: {
                 Image(systemName: isCalendarSelected ? "gauge.with.dots.needle.bottom.100percent" : "gauge.with.dots.needle.bottom.0percent")

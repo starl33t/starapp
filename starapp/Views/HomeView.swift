@@ -14,6 +14,8 @@ struct HomeView: View {
     @AppStorage("isGraphExpanded") private var isGraphExpanded = false
     @AppStorage("isFloatingChatExpanded") private var isFloatingChatExpanded = false
     @AppStorage("isCalendarSelected") private var isCalendarSelected = false
+    @AppStorage("isChatSelected") private var isChatSelected = false
+    @AppStorage("isprofileSelected") private var isprofileSelected = false
     @Query private var allSessions: [Session]
     @State private var newMessageContent: String = ""
     
@@ -67,6 +69,7 @@ struct HomeView: View {
         .onAppear {
             updateActiveTabIfNeeded()
             isCalendarSelected = false
+            isChatSelected = false
         }
         .onChange(of: selectedDateRange) {
             updateActiveTabIfNeeded()
@@ -85,6 +88,7 @@ struct HomeView: View {
             .onTapGesture {
                 isGraphExpanded = false
                 isFloatingChatExpanded = false
+                isprofileSelected = false
             }
         VStack {
             if isGraphExpanded {
@@ -121,33 +125,19 @@ struct HomeView: View {
             selectedCapsuleIndex = nil
         }
         
-        if isFloatingChatExpanded {
+        if isprofileSelected {
             VStack {
-                Spacer()
-                ZStack(alignment: .topTrailing) {
-                    ChatView()
-                        .frame(height: 200)
-                        .background(Color.starBlack.opacity(0.9))
-                    chatSupportButton()
-                    
+                ZStack(alignment: .top) {
+                    Color.starBlack.opacity(0.9).ignoresSafeArea()
+                        .frame(height: 300)
                 }
+                Spacer()
             }
-            .transition(.move(edge: .bottom))
-            .animation(.easeInOut(duration: 0.3), value: isFloatingChatExpanded)
-        }
-    }
-    
-    @ViewBuilder
-    private func chatSupportButton() -> some View {
-        Button(action: {
-            if let url = URL(string: "https://t.me/starleetproject") {
-                UIApplication.shared.open(url)
+            .transition(.move(edge: .top))
+            .animation(.easeInOut(duration: 0.3), value: isprofileSelected)
+            .onTapGesture {
+                isprofileSelected = false
             }
-        }) {
-            Image(systemName: "paperplane.fill")
-                .font(.title3)
-                .fontWeight(.semibold)
-                .foregroundStyle(.starMain)
         }
     }
     

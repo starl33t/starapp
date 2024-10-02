@@ -1,9 +1,10 @@
 import SwiftUI
 
 struct HomeToolBarTrail: View {
-    @AppStorage("Notifications") private var Notifications = false
+    @EnvironmentObject var appState: AppState
     @AppStorage("isGraphExpanded") private var isGraphExpanded = false
-    @AppStorage("isFloatingChatExpanded") private var isFloatingChatExpanded = false
+    @AppStorage("isChatSelected") private var isChatSelected = false
+   
     var body: some View {
         HStack {
             Button {
@@ -19,13 +20,14 @@ struct HomeToolBarTrail: View {
                     .contentShape(Circle()) // Match content shape
             }
                 Button {
-                    isFloatingChatExpanded.toggle()
+                    isChatSelected = true
+                    appState.selectedTab = 3
                 } label: {
-                    Image(systemName: isFloatingChatExpanded ? "text.bubble" : "bubble.left")
+                    Image(systemName: isChatSelected ? "text.bubble" : "bubble.left")
                         .font(.title3)
                         .fontWeight(.semibold)
-                        .foregroundStyle(isFloatingChatExpanded ? .starMain : .whiteOne)
-                        .symbolEffect(.bounce, value: isFloatingChatExpanded)
+                        .foregroundStyle(isChatSelected ? .starMain : .whiteOne)
+                        .symbolEffect(.bounce, value: isChatSelected)
                         .frame(width: 50, height: 50) // Matching button size
                         .background(Circle().fill(Color.darkOne)) // Same circular background
                         .contentShape(Circle()) // Match content shape

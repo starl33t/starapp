@@ -10,10 +10,7 @@ import SwiftUI
 struct ChatToolBarPrin: View {
     var body: some View {
         HStack {
-            Text("AI Coach")
         }
-        .foregroundColor(.whiteOne)
-        .font(.headline)
     }
 }
 

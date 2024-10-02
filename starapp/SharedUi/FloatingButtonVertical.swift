@@ -15,7 +15,7 @@
 import SwiftUI
 
 struct FloatingButtonVertical<Label: View>: View {
-    @State private var isExpanded = false
+    @AppStorage("isprofileSelected") private var isprofileSelected = false
     var buttonSize: CGFloat
     var actions: [FloatingActionVertical]
     var label: (Bool) -> Label
@@ -27,9 +27,9 @@ struct FloatingButtonVertical<Label: View>: View {
     
     var body: some View {
         Button {
-            isExpanded.toggle()
+            isprofileSelected.toggle()
         } label: {
-            label(isExpanded)
+            label(isprofileSelected)
                 .frame(width: buttonSize, height: buttonSize)
                 .background(Circle().fill(Color.darkOne))
                 .contentShape(.rect)
@@ -43,14 +43,14 @@ struct FloatingButtonVertical<Label: View>: View {
             }
             .frame(width: buttonSize, height: buttonSize)
         }
-        .animation(.snappy(duration: 0.4, extraBounce: 0), value: isExpanded)
+        .animation(.snappy(duration: 0.4, extraBounce: 0), value: isprofileSelected)
     }
     
     @ViewBuilder
     func ActionView(_ action: FloatingActionVertical) -> some View {
         Button {
             action.action()
-            isExpanded = false
+            isprofileSelected = false
         } label: {
                 ZStack {
                     if let symbols = action.symbols {
@@ -70,13 +70,13 @@ struct FloatingButtonVertical<Label: View>: View {
                         .font(action.textFont)
                         .foregroundStyle(action.tint)
                         .offset(x: buttonSize + 10)
-                        .opacity(isExpanded ? 1 : 0)
-                        .animation(.easeInOut(duration: 0.3), value:  isExpanded)
+                        .opacity(isprofileSelected ? 1 : 0)
+                        .animation(.easeInOut(duration: 0.3), value:  isprofileSelected)
                 )
         }
         .buttonStyle(PressableButtonStyle())
-        .disabled(!isExpanded)
-        .offset(y: isExpanded ? progress(for: action) : 0)
+        .disabled(!isprofileSelected)
+        .offset(y: isprofileSelected ? progress(for: action) : 0)
     }
     
     private var offset: CGFloat {

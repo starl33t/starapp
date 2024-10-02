@@ -11,6 +11,7 @@ struct ChatToolbarTrail: View {
     @AppStorage("lastMessageDate") private var lastMessageDate: String = Date().formatted()
     @AppStorage("showAlert") private var showAlert: Bool = false
     @AppStorage("canSendMessage") private var canSendMessage: Bool = true
+    @AppStorage("isChatSelected") private var isChatSelected = false
     
     var body: some View {
         HStack {
@@ -30,10 +31,6 @@ struct ChatToolbarTrail: View {
                 }) {
                     Text("Help me with my injuries")
                 }
-            } label: {
-                Label("Recovery", systemImage: "figure.pilates")
-            }
-            Menu {
                 Button(action: {
                     sendMessage("Optimize my training")
                 }) {
@@ -50,9 +47,28 @@ struct ChatToolbarTrail: View {
                     Text("I want to peak")
                 }
             } label: {
-                Label("Performance", systemImage: "trophy")
+                Image(systemName: "trophy")
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.whiteOne)
+                    .frame(width: 50, height: 50) 
+                    .background(Circle().fill(Color.darkOne))
+                    .contentShape(Circle())
+            }
+            Button {
+                appState.selectedTab = 0
+            } label: {
+                Image(systemName: isChatSelected ? "text.bubble" : "bubble.left")
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(isChatSelected ? .starMain : .whiteOne)
+                    .symbolEffect(.bounce, value: isChatSelected)
+                    .frame(width: 50, height: 50)
+                    .background(Circle().fill(Color.darkOne))
+                    .contentShape(Circle())
             }
         }
+        .padding(.horizontal, 4)
     }
     
     private func sendMessage(_ text: String) {
