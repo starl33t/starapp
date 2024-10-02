@@ -30,7 +30,7 @@ struct CalendarView: View {
                         ZStack{
                             RoundedRectangle(cornerRadius: 10)
                                 .stroke(Color.whiteOne, lineWidth: 2)
-                                .frame(width: 160, height: 32)
+                                .frame(width: 142, height: 38)
                             Text(appState.todayTitle)
                                 .font(.headline)
                                 .frame(maxWidth: .infinity)
@@ -39,7 +39,7 @@ struct CalendarView: View {
                     }
                 }
                 .font(.headline)
-                .padding()
+                .padding(.vertical, 6)
                 if showTrainingList {
                     listTrainingView()
                 } else {

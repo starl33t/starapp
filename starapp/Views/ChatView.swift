@@ -19,8 +19,7 @@ struct ChatView: View {
     var body: some View {
         ZStack {
             VStack {
-                HStack (spacing: 18){
-                    Text("           ")
+                HStack (spacing: 12){
                     socialTelegram()
                     socialReddit()
                 }
@@ -38,7 +37,7 @@ struct ChatView: View {
                 }
                 .padding(.horizontal)
             }
-            .padding(.top)
+            .padding(.top, 10)
         }
         .onAppear {
             Task {

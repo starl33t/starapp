@@ -24,7 +24,7 @@ struct ChatToolBarLead: View {
                     .contentShape(Circle())
             }
 
-            Text("  Got feedback?")
+            Text("Let's talk!")
                 .foregroundStyle(.whiteOne)
         }
         .padding(.horizontal, 4)
