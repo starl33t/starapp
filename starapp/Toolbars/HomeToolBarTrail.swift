@@ -24,7 +24,7 @@ struct HomeToolBarTrail: View {
                     appState.selectedTab = 3
                 } label: {
                     Image(systemName: isChatSelected ? "text.bubble" : "bubble.left")
-                        .font(.title3)
+                        .font(.system(size: 24))
                         .fontWeight(.semibold)
                         .foregroundStyle(isChatSelected ? .starMain : .whiteOne)
                         .symbolEffect(.bounce, value: isChatSelected)

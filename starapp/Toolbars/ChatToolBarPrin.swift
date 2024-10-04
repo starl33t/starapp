@@ -10,6 +10,7 @@ import SwiftUI
 struct ChatToolBarPrin: View {
     var body: some View {
         HStack {
+          
         }
     }
 }

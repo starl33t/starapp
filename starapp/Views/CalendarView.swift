@@ -30,7 +30,7 @@ struct CalendarView: View {
                         ZStack{
                             RoundedRectangle(cornerRadius: 10)
                                 .stroke(Color.whiteOne, lineWidth: 2)
-                                .frame(width: 142, height: 38)
+                                .frame(width: 138, height: 34)
                             Text(appState.todayTitle)
                                 .font(.headline)
                                 .frame(maxWidth: .infinity)

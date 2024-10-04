@@ -168,7 +168,56 @@ extension CLLocationCoordinate2D {
         latitude: 52.51766580099817,
         longitude: 13.368332792630026
     )
-    //52.51766580099817, 13.368332792630026
+    //Chicago Marathon
+    static let ChicagoMarathon: Self = .init(
+        latitude: 41.88086810849661,
+        longitude: -87.62080750554965
+    )
+    static let ChicagoMarathonStartGroupStart: Self = .init(
+        latitude: 41.88046458084802,
+        longitude: -87.62077087694472
+    )
+    static let ChicagoMarathonStartGroupEnd: Self = .init(
+        latitude: 41.87458550347972,
+        longitude: -87.62059721372681
+    )
+    static let ChicagoMarathonGate1: Self = .init(
+        latitude: 41.87829220203549,
+        longitude: -87.62430486961422
+    )
+    static let ChicagoMarathonGate2: Self = .init(
+        latitude: 41.87702172321117,
+        longitude: -87.62425700000102
+    )
+    static let ChicagoMarathonGate3: Self = .init(
+        latitude: 41.87702172321117,
+        longitude: -87.62425700000102
+    )
+    static let ChicagoMarathonGate4: Self = .init(
+        latitude: 41.87572843986871,
+        longitude: -87.62418710096458
+    )
+    static let ChicagoMarathonGate5: Self = .init(
+        latitude: 41.87572843986871,
+        longitude: -87.62418710096458
+    )
+    static let ChicagoMarathonGate7: Self = .init(
+        latitude: 41.87453635857385,
+        longitude: -87.62422870260427
+    )
+    static let ChicagoMarathonGearCheckRed: Self = .init(
+        latitude: 41.87581697352971,
+        longitude: -87.61786230690132
+    )
+    static let ChicagoMarathonGearCheckBlue: Self = .init(
+        latitude: 41.87505254600087,
+        longitude: -87.61891854787744
+    )
+    static let ChicagoMarathonGearCheckOrange: Self = .init(
+        latitude: 41.87432486728637,
+        longitude: -87.6214822019808
+    )
+    //41.87432486728637, -87.6214822019808
 }
 struct SubPolyline: Identifiable, Hashable, Equatable {
     let id = UUID()
@@ -489,6 +538,91 @@ struct raceRunLocationEvents {
                         coordinates: [
                             .BerlinMarathonStartGroupStart,
                             .BerlinMarathonStartGroupEnd
+                        ],
+                        title: "Start Groups Line",
+                        color: .red
+                    )
+                ]
+            ),
+            // Chicago Marathon
+            EventMarker(
+                coordinate: .ChicagoMarathon,
+                label: "Chicago Marathon",
+                systemImage: "figure.run",
+                metadata: "Start: 07:30, 13-OCT-2024",
+                sublocations: [
+                    Sublocation(
+                        coordinate: .ChicagoMarathonGate1,
+                        title: "Gate #1",
+                        systemImage: "door.french.open",
+                        color: .cyan
+                    ),
+                    Sublocation(
+                        coordinate: .ChicagoMarathonGate2,
+                        title: "Gate #2",
+                        systemImage: "door.french.open",
+                        color: .cyan
+                    ),
+                    Sublocation(
+                        coordinate: .ChicagoMarathonGate3,
+                        title: "Gate #3",
+                        systemImage: "door.french.open",
+                        color: .cyan
+                    ),
+                    Sublocation(
+                        coordinate: .ChicagoMarathonGate4,
+                        title: "Gate #4",
+                        systemImage: "door.french.open",
+                        color: .cyan
+                    ),
+                    Sublocation(
+                        coordinate: .ChicagoMarathonGate5,
+                        title: "Gate #5",
+                        systemImage: "door.french.open",
+                        color: .cyan
+                    ),
+                    Sublocation(
+                        coordinate: .ChicagoMarathonGate7,
+                        title: "Gate #7",
+                        systemImage: "door.french.open",
+                        color: .cyan
+                    ),
+                    Sublocation(
+                        coordinate: .ChicagoMarathonGearCheckRed,
+                        title: "Gear Check",
+                        systemImage: "hanger",
+                        color: .red
+                    ),
+                    Sublocation(
+                        coordinate: .ChicagoMarathonGearCheckBlue,
+                        title: "Gear Check",
+                        systemImage: "hanger",
+                        color: .blue
+                    ),
+                    Sublocation(
+                        coordinate: .ChicagoMarathonGearCheckOrange,
+                        title: "Gear Check",
+                        systemImage: "hanger",
+                        color: .orange
+                    ),
+                    Sublocation(
+                        coordinate: .ChicagoMarathonStartGroupStart,
+                        title: "Start Wave 1",
+                        systemImage: "a.circle",
+                        color: .red
+                    ),
+                    Sublocation(
+                        coordinate: .ChicagoMarathonStartGroupEnd,
+                        title: "Start Wave 3",
+                        systemImage: "n.circle",
+                        color: .orange
+                    )
+                ],
+                subpolylines: [
+                    SubPolyline(
+                        coordinates: [
+                            .ChicagoMarathonStartGroupStart,
+                            .ChicagoMarathonStartGroupEnd
                         ],
                         title: "Start Groups Line",
                         color: .red

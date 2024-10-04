@@ -23,7 +23,7 @@ struct CalendarToolBarTrail: View {
                     showTrainingList.toggle()
                 } label: {
                     Image(systemName: showTrainingList ? "square.grid.3x3" : "line.3.horizontal")
-                        .font(.title3)
+                        .font(.system(size: 24))
                         .fontWeight(.semibold)
                         .foregroundStyle(.whiteOne)
                         .frame(width: 50, height: 50)
@@ -35,7 +35,7 @@ struct CalendarToolBarTrail: View {
                         isExporting = true
                     }  label: {
                         Image(systemName: "arrow.down.to.line.compact")
-                            .font(.title3)
+                            .font(.system(size: 24))
                             .fontWeight(.semibold)
                             .foregroundStyle(isExporting ? .starMain : .whiteOne)
                             .symbolEffect(.bounce, value: isExporting)
@@ -48,7 +48,7 @@ struct CalendarToolBarTrail: View {
                         showDatePicker = true
                     }  label: {
                         Image(systemName: "calendar")
-                            .font(.title3)
+                            .font(.system(size: 24))
                             .fontWeight(.semibold)
                             .foregroundStyle(showDatePicker ? .starMain : .whiteOne)
                             .symbolEffect(.bounce, value: showDatePicker)

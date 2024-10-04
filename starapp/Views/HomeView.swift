@@ -129,7 +129,7 @@ struct HomeView: View {
             VStack {
                 ZStack(alignment: .top) {
                     Color.starBlack.opacity(0.9).ignoresSafeArea()
-                        .frame(height: 300)
+                        .frame(height: 258)
                 }
                 Spacer()
             }

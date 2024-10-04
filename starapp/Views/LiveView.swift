@@ -10,22 +10,16 @@ struct UserLocationAnnotation: Identifiable {
 
 struct LiveView: View {
     @EnvironmentObject var locationManager: LocationManager
+    @EnvironmentObject var appState: AppState
     @AppStorage("Athletes") var athletesToggle: Bool = false
     @AppStorage("isAuthorizedLocation") var isAuthorizedLocation: Bool = true
     @AppStorage("persistedEventLabel") private var persistedEventLabel: String? // Use label for persistence
     @AppStorage("routeDisplaying") private var routeDisplaying: Bool = false
-    @State var position: MapCameraPosition = .userLocation(fallback: .automatic)
-    @State private var userAnnotations: [UserLocationAnnotation] = []
-    @State private var selectedEvent: EventMarker?
-    @State private var lastSelectedEvent: EventMarker?
-    @State private var route: MKRoute?
-    @State private var travelInterval: TimeInterval?
-    @State private var currentEvent: EventMarker?
     @Namespace private var mapScope
     
     var body: some View {
         ZStack(alignment: .top) {
-            Map(position: $position, selection: $selectedEvent, scope: mapScope) {
+            Map(position: $appState.position, selection: $appState.selectedEvent, scope: mapScope) {
                 UserAnnotation()
                 
                 ForEach(parkRunLocationEvents.allEventMarkers(), id: \.self) { event in
@@ -43,7 +37,7 @@ struct LiveView: View {
                     .tag(event)
                 }
                 // Display sublocations and subpolylines if available
-                if let lastSelectedEvent = lastSelectedEvent {
+                if let lastSelectedEvent = appState.lastSelectedEvent {
                     // Display sublocations
                     if let sublocations = lastSelectedEvent.sublocations {
                         ForEach(sublocations, id: \.self) { sublocation in
@@ -63,7 +57,7 @@ struct LiveView: View {
                     }
                 }
                 
-                if let route, routeDisplaying {
+                if let route = appState.route, routeDisplaying {
                     MapPolyline(route.polyline)
                         .stroke(Color.starMain.opacity(0.5), lineWidth: 2)
                 }
@@ -71,16 +65,16 @@ struct LiveView: View {
             .onAppear {
                 if routeDisplaying {
                     if let persistedEventLabel = persistedEventLabel, let restoredEvent = findEventByLabel(persistedEventLabel) {
-                        currentEvent = restoredEvent
+                        appState.currentEvent = restoredEvent
                         Task {
                             await fetchRoute(to: restoredEvent)
                         }
                     }
                 } else {
-                    route = nil
+                    appState.currentEvent = nil
                 }
             }
-            .sheet(item: $selectedEvent) { event in
+            .sheet(item: $appState.selectedEvent) { event in
                 ZStack {
                     Color.starBlack.ignoresSafeArea()
                     VStack(spacing: 20) {
@@ -95,19 +89,19 @@ struct LiveView: View {
                                     UIApplication.shared.open(appSettings)
                                 }
                             } else {
-                                if currentEvent?.label == event.label {
+                                if  appState.currentEvent?.label == event.label {
                                     routeDisplaying.toggle()
                                     if routeDisplaying {
                                         Task {
                                             await fetchRoute(to: event)
                                         }
                                     } else {
-                                        route = nil
+                                        appState.route = nil
                                     }
                                 } else {
                                     routeDisplaying = false
-                                    route = nil
-                                    currentEvent = event
+                                    appState.route = nil
+                                    appState.currentEvent = event
                                     persistedEventLabel = event.label
                                     Task {
                                         await fetchRoute(to: event)
@@ -122,7 +116,7 @@ struct LiveView: View {
                                     .foregroundStyle(.whiteOne)
                                     .cornerRadius(10)
                             } else {
-                                Image(systemName: routeDisplaying && currentEvent == event ? "mappin.slash" : "mappin")
+                                Image(systemName: routeDisplaying &&  appState.currentEvent == event ? "mappin.slash" : "mappin")
                                     .font(.title)
                             }
                         }
@@ -131,7 +125,7 @@ struct LiveView: View {
                     .frame(maxWidth: .infinity)
                 }
                 .presentationDetents([.fraction(0.3)])
-                .modifier(CloseButtonModifier(onClose: { selectedEvent = nil }))
+                .modifier(CloseButtonModifier(onClose: {  appState.selectedEvent = nil }))
             }
             .mapStyle(.imagery(elevation: .realistic))
             .overlay {
@@ -147,19 +141,18 @@ struct LiveView: View {
                 }
                 .padding(.horizontal)
             }
-            
         }
         .mapScope(mapScope)
-        .onChange(of: selectedEvent) { oldSelection, newSelection in
+        .onChange(of:  appState.selectedEvent) { oldSelection, newSelection in
             if let selectedEvent = newSelection {
-                lastSelectedEvent = newSelection
+                appState.lastSelectedEvent = newSelection
                 let camera = MapCamera(
                     centerCoordinate: selectedEvent.coordinate,
                     distance: 4000,
                     heading: .zero,
                     pitch: .zero
                 )
-                position = .camera(camera)
+                appState.position = .camera(camera)
             }
         }
     }
@@ -179,12 +172,12 @@ struct LiveView: View {
                 let result = try await directions.calculate()
                 
                 if let route = result.routes.first {
-                    self.route = route
-                    travelInterval = route.expectedTravelTime
+                    appState.route = route
+                    appState.travelInterval = route.expectedTravelTime
                     
                     withAnimation {
                         routeDisplaying = true
-                        position = .rect(route.polyline.boundingMapRect)
+                        appState.position = .rect(route.polyline.boundingMapRect)
                     }
                 }
             } catch {

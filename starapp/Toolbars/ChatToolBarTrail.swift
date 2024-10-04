@@ -48,7 +48,7 @@ struct ChatToolbarTrail: View {
                 }
             } label: {
                 Image(systemName: "trophy")
-                    .font(.title3)
+                    .font(.system(size: 24)) // Increase symbol size
                     .fontWeight(.semibold)
                     .foregroundStyle(.whiteOne)
                     .frame(width: 50, height: 50) 
@@ -59,7 +59,7 @@ struct ChatToolbarTrail: View {
                 appState.selectedTab = 0
             } label: {
                 Image(systemName: isChatSelected ? "text.bubble" : "bubble.left")
-                    .font(.title3)
+                    .font(.system(size: 24)) 
                     .fontWeight(.semibold)
                     .foregroundStyle(isChatSelected ? .starMain : .whiteOne)
                     .symbolEffect(.bounce, value: isChatSelected)

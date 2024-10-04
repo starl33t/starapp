@@ -37,7 +37,7 @@ struct ChatView: View {
                 }
                 .padding(.horizontal)
             }
-            .padding(.top, 10)
+            .padding(.top, 14)
         }
         .onAppear {
             Task {
