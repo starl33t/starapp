@@ -11,7 +11,7 @@ import MapKit
 struct HomeToolBarPrin: View {
     @EnvironmentObject var appState: AppState
     @State private var newSearchContent: String = ""
-    @FocusState private var textFieldIsFocused: Bool
+    @FocusState private var searchFieldIsFocused: Bool
     @AppStorage("isGraphExpanded") private var isGraphExpanded = false
     
     var body: some View {
@@ -24,7 +24,7 @@ struct HomeToolBarPrin: View {
                 ZStack(alignment: .leading) {
                     Button(action: {
                         newSearchContent = ""
-                        textFieldIsFocused = false
+                        searchFieldIsFocused = false
                     }) {
                         Image(systemName: "xmark.circle.fill")
                             .font(.system(size: 24))
@@ -40,7 +40,7 @@ struct HomeToolBarPrin: View {
                     TextField("", text: $newSearchContent, axis: .vertical)
                         .font(.system(size: 14))
                         .foregroundStyle(.whiteOne)
-                        .focused($textFieldIsFocused)
+                        .focused($searchFieldIsFocused)
                         .padding(.leading, 34)
                         .onChange(of: newSearchContent) { _,newValue in
                             performSearch(for: newValue)

@@ -11,6 +11,20 @@ struct SubscriptionView: View {
         ZStack {
             Color.starBlack.ignoresSafeArea()
             VStack {
+                HStack{
+                    Spacer()
+                    Button(action: {
+                        Task {
+                            if let product = starStore.subscriptions.first {
+                                await buy(product: product)
+                            }
+                        }
+                    }) {
+                        Text("Restore Buy?")
+                            .foregroundStyle(.whiteOne)
+                            .padding(.horizontal)
+                    }
+                }
                 HStack {
                     RoundedRectangle(cornerRadius: 10)
                         .fill(.starMain.opacity(0.8))
@@ -56,7 +70,7 @@ struct SubscriptionView: View {
                                 .font(.body)
                                 .padding(.top, 10)
                             }
-                            .padding()
+                                .padding()
                         )
                 }
                 Button(action: {
@@ -77,19 +91,7 @@ struct SubscriptionView: View {
                 Text("Tier 1 is charged monthly. Read and agree to our [Terms & Conditions](https://www.apple.com/legal/internet-services/itunes/dev/stdeula/) and [Privacy Policy](https://www.apple.com/legal/privacy/pdfs/apple-privacy-policy-en-ww.pdf).")
                     .font(.system(size: 14))
                     .foregroundColor(.gray)
-                    .padding()
-                
-                Button(action: {
-                    Task {
-                        if let product = starStore.subscriptions.first {
-                            await buy(product: product)
-                        }
-                    }
-                }) {
-                    Text("Restore Buy?")
-                        .foregroundStyle(.whiteOne)
-                        .padding()
-                }
+                    .padding(.horizontal)
             }
             
         }
@@ -98,6 +100,7 @@ struct SubscriptionView: View {
     func buy(product: Product) async {
         do {
             if try await starStore.purchase(product) != nil {
+                userTier = 1
                 try? modelContext.save()
             }
         } catch {

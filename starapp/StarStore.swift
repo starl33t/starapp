@@ -103,27 +103,42 @@ class StarStore: ObservableObject {
     
     @MainActor
     func updateCustomerProductStatus() async {
+        var hasTier1Subscription = false
+
         for await result in Transaction.currentEntitlements {
             do {
-                //Check whether the transaction is verified. If it isn’t, catch `failedVerification` error.
+                // Check whether the transaction is verified. If it isn’t, catch `failedVerification` error.
                 let transaction = try checkVerified(result)
                 
                 switch transaction.productType {
                 case .autoRenewable:
-                    if let subscription = subscriptions.first(where: {$0.id == transaction.productID}) {
+                    if let subscription = subscriptions.first(where: { $0.id == transaction.productID }) {
                         purchasedSubscriptions.append(subscription)
+                        
+                        // Check if the product ID matches "tier1" and set userTier to 1
+                        if transaction.productID == "tier1" {
+                            hasTier1Subscription = true
+                        }
                     }
                 default:
                     break
                 }
-                //Always finish a transaction.
+                // Always finish a transaction.
                 await transaction.finish()
             } catch {
-                print("failed updating products")
+                print("Failed updating products")
             }
         }
+        
+        // Set userTier based on active subscription
+        if hasTier1Subscription {
+            // Update AppStorage for userTier
+            UserDefaults.standard.set(1, forKey: "userTier")
+        } else {
+            // Reset userTier to 0 if no active subscriptions
+            UserDefaults.standard.set(0, forKey: "userTier")
+        }
     }
-    
 }
 
 
