@@ -15,6 +15,7 @@ struct LiveView: View {
     @AppStorage("isAuthorizedLocation") var isAuthorizedLocation: Bool = true
     @AppStorage("persistedEventLabel") private var persistedEventLabel: String? // Use label for persistence
     @AppStorage("routeDisplaying") private var routeDisplaying: Bool = false
+    @AppStorage("isSearchBarSelected") private var isSearchBarSelected = false
     @Namespace private var mapScope
     
     var body: some View {
@@ -145,14 +146,16 @@ struct LiveView: View {
         .mapScope(mapScope)
         .onChange(of:  appState.selectedEvent) { oldSelection, newSelection in
             if let selectedEvent = newSelection {
-                appState.lastSelectedEvent = newSelection
-                let camera = MapCamera(
-                    centerCoordinate: selectedEvent.coordinate,
-                    distance: 4000,
-                    heading: .zero,
-                    pitch: .zero
-                )
-                appState.position = .camera(camera)
+                if !isSearchBarSelected {
+                    let camera = MapCamera(
+                        centerCoordinate: selectedEvent.coordinate,
+                        distance: 4000,
+                        heading: .zero,
+                        pitch: .zero
+                    )
+                    appState.position = .camera(camera)
+                }
+                appState.lastSelectedEvent = selectedEvent
             }
         }
     }
@@ -190,3 +193,4 @@ struct LiveView: View {
         raceRunLocationEvents.allEventMarkers().first { $0.label == label }
     }
 }
+

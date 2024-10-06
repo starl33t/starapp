@@ -189,15 +189,7 @@ extension CLLocationCoordinate2D {
         latitude: 41.87702172321117,
         longitude: -87.62425700000102
     )
-    static let ChicagoMarathonGate3: Self = .init(
-        latitude: 41.87702172321117,
-        longitude: -87.62425700000102
-    )
     static let ChicagoMarathonGate4: Self = .init(
-        latitude: 41.87572843986871,
-        longitude: -87.62418710096458
-    )
-    static let ChicagoMarathonGate5: Self = .init(
         latitude: 41.87572843986871,
         longitude: -87.62418710096458
     )
@@ -217,8 +209,225 @@ extension CLLocationCoordinate2D {
         latitude: 41.87432486728637,
         longitude: -87.6214822019808
     )
-    //41.87432486728637, -87.6214822019808
+    //New York Marathon
+    static let NewYorkMarathon: Self = .init(
+        latitude: 40.60180084427038,
+        longitude: -74.05965936181843
+    )
+    static let NewYorkMarathonStartGroupStart: Self = .init(
+        latitude: 40.60179794684628,
+        longitude: -74.06035534169192
+    )
+    static let NewYorkMarathonStartGroupEnd: Self = .init(
+        latitude: 40.60208613921757,
+        longitude: -74.06361672478995
+    )
+    static let NewYorkMarathonNYPLDropOff: Self = .init(
+        latitude: 40.60270195415184,
+        longitude: -74.0617539038959
+    )
+    static let NewYorkMarathonFerryDropOff: Self = .init(
+        latitude: 40.60636772796669,
+        longitude: -74.06043555218373
+    )
+    static let NewYorkMarathonBagPreCheck: Self = .init(
+        latitude: 40.77271420619875,
+        longitude: -73.9702355405517
+    )
+    //40.60636772796669, -74.06043555218373
 }
+
+struct raceRunLocationEvents {
+    static func allEventMarkers() -> [EventMarker] {
+        return [
+            // Valencia Marathon
+            EventMarker(
+                coordinate: .ValenciaMarathon,
+                label: "Valencia Marathon",
+                systemImage: "figure.run",
+                metadata: "Start: 08:15, 01-Dec-2024"
+            ),
+            // Berlin Marathon
+            EventMarker(
+                coordinate: .BerlinMarathon,
+                label: "Berlin Marathon",
+                systemImage: "figure.run",
+                metadata: "Start: 09:15, 29-Sep-2024",
+                sublocations: [
+                    Sublocation(
+                        coordinate: .BerlinMarathonEntrance,
+                        title: "Entrance",
+                        systemImage: "figure.walk.arrival",
+                        color: .blue
+                    ),
+                    Sublocation(
+                        coordinate: .BerlinMarathonBagDrop1,
+                        title: "Bag Drop I-III",
+                        systemImage: "hanger",
+                        color: .cyan
+                    ),
+                    Sublocation(
+                        coordinate: .BerlinMarathonBagDrop2,
+                        title: "Bag Drop V",
+                        systemImage: "hanger",
+                        color: .cyan
+                    ),
+                    Sublocation(
+                        coordinate: .BerlinMarathonBagDrop3,
+                        title: "Bag Drop VII",
+                        systemImage: "hanger",
+                        color: .cyan
+                    ),
+                    Sublocation(
+                        coordinate: .BerlinMarathonStartGroupStart,
+                        title: "Start Group A",
+                        systemImage: "a.circle",
+                        color: .red
+                    ),
+                    Sublocation(
+                        coordinate: .BerlinMarathonStartGroupEnd,
+                        title: "Start Group J",
+                        systemImage: "j.circle",
+                        color: .orange
+                    )
+                ],
+                subpolylines: [
+                    SubPolyline(
+                        coordinates: [
+                            .BerlinMarathonStartGroupStart,
+                            .BerlinMarathonStartGroupEnd
+                        ],
+                        title: "Start Groups Line",
+                        color: .red
+                    )
+                ]
+            ),
+            // Chicago Marathon
+            EventMarker(
+                coordinate: .ChicagoMarathon,
+                label: "Chicago Marathon",
+                systemImage: "figure.run",
+                metadata: "Start: 07:30, 13-OCT-2024",
+                sublocations: [
+                    Sublocation(
+                        coordinate: .ChicagoMarathonGate1,
+                        title: "Gate #1",
+                        systemImage: "door.french.open",
+                        color: .cyan
+                    ),
+                    Sublocation(
+                        coordinate: .ChicagoMarathonGate2,
+                        title: "Gate #2+#3",
+                        systemImage: "door.french.open",
+                        color: .cyan
+                    ),
+                    Sublocation(
+                        coordinate: .ChicagoMarathonGate4,
+                        title: "Gate #4+#5",
+                        systemImage: "door.french.open",
+                        color: .cyan
+                    ),
+                    Sublocation(
+                        coordinate: .ChicagoMarathonGate7,
+                        title: "Gate #7",
+                        systemImage: "door.french.open",
+                        color: .cyan
+                    ),
+                    Sublocation(
+                        coordinate: .ChicagoMarathonGearCheckRed,
+                        title: "Gear Check",
+                        systemImage: "hanger",
+                        color: .red
+                    ),
+                    Sublocation(
+                        coordinate: .ChicagoMarathonGearCheckBlue,
+                        title: "Gear Check",
+                        systemImage: "hanger",
+                        color: .blue
+                    ),
+                    Sublocation(
+                        coordinate: .ChicagoMarathonGearCheckOrange,
+                        title: "Gear Check",
+                        systemImage: "hanger",
+                        color: .orange
+                    ),
+                    Sublocation(
+                        coordinate: .ChicagoMarathonStartGroupStart,
+                        title: "Start Wave 1",
+                        systemImage: "a.circle",
+                        color: .red
+                    ),
+                    Sublocation(
+                        coordinate: .ChicagoMarathonStartGroupEnd,
+                        title: "Start Wave 3",
+                        systemImage: "n.circle",
+                        color: .orange
+                    )
+                ],
+                subpolylines: [
+                    SubPolyline(
+                        coordinates: [
+                            .ChicagoMarathonStartGroupStart,
+                            .ChicagoMarathonStartGroupEnd
+                        ],
+                        title: "Start Groups Line",
+                        color: .red
+                    )
+                ]
+            ),
+            //New Yori Marathon
+            EventMarker(
+                coordinate: .NewYorkMarathon,
+                label: "New York Marathon",
+                systemImage: "figure.run",
+                metadata: "Start: 09:10, 03-NOV-2024",
+                sublocations: [
+                    Sublocation(
+                        coordinate: .NewYorkMarathonBagPreCheck,
+                        title: "Bag Pre-Check",
+                        systemImage: "hanger",
+                        color: .cyan
+                    ),
+                    Sublocation(
+                        coordinate: .NewYorkMarathonNYPLDropOff,
+                        title: "NYPL Drop-off",
+                        systemImage: "bus.fill",
+                        color: .blue
+                    ),
+                    Sublocation(
+                        coordinate: .NewYorkMarathonFerryDropOff,
+                        title: "Ferry Drop-Off",
+                        systemImage: "bus.fill",
+                        color: .blue
+                    ),
+                    Sublocation(
+                        coordinate: .NewYorkMarathonStartGroupStart,
+                        title: "Start Wave 1",
+                        systemImage: "1.circle",
+                        color: .pink
+                    ),
+                    Sublocation(
+                        coordinate: .NewYorkMarathonStartGroupEnd,
+                        title: "Start Wave 5",
+                        systemImage: "5.circle",
+                        color: .blue
+                    )
+                ],
+                subpolylines: [
+                    SubPolyline(
+                        coordinates: [
+                            .NewYorkMarathonStartGroupStart,
+                            .NewYorkMarathonStartGroupEnd
+                        ],
+                        title: "Start Groups Line",
+                        color: .red
+                    )
+                ]
+            ),
+        ]
+    }
+}
+
 struct SubPolyline: Identifiable, Hashable, Equatable {
     let id = UUID()
     let coordinates: [CLLocationCoordinate2D]
@@ -478,158 +687,3 @@ struct parkRunLocationEvents {
     }
 }
 
-
-struct raceRunLocationEvents {
-    static func allEventMarkers() -> [EventMarker] {
-        return [
-            // Valencia Marathon
-            EventMarker(
-                coordinate: .ValenciaMarathon,
-                label: "Valencia Marathon",
-                systemImage: "figure.run",
-                metadata: "Start: 08:15, 01-Dec-2024"
-            ),
-            // Berlin Marathon
-            EventMarker(
-                coordinate: .BerlinMarathon,
-                label: "Berlin Marathon",
-                systemImage: "figure.run",
-                metadata: "Start: 09:15, 29-Sep-2024",
-                sublocations: [
-                    Sublocation(
-                        coordinate: .BerlinMarathonEntrance,
-                        title: "Entrance",
-                        systemImage: "figure.walk.arrival",
-                        color: .blue
-                    ),
-                    Sublocation(
-                        coordinate: .BerlinMarathonBagDrop1,
-                        title: "Bag Drop I-III",
-                        systemImage: "hanger",
-                        color: .cyan
-                    ),
-                    Sublocation(
-                        coordinate: .BerlinMarathonBagDrop2,
-                        title: "Bag Drop V",
-                        systemImage: "hanger",
-                        color: .cyan
-                    ),
-                    Sublocation(
-                        coordinate: .BerlinMarathonBagDrop3,
-                        title: "Bag Drop VII",
-                        systemImage: "hanger",
-                        color: .cyan
-                    ),
-                    Sublocation(
-                        coordinate: .BerlinMarathonStartGroupStart,
-                        title: "Start Group A",
-                        systemImage: "a.circle",
-                        color: .red
-                    ),
-                    Sublocation(
-                        coordinate: .BerlinMarathonStartGroupEnd,
-                        title: "Start Group J",
-                        systemImage: "j.circle",
-                        color: .orange
-                    )
-                ],
-                subpolylines: [
-                    SubPolyline(
-                        coordinates: [
-                            .BerlinMarathonStartGroupStart,
-                            .BerlinMarathonStartGroupEnd
-                        ],
-                        title: "Start Groups Line",
-                        color: .red
-                    )
-                ]
-            ),
-            // Chicago Marathon
-            EventMarker(
-                coordinate: .ChicagoMarathon,
-                label: "Chicago Marathon",
-                systemImage: "figure.run",
-                metadata: "Start: 07:30, 13-OCT-2024",
-                sublocations: [
-                    Sublocation(
-                        coordinate: .ChicagoMarathonGate1,
-                        title: "Gate #1",
-                        systemImage: "door.french.open",
-                        color: .cyan
-                    ),
-                    Sublocation(
-                        coordinate: .ChicagoMarathonGate2,
-                        title: "Gate #2",
-                        systemImage: "door.french.open",
-                        color: .cyan
-                    ),
-                    Sublocation(
-                        coordinate: .ChicagoMarathonGate3,
-                        title: "Gate #3",
-                        systemImage: "door.french.open",
-                        color: .cyan
-                    ),
-                    Sublocation(
-                        coordinate: .ChicagoMarathonGate4,
-                        title: "Gate #4",
-                        systemImage: "door.french.open",
-                        color: .cyan
-                    ),
-                    Sublocation(
-                        coordinate: .ChicagoMarathonGate5,
-                        title: "Gate #5",
-                        systemImage: "door.french.open",
-                        color: .cyan
-                    ),
-                    Sublocation(
-                        coordinate: .ChicagoMarathonGate7,
-                        title: "Gate #7",
-                        systemImage: "door.french.open",
-                        color: .cyan
-                    ),
-                    Sublocation(
-                        coordinate: .ChicagoMarathonGearCheckRed,
-                        title: "Gear Check",
-                        systemImage: "hanger",
-                        color: .red
-                    ),
-                    Sublocation(
-                        coordinate: .ChicagoMarathonGearCheckBlue,
-                        title: "Gear Check",
-                        systemImage: "hanger",
-                        color: .blue
-                    ),
-                    Sublocation(
-                        coordinate: .ChicagoMarathonGearCheckOrange,
-                        title: "Gear Check",
-                        systemImage: "hanger",
-                        color: .orange
-                    ),
-                    Sublocation(
-                        coordinate: .ChicagoMarathonStartGroupStart,
-                        title: "Start Wave 1",
-                        systemImage: "a.circle",
-                        color: .red
-                    ),
-                    Sublocation(
-                        coordinate: .ChicagoMarathonStartGroupEnd,
-                        title: "Start Wave 3",
-                        systemImage: "n.circle",
-                        color: .orange
-                    )
-                ],
-                subpolylines: [
-                    SubPolyline(
-                        coordinates: [
-                            .ChicagoMarathonStartGroupStart,
-                            .ChicagoMarathonStartGroupEnd
-                        ],
-                        title: "Start Groups Line",
-                        color: .red
-                    )
-                ]
-            ),
-
-        ]
-    }
-}

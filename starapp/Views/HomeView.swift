@@ -17,7 +17,9 @@ struct HomeView: View {
     @AppStorage("isChatSelected") private var isChatSelected = false
     @AppStorage("isprofileSelected") private var isprofileSelected = false
     @Query private var allSessions: [Session]
-    @State private var newMessageContent: String = ""
+    @FocusState private var searchFieldIsFocused: Bool
+    @AppStorage("newSearchContent") private var newSearchContent = ""
+    @AppStorage("isSearchBarSelected") private var isSearchBarSelected = false
     
     init() {
         let startOfLast7Days = Calendar.current.date(byAdding: .day, value: -365, to: Date())!
@@ -50,29 +52,84 @@ struct HomeView: View {
     }
     
     var body: some View {
-        ZStack {
-            Color.starBlack.ignoresSafeArea()
-            VStack {
-                ZStack(alignment: .top) {
-                    mapView()
+        VStack {
+            ZStack(alignment: .top) {
+                LiveView()
+                    .onTapGesture {
+                        isGraphExpanded = false
+                        isFloatingChatExpanded = false
+                        isprofileSelected = false
+                        searchFieldIsFocused = false
+                        isSearchBarSelected = false
+                    }
+                searchBar()
+                VStack {
+                    if isGraphExpanded {
+                        Text(appState.homeTitle)
+                            .font(.headline)
+                            .foregroundStyle(.whiteOne)
+                            .padding()
+                        summaryView()
+                        HStack {
+                            Button {
+                                showDatePicker = true
+                            } label: {
+                                ZStack{
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.whiteOne, lineWidth: 2)
+                                        .frame(width: 130, height: 32)
+                                    Text(selectedDateRange.displayText)
+                                }
+                            }
+                            Spacer()
+                            Text(sessionDisplayText)
+                        }
+                        .foregroundStyle(.whiteOne)
+                        .padding()
+                        sessionChartView(sessions: NumberHelper.filteredSessions(for: appState.homeActiveTab, in: sessions))
+                            .frame(height: 100)
+                            .padding()
+                    }
                 }
+                .animation(.easeInOut(duration: 0.3), value: isGraphExpanded)
+                .background(Color.starBlack.opacity(0.9))
                 .onTapGesture {
-                    isFloatingChatExpanded = false
+                    selectedSession = nil
+                    selectedCapsuleIndex = nil
+                }
+                
+                if isprofileSelected {
+                    VStack {
+                        ZStack(alignment: .top) {
+                            Color.starBlack.opacity(0.9).ignoresSafeArea()
+                                .frame(height: 305)
+                        }
+                        Spacer()
+                    }
+                    .transition(.move(edge: .top))
+                    .animation(.easeInOut(duration: 0.3), value: isprofileSelected)
+                    .onTapGesture {
+                        isprofileSelected = false
+                    }
                 }
             }
-            .tint(.starMain)
         }
-        .onTapGesture {
-            selectedSession = nil
-            selectedCapsuleIndex = nil
-        }
+        .tint(.starMain)
         .onAppear {
             updateActiveTabIfNeeded()
             isCalendarSelected = false
             isChatSelected = false
+            searchFieldIsFocused = false
+            isSearchBarSelected = false
         }
         .onChange(of: selectedDateRange) {
             updateActiveTabIfNeeded()
+        }
+        .onChange(of: appState.selectedEvent) { _,newSelectedEvent in
+            // Update search content when a new event is selected
+            if let newEvent = newSelectedEvent {
+                newSearchContent = newEvent.label
+            }
         }
         .sheet(isPresented: $showDatePicker) {
             datePicker()
@@ -81,63 +138,78 @@ struct HomeView: View {
         }
     }
     
-    
     @ViewBuilder
-    private func mapView() -> some View {
-        LiveView()
-            .onTapGesture {
-                isGraphExpanded = false
-                isFloatingChatExpanded = false
-                isprofileSelected = false
+    private func searchBar() -> some View {
+        if isGraphExpanded {
+            HStack {
+                
             }
-        VStack {
-            if isGraphExpanded {
-                Text(appState.homeTitle)
-                    .font(.headline)
-                    .foregroundStyle(.whiteOne)
-                    .padding()
-                summaryView()
-                HStack {
-                    Button {
-                        showDatePicker = true
-                    } label: {
-                        ZStack{
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.whiteOne, lineWidth: 2)
-                                .frame(width: 130, height: 32)
-                            Text(selectedDateRange.displayText)
-                        }
+        } else {
+            HStack {
+                ZStack(alignment: .leading) {
+                    Button(action: {
+                        newSearchContent = ""
+                    }) {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.system(size: 28))
+                            .foregroundColor(newSearchContent.isEmpty ? .gray : .whiteOne)
+                            .padding(.leading, 2)
                     }
-                    Spacer()
-                    Text(sessionDisplayText)
+                    if newSearchContent.isEmpty {
+                        Text("Let's Race!")
+                            .foregroundStyle(.gray)
+                            .padding(.leading, 38)
+                    }
+                    TextField("", text: $newSearchContent)
+                        .foregroundStyle(.whiteOne)
+                        .focused($searchFieldIsFocused)
+                        .padding(.leading, 38)
+                        .onChange(of: newSearchContent) { _,newValue in
+                            performSearch(for: newValue)
+                            isSearchBarSelected = true
+                        }
+                        .onChange(of: searchFieldIsFocused) { _,isFocused in
+                            if isFocused {
+                                isSearchBarSelected = true
+                                performSearch(for: newSearchContent)
+                            }
+                        }
                 }
-                .foregroundStyle(.whiteOne)
-                .padding()
-                sessionChartView(sessions: NumberHelper.filteredSessions(for: appState.homeActiveTab, in: sessions))
-                    .frame(height: 100)
-                    .padding()
+                .padding(.vertical, 2)
+                .background(.darkOne)
+                .cornerRadius(24)
             }
+            .padding(.horizontal, isSearchBarSelected ? 60 : 120)
+            .padding(.top, 8)
+            .animation(.spring(response: 0.4, dampingFraction: 0.7, blendDuration: 1), value: isSearchBarSelected)
+            
         }
-        .animation(.easeInOut(duration: 0.3), value: isGraphExpanded)
-        .background(Color.starBlack.opacity(0.9))
-        .onTapGesture {
-            selectedSession = nil
-            selectedCapsuleIndex = nil
+    }
+    
+    func performSearch(for searchText: String) {
+        let matchedEvent = parkRunLocationEvents.allEventMarkers().first { event in
+            event.label.lowercased().contains(searchText.lowercased())
+        } ?? raceRunLocationEvents.allEventMarkers().first { event in
+            event.label.lowercased().contains(searchText.lowercased())
         }
         
-        if isprofileSelected {
-            VStack {
-                ZStack(alignment: .top) {
-                    Color.starBlack.opacity(0.9).ignoresSafeArea()
-                        .frame(height: 258)
-                }
-                Spacer()
-            }
-            .transition(.move(edge: .top))
-            .animation(.easeInOut(duration: 0.3), value: isprofileSelected)
-            .onTapGesture {
-                isprofileSelected = false
-            }
+        if let event = matchedEvent {
+            if  isSearchBarSelected {
+                moveCameraTo(event) // Move the camera to the event location
+            } 
+            
+        }
+    }
+    
+    func moveCameraTo(_ event: EventMarker) {
+        let camera = MapCamera(
+            centerCoordinate: event.coordinate,
+            distance: 100000000,  // A large distance for maximum zoom out
+            heading: .zero,
+            pitch: .zero
+        )
+        withAnimation {
+            appState.position = .camera(camera) // Update the map camera position
         }
     }
     

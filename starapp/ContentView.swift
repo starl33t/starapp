@@ -48,7 +48,7 @@ struct ContentView: View {
         .overlay(alignment: .top) {
             switch appState.selectedTab {
             case 0:
-                HomeToolBarPrin().environmentObject(appState)
+                HomeToolBarPrin()
             case 1:
                 CalendarToolBarPrin()
             case 2:
