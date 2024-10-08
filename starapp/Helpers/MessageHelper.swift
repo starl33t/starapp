@@ -13,12 +13,13 @@ struct Message: Codable, Equatable {
 }
 
 class MessageHelper: ObservableObject {
-    @Published var currentMessage: Message?
+    @Published var messages: [Message] = []
     @Published var threadId: String?
     
     let assistantId = "asst_LQa6lUG4q2TN2mdatyXXI490"
     let apiKey: String
     private let maxRetryCount = 3
+    private let maxMessages = 100
     
     init() {
         guard let key = Bundle.main.object(forInfoDictionaryKey: "OpenAIAPIKey") as? String else {
@@ -85,7 +86,7 @@ class MessageHelper: ObservableObject {
                     createdAt: Date()
                 )
                 DispatchQueue.main.async {
-                    self.currentMessage = newMessage
+                    self.addMessage(newMessage)
                 }
                 
                 // Stream assistant response
@@ -147,8 +148,8 @@ class MessageHelper: ObservableObject {
     
     @MainActor
     func updateAssistantMessage(_ content: String, threadId: String) {
-        if let lastMessage = self.currentMessage, lastMessage.role == "assistant" {
-            self.currentMessage?.content += content
+        if let lastMessage = self.messages.last, lastMessage.role == "assistant" {
+            self.messages[self.messages.count - 1].content += content
         } else {
             let newAssistantMessage = Message(
                 threadId: threadId,
@@ -156,7 +157,13 @@ class MessageHelper: ObservableObject {
                 content: content,
                 createdAt: Date()
             )
-            self.currentMessage = newAssistantMessage
+            self.addMessage(newAssistantMessage)
+        }
+    }
+    private func addMessage(_ message: Message) {
+        messages.append(message)
+        if messages.count > maxMessages {
+            messages = Array(messages.suffix(maxMessages))
         }
     }
 }

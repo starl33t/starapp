@@ -10,12 +10,14 @@ struct UserLocationAnnotation: Identifiable {
 
 struct LiveView: View {
     @EnvironmentObject var locationManager: LocationManager
+    @EnvironmentObject var viewModel: MessageHelper
     @EnvironmentObject var appState: AppState
     @AppStorage("Athletes") var athletesToggle: Bool = false
     @AppStorage("isAuthorizedLocation") var isAuthorizedLocation: Bool = true
     @AppStorage("persistedEventLabel") private var persistedEventLabel: String? // Use label for persistence
     @AppStorage("routeDisplaying") private var routeDisplaying: Bool = false
     @AppStorage("isSearchBarSelected") private var isSearchBarSelected = false
+    @State private var newMessageContent: String = ""
     @Namespace private var mapScope
     
     var body: some View {
@@ -83,41 +85,51 @@ struct LiveView: View {
                             .font(.headline)
                         Text(event.metadata)
                             .font(.body)
-                        Button(action: {
-                            if isAuthorizedLocation == false {
-                                // Open the app's settings for the user to allow location access
-                                if let appSettings = URL(string: UIApplication.openSettingsURLString) {
-                                    UIApplication.shared.open(appSettings)
-                                }
-                            } else {
-                                if  appState.currentEvent?.label == event.label {
-                                    routeDisplaying.toggle()
-                                    if routeDisplaying {
+                        HStack{
+                            Button(action: {
+                                if isAuthorizedLocation == false {
+                                    // Open the app's settings for the user to allow location access
+                                    if let appSettings = URL(string: UIApplication.openSettingsURLString) {
+                                        UIApplication.shared.open(appSettings)
+                                    }
+                                } else {
+                                    if  appState.currentEvent?.label == event.label {
+                                        routeDisplaying.toggle()
+                                        if routeDisplaying {
+                                            Task {
+                                                await fetchRoute(to: event)
+                                            }
+                                        } else {
+                                            appState.route = nil
+                                        }
+                                    } else {
+                                        routeDisplaying = false
+                                        appState.route = nil
+                                        appState.currentEvent = event
+                                        persistedEventLabel = event.label
                                         Task {
                                             await fetchRoute(to: event)
                                         }
-                                    } else {
-                                        appState.route = nil
-                                    }
-                                } else {
-                                    routeDisplaying = false
-                                    appState.route = nil
-                                    appState.currentEvent = event
-                                    persistedEventLabel = event.label
-                                    Task {
-                                        await fetchRoute(to: event)
                                     }
                                 }
+                            }) {
+                                if isAuthorizedLocation == false {
+                                    Label("Turn On Location", systemImage: "gear")
+                                        .padding()
+                                        .background(.starMain)
+                                        .foregroundStyle(.whiteOne)
+                                        .cornerRadius(10)
+                                } else {
+                                    Image(systemName: routeDisplaying &&  appState.currentEvent == event ? "mappin.slash" : "mappin")
+                                        .font(.title)
+                                }
                             }
-                        }) {
-                            if isAuthorizedLocation == false {
-                                Label("Turn On Location", systemImage: "gear")
-                                    .padding()
-                                    .background(.starMain)
-                                    .foregroundStyle(.whiteOne)
-                                    .cornerRadius(10)
-                            } else {
-                                Image(systemName: routeDisplaying &&  appState.currentEvent == event ? "mappin.slash" : "mappin")
+                            Button(action: {
+                                Task {
+                                    await navigateToChatWithPrompt("I'm running \(event.label). \(event.metadata). Today is \(Date())!")
+                                }
+                            }) {
+                                Image(systemName: "text.bubble")
                                     .font(.title)
                             }
                         }
@@ -191,6 +203,20 @@ struct LiveView: View {
     func findEventByLabel(_ label: String) -> EventMarker? {
         return parkRunLocationEvents.allEventMarkers().first { $0.label == label } ??
         raceRunLocationEvents.allEventMarkers().first { $0.label == label }
+    }
+    
+    private func navigateToChatWithPrompt(_ prompt: String) async {
+        if let threadId = viewModel.threadId {
+            await viewModel.createMessage(threadId: threadId, content: prompt)
+        } else {
+            await viewModel.createThread()
+            if let threadId = viewModel.threadId {
+                await viewModel.createMessage(threadId: threadId, content: prompt)
+            }
+        }
+        withAnimation(.easeInOut(duration: 0.3)) {
+            appState.selectedTab = 3
+        }
     }
 }
 

@@ -25,8 +25,8 @@ struct ChatView: View {
                 }
                 ScrollView {
                     LazyVStack {
-                        if let latestMessage = viewModel.currentMessage {
-                            MessageRowView(message: latestMessage)
+                        ForEach(viewModel.messages, id: \.createdAt) { message in
+                            MessageRowView(message: message)
                         }
                     }
                 }
@@ -72,7 +72,7 @@ struct ChatView: View {
                     .foregroundStyle(.whiteOne)
                     .padding(6)
                     .background(Circle().fill(Color.blue))
-                    
+                
             }
         }
     }
