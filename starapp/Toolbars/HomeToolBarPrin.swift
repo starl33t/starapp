@@ -10,13 +10,22 @@ import MapKit
 
 struct HomeToolBarPrin: View {
     @EnvironmentObject var appState: AppState
-    @State private var newSearchContent: String = ""
-    @FocusState private var searchFieldIsFocused: Bool
-    @AppStorage("isGraphExpanded") private var isGraphExpanded = false
-    
+    @AppStorage("showTrainingList") var showTrainingList = false
     var body: some View {
-        VStack{
-            
+        HStack{
+            Button {
+                appState.selectedTab = 1
+                showTrainingList = true
+            }  label: {
+                Image(systemName: "aqi.medium")
+                    .font(.system(size: 38)) // Increase symbol size
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.starMain)
+                    .frame(width: 60, height: 60) // Matching button size
+                    .background(Circle().fill(Color.darkOne))
+                    .contentShape(Circle())
+                   
+            }
         }
     }
 }

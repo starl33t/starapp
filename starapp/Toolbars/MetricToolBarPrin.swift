@@ -8,13 +8,9 @@
 import SwiftUI
 
 struct MetricToolBarPrin: View {
-    @EnvironmentObject var appState: AppState
     
     var body: some View {
         HStack {
-            Text("Metric")
-                .font(.headline)
-                .foregroundColor(.whiteOne)
         }
     }
 }

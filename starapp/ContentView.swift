@@ -45,22 +45,6 @@ struct ContentView: View {
                 HomeToolBarLead()
             }
         }
-        .overlay(alignment: .top) {
-            switch appState.selectedTab {
-            case 0:
-                HomeToolBarPrin()
-            case 1:
-                CalendarToolBarPrin()
-            case 2:
-                LiveToolBarPrin()
-            case 3:
-                ChatToolBarPrin()
-            case 4:
-                MetricToolBarPrin()
-            default:
-                CalendarToolBarPrin()
-            }
-        }
         .overlay(alignment: .topTrailing) {
             switch appState.selectedTab {
             case 0:
@@ -75,6 +59,22 @@ struct ContentView: View {
                 MetricToolBarTrail()
             default:
                 HomeToolBarTrail()
+            }
+        }
+        .overlay(alignment: .bottom) {
+            switch appState.selectedTab {
+            case 0:
+                HomeToolBarPrin()
+            case 1:
+                CalendarToolBarPrin()
+            case 2:
+                LiveToolBarPrin()
+            case 3:
+                ChatToolBarPrin()
+            case 4:
+                MetricToolBarPrin()
+            default:
+                CalendarToolBarPrin()
             }
         }
         .onAppear {

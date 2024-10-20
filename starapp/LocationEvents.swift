@@ -234,7 +234,37 @@ extension CLLocationCoordinate2D {
         latitude: 40.77271420619875,
         longitude: -73.9702355405517
     )
-    //40.60636772796669, -74.06043555218373
+    //Tokyo Marathon
+    static let TokyoMarathon: Self = .init(
+        latitude: 35.68962209333429,
+        longitude: 139.69233488902137
+    )
+    //Boston Marathon
+    static let BostonMarathon: Self = .init(
+        latitude: 42.229793219019896,
+        longitude: -71.51820186691613
+    )
+    static let BostonMarathonStartGroupStart: Self = .init(
+        latitude: 42.22966338622069,
+        longitude: -71.51836506415836
+    )
+    static let BostonMarathonStartGroupEnd: Self = .init(
+        latitude: 42.22889525189104,
+        longitude: -71.51997478794536
+    )
+    static let BostonMarathonScreeningStation1: Self = .init(
+        latitude: 42.22906310438947,
+        longitude: -71.52220854030315
+    )
+    static let BostonMarathonScreeningStation2: Self = .init(
+        latitude: 42.2273397748633,
+        longitude: -71.52507130115251
+    )
+    static let BostonMarathonScreeningStation3: Self = .init(
+        latitude: 42.225389759541464,
+        longitude: -71.5208957359765
+    )
+    //42.225389759541464, -71.5208957359765
 }
 
 struct raceRunLocationEvents {
@@ -375,7 +405,7 @@ struct raceRunLocationEvents {
                     )
                 ]
             ),
-            //New Yori Marathon
+            //New York Marathon
             EventMarker(
                 coordinate: .NewYorkMarathon,
                 label: "New York Marathon",
@@ -418,6 +448,62 @@ struct raceRunLocationEvents {
                         coordinates: [
                             .NewYorkMarathonStartGroupStart,
                             .NewYorkMarathonStartGroupEnd
+                        ],
+                        title: "Start Groups Line",
+                        color: .red
+                    )
+                ]
+            ),
+            // Tokyo Marathon
+            EventMarker(
+                coordinate: .TokyoMarathon,
+                label: "Tokyo Marathon",
+                systemImage: "figure.run",
+                metadata: "Start: 09:10, 02-MAR-2024"
+            ),
+            // Boston Marathon
+            EventMarker(
+                coordinate: .BostonMarathon,
+                label: "Boston Marathon",
+                systemImage: "figure.run",
+                metadata: "Start: 10:00, 15-APR-2025",
+                sublocations: [
+                    Sublocation(
+                        coordinate: .BostonMarathonScreeningStation1,
+                        title: "Screening Station",
+                        systemImage: "door.french.open",
+                        color: .cyan
+                    ),
+                    Sublocation(
+                        coordinate: .BostonMarathonScreeningStation2,
+                        title: "Screening Station",
+                        systemImage: "door.french.open",
+                        color: .cyan
+                    ),
+                    Sublocation(
+                        coordinate: .BostonMarathonScreeningStation3,
+                        title: "Screening Station",
+                        systemImage: "door.french.open",
+                        color: .cyan
+                    ),
+                    Sublocation(
+                        coordinate: .BostonMarathonStartGroupStart,
+                        title: "Start Wave 1",
+                        systemImage: "1.circle",
+                        color: .pink
+                    ),
+                    Sublocation(
+                        coordinate: .BostonMarathonStartGroupEnd,
+                        title: "Start Wave 4",
+                        systemImage: "4.circle",
+                        color: .yellow
+                    )
+                ],
+                subpolylines: [
+                    SubPolyline(
+                        coordinates: [
+                            .BostonMarathonStartGroupStart,
+                            .BostonMarathonStartGroupEnd
                         ],
                         title: "Start Groups Line",
                         color: .red

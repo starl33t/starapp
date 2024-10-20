@@ -13,6 +13,7 @@ struct CalendarView: View {
     @AppStorage("showTrainingList") var showTrainingList = false
     @AppStorage("showSpecificTrainingView") var showSpecificTrainingView = false
     @AppStorage("isprofileSelected") private var isprofileSelected = false
+    @AppStorage("isCalendarSelected") private var isCalendarSelected = false
     
     private let columns = Array(repeating: GridItem(.flexible()), count: 7)
     private let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
@@ -79,6 +80,7 @@ struct CalendarView: View {
             
         }
         .onAppear {
+            isCalendarSelected = true
             isprofileSelected = false
             showSpecificTrainingView = false
             appState.updateTodayTitle()
