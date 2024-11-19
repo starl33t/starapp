@@ -91,7 +91,7 @@ extension Date {
     func formatDayMonthLong(date: Date?) -> String {
         guard let date = date else { return "N/A" }
         let formatter = DateFormatter()
-        formatter.dateFormat = "E dd MMMM"
+        formatter.dateFormat = "E dd MMM"
         return formatter.string(from: date)
     }
     

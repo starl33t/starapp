@@ -116,14 +116,14 @@ struct HomeView: View {
         }
         .tint(.starMain)
         .onAppear {
-            updateActiveTabIfNeeded()
             isCalendarSelected = false
             isChatSelected = false
             searchFieldIsFocused = false
             isSearchBarSelected = false
+            appState.position = .userLocation(fallback: .automatic)
         }
-        .onChange(of: selectedDateRange) {
-            updateActiveTabIfNeeded()
+        .onChange(of: appState.homeActiveTab) { _,newValue in
+            appState.updateHomeNavigationTitle()
         }
         .onChange(of: appState.selectedEvent) { _,newSelectedEvent in
             // Update search content when a new event is selected
@@ -187,9 +187,7 @@ struct HomeView: View {
     }
     
     func performSearch(for searchText: String) {
-        let matchedEvent = parkRunLocationEvents.allEventMarkers().first { event in
-            event.label.lowercased().contains(searchText.lowercased())
-        } ?? raceRunLocationEvents.allEventMarkers().first { event in
+        let matchedEvent = raceRunLocationEvents.allEventMarkers().first { event in
             event.label.lowercased().contains(searchText.lowercased())
         }
         

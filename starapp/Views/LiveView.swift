@@ -25,13 +25,7 @@ struct LiveView: View {
             Map(position: $appState.position, selection: $appState.selectedEvent, scope: mapScope) {
                 UserAnnotation()
                 
-                ForEach(parkRunLocationEvents.allEventMarkers(), id: \.self) { event in
-                    Marker(coordinate: event.coordinate) {
-                        Label(event.label, systemImage: event.systemImage)
-                    }
-                    .tint(.starMain)
-                    .tag(event)
-                }
+             
                 ForEach(raceRunLocationEvents.allEventMarkers(), id: \.self) { event in
                     Marker(coordinate: event.coordinate) {
                         Label(event.label, systemImage: event.systemImage)
@@ -201,8 +195,7 @@ struct LiveView: View {
         }
     }
     func findEventByLabel(_ label: String) -> EventMarker? {
-        return parkRunLocationEvents.allEventMarkers().first { $0.label == label } ??
-        raceRunLocationEvents.allEventMarkers().first { $0.label == label }
+        return raceRunLocationEvents.allEventMarkers().first { $0.label == label }
     }
     
     private func navigateToChatWithPrompt(_ prompt: String) async {

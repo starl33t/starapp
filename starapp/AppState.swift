@@ -16,6 +16,9 @@ class AppState: ObservableObject {
     @Published var currentEvent: EventMarker? //LiveView
     @Published var travelInterval: TimeInterval?
     
+    init() {
+        self.updateHomeNavigationTitle()
+    }
     
     func checkSubscriptionStatus(starStore: StarStore) async {
         await starStore.updateCustomerProductStatus()
