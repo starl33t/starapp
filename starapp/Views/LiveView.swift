@@ -120,7 +120,7 @@ struct LiveView: View {
                             }
                             Button(action: {
                                 Task {
-                                    await navigateToChatWithPrompt("I'm running \(event.label). \(event.metadata). Today is \(Date())!")
+                                    await navigateToChatWithPrompt("I'm running \(event.label). \(event.metadata). Today is \(Date().formatDayMonth(date: Date()))!")
                                 }
                             }) {
                                 Image(systemName: "text.bubble")

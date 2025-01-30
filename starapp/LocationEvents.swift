@@ -148,14 +148,14 @@ struct raceRunLocationEvents {
                 coordinate: .ValenciaMarathon,
                 label: "Valencia Marathon",
                 systemImage: "figure.run",
-                metadata: "Start: 08:15, 01-Dec-2024"
+                metadata: "Start: December"
             ),
             // Berlin Marathon
             EventMarker(
                 coordinate: .BerlinMarathon,
                 label: "Berlin Marathon",
                 systemImage: "figure.run",
-                metadata: "Start: 09:15, 29-Sep-2024",
+                metadata: "Start: September",
                 sublocations: [
                     Sublocation(
                         coordinate: .BerlinMarathonEntrance,
@@ -210,7 +210,7 @@ struct raceRunLocationEvents {
                 coordinate: .ChicagoMarathon,
                 label: "Chicago Marathon",
                 systemImage: "figure.run",
-                metadata: "Start: 07:30, 13-OCT-2024",
+                metadata: "Start: October",
                 sublocations: [
                     Sublocation(
                         coordinate: .ChicagoMarathonGate1,
@@ -283,7 +283,7 @@ struct raceRunLocationEvents {
                 coordinate: .NewYorkMarathon,
                 label: "New York Marathon",
                 systemImage: "figure.run",
-                metadata: "Start: 09:10, 03-NOV-2024",
+                metadata: "Start: November",
                 sublocations: [
                     Sublocation(
                         coordinate: .NewYorkMarathonBagPreCheck,
@@ -332,14 +332,14 @@ struct raceRunLocationEvents {
                 coordinate: .TokyoMarathon,
                 label: "Tokyo Marathon",
                 systemImage: "figure.run",
-                metadata: "Start: 09:10, 02-MAR-2024"
+                metadata: "Start: March"
             ),
             // Boston Marathon
             EventMarker(
                 coordinate: .BostonMarathon,
                 label: "Boston Marathon",
                 systemImage: "figure.run",
-                metadata: "Start: 10:00, 15-APR-2025",
+                metadata: "Start: April",
                 sublocations: [
                     Sublocation(
                         coordinate: .BostonMarathonScreeningStation1,
@@ -388,7 +388,7 @@ struct raceRunLocationEvents {
                 coordinate: .LondonMarathon,
                 label: "London Marathon",
                 systemImage: "figure.run",
-                metadata: "Start: 08:15, 27-APR-2025"
+                metadata: "Start: April"
             ),
         ]
     }

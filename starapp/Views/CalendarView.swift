@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import CoreNFC
 
 struct CalendarView: View {
     @Environment(\.calendar) private var calendar
@@ -14,6 +15,7 @@ struct CalendarView: View {
     @AppStorage("showSpecificTrainingView") var showSpecificTrainingView = false
     @AppStorage("isprofileSelected") private var isprofileSelected = false
     @AppStorage("isCalendarSelected") private var isCalendarSelected = false
+    private let nfcManager = NFCManager()
     
     private let columns = Array(repeating: GridItem(.flexible()), count: 7)
     private let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
@@ -85,6 +87,7 @@ struct CalendarView: View {
             showSpecificTrainingView = false
             appState.updateTodayTitle()
             currentDate = Date()
+            nfcManager.beginScanning() //Start NFC scanning when CalendarView appears
         }
     }
     
