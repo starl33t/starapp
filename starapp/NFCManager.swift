@@ -1,39 +1,83 @@
-//
-//  NFCManager.swift
-//  starapp
-//
-//  Created by Peter Tran on 30/01/2025.
-//
-
 import CoreNFC
 
-class NFCManager: NSObject, NFCNDEFReaderSessionDelegate {
-    var nfcSession: NFCNDEFReaderSession?
+class NFCManager: NSObject, NFCTagReaderSessionDelegate {
+    var nfcSession: NFCTagReaderSession?
 
+    // ✅ Start NFC scanning
     func beginScanning() {
-        guard NFCNDEFReaderSession.readingAvailable else {
+        guard NFCTagReaderSession.readingAvailable else {
             print("NFC is not available on this device.")
             return
         }
 
-        nfcSession = NFCNDEFReaderSession(delegate: self, queue: nil, invalidateAfterFirstRead: true)
+        nfcSession = NFCTagReaderSession(pollingOption: .iso14443, delegate: self, queue: nil)
         nfcSession?.alertMessage = "Hold your iPhone near the NFC tag."
         nfcSession?.begin()
     }
 
-    // Delegate method - Called when a tag is detected
-    func readerSession(_ session: NFCNDEFReaderSession, didDetectNDEFs messages: [NFCNDEFMessage]) {
-        for message in messages {
-            for record in message.records {
-                if let text = String(data: record.payload, encoding: .utf8) {
-                    print("NFC Data: \(text)")
+    // ✅ REQUIRED: Called when the NFC session becomes active
+    func tagReaderSessionDidBecomeActive(_ session: NFCTagReaderSession) {
+        print("NFC session is now active.")
+    }
+
+    // ✅ REQUIRED: Called when an NFC tag is detected
+    func tagReaderSession(_ session: NFCTagReaderSession, didDetect tags: [NFCTag]) {
+        guard let firstTag = tags.first else {
+            session.invalidate(errorMessage: "No NFC tag found.")
+            return
+        }
+
+        print("NFC Tag Detected.")
+
+        switch firstTag {
+        case .iso7816(let tag):
+            session.connect(to: firstTag) { (error) in
+                if let error = error {
+                    print("Connection failed: \(error.localizedDescription)")
+                    session.invalidate(errorMessage: "Connection failed.")
+                    return
+                }
+
+                print("Connected to NFC tag.")
+
+                // Example APDU Command (You may need to modify this for your wearable)
+                let apduCommand = NFCISO7816APDU(
+                    instructionClass: 0x00,
+                    instructionCode: 0xA4,
+                    p1Parameter: 0x04,
+                    p2Parameter: 0x00,
+                    data: Data([0xD2, 0x76, 0x00, 0x00, 0x85, 0x01, 0x01]),
+                    expectedResponseLength: -1
+                )
+
+                tag.sendCommand(apdu: apduCommand) { (response, sw1, sw2, error) in
+                    if let error = error {
+                        print("APDU command failed: \(error.localizedDescription)")
+                        session.invalidate(errorMessage: "APDU command failed.")
+                        return
+                    }
+
+                    print("Response Data: \(response.hexEncodedString())")
+                    print("Status Word: \(sw1) \(sw2)")
+
+                    session.invalidate()
                 }
             }
+
+        default:
+            session.invalidate(errorMessage: "Unsupported NFC tag type.")
         }
     }
 
-    // Delegate method - Called when the session fails or is canceled
-    func readerSession(_ session: NFCNDEFReaderSession, didInvalidateWithError error: Error) {
+    // ✅ REQUIRED: Handle NFC session errors
+    func tagReaderSession(_ session: NFCTagReaderSession, didInvalidateWithError error: Error) {
         print("NFC session invalidated: \(error.localizedDescription)")
+    }
+}
+
+// ✅ Helper: Convert Data to Hex String
+extension Data {
+    func hexEncodedString() -> String {
+        return map { String(format: "%02x", $0) }.joined()
     }
 }
