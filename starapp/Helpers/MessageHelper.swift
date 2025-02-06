@@ -53,48 +53,42 @@ class MessageHelper: ObservableObject {
         }
     }
     
+    @MainActor
     func createThread() async {
-        await Task {
-            do {
-                let response = try await self.performRequest(url: "https://api.openai.com/v1/threads", method: "POST")
-                let threadId = response["id"] as! String
-                DispatchQueue.main.async {
-                    self.threadId = threadId
-                }
-            } catch {
-                print("Failed to create thread: \(error.localizedDescription)")
-            }
-        }.value
+        do {
+            let response = try await self.performRequest(url: "https://api.openai.com/v1/threads", method: "POST")
+            let threadId = response["id"] as! String
+            self.threadId = threadId
+        } catch {
+            print("Failed to create thread: \(error.localizedDescription)")
+        }
     }
     
+    @MainActor
     func createMessage(threadId: String, content: String) async {
-        await Task {
-            let jsonBody: [String: Any] = [
-                "role": "user",
-                "content": content
-            ]
+        let jsonBody: [String: Any] = [
+            "role": "user",
+            "content": content
+        ]
+        
+        do {
+            // Make the request to create a message
+            _ = try await self.performRequest(url: "https://api.openai.com/v1/threads/\(threadId)/messages", method: "POST", body: jsonBody)
             
-            do {
-                // Make the request to create a message
-                _ = try await self.performRequest(url: "https://api.openai.com/v1/threads/\(threadId)/messages", method: "POST", body: jsonBody)
-                
-                // Create and append the new message locally
-                let newMessage = Message(
-                    threadId: threadId,
-                    role: "user",
-                    content: content,
-                    createdAt: Date()
-                )
-                DispatchQueue.main.async {
-                    self.addMessage(newMessage)
-                }
-                
-                // Stream assistant response
-                try await self.streamAssistantResponse(threadId: threadId)
-            } catch {
-                print("Failed to create message: \(error.localizedDescription)")
-            }
-        }.value
+            // Create and append the new message locally
+            let newMessage = Message(
+                threadId: threadId,
+                role: "user",
+                content: content,
+                createdAt: Date()
+            )
+            self.addMessage(newMessage)
+            
+            // Stream assistant response
+            try await self.streamAssistantResponse(threadId: threadId)
+        } catch {
+            print("Failed to create message: \(error.localizedDescription)")
+        }
     }
     
     func streamAssistantResponse(threadId: String) async throws {

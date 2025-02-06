@@ -20,17 +20,17 @@ class AppState: ObservableObject {
         self.updateHomeNavigationTitle()
     }
     
+    @MainActor
     func checkSubscriptionStatus(starStore: StarStore) async {
         await starStore.updateCustomerProductStatus()
-        
-        DispatchQueue.main.async {
-            if starStore.purchasedSubscriptions.contains(where: { $0.id == "tier1" }) {
-                self.userTier = 1
-            } else {
-                self.userTier = 0
-            }
+
+        if starStore.purchasedSubscriptions.contains(where: { $0.id == "tier1" }) {
+            self.userTier = 1
+        } else {
+            self.userTier = 0
         }
     }
+
     
     func updateHomeNavigationTitle() {
         self.homeTitle = self.homeActiveTab.navigationTitle
