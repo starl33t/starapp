@@ -4,8 +4,8 @@ import CloudKit
 struct ContentView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var starStore: StarStore
-    @EnvironmentObject var locationManager: LocationManager
     @StateObject private var messageManager = MessageHelper()
+    private let nfcManager = NFCManager()
     
     var body: some View {
         NavigationStack{
@@ -17,11 +17,7 @@ struct ContentView: View {
                 case 1:
                     CalendarView()
                 case 2:
-                    LiveView().environmentObject(locationManager)
-                case 3:
                     ChatView().environmentObject(messageManager)
-                case 4:
-                    MetricView()
                 default:
                     HomeView().environmentObject(messageManager)
                 }
@@ -36,11 +32,7 @@ struct ContentView: View {
             case 1:
                 CalendarToolBarLead()
             case 2:
-                HomeToolBarLead()
-            case 3:
                 ChatToolBarLead()
-            case 4:
-                HomeToolBarLead()
             default:
                 HomeToolBarLead()
             }
@@ -52,11 +44,7 @@ struct ContentView: View {
             case 1:
                 CalendarToolBarTrail()
             case 2:
-                LiveToolbarTrail()
-            case 3:
                 ChatToolbarTrail(viewModel: messageManager)
-            case 4:
-                MetricToolBarTrail()
             default:
                 HomeToolBarTrail()
             }
@@ -64,15 +52,11 @@ struct ContentView: View {
         .overlay(alignment: .bottom) {
             switch appState.selectedTab {
             case 0:
-                HomeToolBarPrin()
+                HomeToolBarPrin(nfcManager: nfcManager)
             case 1:
                 CalendarToolBarPrin()
             case 2:
-                LiveToolBarPrin()
-            case 3:
                 ChatToolBarPrin()
-            case 4:
-                MetricToolBarPrin()
             default:
                 CalendarToolBarPrin()
             }

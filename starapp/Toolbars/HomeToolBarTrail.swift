@@ -12,7 +12,7 @@ struct HomeToolBarTrail: View {
             HStack{
                 Button {
                     isChatSelected = true
-                    appState.selectedTab = 3
+                    appState.selectedTab = 2
                 } label: {
                     Image(systemName: isChatSelected ? "text.bubble" : "bubble.left")
                         .font(.system(size: 24))
@@ -41,7 +41,7 @@ struct HomeToolBarTrail: View {
                 }
                 Button {
                     isChatSelected = true
-                    appState.selectedTab = 3
+                    appState.selectedTab = 2
                 } label: {
                     Image(systemName: isChatSelected ? "text.bubble" : "bubble.left")
                         .font(.system(size: 24))

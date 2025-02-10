@@ -9,12 +9,6 @@ class AppState: ObservableObject {
     @Published var homeTitle: String = "Lactate"
     @Published var homeActiveTab: HomeTab = .lactate
     @Published var todayTitle: String = ""
-    @Published var position: MapCameraPosition = .userLocation(fallback: .automatic) //LiveView
-    @Published var selectedEvent: EventMarker? //LiveView
-    @Published var lastSelectedEvent: EventMarker? //LiveView
-    @Published var route: MKRoute? //LiveView
-    @Published var currentEvent: EventMarker? //LiveView
-    @Published var travelInterval: TimeInterval?
     
     init() {
         self.updateHomeNavigationTitle()

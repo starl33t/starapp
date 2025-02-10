@@ -16,13 +16,9 @@
 		BF42BE502CAA8C5D00ECBB17 /* FloatingButtonVertical.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF42BE4F2CAA8C5600ECBB17 /* FloatingButtonVertical.swift */; };
 		BF4A81352C3AEC4D00D4CAF1 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81342C3AEC4D00D4CAF1 /* CalendarView.swift */; };
 		BF4A813F2C3AEE0900D4CAF1 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A813E2C3AEE0900D4CAF1 /* DateHelper.swift */; };
-		BF4A81452C3AEE6C00D4CAF1 /* LiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81442C3AEE6C00D4CAF1 /* LiveView.swift */; };
 		BF4A81492C3AEFCE00D4CAF1 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81482C3AEFCE00D4CAF1 /* ChatView.swift */; };
-		BF4A814D2C3AF03B00D4CAF1 /* MetricView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A814C2C3AF03B00D4CAF1 /* MetricView.swift */; };
 		BF4A81672C3AF5D500D4CAF1 /* CalendarToolBarTrail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81662C3AF5D500D4CAF1 /* CalendarToolBarTrail.swift */; };
-		BF4A816F2C3AF8DA00D4CAF1 /* LiveToolBarTrail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A816E2C3AF8DA00D4CAF1 /* LiveToolBarTrail.swift */; };
 		BF4A81772C3AFA1700D4CAF1 /* ChatToolBarTrail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81762C3AFA1700D4CAF1 /* ChatToolBarTrail.swift */; };
-		BF4A817F2C3AFB8600D4CAF1 /* MetricToolBarTrail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A817E2C3AFB8600D4CAF1 /* MetricToolBarTrail.swift */; };
 		BF4A81892C3AFDDE00D4CAF1 /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A81882C3AFDDE00D4CAF1 /* SubscriptionView.swift */; };
 		BF4A818B2C3AFDF500D4CAF1 /* ColorOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A818A2C3AFDF500D4CAF1 /* ColorOptionView.swift */; };
 		BF4A818F2C3AFFDD00D4CAF1 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A818E2C3AFFDD00D4CAF1 /* HomeView.swift */; };
@@ -42,24 +38,21 @@
 		BF87F7B92C79C69D00B35F6A /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF87F7B82C79C69A00B35F6A /* AppState.swift */; };
 		BF8D6ADC2C41A9DF000269F1 /* TrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */; };
 		BF91AC6E2C45405C0028BC41 /* NumberHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF91AC6D2C4540530028BC41 /* NumberHelper.swift */; };
+		BF95C5A02D54EDA200960EB4 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF73F4562C6BD85300922B9B /* StoreKit.framework */; };
+		BF95C5A32D54EDA600960EB4 /* CoreNFC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF95C59E2D54ECB900960EB4 /* CoreNFC.framework */; };
 		BFB6603F2C99717F005E0C29 /* CalendarToolBarLead.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB6603E2C997178005E0C29 /* CalendarToolBarLead.swift */; };
 		BFBBD9582C55869200671197 /* MessageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBBD9572C55868F00671197 /* MessageHelper.swift */; };
 		BFBF2C9D2CABDB1A004EC7A2 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBF2C9C2CABDB18004EC7A2 /* ListView.swift */; };
-		BFC38D082C935ED900E93826 /* LocationEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC38D072C935ECC00E93826 /* LocationEvents.swift */; };
 		BFC7951A2D4B6FB800098B2B /* NFCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC795192D4B6FAF00098B2B /* NFCManager.swift */; };
 		BFDE40512C591A1200733888 /* CSVDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE40502C591A0900733888 /* CSVDocument.swift */; };
 		BFDE40532C591F8200733888 /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE40522C591F7B00733888 /* CalendarHelper.swift */; };
-		BFDE77422C91D284000D4373 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE77412C91D284000D4373 /* LocationManager.swift */; };
 		BFDEB6042C49994C00D32736 /* SupportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDEB6032C49994900D32736 /* SupportView.swift */; };
 		BFE876062C6E7DA9006725A6 /* StringHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE876052C6E7DA6006725A6 /* StringHelper.swift */; };
-		BFEAE8592C92C348006F6285 /* LiveToolBarPrin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEAE8582C92C338006F6285 /* LiveToolBarPrin.swift */; };
 		BFEAE85B2C92C538006F6285 /* ChatToolBarPrin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEAE85A2C92C52E006F6285 /* ChatToolBarPrin.swift */; };
-		BFEAE85D2C92C5A3006F6285 /* MetricToolBarPrin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEAE85C2C92C59A006F6285 /* MetricToolBarPrin.swift */; };
 		BFECC9672C8EC8130081B617 /* HomeToolBarLead.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFECC9662C8EC7FF0081B617 /* HomeToolBarLead.swift */; };
 		BFECC9692C8ECE060081B617 /* HomeToolBarPrin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFECC9682C8ECDF30081B617 /* HomeToolBarPrin.swift */; };
 		BFF251622C9025EA00389A3D /* CalendarToolBarPrin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF251612C9025E100389A3D /* CalendarToolBarPrin.swift */; };
 		BFF251662C90C59E00389A3D /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF251652C90C59800389A3D /* FloatingButton.swift */; };
-		BFFE4D0D2CA69593006B0DFD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF73F4562C6BD85300922B9B /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,13 +96,9 @@
 		BF42BE4F2CAA8C5600ECBB17 /* FloatingButtonVertical.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButtonVertical.swift; sourceTree = "<group>"; };
 		BF4A81342C3AEC4D00D4CAF1 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		BF4A813E2C3AEE0900D4CAF1 /* DateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
-		BF4A81442C3AEE6C00D4CAF1 /* LiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveView.swift; sourceTree = "<group>"; };
 		BF4A81482C3AEFCE00D4CAF1 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
-		BF4A814C2C3AF03B00D4CAF1 /* MetricView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricView.swift; sourceTree = "<group>"; };
 		BF4A81662C3AF5D500D4CAF1 /* CalendarToolBarTrail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarToolBarTrail.swift; sourceTree = "<group>"; };
-		BF4A816E2C3AF8DA00D4CAF1 /* LiveToolBarTrail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveToolBarTrail.swift; sourceTree = "<group>"; };
 		BF4A81762C3AFA1700D4CAF1 /* ChatToolBarTrail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatToolBarTrail.swift; sourceTree = "<group>"; };
-		BF4A817E2C3AFB8600D4CAF1 /* MetricToolBarTrail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricToolBarTrail.swift; sourceTree = "<group>"; };
 		BF4A81882C3AFDDE00D4CAF1 /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
 		BF4A818A2C3AFDF500D4CAF1 /* ColorOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorOptionView.swift; sourceTree = "<group>"; };
 		BF4A818E2C3AFFDD00D4CAF1 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -134,20 +123,17 @@
 		BF87F7B82C79C69A00B35F6A /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingView.swift; sourceTree = "<group>"; };
 		BF91AC6D2C4540530028BC41 /* NumberHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberHelper.swift; sourceTree = "<group>"; };
+		BF95C59E2D54ECB900960EB4 /* CoreNFC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreNFC.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk/System/Library/Frameworks/CoreNFC.framework; sourceTree = DEVELOPER_DIR; };
 		BFB58B942CB1342A00094BBE /* starappDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = starappDebug.entitlements; sourceTree = "<group>"; };
 		BFB6603E2C997178005E0C29 /* CalendarToolBarLead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarToolBarLead.swift; sourceTree = "<group>"; };
 		BFBBD9572C55868F00671197 /* MessageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHelper.swift; sourceTree = "<group>"; };
 		BFBF2C9C2CABDB18004EC7A2 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
-		BFC38D072C935ECC00E93826 /* LocationEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationEvents.swift; sourceTree = "<group>"; };
 		BFC795192D4B6FAF00098B2B /* NFCManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFCManager.swift; sourceTree = "<group>"; };
 		BFDE40502C591A0900733888 /* CSVDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVDocument.swift; sourceTree = "<group>"; };
 		BFDE40522C591F7B00733888 /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
-		BFDE77412C91D284000D4373 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		BFDEB6032C49994900D32736 /* SupportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportView.swift; sourceTree = "<group>"; };
 		BFE876052C6E7DA6006725A6 /* StringHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHelper.swift; sourceTree = "<group>"; };
-		BFEAE8582C92C338006F6285 /* LiveToolBarPrin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveToolBarPrin.swift; sourceTree = "<group>"; };
 		BFEAE85A2C92C52E006F6285 /* ChatToolBarPrin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatToolBarPrin.swift; sourceTree = "<group>"; };
-		BFEAE85C2C92C59A006F6285 /* MetricToolBarPrin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricToolBarPrin.swift; sourceTree = "<group>"; };
 		BFECC9662C8EC7FF0081B617 /* HomeToolBarLead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeToolBarLead.swift; sourceTree = "<group>"; };
 		BFECC9682C8ECDF30081B617 /* HomeToolBarPrin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeToolBarPrin.swift; sourceTree = "<group>"; };
 		BFF251612C9025E100389A3D /* CalendarToolBarPrin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarToolBarPrin.swift; sourceTree = "<group>"; };
@@ -159,7 +145,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFFE4D0D2CA69593006B0DFD /* StoreKit.framework in Frameworks */,
+				BF95C5A02D54EDA200960EB4 /* StoreKit.framework in Frameworks */,
+				BF95C5A32D54EDA600960EB4 /* CoreNFC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,11 +191,9 @@
 				BFDEB6032C49994900D32736 /* SupportView.swift */,
 				BF4A818E2C3AFFDD00D4CAF1 /* HomeView.swift */,
 				BF4A81342C3AEC4D00D4CAF1 /* CalendarView.swift */,
-				BF4A81442C3AEE6C00D4CAF1 /* LiveView.swift */,
 				BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */,
 				BFBF2C9C2CABDB18004EC7A2 /* ListView.swift */,
 				BF4A81482C3AEFCE00D4CAF1 /* ChatView.swift */,
-				BF4A814C2C3AF03B00D4CAF1 /* MetricView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -222,13 +207,9 @@
 				BFB6603E2C997178005E0C29 /* CalendarToolBarLead.swift */,
 				BFF251612C9025E100389A3D /* CalendarToolBarPrin.swift */,
 				BF4A81662C3AF5D500D4CAF1 /* CalendarToolBarTrail.swift */,
-				BFEAE8582C92C338006F6285 /* LiveToolBarPrin.swift */,
-				BF4A816E2C3AF8DA00D4CAF1 /* LiveToolBarTrail.swift */,
 				BF19035B2C9ADB4600B0E581 /* ChatToolBarLead.swift */,
 				BFEAE85A2C92C52E006F6285 /* ChatToolBarPrin.swift */,
 				BF4A81762C3AFA1700D4CAF1 /* ChatToolBarTrail.swift */,
-				BFEAE85C2C92C59A006F6285 /* MetricToolBarPrin.swift */,
-				BF4A817E2C3AFB8600D4CAF1 /* MetricToolBarTrail.swift */,
 			);
 			path = Toolbars;
 			sourceTree = "<group>";
@@ -304,8 +285,6 @@
 				BF7342082C3AE74A00911375 /* ContentView.swift */,
 				BF7342062C3AE74A00911375 /* starleetApp.swift */,
 				BFC795192D4B6FAF00098B2B /* NFCManager.swift */,
-				BFC38D072C935ECC00E93826 /* LocationEvents.swift */,
-				BFDE77412C91D284000D4373 /* LocationManager.swift */,
 				BF87F7B82C79C69A00B35F6A /* AppState.swift */,
 				BF73F4582C6BD8F600922B9B /* Starleet.storekit */,
 				BF73F45A2C6BE62D00922B9B /* StarStore.swift */,
@@ -344,6 +323,7 @@
 		BF73F4552C6BD85300922B9B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BF95C59E2D54ECB900960EB4 /* CoreNFC.framework */,
 				BF73F4562C6BD85300922B9B /* StoreKit.framework */,
 			);
 			name = Frameworks;
@@ -483,16 +463,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFDE77422C91D284000D4373 /* LocationManager.swift in Sources */,
 				BF7342092C3AE74A00911375 /* ContentView.swift in Sources */,
 				BF4A818B2C3AFDF500D4CAF1 /* ColorOptionView.swift in Sources */,
-				BF4A814D2C3AF03B00D4CAF1 /* MetricView.swift in Sources */,
 				BF87F7B92C79C69D00B35F6A /* AppState.swift in Sources */,
 				BF6744D12C3FCAE900A23D76 /* Session.swift in Sources */,
 				BFDE40532C591F8200733888 /* CalendarHelper.swift in Sources */,
 				BFB6603F2C99717F005E0C29 /* CalendarToolBarLead.swift in Sources */,
 				BF14E3402C863AB8007FE41D /* HomeTab.swift in Sources */,
-				BFEAE85D2C92C5A3006F6285 /* MetricToolBarPrin.swift in Sources */,
 				BF42BE502CAA8C5D00ECBB17 /* FloatingButtonVertical.swift in Sources */,
 				BFECC9692C8ECE060081B617 /* HomeToolBarPrin.swift in Sources */,
 				BF91AC6E2C45405C0028BC41 /* NumberHelper.swift in Sources */,
@@ -500,16 +477,13 @@
 				BFE876062C6E7DA9006725A6 /* StringHelper.swift in Sources */,
 				BF73F45B2C6BE63500922B9B /* StarStore.swift in Sources */,
 				BF31F0AB2C48FDAD000C005C /* EmailHelper.swift in Sources */,
-				BF4A816F2C3AF8DA00D4CAF1 /* LiveToolBarTrail.swift in Sources */,
 				BF4A818F2C3AFFDD00D4CAF1 /* HomeView.swift in Sources */,
-				BFC38D082C935ED900E93826 /* LocationEvents.swift in Sources */,
 				BFEAE85B2C92C538006F6285 /* ChatToolBarPrin.swift in Sources */,
 				BFC7951A2D4B6FB800098B2B /* NFCManager.swift in Sources */,
 				BF4A81492C3AEFCE00D4CAF1 /* ChatView.swift in Sources */,
 				BF6F84022C8794660081838D /* Sheet.swift in Sources */,
 				BFDEB6042C49994C00D32736 /* SupportView.swift in Sources */,
 				BF8D6ADC2C41A9DF000269F1 /* TrainingView.swift in Sources */,
-				BFEAE8592C92C348006F6285 /* LiveToolBarPrin.swift in Sources */,
 				BF1A81532C542C280057D87D /* HomeToolBarTrail.swift in Sources */,
 				BF4A81352C3AEC4D00D4CAF1 /* CalendarView.swift in Sources */,
 				BF0ED3B92C8234E100ADB94C /* HomeCapsuleGraph.swift in Sources */,
@@ -518,10 +492,8 @@
 				BF7342072C3AE74A00911375 /* starleetApp.swift in Sources */,
 				BF6C840E2C3C5E8100032E93 /* AccountView.swift in Sources */,
 				BFF251622C9025EA00389A3D /* CalendarToolBarPrin.swift in Sources */,
-				BF4A817F2C3AFB8600D4CAF1 /* MetricToolBarTrail.swift in Sources */,
 				BF4A81892C3AFDDE00D4CAF1 /* SubscriptionView.swift in Sources */,
 				BFBBD9582C55869200671197 /* MessageHelper.swift in Sources */,
-				BF4A81452C3AEE6C00D4CAF1 /* LiveView.swift in Sources */,
 				BF4A813F2C3AEE0900D4CAF1 /* DateHelper.swift in Sources */,
 				BFECC9672C8EC8130081B617 /* HomeToolBarLead.swift in Sources */,
 				BFF251662C90C59E00389A3D /* FloatingButton.swift in Sources */,
@@ -690,9 +662,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = starapp/starappDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 425;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"starapp/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "starapp/Preview\\ Content starapp/starappDebug.entitlements";
 				DEVELOPMENT_TEAM = 7F33N9HZ63;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -701,6 +673,7 @@
 				INFOPLIST_FILE = starapp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Starleet;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NFCReaderUsageDescription = "We need NFC for the wearable to work";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "So you can plan your routes";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "So you can plan your routes";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -716,7 +689,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 2.3.1;
+				MARKETING_VERSION = 2.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starappv01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -735,9 +708,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = starapp/starapp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 425;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"starapp/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "starapp/Preview\\ Content starapp/starappDebug.entitlements";
 				DEVELOPMENT_TEAM = 7F33N9HZ63;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -746,6 +719,7 @@
 				INFOPLIST_FILE = starapp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Starleet;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NFCReaderUsageDescription = "We need NFC for the wearable to work";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "So you can plan your routes";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "So you can plan your routes";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -761,7 +735,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 2.3.1;
+				MARKETING_VERSION = 2.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starappv01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;

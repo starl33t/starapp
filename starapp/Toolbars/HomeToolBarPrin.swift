@@ -10,21 +10,22 @@ import MapKit
 
 struct HomeToolBarPrin: View {
     @EnvironmentObject var appState: AppState
+    let nfcManager: NFCManager 
     @AppStorage("showTrainingList") var showTrainingList = false
+  
     var body: some View {
         HStack{
             Button {
-                appState.selectedTab = 1
-                showTrainingList = true
+                nfcManager.beginScanning()
             }  label: {
                 Image(systemName: "aqi.medium")
-                    .font(.system(size: 38)) // Increase symbol size
+                    .font(.system(size: 82)) // Increase symbol size
+                    .symbolEffect(.variableColor.cumulative.dimInactiveLayers.reversing) //something wrong here
                     .fontWeight(.semibold)
                     .foregroundStyle(.starMain)
-                    .frame(width: 60, height: 60) // Matching button size
-                    .background(Circle().fill(Color.darkOne))
-                    .contentShape(Circle())
-                   
+                    .frame(width: 124, height: 124)
+                    .padding(.bottom, 132)
+                    
             }
         }
     }
