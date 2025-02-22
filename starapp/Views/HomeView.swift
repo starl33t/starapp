@@ -56,10 +56,12 @@ struct HomeView: View {
                 Text("Lactate: \(lactate, specifier: "%.1f") mM")
                     .font(.system(size: 42, weight: .bold))
                     .foregroundColor(.whiteOne)
+                    .padding(.top, 142)
                 
                 Text("ADC: \(adc)")
                     .font(.system(size: 28, weight: .bold))
                     .foregroundColor(.whiteOne)
+                Spacer()
             }
         VStack{
             if isScanning {
