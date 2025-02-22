@@ -61,11 +61,13 @@ struct HomeView: View {
                     .font(.system(size: 28, weight: .bold))
                     .foregroundColor(.whiteOne)
             }
-        VStack {
+        VStack{
             if isScanning {
                 scanGuide()
                 Spacer()
             }
+        }
+        VStack {
             if isGraphExpanded {
                 Text(appState.homeTitle)
                     .font(.headline)
@@ -105,6 +107,7 @@ struct HomeView: View {
         .onAppear {
             isCalendarSelected = false
             isChatSelected = false
+            isScanning = false
         }
         .onChange(of: appState.homeActiveTab) { _,newValue in
             appState.updateHomeNavigationTitle()
@@ -174,8 +177,8 @@ struct HomeView: View {
     private func scanGuide() -> some View {
         HStack {
             Image(systemName: "wave.3.up")
-                .font(.system(size: 102)) // Adjust size as needed
-                .foregroundStyle(.starMain) // Optional: Adjust color
+                .font(.system(size: 102))
+                .foregroundStyle(.starMain)
                 .symbolEffect(.variableColor.cumulative.dimInactiveLayers.nonReversing)
         }
     }
