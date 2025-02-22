@@ -1,11 +1,11 @@
 import SwiftUI
-import CloudKit
 
 struct ContentView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var starStore: StarStore
     @StateObject private var messageManager = MessageHelper()
     private let nfcManager = NFCManager()
+
     
     var body: some View {
         NavigationStack{

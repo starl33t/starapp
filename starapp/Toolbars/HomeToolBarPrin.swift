@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import MapKit
+import CoreNFC
 
 struct HomeToolBarPrin: View {
     @EnvironmentObject var appState: AppState
@@ -16,6 +16,7 @@ struct HomeToolBarPrin: View {
     var body: some View {
         HStack{
             Button {
+                print("DEBUG: NFC Button Pressed. nfcManager: \(nfcManager)")
                 nfcManager.beginScanning()
             }  label: {
                 Image(systemName: "aqi.medium")
