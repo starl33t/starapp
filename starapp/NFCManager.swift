@@ -12,6 +12,7 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
         session = NFCTagReaderSession(pollingOption: [.iso14443], delegate: self, queue: nil)
         session?.alertMessage = "Tap phone's speaker over wearable"
         session?.begin()
+        UserDefaults.standard.set(true, forKey: "isScanning")
     }
     
     func tagReaderSessionDidBecomeActive(_ session: NFCTagReaderSession) {}
@@ -131,6 +132,7 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
 
                 session.alertMessage = "ADC Read Complete"
                 session.invalidate()
+                UserDefaults.standard.set(false, forKey: "isScanning")
             }
         }
         
@@ -138,7 +140,9 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
         executeCommandLoop()
     }
     
-    func tagReaderSession(_ session: NFCTagReaderSession, didInvalidateWithError _: Error) {}
+    func tagReaderSession(_ session: NFCTagReaderSession, didInvalidateWithError _: Error) {
+        UserDefaults.standard.set(false, forKey: "isScanning")
+    }
 }
 
 // ✅ Helper function to convert Data to Hex String

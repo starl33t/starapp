@@ -10,6 +10,7 @@ struct HomeView: View {
     @State private var selectedSession: Session? = nil
     @State private var showDatePicker: Bool = false
     @State private var selectedDateRange: DateRangeOption = .thisWeek
+    @AppStorage("isScanning") private var isScanning: Bool = false
     @AppStorage("isGraphExpanded") private var isGraphExpanded = false
     @AppStorage("isFloatingChatExpanded") private var isFloatingChatExpanded = false
     @AppStorage("isCalendarSelected") private var isCalendarSelected = false
@@ -51,17 +52,20 @@ struct HomeView: View {
     }
     
     var body: some View {
+            VStack {
+                Text("Lactate: \(lactate, specifier: "%.1f") mM")
+                    .font(.system(size: 42, weight: .bold))
+                    .foregroundColor(.whiteOne)
+                
+                Text("ADC: \(adc)")
+                    .font(.system(size: 28, weight: .bold))
+                    .foregroundColor(.whiteOne)
+            }
         VStack {
-            Text("Lactate: \(lactate, specifier: "%.1f") mM")
-                .font(.system(size: 42, weight: .bold))
-                .foregroundColor(.whiteOne)
-                .offset(y: -120)
-            Text("ADC: \(adc)")
-                .font(.system(size: 28, weight: .bold))
-                .foregroundColor(.whiteOne)
-                .offset(y: -120)
-        }
-        VStack {
+            if isScanning {
+                scanGuide()
+                Spacer()
+            }
             if isGraphExpanded {
                 Text(appState.homeTitle)
                     .font(.headline)
@@ -163,6 +167,16 @@ struct HomeView: View {
             return "\(date.formatAsDayMonthYear()): \(NumberHelper.valueForTab(appState.homeActiveTab, in: selectedSession))"
         } else {
             return "Total: \(NumberHelper.totalValue(for: appState.homeActiveTab, in: sessions))"
+        }
+    }
+    
+    @ViewBuilder
+    private func scanGuide() -> some View {
+        HStack {
+            Image(systemName: "wave.3.up")
+                .font(.system(size: 102)) // Adjust size as needed
+                .foregroundStyle(.starMain) // Optional: Adjust color
+                .symbolEffect(.variableColor.cumulative.dimInactiveLayers.nonReversing)
         }
     }
     
