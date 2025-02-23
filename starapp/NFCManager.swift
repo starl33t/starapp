@@ -42,17 +42,17 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
             Data([0x30, 0x28]),  // Read EEPROM Page 0x28
             Data([0x30, 0x2C]),  // Read EEPROM Page 0x2C
             Data([0x30, 0x30]),  // Read EEPROM Page 0x30
-            Data([0xB6, 0x04, 0x8F]),  // Write ADC Divisor Register
-            Data([0xB6, 0x05, 0x00]),  // Write ADC Prescaler Register
-            Data([0xB6, 0x09, 0x00]),  // Write ADC Mode Config Register
-            Data([0xB6, 0x11, 0x01]),  // Write Potentiostat Config
-            Data([0xB6, 0x18, 0x0F]),  // Write Sensor Config
-            Data([0xB6, 0x0A, 0x01]),  // Set ADC LPF
-            Data([0xB6, 0x08, 0x2D]),  // Write ADC Bit Config
-            Data([0xB6, 0x10, 0x00]),  // Map RE, WE, CE to IO[0]
+            Data([0xB6, 0x04, 0x8F]),  // Write ADC Divisor Register, clock frequency 271
+            Data([0xB6, 0x05, 0x00]),  // Write ADC Prescaler Register, ADC sensor is 50 kHz
+            Data([0xB6, 0x09, 0x00]),  // Write ADC Mode Config Register, single conversion mode->get adc
+            Data([0xB6, 0x11, 0x01]),  // Write Potentiostat Config, 3 electrode, 20 µA, not grounded
+            Data([0xB6, 0x18, 0x0F]),  // Write Sensor Config, +TIA, +AFE, +DAC
+            Data([0xB6, 0x0A, 0x01]),  // Set ADC LPF, cutoff 1250 kHz
+            Data([0xB6, 0x08, 0x2D]),  // Write ADC Bit Config, 13-bit, signed values
+            Data([0xB6, 0x10, 0x06]),  // IO[0]->RE, IO[1]->WE, IO[2]->CE
             Data([0xB6, 0x07, 0x64]),  // Warm_Clock = 104
             Data([0xB6, 0x0E, 0x00]),  // Set VRE = 0.00V
-            Data([0xB6, 0x0F, 0x8C])   // Command that we need to check response for
+            Data([0xB6, 0x0F, 0x8C])   // VWE = 700mV. Checksum command
         ]
 
         let adcCommand = Data([0xB8, 0x00]) // Get ADC Reading
