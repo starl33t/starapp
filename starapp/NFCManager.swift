@@ -49,9 +49,9 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
             Data([0xB6, 0x18, 0x0F]),  // Write Sensor Config, +TIA, +AFE, +DAC
             Data([0xB6, 0x0A, 0x01]),  // Set ADC LPF, cutoff 1250 kHz
             Data([0xB6, 0x08, 0x2D]),  // Write ADC Bit Config, 13-bit, signed values
-            Data([0xB6, 0x10, 0x03]),  // IO[0]->RE, IO[1]->WE, IO[2]->CE with 6 and // IO[0]=CE, IO[1]=WE, IO[2]=RE with 3
+            Data([0xB6, 0x10, 0x06]),  // IO[0]->RE, IO[1]->WE, IO[2]->CE
             Data([0xB6, 0x07, 0x64]),  // Warm_Clock = 104
-            Data([0xB6, 0x0E, 0x50]),  // Set VRE = 0.4V
+            Data([0xB6, 0x0E, 0x50]),  // Set VRE = 0.4V 
             Data([0xB6, 0x0F, 0xE6])   // VWE = 1.15V. VBias = 750 mV.
         ]
 
@@ -77,7 +77,6 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                     
                     let responseHex = response.toHexString()
                     print("DEBUG: Command \(command.toHexString()) Response: \(responseHex)")
-
                     // ✅ Handle response for b60f8c
                     if command == Data([0xB6, 0x0F, 0xE6]) {
                         if responseHex == "1a1a" {
@@ -113,19 +112,30 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                     session.invalidate(errorMessage: "ADC command failed.")
                     return
                 }
-                
+
                 let responseHex = response.toHexString()
                 print("DEBUG: ADC Command Response: \(responseHex)")
-                
-                var adcValue = Int(responseHex, radix: 16) ?? 0
-                adcValue = adcValue & 0x7FF  // Mask last 11 bits
-                
-                if (adcValue & 0x400) != 0 {  // Two's complement conversion
-                    adcValue -= 2048
+
+                // ✅ Ensure response has at least 2 bytes
+                guard response.count >= 2 else {
+                    print("DEBUG: Invalid ADC response length")
+                    session.invalidate(errorMessage: "Invalid ADC response.")
+                    return
                 }
 
-                print("DEBUG: ADC Value: \(adcValue)")
-                UserDefaults.standard.set(adcValue, forKey: "Adc")
+                // ✅ Extract only the last two bytes (ignoring the first byte)
+                let adcMSB = Int(response[1])  // B9
+                let adcLSB = Int(response[2])  // 35
+                let adcValue = (adcMSB << 8) | adcLSB  // Convert to 16-bit
+            
+
+                // ✅ Convert from two’s complement if necessary
+                let signedAdcValue = (adcValue & 0x8000) != 0 ? adcValue - 65536 : adcValue
+                
+
+
+                print("DEBUG: ADC Value: \(signedAdcValue)")
+                UserDefaults.standard.set(signedAdcValue, forKey: "Adc")
 
                 let elapsedTime = Date().timeIntervalSince1970 - startTime
                 print("DEBUG: NFC Process Time: \(elapsedTime) seconds")
@@ -135,6 +145,7 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                 UserDefaults.standard.set(false, forKey: "isScanning")
             }
         }
+
         
         // Start looping execution
         executeCommandLoop()
