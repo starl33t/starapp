@@ -49,10 +49,10 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
             Data([0xB6, 0x18, 0x0F]),  // Write Sensor Config, +TIA, +AFE, +DAC
             Data([0xB6, 0x0A, 0x01]),  // Set ADC LPF, cutoff 1250 kHz
             Data([0xB6, 0x08, 0x2D]),  // Write ADC Bit Config, 13-bit, signed values
-            Data([0xB6, 0x10, 0x06]),  // IO[0]->RE, IO[1]->WE, IO[2]->CE
+            Data([0xB6, 0x10, 0x03]),  // IO[0]->RE, IO[1]->WE, IO[2]->CE with 6 and // IO[0]=CE, IO[1]=WE, IO[2]=RE with 3
             Data([0xB6, 0x07, 0x64]),  // Warm_Clock = 104
-            Data([0xB6, 0x0E, 0x00]),  // Set VRE = 0.00V
-            Data([0xB6, 0x0F, 0x8C])   // VWE = 700mV. Checksum command
+            Data([0xB6, 0x0E, 0x50]),  // Set VRE = 0.4V
+            Data([0xB6, 0x0F, 0xE6])   // VWE = 1.15V. VBias = 750 mV.
         ]
 
         let adcCommand = Data([0xB8, 0x00]) // Get ADC Reading
@@ -79,7 +79,7 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                     print("DEBUG: Command \(command.toHexString()) Response: \(responseHex)")
 
                     // ✅ Handle response for b60f8c
-                    if command == Data([0xB6, 0x0F, 0x8C]) {
+                    if command == Data([0xB6, 0x0F, 0xE6]) {
                         if responseHex == "1a1a" {
                             print("DEBUG: Received expected response '1a1a'. Reading ADC next.")
                             readADCValue()
