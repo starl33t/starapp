@@ -42,8 +42,8 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
             Data([0x30, 0x28]),  // Read EEPROM Page 0x28
             Data([0x30, 0x2C]),  // Read EEPROM Page 0x2C
             Data([0x30, 0x30]),  // Read EEPROM Page 0x30
-            Data([0xB6, 0x04, 0x8F]),  // Write ADC Divisor Register, clock frequency 271
-            Data([0xB6, 0x05, 0x00]),  // Write ADC Prescaler Register, ADC sensor is 50 kHz
+            Data([0xB6, 0x04, 0x8F]),  // Write ADC Divisor Register = 143
+            Data([0xB6, 0x05, 0x00]),  // Write ADC Prescaler Register = 0, ADC sensor is 50 kHz->Fastest sampling
             Data([0xB6, 0x09, 0x00]),  // Write ADC Mode Config Register, single conversion mode->get adc
             Data([0xB6, 0x11, 0x01]),  // Write Potentiostat Config, 3 electrode, 20 µA, not grounded
             Data([0xB6, 0x18, 0x0F]),  // Write Sensor Config, +TIA, +AFE, +DAC
@@ -52,7 +52,7 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
             Data([0xB6, 0x10, 0x06]),  // IO[0]->RE, IO[1]->WE, IO[2]->CE
             Data([0xB6, 0x07, 0x64]),  // Warm_Clock = 104
             Data([0xB6, 0x0E, 0x50]),  // Set VRE = 0.4V 
-            Data([0xB6, 0x0F, 0xE6])   // VWE = 1.15V. VBias = 750 mV.
+            Data([0xB6, 0x0F, 0x6E])   // VWE = 0.55V. VBias = 150 mV.
         ]
 
         let adcCommand = Data([0xB8, 0x00]) // Get ADC Reading
@@ -78,7 +78,7 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                     let responseHex = response.toHexString()
                     print("DEBUG: Command \(command.toHexString()) Response: \(responseHex)")
                     // ✅ Handle response for b60f8c
-                    if command == Data([0xB6, 0x0F, 0xE6]) {
+                    if command == Data([0xB6, 0x0F, 0x6E]) {
                         if responseHex == "1a1a" {
                             print("DEBUG: Received expected response '1a1a'. Reading ADC next.")
                             readADCValue()
