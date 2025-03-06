@@ -5,6 +5,7 @@ struct HomeView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var viewModel: MessageHelper
     @EnvironmentObject var starStore: StarStore
+    @Environment(\.modelContext) private var context
     @Namespace private var tabAnimation
     @State private var selectedCapsuleIndex: Int? = nil
     @State private var selectedSession: Session? = nil
@@ -63,6 +64,9 @@ struct HomeView: View {
                     .foregroundColor(.whiteOne)
                 Spacer()
             }
+            .onChange(of: lactate) { _,newLactate in
+                    createNewTrainingSession(with: newLactate)
+                }
         VStack{
             if isScanning {
                 scanGuide()
@@ -154,6 +158,23 @@ struct HomeView: View {
             .frame(maxWidth: .infinity)
         }
     }
+    
+    //New training session whenever a new lactate values
+    private func createNewTrainingSession(with lactateValue: Double) {
+        let newSession = Session(
+            lactate: lactateValue,
+            date: Date()
+            // Add additional required fields if needed
+        )
+        context.insert(newSession)
+        do {
+            try context.save()
+            print("Created new session with lactate: \(lactateValue)")
+        } catch {
+            print("Error saving new session: \(error)")
+        }
+    }
+
     
     private func updateActiveTabIfNeeded() {
         if NumberHelper.filteredSessions(for: appState.homeActiveTab, in: sessions).isEmpty {

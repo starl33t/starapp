@@ -14,6 +14,10 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
     // Accumulate ADC responses from a successful iteration.
     private var adcResponses: [Int] = []
     
+    //UID
+    private var fullUID: [UInt8] = []
+    
+    
     // MARK: - Public Entry Point
     
     func beginScanning() {
@@ -22,8 +26,9 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
             return
         }
         session = NFCTagReaderSession(pollingOption: [.iso14443], delegate: self)
-        session?.alertMessage = "Hold steady on your wearable"
+        session?.alertMessage = "Tap on wearable"
         session?.begin()
+        UserDefaults.standard.set(true, forKey: "isScanning")
     }
     
     // MARK: - NFCTagReaderSessionDelegate Methods
@@ -48,6 +53,7 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
     
     func tagReaderSession(_ session: NFCTagReaderSession, didInvalidateWithError error: Error) {
         print("DEBUG: Session invalidated – \(error.localizedDescription)")
+        UserDefaults.standard.set(false, forKey: "isScanning")
     }
     
     // MARK: - Full Command Sequence Execution
@@ -102,6 +108,8 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
     private func buildSetupCommands() -> [Data] {
         return [
             Data([0xB4, 0xFF]),         // Clear Error Flags
+            Data([0x30, 0x00]),         // UID0, UID1, UID2, BBCO
+            Data([0x30, 0x01]),         // UID3, UID4, UID5, UID6
             Data([0x30, 0x28]),         // EEPROM 0x28: Calibration for +16µA and +8µA
             Data([0x30, 0x29]),         // EEPROM 0x29: Calibration for 0µA and -8µA
             Data([0x30, 0x2A]),         // EEPROM 0x2A: Calibration for -16µA
@@ -134,6 +142,25 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
         if command.count == 2, command[0] == 0x30 {
             let page = command[1]
             switch page {
+            case 0x00: // page 0: UID0, UID1, UID2, BCC0
+                if response.count >= 4 {
+                    // Reset the array or append accordingly
+                    fullUID = []
+                    fullUID.append(response[0])  // UID0
+                    fullUID.append(response[1])  // UID1
+                    fullUID.append(response[2])  // UID2
+                    // Optionally, store BCC0 separately if needed
+                    let bcc0 = response[3]
+                    print("DEBUG: Page 0 => UID0=\(String(format: "%02X", response[0])), UID1=\(String(format: "%02X", response[1])), UID2=\(String(format: "%02X", response[2])), BCC0=\(String(format: "%02X", bcc0))")
+                }
+            case 0x01: // page 1: UID3, UID4, UID5, UID6
+                if response.count >= 4 {
+                    fullUID.append(response[0])  // UID3
+                    fullUID.append(response[1])  // UID4
+                    fullUID.append(response[2])  // UID5
+                    fullUID.append(response[3])  // UID6
+                    print("DEBUG: Page 1 => UID3=\(String(format: "%02X", response[0])), UID4=\(String(format: "%02X", response[1])), UID5=\(String(format: "%02X", response[2])), UID6=\(String(format: "%02X", response[3]))")
+                }
             case 0x28:
                 if response.count >= 4 {
                     let adc16 = parseInt16(from: response, start: 0)
@@ -218,13 +245,24 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
         let average = adcResponses.isEmpty ? 0 : adcResponses.reduce(0, +) / adcResponses.count
         print("DEBUG: Average ADC Value: \(average)")
         print("DEBUG: Average Current≈\(currentFromAdc(adcValue: Double(average))) µA")
-        
         UserDefaults.standard.set(average, forKey: "Adc")
+        
+        let lactate = currentFromAdc(adcValue: Double(average)) * 0.9
+        UserDefaults.standard.set(lactate, forKey: "Lactate")
+        print("DEBUG: Average Lactate Value: \(lactate) mM")
+        
+        let uidString = fullUID.map { String(format: "%02X", $0) }
+            .joined(separator: ":")
+        print("Full UID: \(uidString)")
+        
+        
         let elapsedTime = Date().timeIntervalSince1970 - startTime
         print("DEBUG: NFC Process Time: \(elapsedTime) seconds")
         
+        
         session.alertMessage = "Done"
         session.invalidate()
+        UserDefaults.standard.set(false, forKey: "isScanning")
     }
     
     /// Solves for the polynomial calibration curve based on five calibration points.
