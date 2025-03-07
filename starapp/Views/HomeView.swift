@@ -19,6 +19,7 @@ struct HomeView: View {
     @AppStorage("isprofileSelected") private var isprofileSelected = false
     @AppStorage("Adc") private var adc: Int = 0
     @AppStorage("Lactate") private var lactate: Double = 0.0
+    @AppStorage("uidString") private var uidString: String = ""
     @Query private var allSessions: [Session]
     
     
@@ -163,7 +164,8 @@ struct HomeView: View {
     private func createNewTrainingSession(with lactateValue: Double) {
         let newSession = Session(
             lactate: lactateValue,
-            date: Date()
+            date: Date(),
+            uidString: uidString
             // Add additional required fields if needed
         )
         context.insert(newSession)

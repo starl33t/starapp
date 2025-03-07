@@ -11,6 +11,7 @@
 		BF14E3402C863AB8007FE41D /* HomeTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF14E33F2C863AB5007FE41D /* HomeTab.swift */; };
 		BF19035C2C9ADB4E00B0E581 /* ChatToolBarLead.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF19035B2C9ADB4600B0E581 /* ChatToolBarLead.swift */; };
 		BF1A81532C542C280057D87D /* HomeToolBarTrail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1A81522C542C280057D87D /* HomeToolBarTrail.swift */; };
+		BF1EDB572D7AE1C2004B8C88 /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1EDB562D7AE1BA004B8C88 /* MailView.swift */; };
 		BF2265BC2C943BD600A1203C /* FloatingButtonText.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2265BB2C943BCE00A1203C /* FloatingButtonText.swift */; };
 		BF31F0AB2C48FDAD000C005C /* EmailHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF31F0AA2C48FDA9000C005C /* EmailHelper.swift */; };
 		BF42BE502CAA8C5D00ECBB17 /* FloatingButtonVertical.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF42BE4F2CAA8C5600ECBB17 /* FloatingButtonVertical.swift */; };
@@ -90,6 +91,7 @@
 		BF14E33F2C863AB5007FE41D /* HomeTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTab.swift; sourceTree = "<group>"; };
 		BF19035B2C9ADB4600B0E581 /* ChatToolBarLead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatToolBarLead.swift; sourceTree = "<group>"; };
 		BF1A81522C542C280057D87D /* HomeToolBarTrail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeToolBarTrail.swift; sourceTree = "<group>"; };
+		BF1EDB562D7AE1BA004B8C88 /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		BF2265BB2C943BCE00A1203C /* FloatingButtonText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButtonText.swift; sourceTree = "<group>"; };
 		BF31F0AA2C48FDA9000C005C /* EmailHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailHelper.swift; sourceTree = "<group>"; };
 		BF3F6CAD2C3F23280087DF5A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 				BFBBD9572C55868F00671197 /* MessageHelper.swift */,
 				BF57B8A82C541360000F24BB /* LactateHelper.swift */,
 				BFE876052C6E7DA6006725A6 /* StringHelper.swift */,
+				BF1EDB562D7AE1BA004B8C88 /* MailView.swift */,
 				BF31F0AA2C48FDA9000C005C /* EmailHelper.swift */,
 				BFDE40522C591F7B00733888 /* CalendarHelper.swift */,
 				BF91AC6D2C4540530028BC41 /* NumberHelper.swift */,
@@ -500,6 +503,7 @@
 				BF57B8A92C541365000F24BB /* LactateHelper.swift in Sources */,
 				BF4A81772C3AFA1700D4CAF1 /* ChatToolBarTrail.swift in Sources */,
 				BF2265BC2C943BD600A1203C /* FloatingButtonText.swift in Sources */,
+				BF1EDB572D7AE1C2004B8C88 /* MailView.swift in Sources */,
 				BF19035C2C9ADB4E00B0E581 /* ChatToolBarLead.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

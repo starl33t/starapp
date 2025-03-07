@@ -12,7 +12,9 @@ struct CalendarToolBarTrail: View {
     @State private var showDatePicker: Bool = false
     @AppStorage("showTrainingList") var showTrainingList = false
     @AppStorage("showSpecificTrainingView") var showSpecificTrainingView = false
-    @State private var isExporting = false
+    
+    // New state variable for presenting the mail composer.
+    @State private var isShowingMailView = false
     
     var body: some View {
         HStack {
@@ -32,13 +34,13 @@ struct CalendarToolBarTrail: View {
                 }
                 if showTrainingList {
                     Button {
-                        isExporting = true
+                        isShowingMailView = true
                     }  label: {
-                        Image(systemName: "arrow.down.to.line.compact")
+                        Image(systemName: "paperplane")
                             .font(.system(size: 24))
                             .fontWeight(.semibold)
-                            .foregroundStyle(isExporting ? .starMain : .whiteOne)
-                            .symbolEffect(.bounce, value: isExporting)
+                            .foregroundStyle(isShowingMailView ? .starMain : .whiteOne)
+                            .symbolEffect(.bounce, value: isShowingMailView)
                             .frame(width: 50, height: 50) // Matching button size
                             .background(Circle().fill(Color.darkOne))
                             .contentShape(Circle())
@@ -58,8 +60,6 @@ struct CalendarToolBarTrail: View {
                     }
                 }
             }
-          
-            
         }
         .padding(.horizontal, 4)
         .sheet(isPresented: $showDatePicker) {
@@ -67,18 +67,12 @@ struct CalendarToolBarTrail: View {
                 .modifier(CloseButtonModifier(onClose: {showDatePicker = false}))
                 .presentationDetents([.fraction(0.3)])
         }
-        .fileExporter(
-            isPresented: $isExporting,
-            document: CSVDocument(sessions: sessions),
-            contentType: .commaSeparatedText,
-            defaultFilename: "sessions.csv"
-        ) { result in
-            switch result {
-            case .success(let url):
-                print("Saved to \(url)")
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
+        .sheet(isPresented: $isShowingMailView) {
+            MailView(
+                recipient: "pt@starleet.com",
+                subject: "Sessions CSV",
+                csvData: CSVDocument(sessions: sessions).csvString.data(using: .utf8) ?? Data()
+            )
         }
     }
     

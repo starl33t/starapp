@@ -11,6 +11,7 @@ class Session {
     var lactate: Double?
     var date: Date?
     var title: String?
+    var uidString: String?
 
     init(
         distance: Double? = nil,
@@ -20,7 +21,8 @@ class Session {
         heartRate: Int? = nil,
         lactate: Double? = nil,
         date: Date? = nil,
-        title: String? = nil
+        title: String? = nil,
+        uidString: String? = nil
     ) {
         self.distance = distance
         self.duration = duration
@@ -30,5 +32,6 @@ class Session {
         self.lactate = lactate
         self.date = date
         self.title = title
+        self.uidString = uidString
     }
 }

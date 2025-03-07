@@ -254,6 +254,7 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
         let uidString = fullUID.map { String(format: "%02X", $0) }
             .joined(separator: ":")
         print("Full UID: \(uidString)")
+        UserDefaults.standard.set(uidString, forKey: "uidString")
         
         
         let elapsedTime = Date().timeIntervalSince1970 - startTime
