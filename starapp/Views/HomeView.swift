@@ -18,6 +18,7 @@ struct HomeView: View {
     @AppStorage("isChatSelected") private var isChatSelected = false
     @AppStorage("isprofileSelected") private var isprofileSelected = false
     @AppStorage("Adc") private var adc: Int = 0
+    @AppStorage("Current") private var current: Double = 0.0
     @AppStorage("Lactate") private var lactate: Double = 0.0
     @AppStorage("uidString") private var uidString: String = ""
     @Query private var allSessions: [Session]
@@ -60,7 +61,7 @@ struct HomeView: View {
                     .foregroundColor(.whiteOne)
                     .padding(.top, 142)
                 
-                Text("ADC: \(adc)")
+                Text("\(adc) ADC | \(current, specifier: "%.1f") µA")
                     .font(.system(size: 28, weight: .bold))
                     .foregroundColor(.whiteOne)
                 Spacer()

@@ -239,26 +239,30 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
         solvePolynomialForCurrent()
         print("DEBUG: ADC Readings: \(adcResponses)")
         for raw in adcResponses {
-            let current = currentFromAdc(adcValue: Double(raw))
-            print("DEBUG: ADC=\(raw) => Current≈\(current) µA")
+            print("DEBUG: ADC=\(raw) => Current≈\(currentFromAdc(adcValue: Double(raw))) µA")
         }
-        let average = adcResponses.isEmpty ? 0 : adcResponses.reduce(0, +) / adcResponses.count
-        print("DEBUG: Average ADC Value: \(average)")
-        print("DEBUG: Average Current≈\(currentFromAdc(adcValue: Double(average))) µA")
-        UserDefaults.standard.set(average, forKey: "Adc")
         
-        let lactate = currentFromAdc(adcValue: Double(average)) * 0.9
+        let adc = adcResponses.isEmpty ? 0 : adcResponses.reduce(0, +) / adcResponses.count
+        let current = currentFromAdc(adcValue: Double(adc))
+        print("ADC Value: \(adc)")
+        print("Current≈\(currentFromAdc(adcValue: Double(adc))) µA")
+        
+        UserDefaults.standard.set(adc, forKey: "Adc")
+        UserDefaults.standard.set(current, forKey: "Current")
+        
+        let lactate = currentFromAdc(adcValue: Double(adc)) * 0.9
         UserDefaults.standard.set(lactate, forKey: "Lactate")
-        print("DEBUG: Average Lactate Value: \(lactate) mM")
+        print("Lactate Value: \(lactate) mM")
         
         let uidString = fullUID.map { String(format: "%02X", $0) }
             .joined(separator: ":")
         print("Full UID: \(uidString)")
         UserDefaults.standard.set(uidString, forKey: "uidString")
         
+        UserDefaults.standard.set(polyCoeffs, forKey: "polyCoeffs")
         
         let elapsedTime = Date().timeIntervalSince1970 - startTime
-        print("DEBUG: NFC Process Time: \(elapsedTime) seconds")
+        print("NFC Process Time: \(elapsedTime) seconds")
         
         
         session.alertMessage = "Done"
