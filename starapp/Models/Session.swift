@@ -12,6 +12,8 @@ class Session {
     var date: Date?
     var title: String?
     var uidString: String?
+    var adc: Int?
+    var current: Double?
 
     init(
         distance: Double? = nil,
@@ -22,7 +24,9 @@ class Session {
         lactate: Double? = nil,
         date: Date? = nil,
         title: String? = nil,
-        uidString: String? = nil
+        uidString: String? = nil,
+        adc: Int? = nil,
+        current: Double? = nil
     ) {
         self.distance = distance
         self.duration = duration
@@ -33,5 +37,7 @@ class Session {
         self.date = date
         self.title = title
         self.uidString = uidString
+        self.adc = adc
+        self.current = current
     }
 }

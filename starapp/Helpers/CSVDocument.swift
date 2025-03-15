@@ -17,7 +17,7 @@ struct CSVDocument: FileDocument {
     
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
         // Updated header to include UID.
-        let headers = "Distance,Duration,Pace,Power,Heart Rate,Lactate,Date,Title,UID,uidString\n"
+        let headers = "Distance,Duration,Pace,Power,Heart Rate,Lactate,Date,Title,UID,uidString,adc,current\n"
         let csvString = headers + sessions.map { session in
             let distance = session.distance.map { String(format: "%.2f", $0) } ?? "N/A"
             let duration = session.duration.map { String(format: "%.2f", $0) } ?? "N/A"
@@ -28,8 +28,10 @@ struct CSVDocument: FileDocument {
             let date = session.date.map { $0.ISO8601Format() } ?? "N/A"
             let title = session.title ?? "N/A"
             let uidString = session.uidString ?? "N/A"
+            let adc = session.adc.map { String($0) } ?? "N/A"
+            let current = session.current.map { String(format: "%.2f", $0) } ?? "N/A"
             
-            return "\(distance),\(duration),\(pace),\(power),\(heartRate),\(lactate),\(date),\(title),\(uidString)"
+            return "\(distance),\(duration),\(pace),\(power),\(heartRate),\(lactate),\(date),\(title),\(uidString),\(adc),\(current)"
         }.joined(separator: "\n")
         
         let data = csvString.data(using: .utf8)!
@@ -40,7 +42,7 @@ struct CSVDocument: FileDocument {
 extension CSVDocument {
     var csvString: String {
         // Updated header to include UID.
-        let headers = "Distance,Duration,Pace,Power,Heart Rate,Lactate,Date,Title,UID\n"
+        let headers = "Distance,Duration,Pace,Power,Heart Rate,Lactate,Date,Title,UID,Adc,Current\n"
         let csvString = headers + sessions.map { session in
             let distance = session.distance.map { String(format: "%.2f", $0) } ?? "N/A"
             let duration = session.duration.map { String(format: "%.2f", $0) } ?? "N/A"
@@ -51,8 +53,10 @@ extension CSVDocument {
             let date = session.date.map { $0.ISO8601Format() } ?? "N/A"
             let title = session.title ?? "N/A"
             let uidString = session.uidString ?? "N/A"
+            let adc = session.adc.map { String($0) } ?? "N/A"
+            let current = session.current.map { String(format: "%.2f", $0) } ?? "N/A"
             
-            return "\(distance),\(duration),\(pace),\(power),\(heartRate),\(lactate),\(date),\(title),\(uidString)"
+            return "\(distance),\(duration),\(pace),\(power),\(heartRate),\(lactate),\(date),\(title),\(uidString),\(adc),\(current)"
         }.joined(separator: "\n")
         return csvString
     }

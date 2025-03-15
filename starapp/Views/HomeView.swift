@@ -166,7 +166,9 @@ struct HomeView: View {
         let newSession = Session(
             lactate: lactateValue,
             date: Date(),
-            uidString: uidString
+            uidString: uidString,
+            adc: adc,
+            current: current
             // Add additional required fields if needed
         )
         context.insert(newSession)
