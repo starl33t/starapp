@@ -61,24 +61,23 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
     /// Executes the full sequence: setup, voltage update, then ADC polling.
     /// If the ADC value is zero, the entire sequence is restarted.
     private func executeCommandSequence(tag: NFCMiFareTag, session: NFCTagReaderSession) {
-           adcReferenceValues.removeAll()
-           bufferOffsets.removeAll()
-           adcResponses.removeAll()
-
-           let startTime = Date().timeIntervalSince1970
-
-           executeCommands(buildSetupCommands(), tag: tag, session: session) { [weak self] in
-               guard let self = self else { return }
-
-               let negBiasCommands = self.buildVoltageCommands(vre: 600.0, we: 400.0)
-               self.executeCommands(negBiasCommands, tag: tag, session: session) {
-                   let posBiasCommands = self.buildVoltageCommands(vre: 400.0, we: 600.0)
-                   self.executeCommands(posBiasCommands, tag: tag, session: session) {
-                       self.pollAdcUntilNonZero(tag: tag, session: session, startTime: startTime)
-                   }
-               }
-           }
-       }
+        // Reset state for a new iteration.
+        adcReferenceValues.removeAll()
+        bufferOffsets.removeAll()
+        adcResponses.removeAll()
+        
+        let startTime = Date().timeIntervalSince1970
+        
+        // Execute the setup commands.
+        executeCommands(buildSetupCommands(), tag: tag, session: session) { [weak self] in
+            guard let self = self else { return }
+            // Execute voltage update commands (which may be updated based on calibration data).
+            self.executeCommands(self.buildVoltageCommands(), tag: tag, session: session) {
+                // Finally, poll the ADC.
+                self.pollAdcUntilNonZero(tag: tag, session: session, startTime: startTime)
+            }
+        }
+    }
     
     /// Executes an array of commands sequentially.
     private func executeCommands(_ commands: [Data],
@@ -127,18 +126,15 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
         ]
     }
     
-    // MARK: - Response Processing
+    /// Builds the voltage-setting commands.
+    private func buildVoltageCommands() -> [Data] {
+        return [
+            Data([0xB6, 0x0E, VRE_HEX]), // Set VRE
+            Data([0xB6, 0x0F, VWE_HEX])  // Set VWE
+        ]
+    }
     
-    private func buildVoltageCommands(vre: Double, we: Double) -> [Data] {
-           let reOffset = bufferOffsets[0] ?? 0
-           let weOffset = bufferOffsets[1] ?? 0
-           let vreHex = UInt8(round((vre - reOffset) / 5.0))
-           let weHex  = UInt8(round((we  - weOffset) / 5.0))
-           return [
-               Data([0xB6, 0x0E, vreHex]),
-               Data([0xB6, 0x0F, weHex])
-           ]
-       }
+    // MARK: - Response Processing
     
     /// Processes a response based on the sent command.
     private func processResponse(for command: Data, response: Data) {
@@ -206,7 +202,7 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
     /// Computes new voltage register values based on calibration.
     private func updateVoltageValues(withREOffset reOffset: Double, weOffset: Double) {
         let expectedRE = 400.0  // in mV
-        let expectedWE = 600.0  // in mV
+        let expectedWE = 1200.0  // in mV
         VRE_HEX = UInt8(round((expectedRE - reOffset) / 5.0))
         VWE_HEX = UInt8(round((expectedWE - weOffset) / 5.0))
         print("DEBUG: Computed VRE=0x\(String(format:"%02X", VRE_HEX)), VWE=0x\(String(format:"%02X", VWE_HEX))")
