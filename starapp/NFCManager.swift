@@ -212,27 +212,47 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
     
     /// Polls the ADC by sending the ADC read command.
     /// If the returned ADC value is zero, the entire command sequence is restarted.
-    private func pollAdcUntilNonZero(tag: NFCMiFareTag,
-                                     session: NFCTagReaderSession,
-                                     startTime: TimeInterval) {
+    private func pollAdcUntilNonZero(
+        tag: NFCMiFareTag,
+        session: NFCTagReaderSession,
+        startTime: TimeInterval
+    ) {
         tag.sendMiFareCommand(commandPacket: Data([0xB8, 0x00])) { response, error in
             if let error = error {
+                // Retry on a momentary RF drop
+                if let nfcErr = error as? NFCReaderError,
+                   nfcErr.code == .readerTransceiveErrorTagConnectionLost {
+                    print("DEBUG: Tag connection lost—retrying in 0.1s")
+                    DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) {
+                        self.pollAdcUntilNonZero(tag: tag,
+                                                 session: session,
+                                                 startTime: startTime)
+                    }
+                    return
+                }
+
+                // Any other error is fatal
                 print("DEBUG: ADC read failed – \(error.localizedDescription)")
                 session.invalidate(errorMessage: "ADC read failed.")
+                UserDefaults.standard.set(false, forKey: "isScanning")
                 return
             }
+
             let adcValue = self.parseADCResponse(response)
             print("DEBUG: ADC read: \(adcValue)")
+
             if adcValue == 0 {
-                // Restart the full sequence from the beginning.
+                // Still zero → restart full sequence
                 print("DEBUG: ADC value is zero, restarting full command sequence.")
                 self.executeCommandSequence(tag: tag, session: session)
             } else {
+                // Got a valid reading!
                 self.adcResponses.append(adcValue)
                 self.finalizeSequence(startTime: startTime, session: session)
             }
         }
     }
+
     
     // MARK: - Finalization and Calibration
     
