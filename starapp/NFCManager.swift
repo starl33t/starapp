@@ -66,15 +66,13 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
         bufferOffsets.removeAll()
         adcResponses.removeAll()
         
-        let startTime = Date().timeIntervalSince1970
-        
         // Execute the setup commands.
         executeCommands(buildSetupCommands(), tag: tag, session: session) { [weak self] in
             guard let self = self else { return }
             // Execute voltage update commands (which may be updated based on calibration data).
             self.executeCommands(self.buildVoltageCommands(), tag: tag, session: session) {
                 // Finally, poll the ADC.
-                self.pollAdcUntilNonZero(tag: tag, session: session, startTime: startTime)
+                self.pollAdcUntilNonZero(tag: tag, session: session)
             }
         }
     }
@@ -191,21 +189,16 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                     let weOffset = Double(parseInt16(from: response, start: 2)) / 100.0
                     bufferOffsets[0] = reOffset
                     bufferOffsets[1] = weOffset
-                    updateVoltageValues(withREOffset: reOffset, weOffset: weOffset)
+                    let expectedRE = 400.0  // in mV
+                    let expectedWE = 1200.0 // in mV
+                    VRE_HEX = UInt8(round((expectedRE - reOffset) / 5.0))
+                    VWE_HEX = UInt8(round((expectedWE - weOffset) / 5.0))
+                    print("DEBUG: Computed VRE=0x\(String(format:"%02X", VRE_HEX)), VWE=0x\(String(format:"%02X", VWE_HEX))")
                 }
             default:
                 break
             }
         }
-    }
-    
-    /// Computes new voltage register values based on calibration.
-    private func updateVoltageValues(withREOffset reOffset: Double, weOffset: Double) {
-        let expectedRE = 400.0  // in mV
-        let expectedWE = 1200.0  // in mV
-        VRE_HEX = UInt8(round((expectedRE - reOffset) / 5.0))
-        VWE_HEX = UInt8(round((expectedWE - weOffset) / 5.0))
-        print("DEBUG: Computed VRE=0x\(String(format:"%02X", VRE_HEX)), VWE=0x\(String(format:"%02X", VWE_HEX))")
     }
     
     // MARK: - ADC Polling Loop
@@ -214,24 +207,11 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
     /// If the returned ADC value is zero, the entire command sequence is restarted.
     private func pollAdcUntilNonZero(
         tag: NFCMiFareTag,
-        session: NFCTagReaderSession,
-        startTime: TimeInterval
+        session: NFCTagReaderSession
     ) {
         tag.sendMiFareCommand(commandPacket: Data([0xB8, 0x00])) { response, error in
             if let error = error {
-                // Retry on a momentary RF drop
-                if let nfcErr = error as? NFCReaderError,
-                   nfcErr.code == .readerTransceiveErrorTagConnectionLost {
-                    print("DEBUG: Tag connection lost—retrying in 0.1s")
-                    DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) {
-                        self.pollAdcUntilNonZero(tag: tag,
-                                                 session: session,
-                                                 startTime: startTime)
-                    }
-                    return
-                }
-
-                // Any other error is fatal
+                // Any error is now fatal (no retry)
                 print("DEBUG: ADC read failed – \(error.localizedDescription)")
                 session.invalidate(errorMessage: "ADC read failed.")
                 UserDefaults.standard.set(false, forKey: "isScanning")
@@ -248,7 +228,7 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
             } else {
                 // Got a valid reading!
                 self.adcResponses.append(adcValue)
-                self.finalizeSequence(startTime: startTime, session: session)
+                self.finalizeSequence(session: session)
             }
         }
     }
@@ -257,7 +237,7 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
     // MARK: - Finalization and Calibration
     
     /// Finalizes the process: calculates the calibration polynomial, prints readings, and ends the session.
-    private func finalizeSequence(startTime: TimeInterval, session: NFCTagReaderSession) {
+    private func finalizeSequence(session: NFCTagReaderSession) {
         solvePolynomialForCurrent()
         print("DEBUG: ADC Readings: \(adcResponses)")
         for raw in adcResponses {
@@ -282,10 +262,6 @@ class NFCManager: NSObject, NFCTagReaderSessionDelegate {
         UserDefaults.standard.set(uidString, forKey: "uidString")
         
         UserDefaults.standard.set(polyCoeffs, forKey: "polyCoeffs")
-        
-        let elapsedTime = Date().timeIntervalSince1970 - startTime
-        print("NFC Process Time: \(elapsedTime) seconds")
-        
         
         session.alertMessage = "Done"
         session.invalidate()
