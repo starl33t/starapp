@@ -52,7 +52,7 @@ struct ContentView: View {
         .overlay(alignment: .bottom) {
             switch appState.selectedTab {
             case 0:
-                HomeToolBarPrin(nfcManager: nfcManager)
+                HomeToolBarPrin()
             case 1:
                 CalendarToolBarPrin()
             case 2:

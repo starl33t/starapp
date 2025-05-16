@@ -1,37 +1,84 @@
 import SwiftUI
-import MapKit
+import CoreNFC  // for NFCManagerDelegate
 
-class AppState: ObservableObject {
+class AppState: ObservableObject, NFCManagerDelegate {
+    // MARK: – UI State
     @Published var selectedTab: Int = 0
-    @AppStorage("userTier") private var userTier: Int = 0
     @Published var selectedDate: Date = Date()
     @Published var days: [Date] = Date().daysInYear
     @Published var homeTitle: String = "Lactate"
     @Published var homeActiveTab: HomeTab = .lactate
     @Published var todayTitle: String = ""
     
+    // MARK: – Persistent Storage
+    @AppStorage("userTier") private var userTier: Int = 0
+    @AppStorage("Adc")      var adc: Int     = 0
+    @AppStorage("Current")  var current: Double = 0.0
+    @AppStorage("Lactate")  var lactate: Double = 0.0
+    
+    // MARK: – NFC
+    private let nfcManager = NFCManager()
+    
     init() {
-        self.updateHomeNavigationTitle()
+        // wire up NFC delegate
+        nfcManager.delegate = self
+        
+        updateHomeNavigationTitle()
     }
+    
+    // MARK: – NFCManagerDelegate
+    
+    public func nfcManager(_ manager: NFCManager,
+                           didReadCalibrationPages pages: [UInt8 : Data],
+                           rawAdc: Int) {
+        // 1) Extract the pages
+        guard let p28 = pages[0x28],
+              let p29 = pages[0x29],
+              let p2A = pages[0x2A]
+        else {
+            return
+        }
+        // 2) Run the math off-thread if you like
+        DispatchQueue.global(qos: .userInitiated).async {
+            if let result = CalibrationService.computeCalibration(
+                page28: p28,
+                page29: p29,
+                page2A: p2A,
+                rawAdcValue: rawAdc
+            ) {
+                // 3) Persist back into AppStorage
+                DispatchQueue.main.async {
+                    self.adc     = rawAdc
+                    self.current = result.current
+                    self.lactate = result.lactate
+                }
+            }
+        }
+    }
+    
+    public func nfcManager(_ manager: NFCManager, didFailWith error: Error) {
+        // Handle scan errors here if you want to show an alert
+        print("NFC scan failed: \(error.localizedDescription)")
+    }
+    
+    // MARK: – Helpers
     
     @MainActor
     func checkSubscriptionStatus(starStore: StarStore) async {
         await starStore.updateCustomerProductStatus()
-
-        if starStore.purchasedSubscriptions.contains(where: { $0.id == "tier1" }) {
-            self.userTier = 1
-        } else {
-            self.userTier = 0
-        }
+        userTier = starStore.purchasedSubscriptions.contains { $0.id == "tier1" } ? 1 : 0
     }
-
     
     func updateHomeNavigationTitle() {
-        self.homeTitle = self.homeActiveTab.navigationTitle
+        homeTitle = homeActiveTab.navigationTitle
     }
     
     func updateTodayTitle() {
-        let today = Date()
-        self.todayTitle = today.formatDayMonthLong(date: today)
+        todayTitle = Date().formatDayMonthLong(date: Date())
+    }
+    
+    // Call this when you want to start a scan, e.g. from your toolbar:
+    func startNFCScan() {
+        nfcManager.beginScanning()
     }
 }
