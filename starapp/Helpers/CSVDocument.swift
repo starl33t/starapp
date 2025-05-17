@@ -17,7 +17,7 @@ struct CSVDocument: FileDocument {
     
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
         // Updated header to include UID.
-        let headers = "Distance,Duration,Pace,Power,Heart Rate,Lactate,Date,Title,UID,uidString,adc,current\n"
+        let headers = "Distance,Duration,Pace,Power,Heart Rate,Lactate,Date,Title,UID,adc,current\n"
         let csvString = headers + sessions.map { session in
             let distance = session.distance.map { String(format: "%.2f", $0) } ?? "N/A"
             let duration = session.duration.map { String(format: "%.2f", $0) } ?? "N/A"

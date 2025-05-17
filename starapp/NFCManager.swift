@@ -121,7 +121,7 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                     let raw = parseADCResponse(response)
                     self.rawAdcValue = raw
                     print("DEBUG: parsed raw ADC = \(raw)")
-
+                    
                     
                     // tear down NFC UI
                     session.alertMessage = "Done"
@@ -130,8 +130,8 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                     
                     // inform delegate with just the raw data
                     self.delegate?.nfcManager(self,
-                        didReadCalibrationPages: self.rawCalibPages,
-                        rawAdc: raw
+                                              didReadCalibrationPages: self.rawCalibPages,
+                                              rawAdc: raw
                     )
                     return
                 }
@@ -152,9 +152,15 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
             Data([0x30, 0x29]),        // EEPROM page 0x29
             Data([0x30, 0x2A]),        // EEPROM page 0x2A
             Data([0x30, 0x30]),        // buffer offsets
-            Data([0xB6, 0x05, 0x00]),  // ADC prescaler
-            Data([0xB6, 0x11, 0x01]),  // potentiostat config
-            Data([0xB6, 0x10, 0x06])   // IO mapping
+            Data([0xB6, 0x04, 0x8F]),   // Write ADC Divisor Register
+            Data([0xB6, 0x05, 0x00]),   // Write ADC Prescaler Register
+            Data([0xB6, 0x09, 0x00]),   // Write ADC Mode Config (Single Conversion Mode)
+            Data([0xB6, 0x11, 0x01]),   // Write Potentiostat Config
+            Data([0xB6, 0x18, 0x0F]),   // Write Sensor Config (Potentiostat ON, ADC ON, DAC ON)
+            Data([0xB6, 0x0A, 0x01]),   // Set ADC LPF to 1250 kHz
+            Data([0xB6, 0x08, 0x2D]),   // Write ADC Bit Config (signed mode)
+            Data([0xB6, 0x10, 0x06]),   // Map RE to IO[0], WE to IO[1], CE to IO[2]
+            Data([0xB6, 0x07, 0x64])    // Warm_Clock = 104
         ]
     }
     
@@ -203,5 +209,5 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
         if (raw & 0x8000) != 0 { raw -= 65536 }
         return raw
     }
-
+    
 }
