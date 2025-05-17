@@ -119,7 +119,7 @@ public class CalibrationService {
     }
     
     // MARK: – Data parsing
-    private static func parseInt16(from data: Data, start: Int) -> Int {
+    public static func parseInt16(from data: Data, start: Int) -> Int {
         let word = UInt16(data[start]) << 8 | UInt16(data[start+1])
         return Int(Int16(bitPattern: word))
     }
