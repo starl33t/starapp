@@ -63,13 +63,13 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
         case .setup:
             return [
                 Data([0xB4, 0xFF]), // Clear error flags
-
+                
                 // EEPROM reads for calibration
                 Data([0x30, 0x28]),
                 Data([0x30, 0x29]),
                 Data([0x30, 0x2A]),
                 Data([0x30, 0x30]),
-
+                
                 // Final config for fast, stable ADC conversion
                 Data([0xB6, 0x04, 0x19]), // ADC_Divisor = 25 → f_sensor ≈ 88 kHz
                 Data([0xB6, 0x05, 0x00]), // ADC_Prescaler = 0
@@ -80,7 +80,7 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                 Data([0xB6, 0x11, 0x01]), // Potentiostat config
                 Data([0xB6, 0x18, 0x0F]), // Sensor config: AFE+ADC+DAC on
             ]
-
+            
         case .voltage:
             return [
                 Data([0xB6, 0x0E, VRE_HEX]),
@@ -89,7 +89,7 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
             ]
         }
     }
-
+    
     
     private func executeCommands(_ commands: [Data], tag: NFCMiFareTag, session: NFCTagReaderSession, completion: @escaping () -> Void) {
         func next(_ index: Int) {
@@ -100,7 +100,7 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                 guard let self = self else { return }
                 
                 if let error = error {
-                    session.invalidate(errorMessage: "Cmd failed")
+                    session.invalidate(errorMessage: "It failed, try again")
                     self.delegate?.nfcManager(self, didFailWith: error)
                     return
                 }
@@ -108,16 +108,28 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                 if cmd.first == 0xB8 {
                     guard response.count >= 2 else {
                         session.invalidate(errorMessage: "Read error")
-                        self.delegate?.nfcManager(self, didFailWith: NSError(domain: "NFCManager", code: 2, userInfo: [NSLocalizedDescriptionKey: "ADC response too short"]))
+                        self.setScanning(false)
+                        self.delegate?.nfcManager(self, didReadCalibrationPages: self.rawCalibPages, rawAdc: 0)
                         return
                     }
+                    
                     let raw = self.parseADC(response)
                     self.rawAdcValue = raw
+                    
+                    if raw == 0 {
+                        self.executeCommands(self.buildCommands(phase: .setup), tag: tag, session: session) {
+                            self.executeCommands(self.buildCommands(phase: .voltage), tag: tag, session: session) {}
+                        }
+                        return
+                    }
+                    
+                    // ✅ Valid ADC received
                     session.alertMessage = "Done"
                     session.invalidate()
                     self.setScanning(false)
                     self.delegate?.nfcManager(self, didReadCalibrationPages: self.rawCalibPages, rawAdc: raw)
-                } else {
+                }
+                else {
                     self.process(cmd, response)
                     next(index + 1)
                 }
@@ -132,23 +144,12 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
         case 0x28, 0x29, 0x2A:
             rawCalibPages[cmd[1]] = response
         case 0x30 where response.count >= 4:
-            // Read RE and WE offsets (in 0.01 mV) → convert to mV (rounded)
-            let reOffset = (CalibrationService.parseInt16(from: response, start: 0) + 50) / 100
-            let weOffset = (CalibrationService.parseInt16(from: response, start: 2) + 50) / 100
-
-            // Guarantee VRE ≥ 400 mV
-            let vreTarget = max(400, 400 - reOffset)
-
-            // Guarantee VWE ≤ 1200 mV with 700 mV bias under worst-case offsets
-            let vweTarget = min(1200, vreTarget + 700 - weOffset)
-
-            VRE_HEX = UInt8(clamping: (vreTarget + 2) / 5)
-            VWE_HEX = UInt8(clamping: (vweTarget + 2) / 5)
-
-            print("RE Offset: \(reOffset) mV, WE Offset: \(weOffset) mV")
-            print("VRE Target: \(vreTarget) mV, VWE Target: \(vweTarget) mV")
-            print("VRE_HEX: \(VRE_HEX), VWE_HEX: \(VWE_HEX)")
-
+            // 1. Parse EEPROM offsets (in 0.01 mV units)
+            let reOffset = Double(CalibrationService.parseInt16(from: response, start: 0)) / 100.0
+            let weOffset = Double(CalibrationService.parseInt16(from: response, start: 2)) / 100.0
+            // 2. Compute DAC values for 800 mV Vbias
+            self.VRE_HEX = UInt8(round((400.0 - reOffset) / 5.0))
+            self.VWE_HEX = UInt8(round((1200.0 - weOffset) / 5.0))
         default:
             break
         }
