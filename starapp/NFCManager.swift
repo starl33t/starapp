@@ -62,29 +62,34 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
         switch phase {
         case .setup:
             return [
-                Data([0xB4, 0xFF]), // Clear Error Flags
-                Data([0x30, 0x28]), // EEPROM 0x28: Calibration for +16µA and +8µA
-                Data([0x30, 0x29]), // EEPROM 0x29: Calibration for 0µA and -8µA
-                Data([0x30, 0x2A]), // EEPROM 0x2A: Calibration for -16µA
-                Data([0x30, 0x30]), // EEPROM 0x30: Buffer Offsets for RE and WE
-                Data([0xB6, 0x04, 0x8F]), // Write ADC Divisor Register
-                Data([0xB6, 0x05, 0x00]),  // Write ADC Prescaler Register
-                Data([0xB6, 0x09, 0x00]),  // Write ADC Mode Config (Single Conversion Mode)
-                Data([0xB6, 0x11, 0x01]),  // Write Potentiostat Config
-                Data([0xB6, 0x18, 0x0F]), // Write Sensor Config (Potentiostat ON, ADC ON, DAC ON)
-                Data([0xB6, 0x0A, 0x01]), // Set ADC LPF to 1250 kHz
-                Data([0xB6, 0x08, 0x2D]),  // Write ADC Bit Config (signed mode)
-                Data([0xB6, 0x10, 0x06]), // Map RE to IO[0], WE to IO[1], CE to IO[2]
-                Data([0xB6, 0x07, 0x64]) // Warm_Clock = 104
+                Data([0xB4, 0xFF]), // Clear error flags
+
+                // EEPROM reads for calibration
+                Data([0x30, 0x28]),
+                Data([0x30, 0x29]),
+                Data([0x30, 0x2A]),
+                Data([0x30, 0x30]),
+
+                // Final config for fast, stable ADC conversion
+                Data([0xB6, 0x04, 0x19]), // ADC_Divisor = 25 → f_sensor ≈ 88 kHz
+                Data([0xB6, 0x05, 0x00]), // ADC_Prescaler = 0
+                Data([0xB6, 0x06, 0x4C]), // ADC_Samp_Pt = 76 (mid-point of one ADC cycle)
+                Data([0xB6, 0x07, 0x52]), // Warm_Clock: M=5, N=2 → 8 + 20 = 28
+                Data([0xB6, 0x08, 0x19]), // ADC: 10-bit, signed, 1 sample
+                Data([0xB6, 0x10, 0x06]), // IO Map: RE, WE, CE
+                Data([0xB6, 0x11, 0x01]), // Potentiostat config
+                Data([0xB6, 0x18, 0x0F]), // Sensor config: AFE+ADC+DAC on
             ]
+
         case .voltage:
             return [
                 Data([0xB6, 0x0E, VRE_HEX]),
                 Data([0xB6, 0x0F, VWE_HEX]),
-                Data([0xB8, 0x00])
+                Data([0xB8, 0x00]) // GetADC
             ]
         }
     }
+
     
     private func executeCommands(_ commands: [Data], tag: NFCMiFareTag, session: NFCTagReaderSession, completion: @escaping () -> Void) {
         func next(_ index: Int) {
@@ -130,15 +135,20 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
             // Read RE and WE offsets (in 0.01 mV) → convert to mV (rounded)
             let reOffset = (CalibrationService.parseInt16(from: response, start: 0) + 50) / 100
             let weOffset = (CalibrationService.parseInt16(from: response, start: 2) + 50) / 100
-            
-            // Fixed safe targets (headroom below 1200 mV)
-            let VWE_HEX = UInt8(clamping: (1150 - weOffset + 2) / 5)
-            let VRE_HEX = UInt8(clamping: (350 - reOffset + 2) / 5)
-            
-            // Store
-            self.VWE_HEX = VWE_HEX
-            self.VRE_HEX = VRE_HEX
-    
+
+            // Guarantee VRE ≥ 400 mV
+            let vreTarget = max(400, 400 - reOffset)
+
+            // Guarantee VWE ≤ 1200 mV with 700 mV bias under worst-case offsets
+            let vweTarget = min(1200, vreTarget + 700 - weOffset)
+
+            VRE_HEX = UInt8(clamping: (vreTarget + 2) / 5)
+            VWE_HEX = UInt8(clamping: (vweTarget + 2) / 5)
+
+            print("RE Offset: \(reOffset) mV, WE Offset: \(weOffset) mV")
+            print("VRE Target: \(vreTarget) mV, VWE Target: \(vweTarget) mV")
+            print("VRE_HEX: \(VRE_HEX), VWE_HEX: \(VWE_HEX)")
+
         default:
             break
         }
