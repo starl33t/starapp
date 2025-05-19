@@ -71,14 +71,14 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                 Data([0x30, 0x30]),
                 
                 // Final config for fast, stable ADC conversion
-                Data([0xB6, 0x04, 0x19]), // ADC_Divisor = 25 → f_sensor ≈ 88 kHz
-                Data([0xB6, 0x05, 0x00]), // ADC_Prescaler = 0
+                Data([0xB6, 0x04, 0x8F]), // D = 143, 50 kHz
+                Data([0xB6, 0x05, 0x00]), // P = 0
                 Data([0xB6, 0x06, 0x4C]), // ADC_Samp_Pt = 76 (mid-point of one ADC cycle)
                 Data([0xB6, 0x07, 0x52]), // Warm_Clock: M=5, N=2 → 8 + 20 = 28
                 Data([0xB6, 0x08, 0x19]), // ADC: 10-bit, signed, 1 sample
                 Data([0xB6, 0x10, 0x06]), // IO Map: RE, WE, CE
                 Data([0xB6, 0x11, 0x01]), // Potentiostat config
-                Data([0xB6, 0x18, 0x0F]), // Sensor config: AFE+ADC+DAC on
+                Data([0xB6, 0x18, 0x0F])  // Sensor config: AFE+ADC+DAC on
             ]
             
         case .voltage:
@@ -124,7 +124,6 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                     }
                     
                     // ✅ Valid ADC received
-                    session.alertMessage = "Done"
                     session.invalidate()
                     self.setScanning(false)
                     self.delegate?.nfcManager(self, didReadCalibrationPages: self.rawCalibPages, rawAdc: raw)
