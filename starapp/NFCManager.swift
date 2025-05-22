@@ -13,6 +13,7 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
     private var rawAdcValue: Int?
     private var VRE_HEX: UInt8 = 0
     private var VWE_HEX: UInt8 = 0
+    private var scanStartTime: CFAbsoluteTime? //timer
     
     public func beginScanning() {
         guard NFCTagReaderSession.readingAvailable else {
@@ -49,6 +50,7 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
             
             self.rawCalibPages.removeAll()
             self.rawAdcValue = nil
+            self.scanStartTime = CFAbsoluteTimeGetCurrent() //Start timer
             
             self.executeCommands(self.buildCommands(phase: .setup), tag: tag, session: session) {
                 self.executeCommands(self.buildCommands(phase: .voltage), tag: tag, session: session) {}
@@ -64,32 +66,37 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
             return [
                 Data([0xB4, 0xFF]), // Clear error flags
                 
-                // EEPROM reads for calibration
+                // Calibration EEPROM reads
                 Data([0x30, 0x28]),
                 Data([0x30, 0x29]),
                 Data([0x30, 0x2A]),
                 Data([0x30, 0x30]),
                 
-                // Final config for fast, stable ADC conversion
-                Data([0xB6, 0x04, 0x8F]), // D = 143, 50 kHz
-                Data([0xB6, 0x05, 0x00]), // P = 0
-                Data([0xB6, 0x06, 0x4C]), // ADC_Samp_Pt = 76 (mid-point of one ADC cycle)
-                Data([0xB6, 0x07, 0x52]), // Warm_Clock: M=5, N=2 → 8 + 20 = 28
-                Data([0xB6, 0x08, 0x19]), // ADC: 10-bit, signed, 1 sample
-                Data([0xB6, 0x10, 0x06]), // IO Map: RE, WE, CE
-                Data([0xB6, 0x11, 0x01]), // Potentiostat config
-                Data([0xB6, 0x18, 0x0F])  // Sensor config: AFE+ADC+DAC on
+                // ADC Frequency setup (50 kHz)
+                Data([0xB6, 0x04, 0x8F]), // Divisor = 143
+                Data([0xB6, 0x05, 0x00]), // Prescaler = 0
+               
+                
+                //Config potentiostat
+                Data([0xB6, 0x11, 0x01]), // Enable potentiostat
+                Data([0xB6, 0x18, 0x0F]),  // AFE + DAC + ADC on
+                Data([0xB6, 0x10, 0x06]), // Map RE to IO[0], WE to IO[1], CE to IO[2]
+                Data([0xB6, 0x0A, 0x03]),   // Set ADC LPF to 325 kHz (most quiet)
+                
+                //ADC sampling mode
+                Data([0xB6, 0x09, 0x02]), // ADC Continuous Mode
+                Data([0xB6, 0x08, 0x19]), // OSR = 64, avg = 2, signed
+                Data([0xB6, 0x07, 0x00])  // Warm-up = 8 clocks (fastest)
             ]
             
         case .voltage:
             return [
-                Data([0xB6, 0x0E, VRE_HEX]),
-                Data([0xB6, 0x0F, VWE_HEX]),
-                Data([0xB8, 0x00]) // GetADC
+                Data([0xB6, 0x0E, VRE_HEX]), // Set RE voltage
+                Data([0xB6, 0x0F, VWE_HEX]), // Set WE voltage
+                Data([0xB8, 0x00])          // GetADC: reads latest continuous value
             ]
         }
     }
-    
     
     private func executeCommands(_ commands: [Data], tag: NFCMiFareTag, session: NFCTagReaderSession, completion: @escaping () -> Void) {
         func next(_ index: Int) {
@@ -106,13 +113,6 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                 }
                 
                 if cmd.first == 0xB8 {
-                    guard response.count >= 2 else {
-                        session.invalidate(errorMessage: "Read error")
-                        self.setScanning(false)
-                        self.delegate?.nfcManager(self, didReadCalibrationPages: self.rawCalibPages, rawAdc: 0)
-                        return
-                    }
-                    
                     let raw = self.parseADC(response)
                     self.rawAdcValue = raw
                     
@@ -127,6 +127,11 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                     session.invalidate()
                     self.setScanning(false)
                     self.delegate?.nfcManager(self, didReadCalibrationPages: self.rawCalibPages, rawAdc: raw)
+                    if let start = self.scanStartTime {
+                        let elapsed = (CFAbsoluteTimeGetCurrent() - start) * 1000 //end timer
+                        print("DEBUG: ⏱️ Total NFC scan time: \(String(format: "%.3f", elapsed)) ms")
+                    }
+                    
                 }
                 else {
                     self.process(cmd, response)
@@ -148,7 +153,8 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
             let weOffset = Double(CalibrationService.parseInt16(from: response, start: 2)) / 100.0
             // 2. Compute DAC values for 800 mV Vbias
             self.VRE_HEX = UInt8(round((400.0 - reOffset) / 5.0))
-            self.VWE_HEX = UInt8(round((1200.0 - weOffset) / 5.0))
+            self.VWE_HEX = UInt8(round((400.0 - weOffset) / 5.0))
+            print("DEBUG: Computed VRE=0x\(String(format:"%02X", VRE_HEX)), VWE=0x\(String(format:"%02X", VWE_HEX))")
         default:
             break
         }
