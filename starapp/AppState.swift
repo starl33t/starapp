@@ -9,7 +9,8 @@ class AppState: ObservableObject, NFCManagerDelegate {
     @Published var homeTitle: String = "Lactate"
     @Published var homeActiveTab: HomeTab = .lactate
     @Published var todayTitle: String = ""
-    
+    @Published var isScanning: Bool = false
+
     // MARK: – Persistent Storage
     @AppStorage("userTier") private var userTier: Int = 0
     @AppStorage("Adc")      var adc: Int     = 0
@@ -28,19 +29,14 @@ class AppState: ObservableObject, NFCManagerDelegate {
     
     // MARK: – NFCManagerDelegate
     
-    public func nfcManager(_ manager: NFCManager,
-                           didReadCalibrationPages pages: [UInt8 : Data],
-                           rawAdc: Int) {
-        // 1) Extract the pages
-        guard let p28 = pages[0x28]
-        else {
-            return
-        }
-        // 2) Run the math off-thread if you like
+    func nfcManager(_ manager: NFCManager,
+                    didReadCalibrationPages pages: [UInt8: Data],
+                    rawAdcResponse: Data) {
+        guard let p28 = pages[0x28] else { return }
+        let rawAdc = CalibrationService.parseADC(from: rawAdcResponse)
+
         DispatchQueue.global(qos: .userInitiated).async {
-            if let result = CalibrationService.computeCalibration(page28: p28, rawAdcValue: rawAdc)
-            {
-                // 3) Persist back into AppStorage
+            if let result = CalibrationService.computeCalibration(page28: p28, rawAdcValue: rawAdc) {
                 DispatchQueue.main.async {
                     self.adc     = rawAdc
                     self.current = result.current
@@ -49,6 +45,7 @@ class AppState: ObservableObject, NFCManagerDelegate {
             }
         }
     }
+
     
     public func nfcManager(_ manager: NFCManager, didFailWith error: Error) {
         // Handle scan errors here if you want to show an alert
@@ -75,4 +72,11 @@ class AppState: ObservableObject, NFCManagerDelegate {
     func startNFCScan() {
         nfcManager.beginScanning()
     }
+    
+    func nfcManager(_ manager: NFCManager, didChangeScanningState isScanning: Bool) {
+        DispatchQueue.main.async {
+            self.isScanning = isScanning
+        }
+    }
+
 }

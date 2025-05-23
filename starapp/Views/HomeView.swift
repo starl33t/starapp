@@ -11,7 +11,6 @@ struct HomeView: View {
     @State private var selectedSession: Session? = nil
     @State private var showDatePicker: Bool = false
     @State private var selectedDateRange: DateRangeOption = .thisWeek
-    @AppStorage("isScanning") private var isScanning: Bool = false
     @AppStorage("isGraphExpanded") private var isGraphExpanded = false
     @AppStorage("isFloatingChatExpanded") private var isFloatingChatExpanded = false
     @AppStorage("isCalendarSelected") private var isCalendarSelected = false
@@ -70,7 +69,7 @@ struct HomeView: View {
                     createNewTrainingSession(with: newLactate)
                 }
         VStack{
-            if isScanning {
+            if appState.isScanning {
                 scanGuide()
                 Spacer()
             }
@@ -115,7 +114,7 @@ struct HomeView: View {
         .onAppear {
             isCalendarSelected = false
             isChatSelected = false
-            isScanning = false
+            appState.isScanning = false
         }
         .onChange(of: appState.homeActiveTab) { _,newValue in
             appState.updateHomeNavigationTitle()
