@@ -32,20 +32,14 @@ class AppState: ObservableObject, NFCManagerDelegate {
                            didReadCalibrationPages pages: [UInt8 : Data],
                            rawAdc: Int) {
         // 1) Extract the pages
-        guard let p28 = pages[0x28],
-              let p29 = pages[0x29],
-              let p2A = pages[0x2A]
+        guard let p28 = pages[0x28]
         else {
             return
         }
         // 2) Run the math off-thread if you like
         DispatchQueue.global(qos: .userInitiated).async {
-            if let result = CalibrationService.computeCalibration(
-                page28: p28,
-                page29: p29,
-                page2A: p2A,
-                rawAdcValue: rawAdc
-            ) {
+            if let result = CalibrationService.computeCalibration(page28: p28, rawAdcValue: rawAdc)
+            {
                 // 3) Persist back into AppStorage
                 DispatchQueue.main.async {
                     self.adc     = rawAdc

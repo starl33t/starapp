@@ -9,22 +9,20 @@ public struct CalibrationResult {
 public class CalibrationService {
     /// Computes calibration coefficients (cubic), current, and lactate from raw pages + ADC.
     public static func computeCalibration(page28: Data,
-                                          page29: Data,
-                                          page2A: Data,
                                           rawAdcValue: Int) -> CalibrationResult? {
         // 1️⃣ Read out your five (adc → µA) points
-        let a16 = Int(parseInt16(from: page28, start: 0));  // +16 µA
-        let a8  = Int(parseInt16(from: page28, start: 2));  //  +8 µA
-        let a0  = Int(parseInt16(from: page29, start: 0));  //   0 µA
-        let aM8 = Int(parseInt16(from: page29, start: 2));  //  -8 µA
-        let aM16 = Int(parseInt16(from: page2A, start: 0));  // -16 µA
-        
-        let adcRef: [Int:Int] = [
-            a16:  16,
-            a8:    8,
-            a0:    0,
+        let aM16 = Int(parseInt16(from: page28, start: 0))
+        let aM8  = Int(parseInt16(from: page28, start: 2))
+        let a0   = Int(parseInt16(from: page28, start: 4))
+        let a8   = Int(parseInt16(from: page28, start: 6))
+        let a16  = Int(parseInt16(from: page28, start: 8))
+
+        let adcRef: [Int: Int] = [
+            aM16: -16,
             aM8:  -8,
-            aM16: -16
+            a0:    0,
+            a8:    8,
+            a16:  16
         ]
         // 2️⃣ Solve the cubic via the same normal‐equation code you had before:
         let coeffs = solvePolynomialForCurrent(adcReferenceValues: adcRef)

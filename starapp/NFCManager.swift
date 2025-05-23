@@ -67,15 +67,13 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                 Data([0xB4, 0xFF]), // Clear error flags
                 
                 // Calibration EEPROM reads
-                Data([0x30, 0x28]),
-                Data([0x30, 0x29]),
-                Data([0x30, 0x2A]),
-                Data([0x30, 0x30]),
+                Data([0x30, 0x28]), // 5 ADC calibration points (-16 µA, -8 µA, 0 µA, +8 µA, +16 µA)
+                Data([0x30, 0x30]), // Page 0x30 → RE_BUFF_OFFSET, WE_BUFF_OFFSET
                 
                 // ADC Frequency setup (50 kHz)
                 Data([0xB6, 0x04, 0x8F]), // Divisor = 143
                 Data([0xB6, 0x05, 0x00]), // Prescaler = 0
-               
+                
                 
                 //Config potentiostat
                 Data([0xB6, 0x11, 0x01]), // Enable potentiostat
@@ -85,7 +83,7 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                 
                 //ADC sampling mode
                 Data([0xB6, 0x09, 0x02]), // ADC Continuous Mode
-                Data([0xB6, 0x08, 0x19]), // OSR = 64, avg = 2, signed
+                Data([0xB6, 0x08, 0x54]), // OSR = 512, avg = 4, signed
                 Data([0xB6, 0x07, 0x00])  // Warm-up = 8 clocks (fastest)
             ]
             
@@ -116,14 +114,6 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                     let raw = self.parseADC(response)
                     self.rawAdcValue = raw
                     
-                    if raw == 0 {
-                        self.executeCommands(self.buildCommands(phase: .setup), tag: tag, session: session) {
-                            self.executeCommands(self.buildCommands(phase: .voltage), tag: tag, session: session) {}
-                        }
-                        return
-                    }
-                    
-                    // ✅ Valid ADC received
                     session.invalidate()
                     self.setScanning(false)
                     self.delegate?.nfcManager(self, didReadCalibrationPages: self.rawCalibPages, rawAdc: raw)
@@ -145,7 +135,7 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
     private func process(_ cmd: Data, _ response: Data) {
         guard cmd.count == 2, cmd[0] == 0x30 else { return }
         switch cmd[1] {
-        case 0x28, 0x29, 0x2A:
+        case 0x28:
             rawCalibPages[cmd[1]] = response
         case 0x30 where response.count >= 4:
             // 1. Parse EEPROM offsets (in 0.01 mV units)
@@ -153,20 +143,21 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
             let weOffset = Double(CalibrationService.parseInt16(from: response, start: 2)) / 100.0
             // 2. Compute DAC values for 800 mV Vbias
             self.VRE_HEX = UInt8(round((400.0 - reOffset) / 5.0))
-            self.VWE_HEX = UInt8(round((400.0 - weOffset) / 5.0))
-            print("DEBUG: Computed VRE=0x\(String(format:"%02X", VRE_HEX)), VWE=0x\(String(format:"%02X", VWE_HEX))")
+            self.VWE_HEX = UInt8(round((1150.0 - weOffset) / 5.0))
         default:
             break
         }
     }
     
+    /// Parses the GetADC reply (16-bit MSB of the 24-bit ADC_RESULT register)
+    /// for the current OSR = 512 setting (→ 11 effective bits).
     private func parseADC(_ response: Data) -> Int {
-        let hex = response.map { String(format: "%02x", $0) }.joined()
-        var raw = Int(hex, radix: 16) ?? 0
-        raw &= 0xFFFF
-        return (raw & 0x8000) != 0 ? raw - 65536 : raw
+        guard response.count >= 2 else { return 0 }
+        let raw16 = Int16(bitPattern: UInt16(response[0]) << 8 | UInt16(response[1]))    // Convert response bytes to 16-bit MSB word
+        let signed11 = raw16 >> 5  // Mask to 11-bit signed value
+        return Int(signed11)
     }
-    
+        
     private func setScanning(_ isScanning: Bool) {
         UserDefaults.standard.set(isScanning, forKey: "isScanning")
     }
