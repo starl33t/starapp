@@ -111,8 +111,6 @@ public class CalibrationService {
             }
             coeffs[i] = B[i] - sum
         }
-        
-        print("DEBUG: Polynomial coefficients: \(coeffs)")
         return coeffs
     }
     

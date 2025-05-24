@@ -9,7 +9,6 @@ class AppState: ObservableObject, NFCManagerDelegate {
     @Published var homeTitle: String = "Lactate"
     @Published var homeActiveTab: HomeTab = .lactate
     @Published var todayTitle: String = ""
-    @Published var isScanning: Bool = false
 
     // MARK: – Persistent Storage
     @AppStorage("userTier") private var userTier: Int = 0
@@ -71,12 +70,6 @@ class AppState: ObservableObject, NFCManagerDelegate {
     // Call this when you want to start a scan, e.g. from your toolbar:
     func startNFCScan() {
         nfcManager.beginScanning()
-    }
-    
-    func nfcManager(_ manager: NFCManager, didChangeScanningState isScanning: Bool) {
-        DispatchQueue.main.async {
-            self.isScanning = isScanning
-        }
     }
 
 }

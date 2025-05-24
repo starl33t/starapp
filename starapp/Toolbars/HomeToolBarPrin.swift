@@ -11,10 +11,6 @@ struct HomeToolBarPrin: View {
             } label: {
                 Image(systemName: "aqi.medium")
                     .font(.system(size: 82))
-                    .symbolEffect(.variableColor
-                        .cumulative
-                        .dimInactiveLayers
-                        .reversing)
                     .fontWeight(.semibold)
                     .foregroundStyle(.starMain)
                     .frame(width: 124, height: 124)

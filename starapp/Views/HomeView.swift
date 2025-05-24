@@ -54,25 +54,19 @@ struct HomeView: View {
     }
     
     var body: some View {
-            VStack {
-                Text("Lactate: \(lactate, specifier: "%.1f") mM")
-                    .font(.system(size: 42, weight: .bold))
-                    .foregroundColor(.whiteOne)
-                    .padding(.top, 142)
-                
-                Text("\(adc) ADC | \(current, specifier: "%.1f") µA")
-                    .font(.system(size: 28, weight: .bold))
-                    .foregroundColor(.whiteOne)
-                Spacer()
-            }
-            .onChange(of: lactate) { _,newLactate in
-                    createNewTrainingSession(with: newLactate)
-                }
-        VStack{
-            if appState.isScanning {
-                scanGuide()
-                Spacer()
-            }
+        VStack {
+            Text("Lactate: \(lactate, specifier: "%.1f") mM")
+                .font(.system(size: 42, weight: .bold))
+                .foregroundColor(.whiteOne)
+                .padding(.top, 142)
+            
+            Text("\(adc) ADC | \(current, specifier: "%.1f") µA")
+                .font(.system(size: 28, weight: .bold))
+                .foregroundColor(.whiteOne)
+            Spacer()
+        }
+        .onChange(of: lactate) { _,newLactate in
+            createNewTrainingSession(with: newLactate)
         }
         VStack {
             if isGraphExpanded {
@@ -114,7 +108,6 @@ struct HomeView: View {
         .onAppear {
             isCalendarSelected = false
             isChatSelected = false
-            appState.isScanning = false
         }
         .onChange(of: appState.homeActiveTab) { _,newValue in
             appState.updateHomeNavigationTitle()
@@ -139,8 +132,6 @@ struct HomeView: View {
                 isprofileSelected = false
             }
         }
-        
-        
     }
     
     private func datePicker() -> some View {
@@ -178,7 +169,7 @@ struct HomeView: View {
             print("Error saving new session: \(error)")
         }
     }
-
+    
     
     private func updateActiveTabIfNeeded() {
         if NumberHelper.filteredSessions(for: appState.homeActiveTab, in: sessions).isEmpty {
@@ -197,16 +188,6 @@ struct HomeView: View {
             return "\(date.formatAsDayMonthYear()): \(NumberHelper.valueForTab(appState.homeActiveTab, in: selectedSession))"
         } else {
             return "Total: \(NumberHelper.totalValue(for: appState.homeActiveTab, in: sessions))"
-        }
-    }
-    
-    @ViewBuilder
-    private func scanGuide() -> some View {
-        HStack {
-            Image(systemName: "wave.3.up")
-                .font(.system(size: 102))
-                .foregroundStyle(.starMain)
-                .symbolEffect(.variableColor.cumulative.dimInactiveLayers.nonReversing)
         }
     }
     
