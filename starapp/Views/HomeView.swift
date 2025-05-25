@@ -65,8 +65,8 @@ struct HomeView: View {
                 .foregroundColor(.whiteOne)
             Spacer()
         }
-        .onChange(of: lactate) { _,newLactate in
-            createNewTrainingSession(with: newLactate)
+        .onChange(of: uidString) {
+            createNewTrainingSession()
         }
         VStack {
             if isGraphExpanded {
@@ -152,22 +152,15 @@ struct HomeView: View {
     }
     
     //New training session whenever a new lactate values
-    private func createNewTrainingSession(with lactateValue: Double) {
+    private func createNewTrainingSession() {
         let newSession = Session(
-            lactate: lactateValue,
+            lactate: lactate,
             date: Date(),
             uidString: uidString,
             adc: adc,
             current: current
-            // Add additional required fields if needed
         )
         context.insert(newSession)
-        do {
-            try context.save()
-            print("Created new session with lactate: \(lactateValue)")
-        } catch {
-            print("Error saving new session: \(error)")
-        }
     }
     
     

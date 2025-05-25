@@ -89,7 +89,7 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
             }
             let cmd = commands[index]
             
-            tag.sendMiFareCommand(commandPacket: cmd) { [weak self] response, _ in
+            tag.sendMiFareCommand(commandPacket: cmd) { [weak self] response, error in
                 guard let self = self else { return }
                 
                 if cmd.first == 0x30 {
@@ -100,13 +100,16 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                     self.rawCalibPages[cmd[1]] = response
                     
                     if cmd[1] == 0x30 {
-                        self.process(cmd, response)
+                        if response.count >= 4 {
+                            let reOffset = Double(CalibrationService.parseInt16(from: response, start: 0)) / 100.0
+                            let weOffset = Double(CalibrationService.parseInt16(from: response, start: 2)) / 100.0
+                            self.VRE_HEX = UInt8(round((400.0 - reOffset) / 5.0))
+                            self.VWE_HEX = UInt8(round((1200.0 - weOffset) / 5.0))
+                        }
                     }
-                    
                     run(index + 1)
                     return
                 }
-                
                 if cmd.first == 0xB8 {
                     session.invalidate()
                     self.delegate?.nfcManager(
@@ -116,28 +119,9 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                     )
                     return
                 }
-                self.process(cmd, response)
                 run(index + 1)
             }
         }
-        
         run(0)
-    }
-    
-    
-    private func process(_ cmd: Data, _ response: Data) {
-        guard cmd.count == 2, cmd[0] == 0x30 else { return }
-        switch cmd[1] {
-        case 0x28:
-            rawCalibPages[cmd[1]] = response
-        case 0x30 where response.count >= 4:
-            // 1. Parse EEPROM offsets (in 0.01 mV units)
-            let reOffset = Double(CalibrationService.parseInt16(from: response, start: 0)) / 100.0
-            let weOffset = Double(CalibrationService.parseInt16(from: response, start: 2)) / 100.0
-            self.VRE_HEX = UInt8(round((400.0 - reOffset) / 5.0))
-            self.VWE_HEX = UInt8(round((1200.0 - weOffset) / 5.0))
-        default:
-            break
-        }
     }
 }

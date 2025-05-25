@@ -15,6 +15,8 @@ class AppState: ObservableObject, NFCManagerDelegate {
     @AppStorage("Adc")      var adc: Int     = 0
     @AppStorage("Current")  var current: Double = 0.0
     @AppStorage("Lactate")  var lactate: Double = 0.0
+    @AppStorage("uidString") var uidString: String = ""
+
     
     // MARK: – NFC
     private let nfcManager = NFCManager()
@@ -40,6 +42,7 @@ class AppState: ObservableObject, NFCManagerDelegate {
                     self.adc     = rawAdc
                     self.current = result.current
                     self.lactate = result.lactate
+                    self.uidString = UUID().uuidString
                 }
             }
         }
