@@ -120,12 +120,10 @@ public class CalibrationService {
         return Int(Int16(bitPattern: word))
     }
     
-    /// Parses the GetADC reply (16-bit MSB of the 24-bit ADC_RESULT register)
-    /// for the current OSR = 512 setting (→ 11 effective bits).
     public static func parseADC(from response: Data) -> Int {
-        guard response.count >= 2 else { return 0 }
-        let raw16 = Int16(bitPattern: UInt16(response[0]) << 8 | UInt16(response[1]))
-        let signed11 = raw16 >> 5
-        return Int(signed11)
+        guard response.count >= 3 else { return 0 }
+
+        let raw16 = UInt16(response[1]) << 8 | UInt16(response[2])
+        return Int(Int16(bitPattern: raw16))  // Signed 16-bit
     }
 }

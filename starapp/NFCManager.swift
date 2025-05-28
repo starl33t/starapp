@@ -59,12 +59,25 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
         switch phase {
         case .setup:
             return [
+                // Calibration & Offset
                 Data([0xB4, 0xFF]), // Clear error flags
                 Data([0x30, 0x28]), // 5 ADC calibration points (-16 µA, -8 µA, 0 µA, +8 µA, +16 µA)
                 Data([0x30, 0x30]), // Page 0x30 → RE_BUFF_OFFSET, WE_BUFF_OFFSET
+                
+                // ADC Frequency setup (50 kHz)
+                Data([0xB6, 0x04, 0x8F]), // Divisor = 143
+                Data([0xB6, 0x05, 0x00]), // Prescaler = 0
+                
+                //Config potentiostat
                 Data([0xB6, 0x11, 0x01]), // Enable potentiostat
+                Data([0xB6, 0x18, 0x0F]),  // AFE + DAC + ADC on
                 Data([0xB6, 0x10, 0x06]), // Map RE to IO[0], WE to IO[1], CE to IO[2]
-                Data([0xB6, 0x09, 0x02]), // ADC Continuous Mode
+                Data([0xB6, 0x0A, 0x01]), // LPF = 1250 kHz
+                
+                //ADC sampling mode
+                Data([0xB6, 0x09, 0x00]), // Single-conversion mode
+                Data([0xB6, 0x08, 0x2D]), // OSR = 1024, avg = 4, signed
+                Data([0xB6, 0x07, 0x81]) // Warm-up clock = 24 cycles
             ]
             
         case .voltage:
@@ -80,37 +93,65 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
         _ commands: [Data],
         tag: NFCMiFareTag,
         session: NFCTagReaderSession,
-        completion: @escaping ()->Void
+        completion: @escaping () -> Void
     ) {
+        let maxAttempts = 200
+        var attempt = 0
+        
         func run(_ index: Int) {
             guard index < commands.count else {
                 completion()
                 return
             }
-            let cmd = commands[index]
             
+            let cmd = commands[index]
             tag.sendMiFareCommand(commandPacket: cmd) { [weak self] response, error in
                 guard let self = self else { return }
                 
+                func failAndRetry() {
+                    attempt += 1
+                    if attempt >= maxAttempts {
+                        session.invalidate(errorMessage: "Bring it closer next time!")
+                        return
+                    } else {
+                        run(0)
+                    }
+                }
+                
                 if cmd.first == 0x30 {
                     if response.count < 16 {
-                        run(index)
+                        failAndRetry()
                         return
                     }
+                    
                     self.rawCalibPages[cmd[1]] = response
                     
-                    if cmd[1] == 0x30 {
-                        if response.count >= 4 {
-                            let reOffset = Double(CalibrationService.parseInt16(from: response, start: 0)) / 100.0
-                            let weOffset = Double(CalibrationService.parseInt16(from: response, start: 2)) / 100.0
-                            self.VRE_HEX = UInt8(round((400.0 - reOffset) / 5.0))
-                            self.VWE_HEX = UInt8(round((1200.0 - weOffset) / 5.0))
-                        }
+                    if cmd[1] == 0x30, response.count >= 4 {
+                        let reOffset = Double(CalibrationService.parseInt16(from: response, start: 0)) / 100.0
+                        let weOffset = Double(CalibrationService.parseInt16(from: response, start: 2)) / 100.0
+                        self.VRE_HEX = UInt8(round((400.0 - reOffset) / 5.0))
+                        self.VWE_HEX = UInt8(round((1200.0 - weOffset) / 5.0))
+                    }
+                    
+                    run(index + 1)
+                    return
+                }
+                
+                if cmd.first == 0xB6 {
+                    if response.count < 1 || response[0] != 0x1A {
+                        failAndRetry()
+                        return
                     }
                     run(index + 1)
                     return
                 }
+                
                 if cmd.first == 0xB8 {
+                    if response.count != 3 || response[0] != 0x1A {
+                        failAndRetry()
+                        return
+                    }
+                    
                     session.invalidate()
                     self.delegate?.nfcManager(
                         self,
@@ -119,9 +160,12 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                     )
                     return
                 }
+                
                 run(index + 1)
             }
         }
+        
         run(0)
     }
+    
 }
