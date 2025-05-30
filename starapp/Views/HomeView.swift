@@ -188,9 +188,13 @@ struct HomeView: View {
     @ViewBuilder
     private func scanGuide() -> some View {
         HStack {
-            Image(systemName: "wave.3.up")
-                .font(.system(size: 98))
-                .foregroundStyle(.starMain)
+            Button {
+                appState.startNFCScan()
+            } label: {
+                Image(systemName: "wave.3.up")
+                    .font(.system(size: 98))
+                    .foregroundStyle(.starMain)
+            }
         }
     }
     
