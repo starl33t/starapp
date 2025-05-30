@@ -32,18 +32,11 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
     
     public func tagReaderSession(_ session: NFCTagReaderSession, didDetect tags: [NFCTag]) {
         guard case let .miFare(tag) = tags.first else {
-            session.invalidate(errorMessage: "Invalid tag")
             return
         }
         
         session.connect(to: tags[0]) { [weak self] error in
             guard let self = self else { return }
-            
-            if let error = error {
-                session.invalidate(errorMessage: "Connection failed")
-                self.delegate?.nfcManager(self, didFailWith: error)
-                return
-            }
             
             self.rawCalibPages.removeAll()
             
@@ -95,7 +88,7 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
         session: NFCTagReaderSession,
         completion: @escaping () -> Void
     ) {
-        let maxAttempts = 200
+        let maxAttempts = 5
         var attempt = 0
         
         func run(_ index: Int) {
@@ -109,15 +102,14 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                 guard let self = self else { return }
                 
                 func failAndRetry() {
-                    attempt += 1
-                    if attempt >= maxAttempts {
-                        session.invalidate(errorMessage: "Bring it closer next time!")
-                        return
-                    } else {
-                        run(0)
-                    }
+                  attempt += 1
+                  if attempt < maxAttempts {
+                    run(0)
+                  } else {
+                    session.restartPolling()
+                  }
                 }
-                
+
                 if cmd.first == 0x30 {
                     if response.count < 16 {
                         failAndRetry()
@@ -132,7 +124,6 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                         self.VRE_HEX = UInt8(round((400.0 - reOffset) / 5.0))
                         self.VWE_HEX = UInt8(round((1200.0 - weOffset) / 5.0))
                     }
-                    
                     run(index + 1)
                     return
                 }

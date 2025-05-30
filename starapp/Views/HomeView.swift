@@ -55,10 +55,11 @@ struct HomeView: View {
     
     var body: some View {
         VStack {
+            scanGuide()
             Text("Lactate: \(lactate, specifier: "%.1f") mM")
                 .font(.system(size: 42, weight: .bold))
                 .foregroundColor(.whiteOne)
-                .padding(.top, 142)
+                .padding(.top, 64)
             
             Text("\(adc) ADC | \(current, specifier: "%.1f") µA")
                 .font(.system(size: 28, weight: .bold))
@@ -181,6 +182,15 @@ struct HomeView: View {
             return "\(date.formatAsDayMonthYear()): \(NumberHelper.valueForTab(appState.homeActiveTab, in: selectedSession))"
         } else {
             return "Total: \(NumberHelper.totalValue(for: appState.homeActiveTab, in: sessions))"
+        }
+    }
+    
+    @ViewBuilder
+    private func scanGuide() -> some View {
+        HStack {
+            Image(systemName: "wave.3.up")
+                .font(.system(size: 98))
+                .foregroundStyle(.starMain)
         }
     }
     
