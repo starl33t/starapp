@@ -1,9 +1,7 @@
 import SwiftUI
 
 struct ChatView: View {
-    @EnvironmentObject var appState: AppState
     @AppStorage("userTier") private var userTier: Int = 0
-    @EnvironmentObject var starStore: StarStore
     @EnvironmentObject var viewModel: MessageHelper
     @State private var newMessageContent: String = ""
     @FocusState private var textFieldIsFocused: Bool
@@ -91,10 +89,9 @@ struct ChatView: View {
         }
     }
     
-    
     private var placeholderText: String {
         
-        let maxMessages = userTier == 1 ? 500 : 10
+        let maxMessages = 10
         let messagesLeft = maxMessages - dailyMessageCount
         
         if messagesLeft <= 5 && messagesLeft > 0 {
@@ -108,7 +105,7 @@ struct ChatView: View {
     }
     
     private func updateCanSendMessage() {
-        let maxMessages = userTier == 1 ? 500 : 10
+        let maxMessages = 10
         canSendMessage = dailyMessageCount < maxMessages
     }
     
@@ -165,7 +162,6 @@ struct ChatView: View {
                         dailyMessageCount += 1
                         updateCanSendMessage()
                         isWaitingForResponse = false
-                        await appState.checkSubscriptionStatus(starStore: starStore)
                     } else {
                         print("Thread ID not available.")
                     }
@@ -188,7 +184,7 @@ struct ChatView: View {
         .alert(isPresented: $showAlert) {
             Alert(
                 title: Text("Daily Limit Reached"),
-                message: Text("Please subscribe using the Profile icon (upper left corner) -> Subscriptions."),
+                message: Text("Please wait one day"),
                 dismissButton: .default(Text("OK"))
             )
         }

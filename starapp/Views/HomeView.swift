@@ -4,7 +4,6 @@ import SwiftData
 struct HomeView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var viewModel: MessageHelper
-    @EnvironmentObject var starStore: StarStore
     @Environment(\.modelContext) private var context
     @Namespace private var tabAnimation
     @State private var selectedCapsuleIndex: Int? = nil

@@ -2,7 +2,6 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var appState: AppState
-    @EnvironmentObject var starStore: StarStore
     @StateObject private var messageManager = MessageHelper()
     private let nfcManager = NFCManager()
 
@@ -59,11 +58,6 @@ struct ContentView: View {
                 ChatToolBarPrin()
             default:
                 CalendarToolBarPrin()
-            }
-        }
-        .onAppear {
-            Task {
-                await appState.checkSubscriptionStatus(starStore: starStore)
             }
         }
     }

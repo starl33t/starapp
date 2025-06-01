@@ -47,7 +47,6 @@ class AppState: ObservableObject, NFCManagerDelegate {
             }
         }
     }
-
     
     public func nfcManager(_ manager: NFCManager, didFailWith error: Error) {
         // Handle scan errors here if you want to show an alert
@@ -55,12 +54,6 @@ class AppState: ObservableObject, NFCManagerDelegate {
     }
     
     // MARK: – Helpers
-    
-    @MainActor
-    func checkSubscriptionStatus(starStore: StarStore) async {
-        await starStore.updateCustomerProductStatus()
-        userTier = starStore.purchasedSubscriptions.contains { $0.id == "tier1" } ? 1 : 0
-    }
     
     func updateHomeNavigationTitle() {
         homeTitle = homeActiveTab.navigationTitle

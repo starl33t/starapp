@@ -102,22 +102,21 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                 guard let self = self else { return }
                 
                 func failAndRetry() {
-                  attempt += 1
-                  if attempt < maxAttempts {
-                    run(0)
-                  } else {
-                    session.restartPolling()
-                  }
+                    attempt += 1
+                    if attempt < maxAttempts {
+                        run(0)
+                    } else {
+                        session.restartPolling()
+                    }
                 }
-
-                if cmd.first == 0x30 {
+                
+                switch cmd.first {
+                case 0x30:
                     if response.count < 16 {
                         failAndRetry()
                         return
                     }
-                    
                     self.rawCalibPages[cmd[1]] = response
-                    
                     if cmd[1] == 0x30, response.count >= 4 {
                         let reOffset = Double(CalibrationService.parseInt16(from: response, start: 0)) / 100.0
                         let weOffset = Double(CalibrationService.parseInt16(from: response, start: 2)) / 100.0
@@ -125,34 +124,28 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                         self.VWE_HEX = UInt8(round((1200.0 - weOffset) / 5.0))
                     }
                     run(index + 1)
-                    return
-                }
-                
-                if cmd.first == 0xB6 {
+                    
+                case 0xB6:
                     if response.count < 1 || response[0] != 0x1A {
                         failAndRetry()
                         return
                     }
                     run(index + 1)
-                    return
-                }
-                
-                if cmd.first == 0xB8 {
+                    
+                case 0xB8:
                     if response.count != 3 || response[0] != 0x1A {
                         failAndRetry()
                         return
                     }
-                    
                     session.invalidate()
                     self.delegate?.nfcManager(
                         self,
                         didReadCalibrationPages: self.rawCalibPages,
                         rawAdcResponse: response
                     )
-                    return
+                default:
+                    run(index + 1)
                 }
-                
-                run(index + 1)
             }
         }
         
