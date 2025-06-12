@@ -32,7 +32,9 @@ public class CalibrationService {
             let (power, b) = pair
             return sum + b * pow(Double(rawAdcValue), Double(power))
         }
-        let lactate = current * 0.3
+        let calibration = UserDefaults.standard.double(forKey: "CalibrationFactor")
+        let lactate = current * calibration
+
         
         return CalibrationResult(coeffs: coeffs,
                                   current: current,

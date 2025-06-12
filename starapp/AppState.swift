@@ -11,7 +11,6 @@ class AppState: ObservableObject, NFCManagerDelegate {
     @Published var todayTitle: String = ""
 
     // MARK: – Persistent Storage
-    @AppStorage("userTier") private var userTier: Int = 0
     @AppStorage("Adc")      var adc: Int     = 0
     @AppStorage("Current")  var current: Double = 0.0
     @AppStorage("Lactate")  var lactate: Double = 0.0

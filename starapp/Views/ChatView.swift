@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct ChatView: View {
-    @AppStorage("userTier") private var userTier: Int = 0
     @EnvironmentObject var viewModel: MessageHelper
     @State private var newMessageContent: String = ""
     @FocusState private var textFieldIsFocused: Bool
@@ -44,9 +43,6 @@ struct ChatView: View {
             isprofileSelected = false
             updateCanSendMessage()
             resetMessageCountIfNeeded()
-        }
-        .onChange(of: userTier) {
-            updateCanSendMessage()
         }
         .onTapGesture {
             textFieldIsFocused = false

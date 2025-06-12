@@ -60,9 +60,9 @@ struct HomeView: View {
                 .foregroundColor(.whiteOne)
                 .padding(.top, 64)
             
-            Text("\(adc) ADC | \(current, specifier: "%.1f") µA")
+            Text(LactateHelper.intensity(for: lactate).rawValue)
                 .font(.system(size: 28, weight: .bold))
-                .foregroundColor(.whiteOne)
+                .foregroundColor(.darkTwo)
             Spacer()
         }
         .onChange(of: uidString) {
