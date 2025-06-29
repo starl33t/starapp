@@ -4,6 +4,8 @@ struct HomeToolBarTrail: View {
     @EnvironmentObject var appState: AppState
     @AppStorage("isGraphExpanded") private var isGraphExpanded = false
     @AppStorage("isChatSelected") private var isChatSelected = false
+    @AppStorage("hasSeenChatConsent") private var hasSeenChatConsent = false
+    @State private var showConsent = false
     
     var body: some View {
         HStack {
@@ -20,8 +22,12 @@ struct HomeToolBarTrail: View {
                     .contentShape(Circle()) // Match content shape
             }
             Button {
-                isChatSelected = true
-                appState.selectedTab = 2
+                if hasSeenChatConsent {
+                    isChatSelected = true
+                    appState.selectedTab = 2
+                } else {
+                    showConsent = true
+                }
             } label: {
                 Image(systemName: isChatSelected ? "text.bubble" : "bubble.left")
                     .font(.system(size: 24))
@@ -34,6 +40,20 @@ struct HomeToolBarTrail: View {
             }
         }
         .padding(.horizontal, 4)
-        
+        .alert("Third-party AI Notice", isPresented: $showConsent) {
+            Button("Continue") {
+                hasSeenChatConsent = true
+                isChatSelected = true
+                appState.selectedTab = 2
+            }
+            Button("Cancel", role: .cancel) { }
+        } message: {
+            Text("""
+                  You are about to interact with a third-party AI (ChatGPT). Please do not share any personal or identifying information. Only anonymous wellness data will be sent.
+                  
+                  Privacy Policy:
+                  https://raw.githubusercontent.com/starl33t/intro/main/privacy.md
+                  """)
+        }
     }
 }

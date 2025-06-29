@@ -17,34 +17,9 @@ struct ChatToolbarTrail: View {
         HStack {
             Menu {
                 Button(action: {
-                    sendMessage("Maximize my recovery")
+                    sendMessage("My latest 10 sessions")
                 }) {
-                    Text("Maximize my recovery")
-                }
-                Button(action: {
-                    sendMessage("Make me a recovery plan")
-                }) {
-                    Text("Make me a recovery plan")
-                }
-                Button(action: {
-                    sendMessage("Help me with my injuries")
-                }) {
-                    Text("Help me with my injuries")
-                }
-                Button(action: {
-                    sendMessage("Optimize my training")
-                }) {
-                    Text("Optimize my training")
-                }
-                Button(action: {
-                    sendMessage("Give me a training plan")
-                }) {
-                    Text("Give me a training plan")
-                }
-                Button(action: {
-                    sendMessage("I want to peak")
-                }) {
-                    Text("I want to peak")
+                    Text("Send last 10 sessions")
                 }
             } label: {
                 Image(systemName: "trophy")
@@ -96,7 +71,7 @@ struct ChatToolbarTrail: View {
         dailyMessageCount += 1
         lastMessageDate = Date().formatDayMonth(date: Date())
 
-        let maxMessages = userTier == 1 ? 500 : 10
+        let maxMessages = 10
         canSendMessage = dailyMessageCount < maxMessages
     }
     
@@ -105,11 +80,10 @@ struct ChatToolbarTrail: View {
             return "No sessions."
         }
         
-        return sessions.enumerated().map { index, session in
+        return sessions.prefix(10).enumerated().map { index, session in
             let sessionDescription = describeSession(session)
-            let dateDescription = session.date?.formatSessionDate() ?? ""
             return """
-                Session \(index + 1)@\(dateDescription):
+                Session \(index + 1):
                 \(sessionDescription)
                 """
         }.joined(separator: "\n\n")
