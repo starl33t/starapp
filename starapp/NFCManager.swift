@@ -64,7 +64,7 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                 //Config potentiostat
                 Data([0xB6, 0x11, 0x03]), // 2-electrode, RE not ground, 20 µA,
                 Data([0xB6, 0x18, 0x0F]),  // AFE + DAC + ADC on
-                Data([0xB6, 0x10, 0x36]), // Map WE to IO[1], CE/RE to IO[2]
+                Data([0xB6, 0x10, 0x26]), // Map WE to IO[1], CE/RE to IO[2]
                 Data([0xB6, 0x0A, 0x01]), // LPF = 1250 kHz
                 
                 //ADC sampling mode
