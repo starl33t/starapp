@@ -16,11 +16,11 @@ public class CalibrationService {
         let a0   = Int(parseInt16(from: page28, start: 4))
         let a8   = Int(parseInt16(from: page28, start: 6))
         let a16  = Int(parseInt16(from: page28, start: 8))
-
+        
         let adcRef: [Int: Int] = [
             aM16: -16,
             aM8:  -8,
-            a0:    0,
+            a0:    -2,
             a8:    8,
             a16:  16
         ]
@@ -34,11 +34,11 @@ public class CalibrationService {
         }
         let calibration = UserDefaults.standard.double(forKey: "CalibrationFactor")
         let lactate = current * calibration
-
+        
         
         return CalibrationResult(coeffs: coeffs,
-                                  current: current,
-                                  lactate: lactate)
+                                 current: current,
+                                 lactate: lactate)
     }
     
     /// Solves the 3rd-order polynomial I(ADC)=b0+b1·ADC+b2·ADC²+b3·ADC³
@@ -124,7 +124,7 @@ public class CalibrationService {
     
     public static func parseADC(from response: Data) -> Int {
         guard response.count >= 3 else { return 0 }
-
+        
         let raw16 = UInt16(response[1]) << 8 | UInt16(response[2])
         return Int(Int16(bitPattern: raw16))  // Signed 16-bit
     }

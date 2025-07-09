@@ -11,7 +11,6 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
     public weak var delegate: NFCManagerDelegate?
     private var session: NFCTagReaderSession?
     private var rawCalibPages: [UInt8: Data] = [:]
-    private var VRE_HEX: UInt8 = 0
     private var VWE_HEX: UInt8 = 0
     
     public func beginScanning() {
@@ -59,23 +58,22 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                 
                 // ADC Frequency setup (50 kHz)
                 Data([0xB6, 0x04, 0x8F]), // Divisor = 143
-                Data([0xB6, 0x05, 0x00]), // Prescaler = 0
+                Data([0xB6, 0x05, 0x00]), // Prescaler = 0, essential
                 
                 //Config potentiostat
-                Data([0xB6, 0x11, 0x03]), // 2-electrode, RE not ground, 20 µA,
+                Data([0xB6, 0x11, 0x07]), // 2-electrode, RE to GND, 20 µA,essential
                 Data([0xB6, 0x18, 0x0F]),  // AFE + DAC + ADC on
-                Data([0xB6, 0x10, 0x26]), // Map WE to IO[1], CE/RE to IO[2]
+                Data([0xB6, 0x10, 0x26]), // Map WE to IO[1], CE/RE to IO[2], essential
                 Data([0xB6, 0x0A, 0x01]), // LPF = 1250 kHz
                 
                 //ADC sampling mode
                 Data([0xB6, 0x09, 0x00]), // Single-conversion mode
                 Data([0xB6, 0x08, 0x2D]), // OSR = 1024, avg = 4, signed
-                Data([0xB6, 0x07, 0x81]) // Warm-up clock = 24 cycles
+                Data([0xB6, 0x07, 0x00]) // Warm-up clock = 8 cycles
             ]
             
         case .voltage:
             return [
-                Data([0xB6, 0x0E, VRE_HEX]), // Set RE voltage
                 Data([0xB6, 0x0F, VWE_HEX]), // Set WE voltage
                 Data([0xB8, 0x00])          // GetADC: reads latest continuous value
             ]
@@ -118,9 +116,7 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                     }
                     self.rawCalibPages[cmd[1]] = response
                     if cmd[1] == 0x30, response.count >= 4 {
-                        let reOffset = Double(CalibrationService.parseInt16(from: response, start: 0)) / 100.0
                         let weOffset = Double(CalibrationService.parseInt16(from: response, start: 2)) / 100.0
-                        self.VRE_HEX = UInt8(round((400.0 - reOffset) / 5.0))
                         self.VWE_HEX = UInt8(round((1200.0 - weOffset) / 5.0))
                     }
                     run(index + 1)
