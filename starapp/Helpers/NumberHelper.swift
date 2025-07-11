@@ -155,4 +155,13 @@ struct NumberHelper {
             return String(format: "%d W", session.power ?? 0)  // Format as integer
         }
     }
+    
+    static func voltageFormatter() -> NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        formatter.groupingSeparator = "" // remove "1.200" style
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        return formatter
+    }
 }

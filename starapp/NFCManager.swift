@@ -50,6 +50,8 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
     private func buildCommands(phase: CommandPhase) -> [Data] {
         switch phase {
         case .setup:
+            let rawValue = UserDefaults.standard.integer(forKey: "AdcLpfSetting") & 0b11
+            let lpfSetting = UInt8(rawValue)
             return [
                 // Calibration & Offset
                 Data([0xB4, 0xFF]), // Clear error flags
@@ -64,7 +66,7 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                 Data([0xB6, 0x11, 0x07]), // 2-electrode, RE to GND, 20 µA,essential
                 Data([0xB6, 0x18, 0x0F]),  // AFE + DAC + ADC on
                 Data([0xB6, 0x10, 0x26]), // Map WE to IO[1], CE/RE to IO[2], essential
-                Data([0xB6, 0x0A, 0x01]), // LPF = 1250 kHz
+                Data([0xB6, 0x0A, lpfSetting]), // LPF = 1250 kHz
                 
                 //ADC sampling mode
                 Data([0xB6, 0x09, 0x00]), // Single-conversion mode
@@ -75,7 +77,7 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
         case .voltage:
             return [
                 Data([0xB6, 0x0F, VWE_HEX]), // Set WE voltage
-                Data([0xB8, 0x00])          // GetADC: reads latest continuous value
+                Data([0xB8, 0x00])          // GetADC: reads latest value
             ]
         }
     }
@@ -117,7 +119,8 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                     self.rawCalibPages[cmd[1]] = response
                     if cmd[1] == 0x30, response.count >= 4 {
                         let weOffset = Double(CalibrationService.parseInt16(from: response, start: 2)) / 100.0
-                        self.VWE_HEX = UInt8(round((1200.0 - weOffset) / 5.0))
+                        let voltage = UserDefaults.standard.double(forKey: "WorkingElectrodeVoltage")
+                        self.VWE_HEX = UInt8(round((voltage - weOffset) / 5.0)) //1200 mV
                     }
                     run(index + 1)
                     

@@ -4,7 +4,6 @@ import SwiftData
 struct AccountView: View {
     @State private var deleteOffset: CGFloat = 0
     @State private var showDeleteAlert = false
-    @State private var showingSheet = false
     @State private var startPositionPercentage: CGFloat = 0.025
     @State private var deleteUser = false
     @AppStorage("Pace") var paceToggle: Bool = true
@@ -12,8 +11,6 @@ struct AccountView: View {
     @AppStorage("Heartrate") var heartRateToggle: Bool = true
     @AppStorage("Distance") var distanceToggle: Bool = true
     @AppStorage("Duration") var durationToggle: Bool = true
-    @AppStorage("CalibrationFactor") private var calibrationFactor: Double = 0.10
-    @State private var calibrationIndex: Int = 10  // 10 → 0.1
     @FocusState private var textCalibrationFieldIsFocused: Bool
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
@@ -54,28 +51,6 @@ struct AccountView: View {
                     .padding()
                     .foregroundColor(.whiteOne)
                     .tint(.green)
-                    HStack {
-                        Text("Calibration")
-                            .foregroundColor(.whiteOne)
-                        Picker("Calibration", selection: $calibrationIndex) {
-                            ForEach(1...100, id: \.self) { index in
-                                Text("\(index)").tag(index)
-                            }
-                        }
-                        .pickerStyle(.wheel)
-                        .frame(width: 100, height: 110)
-                        
-                        Button(action: {
-                            withAnimation(.easeOut(duration: 0.4)) {
-                                calibrationIndex = 10        // Scroll to 0.10 smoothly
-                            }
-                        }) {
-                            Image(systemName: "arrow.counterclockwise")
-                                .font(.system(size: 24))
-                                .foregroundColor(.darkOne)
-                                .padding(.leading, 8)
-                        }
-                    }
                 }
                 .padding()
                 .background(Color.starBlack)
@@ -138,13 +113,6 @@ struct AccountView: View {
             .padding()
             .background(Color.starBlack)
             .cornerRadius(16)
-            .onAppear {
-                showingSheet = true
-                calibrationIndex = Int(calibrationFactor * 100)
-            }
-            .onChange(of: calibrationIndex) { _,newValue in
-                calibrationFactor = Double(newValue) / 100.0
-            }
             .alert(isPresented: $showDeleteAlert) {
                 Alert(
                     title: Text("Delete All Data"),
@@ -171,7 +139,6 @@ struct AccountView: View {
             modelContext.delete(session)
         }
         do {
-            calibrationIndex = 10
             paceToggle = true
             powerToggle = true
             heartRateToggle = true

@@ -11,6 +11,7 @@ struct HomeToolBarLead: View {
     @EnvironmentObject var appState: AppState
     @State private var showAccountSheet = false
     @State private var showSupportSheet = false
+    @State private var showSettingSheet = false
     @AppStorage("isCalendarSelected") private var isCalendarSelected = false
     
     var body: some View {
@@ -18,6 +19,9 @@ struct HomeToolBarLead: View {
             FloatingButtonVertical {
                 FloatingActionVertical(symbols: ["person"], text: "Profile ") {
                     showAccountSheet = true
+                }
+                FloatingActionVertical(symbols: ["cpu"], text: "Config  ") {
+                    showSettingSheet = true
                 }
                 FloatingActionVertical(symbols: ["questionmark.circle"], text: "Help    ") {
                     showSupportSheet = true
@@ -48,6 +52,11 @@ struct HomeToolBarLead: View {
         .sheet(isPresented: $showAccountSheet) {
             AccountView()
                 .modifier(CloseButtonModifier(onClose: {showAccountSheet = false}))
+            
+        }
+        .sheet(isPresented: $showSettingSheet) {
+            SettingView()
+                .modifier(CloseButtonModifier(onClose: {showSettingSheet = false}))
             
         }
         .sheet(isPresented: $showSupportSheet) {
