@@ -15,20 +15,37 @@ class AppState: ObservableObject, NFCManagerDelegate {
     @AppStorage("Current")  var current: Double = 0.0
     @AppStorage("Lactate")  var lactate: Double = 0.0
     @AppStorage("uidString") var uidString: String = ""
+    @AppStorage("CalibrationFactor") var calibrationFactor: Double = 1.0
+    @AppStorage("WorkingElectrodeVoltage") var workingElectrodeVoltage: Double = 1200.0
+    @AppStorage("AdcLpfSetting") var adcLpfSetting: Int = 1
+
 
     
     // MARK: – NFC
     private let nfcManager = NFCManager()
     
     init() {
-        // wire up NFC delegate
+        ensureAppStorageDefaults()
         nfcManager.delegate = self
         
         updateHomeNavigationTitle()
     }
-    
     // MARK: – NFCManagerDelegate
     
+    func ensureAppStorageDefaults() {
+        let defaults = UserDefaults.standard
+
+        if defaults.object(forKey: "CalibrationFactor") == nil {
+            defaults.set(1.0, forKey: "CalibrationFactor")
+        }
+        if defaults.object(forKey: "WorkingElectrodeVoltage") == nil {
+            defaults.set(1200.0, forKey: "WorkingElectrodeVoltage")
+        }
+        if defaults.object(forKey: "AdcLpfSetting") == nil {
+            defaults.set(1, forKey: "AdcLpfSetting")
+        }
+    }
+
     func nfcManager(_ manager: NFCManager,
                     didReadCalibrationPages pages: [UInt8: Data],
                     rawAdcResponse: Data) {

@@ -1,13 +1,12 @@
 import SwiftUI
 
 struct SettingView: View {
-    //@State private var showingSheet = false
-    @AppStorage("CalibrationFactor") private var calibrationFactor: Double = 1.0
+    @EnvironmentObject var appState: AppState
     @State private var calibrationIndex: Int = 100  // 100 → 1.0
     @FocusState private var textCalibrationFieldIsFocused: Bool
-    @AppStorage("WorkingElectrodeVoltage") private var workingElectrodeVoltage: Double = 1200.0
+   
     @State private var voltageIndex: Double = 1200.0
-    @AppStorage("AdcLpfSetting") private var adcLpfSetting: Int = 1
+   
     @State private var lpfIndex: Int = 1
 
     var body: some View {
@@ -110,18 +109,18 @@ struct SettingView: View {
             .background(Color.starBlack)
             .cornerRadius(16)
             .onAppear {
-                calibrationIndex = Int(calibrationFactor * 100)
-                voltageIndex = workingElectrodeVoltage
-                lpfIndex = adcLpfSetting
+                calibrationIndex = Int(appState.calibrationFactor * 100)
+                voltageIndex = appState.workingElectrodeVoltage
+                lpfIndex = appState.adcLpfSetting
             }
             .onChange(of: calibrationIndex) { _,newValue in
-                calibrationFactor = Double(newValue) / 100.0
+                appState.calibrationFactor = Double(newValue) / 100.0
             }
             .onChange(of: voltageIndex) { _, newValue in
-                workingElectrodeVoltage = newValue
+                appState.workingElectrodeVoltage = newValue
             }
             .onChange(of: lpfIndex) { _, newValue in
-                adcLpfSetting = newValue
+                appState.adcLpfSetting = newValue
             }
         }
         .onTapGesture {

@@ -35,7 +35,6 @@ public class CalibrationService {
         let calibration = UserDefaults.standard.double(forKey: "CalibrationFactor")
         let lactate = current * calibration
         
-        
         return CalibrationResult(coeffs: coeffs,
                                  current: current,
                                  lactate: lactate)
