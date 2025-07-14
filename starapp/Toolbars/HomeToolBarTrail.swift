@@ -2,25 +2,12 @@ import SwiftUI
 
 struct HomeToolBarTrail: View {
     @EnvironmentObject var appState: AppState
-    @AppStorage("isGraphExpanded") private var isGraphExpanded = false
     @AppStorage("isChatSelected") private var isChatSelected = false
     @AppStorage("hasSeenChatConsent") private var hasSeenChatConsent = false
     @State private var showConsent = false
     
     var body: some View {
-        HStack {
-            Button {
-                isGraphExpanded.toggle()
-            } label: {
-                Image(systemName: isGraphExpanded ? "chart.bar.fill" : "chart.bar")
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(isGraphExpanded ? .starMain : .whiteOne)
-                    .symbolEffect(.bounce, value: isGraphExpanded)
-                    .frame(width: 50, height: 50) // Matching button size
-                    .background(Circle().fill(Color.darkOne)) // Same circular background
-                    .contentShape(Circle()) // Match content shape
-            }
+        VStack {
             Button {
                 if hasSeenChatConsent {
                     isChatSelected = true
@@ -38,7 +25,19 @@ struct HomeToolBarTrail: View {
                     .background(Circle().fill(Color.darkOne)) // Same circular background
                     .contentShape(Circle()) // Match content shape
             }
+            Button {
+                appState.selectedTab = 1
+            }  label: {
+                Image(systemName: "gauge.with.dots.needle.bottom.100percent")
+                    .font(.system(size: 26))
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.whiteOne)
+                    .frame(width: 50, height: 50)
+                    .background(Circle().fill(Color.darkOne))
+                    .contentShape(Circle())
+            }
         }
+        .padding(.vertical, 4)
         .padding(.horizontal, 4)
         .alert("Third-party AI Notice", isPresented: $showConsent) {
             Button("Continue") {

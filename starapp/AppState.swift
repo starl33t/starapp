@@ -36,15 +36,24 @@ class AppState: ObservableObject, NFCManagerDelegate {
         let defaults = UserDefaults.standard
 
         if defaults.object(forKey: "CalibrationFactor") == nil {
-            defaults.set(1.0, forKey: "CalibrationFactor")
+            let defaultValue = 1.0
+            defaults.set(defaultValue, forKey: "CalibrationFactor")
+            calibrationFactor = defaultValue
         }
+
         if defaults.object(forKey: "WorkingElectrodeVoltage") == nil {
-            defaults.set(1200.0, forKey: "WorkingElectrodeVoltage")
+            let defaultValue = 1200.0
+            defaults.set(defaultValue, forKey: "WorkingElectrodeVoltage")
+            workingElectrodeVoltage = defaultValue
         }
+
         if defaults.object(forKey: "AdcLpfSetting") == nil {
-            defaults.set(1, forKey: "AdcLpfSetting")
+            let defaultValue = 1
+            defaults.set(defaultValue, forKey: "AdcLpfSetting")
+            adcLpfSetting = defaultValue
         }
     }
+
 
     func nfcManager(_ manager: NFCManager,
                     didReadCalibrationPages pages: [UInt8: Data],

@@ -3,8 +3,8 @@ import SwiftUI
 
 struct CalendarToolBarLead: View {
     @EnvironmentObject var appState: AppState
-    @AppStorage("isCalendarSelected") private var isCalendarSelected = false
     @AppStorage("showSpecificTrainingView") var showSpecificTrainingView = false
+    @AppStorage("isGraphExpanded") private var isGraphExpanded = false
     var body: some View {
         HStack {
             if showSpecificTrainingView {
@@ -22,17 +22,16 @@ struct CalendarToolBarLead: View {
                         .contentShape(Circle())
                 }
                 Button {
-                    isCalendarSelected = false
-                    appState.selectedTab = 0
+                    isGraphExpanded.toggle()
                 }  label: {
-                    Image(systemName: isCalendarSelected ? "gauge.with.dots.needle.bottom.100percent" : "gauge.with.dots.needle.bottom.0percent")
-                        .font(.system(size: 26)) // Increase symbol size
+                    Image(systemName: isGraphExpanded ? "chart.bar.fill" : "chart.bar")
+                        .font(.title3)
                         .fontWeight(.semibold)
-                        .foregroundStyle(isCalendarSelected ? .starMain : .whiteOne)
-                        .symbolEffect(.bounce, value: isCalendarSelected)
+                        .foregroundStyle(isGraphExpanded ? .starMain : .whiteOne)
+                        .symbolEffect(.bounce, value: isGraphExpanded)
                         .frame(width: 50, height: 50) // Matching button size
-                        .background(Circle().fill(Color.darkOne))
-                        .contentShape(Circle())
+                        .background(Circle().fill(Color.darkOne)) // Same circular background
+                        .contentShape(Circle()) // Match content shape
                 }
             }
         }

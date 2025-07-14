@@ -12,7 +12,6 @@ struct HomeToolBarLead: View {
     @State private var showAccountSheet = false
     @State private var showSupportSheet = false
     @State private var showSettingSheet = false
-    @AppStorage("isCalendarSelected") private var isCalendarSelected = false
     
     var body: some View {
         HStack {
@@ -33,19 +32,6 @@ struct HomeToolBarLead: View {
                     .foregroundStyle(isExpanded ? .starMain : .whiteOne)
                     .rotationEffect(.init(degrees: isExpanded ? 135 : 0))
                     .scaleEffect(isExpanded ? 1 : 1.2 )
-            }
-            Button {
-                isCalendarSelected = true
-                appState.selectedTab = 1
-            }  label: {
-                Image(systemName: isCalendarSelected ? "gauge.with.dots.needle.bottom.100percent" : "gauge.with.dots.needle.bottom.0percent")
-                    .font(.system(size: 26)) // Increase symbol size
-                    .fontWeight(.semibold)
-                    .foregroundStyle(isCalendarSelected ? .starMain : .whiteOne)
-                    .symbolEffect(.bounce, value: isCalendarSelected)
-                    .frame(width: 50, height: 50) // Matching button size
-                    .background(Circle().fill(Color.darkOne))
-                    .contentShape(Circle())
             }
         }
         .padding(.horizontal, 4)

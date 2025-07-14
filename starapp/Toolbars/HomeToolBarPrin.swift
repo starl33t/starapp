@@ -14,7 +14,7 @@ struct HomeToolBarPrin: View {
                     .fontWeight(.semibold)
                     .foregroundStyle(.starMain)
                     .frame(width: 124, height: 124)
-                    .padding(.bottom, 132)
+                    .padding(.bottom, 92)
             }
         }
     }

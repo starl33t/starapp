@@ -11,6 +11,7 @@ struct AccountView: View {
     @AppStorage("Heartrate") var heartRateToggle: Bool = true
     @AppStorage("Distance") var distanceToggle: Bool = true
     @AppStorage("Duration") var durationToggle: Bool = true
+    @AppStorage("Research") var researchToggle: Bool = false
     @FocusState private var textCalibrationFieldIsFocused: Bool
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
@@ -47,6 +48,12 @@ struct AccountView: View {
                     .tint(.green)
                     HStack {
                         Toggle("Power", isOn: $powerToggle)
+                    }
+                    .padding()
+                    .foregroundColor(.whiteOne)
+                    .tint(.green)
+                    HStack {
+                        Toggle("Research Mode", isOn: $researchToggle)
                     }
                     .padding()
                     .foregroundColor(.whiteOne)
@@ -144,6 +151,7 @@ struct AccountView: View {
             heartRateToggle = true
             distanceToggle = true
             durationToggle = true
+            researchToggle = false
             try modelContext.save()
             
             dismiss()
