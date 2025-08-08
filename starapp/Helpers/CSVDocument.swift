@@ -2,7 +2,8 @@ import SwiftUI
 import SwiftData
 import UniformTypeIdentifiers
 
-struct CSVDocument: FileDocument {
+
+struct CSVDocument: FileDocument, @unchecked Sendable {
     static var readableContentTypes: [UTType] { [.commaSeparatedText] }
     
     var sessions: [Session]
@@ -59,5 +60,25 @@ extension CSVDocument {
             return "\(distance),\(duration),\(pace),\(power),\(heartRate),\(lactate),\(date),\(title),\(uidString),\(adc),\(current)"
         }.joined(separator: "\n")
         return csvString
+    }
+}
+
+struct ScanCSVDocument {
+    let dataPoints: [(time: TimeInterval, current: Double)]
+
+    var csvString: String {
+        let header = "Time (s),Current (µA)\n"
+        let rows = dataPoints.map { point in
+            let timeStr = String(format: "%.3f", point.time)
+            let currentStr = String(format: "%.3f", point.current)
+            return "\(timeStr),\(currentStr)"
+        }
+        .joined(separator: "\n")
+
+        return header + rows
+    }
+
+    var csvData: Data {
+        csvString.data(using: .utf8) ?? Data()
     }
 }

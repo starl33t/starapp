@@ -26,38 +26,32 @@ struct AccountView: View {
                         Toggle("Duration", isOn: $durationToggle)
                     }
                     .padding()
-                    .foregroundColor(.whiteOne)
-                    .tint(.green)
+                  
                     HStack {
                         Toggle("Distance", isOn: $distanceToggle)
                     }
                     .padding()
-                    .foregroundColor(.whiteOne)
-                    .tint(.green)
+                    
                     HStack {
                         Toggle("Heartrate", isOn: $heartRateToggle)
                     }
                     .padding()
-                    .foregroundColor(.whiteOne)
-                    .tint(.green)
+                    
                     HStack {
                         Toggle("Pace", isOn: $paceToggle)
                     }
                     .padding()
-                    .foregroundColor(.whiteOne)
-                    .tint(.green)
+                    
                     HStack {
                         Toggle("Power", isOn: $powerToggle)
                     }
                     .padding()
-                    .foregroundColor(.whiteOne)
-                    .tint(.green)
+                   
                     HStack {
                         Toggle("Research Mode", isOn: $researchToggle)
                     }
                     .padding()
-                    .foregroundColor(.whiteOne)
-                    .tint(.green)
+                    
                 }
                 .padding()
                 .background(Color.starBlack)

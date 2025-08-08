@@ -68,8 +68,10 @@ struct ChatToolbarTrail: View {
     }
     
     private func updateCanSendMessage() {
-        dailyMessageCount += 1
-        lastMessageDate = Date().formatDayMonth(date: Date())
+        if lastMessageDate != Date().formatDayMonth(date: Date()) {
+            dailyMessageCount = 0
+            lastMessageDate = Date().formatDayMonth(date: Date())
+        }
 
         let maxMessages = 10
         canSendMessage = dailyMessageCount < maxMessages

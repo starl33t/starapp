@@ -11,7 +11,14 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
     public weak var delegate: NFCManagerDelegate?
     private var session: NFCTagReaderSession?
     private var rawCalibPages: [UInt8: Data] = [:]
+    private var VRE_HEX: UInt8 = 0
     private var VWE_HEX: UInt8 = 0
+    private unowned let appState: AppState  // ✅ injected instead of cast
+    private var lastADCResponse: Data?
+    
+    init(appState: AppState) {
+        self.appState = appState
+    }
     
     public func beginScanning() {
         guard NFCTagReaderSession.readingAvailable else {
@@ -30,56 +37,68 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
     }
     
     public func tagReaderSession(_ session: NFCTagReaderSession, didDetect tags: [NFCTag]) {
-        guard case let .miFare(tag) = tags.first else {
-            return
-        }
+        guard case let .miFare(tag) = tags.first else { return }
         
         session.connect(to: tags[0]) { [weak self] error in
             guard let self = self else { return }
             
             self.rawCalibPages.removeAll()
+            let startTime = Date()
             
-            self.executeCommands(self.buildCommands(phase: .setup), tag: tag, session: session) {
-                self.executeCommands(self.buildCommands(phase: .voltage), tag: tag, session: session) {}
+            // Run setup ONCE at the start of each scan
+            self.executeCommands(self.buildSetupCommands(), tag: tag, session: session) {
+                
+                func performVoltageLoop() {
+                    let voltageCommands: [Data] = [
+                        Data([0xB6, 0x0F, self.VWE_HEX]),
+                        Data([0xB8, 0x00])
+                    ]
+
+                    self.executeCommands(voltageCommands, tag: tag, session: session) {
+                        if let response = self.lastADCResponse {
+                            self.delegate?.nfcManager(self, didReadCalibrationPages: self.rawCalibPages, rawAdcResponse: response)
+                        }
+
+                        let time = self.appState.scanTime
+                        let isResearch = self.appState.research
+                        let elapsed = Date().timeIntervalSince(startTime)
+                        
+                        if isResearch, elapsed < time {
+                            let timeLeft = Int(time - elapsed)
+                            session.alertMessage = "Scanning: \(timeLeft) seconds left"
+                            performVoltageLoop()
+                        } else {
+                            session.invalidate()
+                        }
+                    }
+                }
+                performVoltageLoop()
             }
         }
     }
     
-    private enum CommandPhase { case setup, voltage }
-    
-    private func buildCommands(phase: CommandPhase) -> [Data] {
-        switch phase {
-        case .setup:
-            let rawValue = UserDefaults.standard.integer(forKey: "AdcLpfSetting") & 0b11
-            let lpfSetting = UInt8(rawValue)
-            return [
-                // Calibration & Offset
-                Data([0xB4, 0xFF]), // Clear error flags
-                Data([0x30, 0x28]), // 5 ADC calibration points (-16 µA, -8 µA, 0 µA, +8 µA, +16 µA)
-                Data([0x30, 0x30]), // Page 0x30 → RE_BUFF_OFFSET, WE_BUFF_OFFSET
-                
-                // ADC Frequency setup (50 kHz)
-                Data([0xB6, 0x04, 0x8F]), // Divisor = 143
-                Data([0xB6, 0x05, 0x00]), // Prescaler = 0, essential
-                
-                //Config potentiostat
-                Data([0xB6, 0x11, 0x07]), // 2-electrode, RE to GND, 20 µA,essential
-                Data([0xB6, 0x18, 0x0F]),  // AFE + DAC + ADC on
-                Data([0xB6, 0x10, 0x26]), // Map WE to IO[1], CE/RE to IO[2], essential
-                Data([0xB6, 0x0A, lpfSetting]), // LPF = 1250 kHz
-                
-                //ADC sampling mode
-                Data([0xB6, 0x09, 0x00]), // Single-conversion mode
-                Data([0xB6, 0x08, 0x2D]), // OSR = 1024, avg = 4, signed
-                Data([0xB6, 0x07, 0x00]) // Warm-up clock = 8 cycles
-            ]
+    private func buildSetupCommands() -> [Data] {
+        return [
+            // Calibration & Offset
+            Data([0xB4, 0xFF]),
+            Data([0x30, 0x28]),
+            Data([0x30, 0x30]),
             
-        case .voltage:
-            return [
-                Data([0xB6, 0x0F, VWE_HEX]), // Set WE voltage
-                Data([0xB8, 0x00])          // GetADC: reads latest value
-            ]
-        }
+            // ADC Frequency setup
+            Data([0xB6, 0x04, 0x8F]),
+            Data([0xB6, 0x05, 0x00]),
+            
+            // Potentiostat config
+            Data([0xB6, 0x11, 0x07]),
+            Data([0xB6, 0x18, 0x0F]),
+            Data([0xB6, 0x10, 0x26]),
+            Data([0xB6, 0x0A, 0x01]),
+            
+            // ADC sampling mode
+            Data([0xB6, 0x09, 0x00]),
+            Data([0xB6, 0x08, 0x2D]),
+            Data([0xB6, 0x07, 0x00])
+        ]
     }
     
     private func executeCommands(
@@ -104,7 +123,7 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                 func failAndRetry() {
                     attempt += 1
                     if attempt < maxAttempts {
-                        run(0)
+                        run(index)
                     } else {
                         session.restartPolling()
                     }
@@ -119,7 +138,7 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                     self.rawCalibPages[cmd[1]] = response
                     if cmd[1] == 0x30, response.count >= 4 {
                         let weOffset = Double(CalibrationService.parseInt16(from: response, start: 2)) / 100.0
-                        let voltage = UserDefaults.standard.double(forKey: "WorkingElectrodeVoltage")
+                        let voltage = appState.workingElectrodeVoltage
                         self.VWE_HEX = UInt8(round((voltage - weOffset) / 5.0)) //1200 mV
                     }
                     run(index + 1)
@@ -136,12 +155,8 @@ public class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                         failAndRetry()
                         return
                     }
-                    session.invalidate()
-                    self.delegate?.nfcManager(
-                        self,
-                        didReadCalibrationPages: self.rawCalibPages,
-                        rawAdcResponse: response
-                    )
+                    self.lastADCResponse = response
+                    completion()
                 default:
                     run(index + 1)
                 }

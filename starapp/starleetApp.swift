@@ -4,12 +4,14 @@ import SwiftData
 @main
 struct starappApp: App {
     @StateObject private var appState = AppState()
+    @StateObject private var messageManager = MessageHelper()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(appState)
+                .environmentObject(messageManager)
         }
-        .environmentObject(appState)
         .modelContainer(for: [Session.self])
     }
 }

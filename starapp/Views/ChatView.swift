@@ -15,7 +15,7 @@ struct ChatView: View {
         ZStack {
             VStack {
                 HStack (spacing: 12){
-                    socialTelegram()
+                    socialWhatsapp()
                     socialReddit()
                 }
                 ScrollView {
@@ -50,20 +50,20 @@ struct ChatView: View {
     }
     
     @ViewBuilder
-    private func socialTelegram() -> some View {
+    private func socialWhatsapp() -> some View {
         HStack {
             Button(action: {
-                if let url = URL(string: "https://t.me/starleetproject") {
+                if let url = URL(string: "https://chat.whatsapp.com/BgO9im6bkCKH90DsnAaU3k") {
                     UIApplication.shared.open(url)
                 }
             }) {
-                Image(systemName: "paperplane.fill")
+                Image(systemName: "phone.circle.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 18, height: 18)
                     .foregroundStyle(.whiteOne)
                     .padding(6)
-                    .background(Circle().fill(Color.blue))
+                    .background(Circle().fill(Color.green))
                 
             }
         }

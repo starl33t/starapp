@@ -2,23 +2,21 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var appState: AppState
-    @StateObject private var messageManager = MessageHelper()
-    private let nfcManager = NFCManager()
+    @EnvironmentObject var messageManager: MessageHelper
 
-    
     var body: some View {
         NavigationStack{
             ZStack {
                 Color.starBlack.ignoresSafeArea()
                 switch appState.selectedTab {
                 case 0:
-                    HomeView().environmentObject(messageManager)
+                    HomeView()
                 case 1:
                     CalendarView()
                 case 2:
-                    ChatView().environmentObject(messageManager)
+                    ChatView()
                 default:
-                    HomeView().environmentObject(messageManager)
+                    HomeView()
                 }
             }
             .navigationBarHidden(true)

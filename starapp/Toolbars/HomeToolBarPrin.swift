@@ -2,12 +2,13 @@ import SwiftUI
 
 struct HomeToolBarPrin: View {
     @EnvironmentObject var appState: AppState
-    @AppStorage("showTrainingList") var showTrainingList = false
+    @AppStorage("isprofileSelected") private var isprofileSelected = false
   
     var body: some View {
         HStack {
             Button {
                 appState.startNFCScan()
+                isprofileSelected = false
             } label: {
                 Image(systemName: "aqi.medium")
                     .font(.system(size: 82))
