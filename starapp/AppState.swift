@@ -97,7 +97,9 @@ class AppState: ObservableObject, NFCManagerDelegate {
     // Call this when you want to start a scan, e.g. from your toolbar:
     func startNFCScan() {
         isScanning = true
-        currentScanValues.removeAll()
+        if research {
+            currentScanValues.removeAll()
+        }
         scanStartTime = Date()
         nfcManager.beginScanning()
     } 

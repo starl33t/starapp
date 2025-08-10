@@ -25,16 +25,14 @@ struct CalendarView: View {
     private let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     
     init() {
-        let startOfLast7Days = Calendar.current.date(byAdding: .day, value: -365, to: Date())!
-        let endOfValidPeriod = Date() // Today
-        
+        let start = Calendar.iso8601UTC.date(byAdding: .day, value: -365, to: Date())!
+        let end = Date()
+
         _allSessions = Query(
             filter: #Predicate<Session> { session in
-                if let date = session.date {
-                    return date >= startOfLast7Days && date <= endOfValidPeriod
-                } else {
-                    return false
-                }
+                if let d = session.date {
+                    return d >= start && d <= end
+                } else { return false }
             },
             sort: \Session.date, order: .forward
         )
@@ -241,7 +239,7 @@ struct CalendarView: View {
                         }
                     }
                 }
-                .disabled(NumberHelper.filteredSessions(for: tab, in: sessionsToUse).isEmpty)
+                .disabled(NumberHelper.filteredSessions(for: tab, in: sessions2).isEmpty)
             }
         }
         .animation(.smooth(duration: 0.3, extraBounce: 0), value: appState.homeActiveTab)
@@ -250,27 +248,49 @@ struct CalendarView: View {
     @ViewBuilder
     private func sessionChartView(sessions: [Session]) -> some View {
         let filteredSessions = NumberHelper.filteredSessions(for: appState.homeActiveTab, in: sessions)
-        let dailyAverages = NumberHelper.calculateDailyAverages(for: appState.homeActiveTab, in: filteredSessions)
-        
-        let keyPath = \ (Date, Double).1
-        let ranges = dailyAverages.map { (element: (Date, Double)) -> Range<Double> in
-            let averageValue = element[keyPath: keyPath]
-            let lowerBound = averageValue - (averageValue * 0.1)
-            let upperBound = averageValue + (averageValue * 0.1)
-            return lowerBound..<upperBound
+
+        // 1) Bucket sessions by UTC day
+        let cal = Calendar.iso8601UTC
+        let bucketsMap: [Date: [Session]] = Dictionary(grouping: filteredSessions) { s in
+            cal.startOfDay(for: s.date ?? Date.distantPast)
         }
-        if let maxMagnitude = ranges.map({ magnitude(of: $0) }).max(), maxMagnitude > 0 {
-            let overallRange = rangeOfRanges(ranges)
+
+        // 2) Compute daily averages using your helper and align them with buckets
+        //    Assumes calculateDailyAverages returns [(day: Date, avg: Double)]
+        let dailyAverages: [(day: Date, avg: Double)] =
+            NumberHelper.calculateDailyAverages(for: appState.homeActiveTab, in: filteredSessions)
+                .map { ($0.0, $0.1) }
+
+        // 3) Build a render-ready array that includes the sessions for each day
+        let buckets: [(day: Date, avg: Double, sessions: [Session])] =
+            dailyAverages.map { day, avg in
+                let key = cal.startOfDay(for: day)
+                return (day: key, avg: avg, sessions: bucketsMap[key] ?? [])
+            }
+
+        // 4) Prepare ranges for your HomeCapsuleGraph
+        let ranges: [Range<Double>] = buckets.map { b in
+            let lower = b.avg - (b.avg * 0.1)
+            let upper = b.avg + (b.avg * 0.1)
+            return lower..<upper
+        }
+
+        if
+            let maxMagnitude = ranges.map({ magnitude(of: $0) }).max(),
+            maxMagnitude > 0,
+            let overallRange = Optional(rangeOfRanges(ranges))  // uses your existing helpers
+        {
             let heightRatio = 1 - CGFloat(maxMagnitude / magnitude(of: overallRange))
+
             GeometryReader { proxy in
                 let maxCapsuleWidth: CGFloat = 10
                 HStack(alignment: .bottom, spacing: proxy.size.width / 120) {
-                    ForEach(0..<dailyAverages.count, id: \.self) { index in
-                        let averageValue = dailyAverages[index][keyPath: keyPath]
-                        let range = ranges[index]
-                        let session = filteredSessions[index]
+                    ForEach(buckets.indices, id: \.self) { index in
+                        let bucket = buckets[index]
+                        let range  = ranges[index]
+                        let avg    = bucket.avg
                         let isPaceTab = appState.homeActiveTab == .pace
-                        
+
                         HomeCapsuleGraph(
                             index: index,
                             color: selectedCapsuleIndex == index ? .starMain : .gray,
@@ -280,14 +300,16 @@ struct CalendarView: View {
                             isPace: isPaceTab
                         )
                         .frame(maxWidth: maxCapsuleWidth)
-                        .animation(.ripple(index: index), value: averageValue)
+                        .animation(.ripple(index: index), value: avg)
                         .onTapGesture {
                             if selectedCapsuleIndex == index {
                                 selectedCapsuleIndex = nil
                                 selectedSession = nil
                             } else {
                                 selectedCapsuleIndex = index
-                                selectedSession = session
+                                // pick a representative session for this day (e.g., latest in that day)
+                                let rep = bucket.sessions.max { ($0.date ?? .distantPast) < ($1.date ?? .distantPast) }
+                                selectedSession = rep ?? bucket.sessions.first
                             }
                         }
                     }
@@ -361,14 +383,12 @@ struct CalendarView: View {
        }
     
     private func createNewSession(title: String) {
-        let newSession = Session(
-            lactate: 0.0,  // Set default values or user input
-            date: Date(),  // Use today's date
-            title: title   // Set the session title from the FloatingAction text
-        )
+        let newSession = Session(lactate: 0.0, date: Date(), title: title)
         context.insert(newSession)
-        try? context.save()  // Save the new session to the context
-        sessionCache[Date(), default: []].append(newSession)  // Optionally update session cache
+        try? context.save()
+
+        let key = Calendar.iso8601UTC.startOfDay(for: Date())
+        sessionCache[key, default: []].append(newSession)
     }
     
     private func daysOfWeekHeader() -> some View {
@@ -415,24 +435,29 @@ struct DayView: View {
     let sessions: [Session]
     let currentDate: Date
     @Environment(\.modelContext) private var context
-    
+    @Environment(\.calendar) private var calendar // stays for bucketing/ids if needed
+
     var body: some View {
+        // Use local calendar for UI markers
+        let uiCal = Calendar.current
+
         ZStack(alignment: .top) {
-            if Calendar.current.component(.day, from: day) == 1 {
-                Text(day.formatted(.dateTime.month(.abbreviated)))
+            if uiCal.component(.day, from: day) == 1 {
+                Text(day.formatted(.dateTime.month(.abbreviated))) // already local
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity)
             }
             VStack {
                 ZStack {
-                    if Calendar.current.isDate(day, inSameDayAs: currentDate) {
+                    if uiCal.isDate(day, inSameDayAs: currentDate) {  // local "today"
                         RoundedRectangle(cornerRadius: 4)
                             .stroke(Color.whiteTwo, lineWidth: 2)
                             .frame(width: 26, height: 22)
                     }
-                    Text(day.formatted(.dateTime.day()))
+                    Text(day.formatted(.dateTime.day())) // already local
                         .fontWeight(.bold)
                         .frame(maxWidth: .infinity)
+
                     if !sessions.isEmpty {
                         HStack(spacing: 4) {
                             ForEach(sessions, id: \.self) { session in
@@ -450,3 +475,4 @@ struct DayView: View {
         }
     }
 }
+

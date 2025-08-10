@@ -3,7 +3,7 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var messageManager: MessageHelper
-
+    
     var body: some View {
         NavigationStack{
             ZStack {
@@ -12,7 +12,7 @@ struct ContentView: View {
                 case 0:
                     HomeView()
                 case 1:
-                    CalendarView()
+                    CalendarView().environment(\.calendar, Calendar.iso8601UTC)
                 case 2:
                     ChatView()
                 default:

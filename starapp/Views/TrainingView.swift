@@ -33,23 +33,23 @@ struct TrainingView: View {
             Color.starBlack.ignoresSafeArea()
             VStack (spacing: 18) {
                 Section {
+                    HStack {
+                        Text("Lactate:")
+                            .foregroundColor(.whiteOne)
+                        TextField("mM", value: $lactate, formatter: NumberHelper.customFormatter())
+                            .foregroundColor(.whiteOne)
+                            .keyboardType(.decimalPad)
+                    }
+                    if showHeartRate {
                         HStack {
-                            Text("Lactate:")
+                            Text("Heart rate:")
                                 .foregroundColor(.whiteOne)
-                            TextField("mM", value: $lactate, formatter: NumberHelper.customFormatter())
+                            TextField("BPM", value: $heartRate, formatter: NumberHelper.customFormatter())
                                 .foregroundColor(.whiteOne)
-                                .keyboardType(.decimalPad)
+                                .keyboardType(.numberPad)
                         }
-                        if showHeartRate {
-                            HStack {
-                                Text("Heart rate:")
-                                    .foregroundColor(.whiteOne)
-                                TextField("BPM", value: $heartRate, formatter: NumberHelper.customFormatter())
-                                    .foregroundColor(.whiteOne)
-                                    .keyboardType(.numberPad)
-                            }
-                            
-                        }
+                        
+                    }
                     HStack {
                         if showDistance {
                             HStack {
@@ -129,13 +129,18 @@ struct TrainingView: View {
                 durationPicker()
                     .presentationDetents([.fraction(0.3)])
             }
-            .sheet(isPresented: $showDistancePicker) { 
+            .sheet(isPresented: $showDistancePicker) {
                 distancePicker()
                     .presentationDetents([.fraction(0.3)])
             }
             .onAppear {
                 showSpecificTrainingView = true
-                date = session.date ?? Date()
+                
+                let cal = Calendar.current
+                let original = session.date ?? Date()
+                // Picker edits only the day, so bind it to a clean local day value:
+                date = cal.startOfDay(for: original)
+                
                 title = session.title ?? ""
                 distance = session.distance
                 duration = session.duration
@@ -163,12 +168,25 @@ struct TrainingView: View {
         .toolbar {
             ToolbarItem(placement: .principal) {
                 DatePicker("Date", selection: $date, displayedComponents: .date)
+                    .environment(\.calendar, .current)   // local
+                    .environment(\.timeZone, .current)   // local
                     .environment(\.colorScheme, .dark)
                     .labelsHidden()
             }
+
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Save") {
-                    session.date = date
+                    let cal = Calendar.current
+
+                    // If the session already has a time-of-day, keep it. Otherwise default to 12:00.
+                    let existingTime = session.date.map { cal.dateComponents([.hour, .minute, .second], from: $0) }
+                    let hour   = existingTime?.hour ?? 12
+                    let minute = existingTime?.minute ?? 0
+                    let second = existingTime?.second ?? 0
+
+                    let merged = cal.date(bySettingHour: hour, minute: minute, second: second, of: date) ?? date
+
+                    session.date = merged
                     session.title = title
                     session.distance = distance
                     session.duration = duration
@@ -176,13 +194,13 @@ struct TrainingView: View {
                     session.power = power
                     session.lactate = lactate
                     session.heartRate = heartRate
+                    // try? context.save() // optional explicit save
                     dismiss()
                 }
                 .foregroundColor(.starMain)
             }
         }
     }
-    
     
     private func updateDistance() {
         distance = Double(kilometers) + Double(hundredMeters) / 1000.0

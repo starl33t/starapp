@@ -17,27 +17,15 @@ struct SettingView: View {
                             .foregroundColor(.whiteOne)
                             .frame(width: 120, alignment: .leading)
                         
-                        if appState.research {
-                            Picker("Voltage", selection: $voltageIndex) {
-                                ForEach(Array(stride(from: 400.0, through: 1200.0, by: 50.0)), id: \.self) { voltage in
-                                    let formatted = NumberHelper.voltageFormatter().string(from: NSNumber(value: voltage)) ?? "\(Int(voltage))"
-                                    Text("\(formatted) mV").tag(voltage)
-                                }
+                        Picker("Voltage", selection: $voltageIndex) {
+                            ForEach(Array(stride(from: 400.0, through: 1200.0, by: 50.0)), id: \.self) { voltage in
+                                let formatted = NumberHelper.voltageFormatter().string(from: NSNumber(value: voltage)) ?? "\(Int(voltage))"
+                                Text("\(formatted) mV").tag(voltage)
                             }
-                            .pickerStyle(.wheel)
-                            .frame(maxWidth: .infinity)
-                            .environment(\.colorScheme, .dark)
-                        } else {
-                            Picker("Voltage", selection: $voltageIndex) {
-                                ForEach(Array(stride(from: 400.0, through: 1200.0, by: 50.0)), id: \.self) { voltage in
-                                    let formatted = NumberHelper.voltageFormatter().string(from: NSNumber(value: voltage)) ?? "\(Int(voltage))"
-                                    Text("\(formatted) mV").tag(voltage)
-                                }
-                            }
-                            .pickerStyle(.wheel)
-                            .frame(maxWidth: .infinity)
-                            .environment(\.colorScheme, .dark)
                         }
+                        .pickerStyle(.wheel)
+                        .frame(maxWidth: .infinity)
+                        .environment(\.colorScheme, .dark)
                         
                         Button(action: {
                             withAnimation(.easeOut(duration: 0.4)) {

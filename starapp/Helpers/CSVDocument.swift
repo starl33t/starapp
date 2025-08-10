@@ -2,11 +2,23 @@ import SwiftUI
 import SwiftData
 import UniformTypeIdentifiers
 
-
 struct CSVDocument: FileDocument, @unchecked Sendable {
     static var readableContentTypes: [UTType] { [.commaSeparatedText] }
     
     var sessions: [Session]
+    
+    // ✅ ISO8601 with fractional seconds, always UTC
+    private static let iso8601UTC_ms: ISO8601DateFormatter = {
+        let f = ISO8601DateFormatter()
+        f.timeZone = .gmt
+        f.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        return f
+    }()
+    
+    // ✅ Strip subseconds to always show `.000Z`
+    private func stripSubseconds(_ d: Date) -> Date {
+        Date(timeIntervalSince1970: floor(d.timeIntervalSince1970))
+    }
     
     init(sessions: [Session]) {
         self.sessions = sessions
@@ -17,7 +29,6 @@ struct CSVDocument: FileDocument, @unchecked Sendable {
     }
     
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-        // Updated header to include UID.
         let headers = "Distance,Duration,Pace,Power,Heart Rate,Lactate,Date,Title,UID,adc,current\n"
         let csvString = headers + sessions.map { session in
             let distance = session.distance.map { String(format: "%.2f", $0) } ?? "N/A"
@@ -26,7 +37,7 @@ struct CSVDocument: FileDocument, @unchecked Sendable {
             let power = session.power.map { String($0) } ?? "N/A"
             let heartRate = session.heartRate.map { String($0) } ?? "N/A"
             let lactate = session.lactate.map { String(format: "%.2f", $0) } ?? "N/A"
-            let date = session.date.map { $0.ISO8601Format() } ?? "N/A"
+            let date = session.date.map { Self.iso8601UTC_ms.string(from: stripSubseconds($0)) } ?? "N/A"
             let title = session.title ?? "N/A"
             let uidString = session.uidString ?? "N/A"
             let adc = session.adc.map { String($0) } ?? "N/A"
@@ -42,7 +53,6 @@ struct CSVDocument: FileDocument, @unchecked Sendable {
 
 extension CSVDocument {
     var csvString: String {
-        // Updated header to include UID.
         let headers = "Distance,Duration,Pace,Power,Heart Rate,Lactate,Date,Title,UID,Adc,Current\n"
         let csvString = headers + sessions.map { session in
             let distance = session.distance.map { String(format: "%.2f", $0) } ?? "N/A"
@@ -51,7 +61,7 @@ extension CSVDocument {
             let power = session.power.map { String($0) } ?? "N/A"
             let heartRate = session.heartRate.map { String($0) } ?? "N/A"
             let lactate = session.lactate.map { String(format: "%.2f", $0) } ?? "N/A"
-            let date = session.date.map { $0.ISO8601Format() } ?? "N/A"
+            let date = session.date.map { Self.iso8601UTC_ms.string(from: stripSubseconds($0)) } ?? "N/A"
             let title = session.title ?? "N/A"
             let uidString = session.uidString ?? "N/A"
             let adc = session.adc.map { String($0) } ?? "N/A"

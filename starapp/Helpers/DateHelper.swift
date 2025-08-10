@@ -1,13 +1,26 @@
 import Foundation
 
+
+extension TimeZone {
+    static let utc = TimeZone(secondsFromGMT: 0)!
+}
+
+extension Calendar {
+    static var iso8601UTC: Calendar {
+        var cal = Calendar(identifier: .iso8601)
+        cal.timeZone = .utc
+        cal.firstWeekday = 2 // Monday
+        return cal
+    }
+}
+
+
 extension Date {
     //Calendarview
     static var calendar: Calendar {
-        var calendar = Calendar.current
-        calendar.firstWeekday = 2 // Start week on Monday
-        return calendar
+        Calendar.iso8601UTC  // <<< was Calendar.current + Monday
     }
-    
+
     var startOfYear: Date {
         let components = Date.calendar.dateComponents([.year], from: self)
         return Date.calendar.date(from: components)!
@@ -50,24 +63,25 @@ extension Date {
     
     //last month in MetricView
     static func startOfLast28Days() -> Date {
-        return Calendar.current.date(byAdding: .day, value: -27, to: Date())!
+        Calendar.iso8601UTC.date(byAdding: .day, value: -27, to: Date())!
     }
     
     //Calendarview's todays date button
     var daySquareIcon: String {
-        let calendar = Calendar.current
-        let day = calendar.component(.day, from: self)
+        let day = Calendar.iso8601UTC.component(.day, from: self)
         return "\(day).square"
     }
     
     //LactateView
+    // LactateView
     func formattedAsRelative() -> String {
-        let calendar = Calendar.current
-        if calendar.isDateInToday(self) {
+        let calendar = Calendar.iso8601UTC
+        let now = Date()
+        if calendar.isDate(self, inSameDayAs: now) {
             return "Today"
-        } else if calendar.isDateInYesterday(self) {
+        } else if calendar.isDate(self, inSameDayAs: calendar.date(byAdding: .day, value: -1, to: now)!) {
             return "Yesterday"
-        } else if let daysAgo = calendar.dateComponents([.day], from: self, to: Date()).day {
+        } else if let daysAgo = calendar.dateComponents([.day], from: self, to: now).day {
             if daysAgo < 31 {
                 return "\(daysAgo) days ago"
             } else if daysAgo >= 365 {
@@ -83,37 +97,43 @@ extension Date {
     //CalendarView
     func formatDayMonth(date: Date?) -> String {
         guard let date = date else { return "N/A" }
-        let formatter = DateFormatter()
-        formatter.dateFormat = "d MMM"
-        return formatter.string(from: date)
+        let f = DateFormatter()
+        f.timeZone = .utc            // <<< KEY
+        f.dateFormat = "d MMM"
+        return f.string(from: date)
     }
     
     func formatDayMonthLong(date: Date?) -> String {
         guard let date = date else { return "N/A" }
-        let formatter = DateFormatter()
-        formatter.dateFormat = "E dd MMM"
-        return formatter.string(from: date)
+        let f = DateFormatter()
+        f.timeZone = .utc            // <<< KEY
+        f.dateFormat = "E dd MMM"
+        return f.string(from: date)
     }
     
     func formatYear(date: Date?) -> String {
         guard let date = date else { return "N/A" }
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy"
-        return formatter.string(from: date)
+        let f = DateFormatter()
+        f.timeZone = .utc            // <<< KEY
+        f.dateFormat = "yyyy"
+        return f.string(from: date)
     }
+    
     func formatSessionDate() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "d MMM yyyy (HH:mm)"
-        dateFormatter.timeZone = TimeZone.current
-        return dateFormatter.string(from: self)
+        let f = DateFormatter()
+        f.timeZone = .utc            // <<< was .current
+        f.dateFormat = "d MMM yyyy (HH:mm)"
+        return f.string(from: self)
     }
     
     //Homeview
     func formatAsDayMonthYear() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "E dd MMM" // Format: "Mon 02 Feb"
-        return dateFormatter.string(from: self)
+        let f = DateFormatter()
+        f.timeZone = .utc
+        f.dateFormat = "E dd MMM"
+        return f.string(from: self)
     }
+
     
     // Start of current week
     var startOfWeek: Date {
@@ -140,38 +160,40 @@ extension Date {
     
     // Last 30 days
     static func startOfLast30Days() -> Date {
-        return Calendar.current.date(byAdding: .day, value: -29, to: Date())!
+        Calendar.iso8601UTC.date(byAdding: .day, value: -29, to: Date())!
     }
     
+    // DateRangeOption boundaries
     func startDate(for dateRange: DateRangeOption) -> Date {
-            switch dateRange {
-            case .thisWeek:
-                return self.startOfWeek
-            case .thisMonth:
-                return self.startOfMonth
-            case .thisYear:
-                return self.startOfYear
-            case .last7Days:
-                return self.addingTimeInterval(-7 * 24 * 60 * 60)
-            case .last30Days:
-                return self.addingTimeInterval(-30 * 24 * 60 * 60)
-            case .last365Days:
-                return self.addingTimeInterval(-365 * 24 * 60 * 60)
-            }
+        let cal = Calendar.iso8601UTC
+        switch dateRange {
+        case .thisWeek:   return self.startOfWeek
+        case .thisMonth:  return self.startOfMonth
+        case .thisYear:   return self.startOfYear
+        case .last7Days:  return cal.date(byAdding: .day, value: -7, to: self)!
+        case .last30Days: return cal.date(byAdding: .day, value: -30, to: self)!
+        case .last365Days:return cal.date(byAdding: .day, value: -365, to: self)!
         }
-        
-        func endDate(for dateRange: DateRangeOption) -> Date {
-            switch dateRange {
-            case .thisWeek:
-                return self.endOfWeek
-            case .thisMonth:
-                return self.endOfMonth
-            case .thisYear:
-                return self.endOfYear
-            case .last7Days, .last30Days, .last365Days:
-                return Date()
-            }
+    }
+
+    func endDate(for dateRange: DateRangeOption) -> Date {
+        switch dateRange {
+        case .thisWeek:   return self.endOfWeek
+        case .thisMonth:  return self.endOfMonth
+        case .thisYear:   return self.endOfYear
+        case .last7Days, .last30Days, .last365Days:
+            return Date() // `Date()` is an instant; comparisons use UTC via Calendar.iso8601UTC
         }
+    }
+    
+    // HomeView tooltip: HH:mm format
+    func formatAsHourMinute() -> String {
+        let f = DateFormatter()
+        f.locale = Locale(identifier: "en_US_POSIX")
+        f.timeZone = .utc            // <<< was .current
+        f.dateFormat = "HH:mm"
+        return f.string(from: self)
+    }
 }
 
 enum DateRangeOption: String, CaseIterable {
