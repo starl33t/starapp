@@ -31,7 +31,7 @@ struct ListView: View {
                                         .frame(width: 100, height: 48)
                                     Text("\(session.duration ?? 0.0, specifier: "%.0f") min")
                                         .font(.system(size: 22, weight: .bold))
-                                        .foregroundColor(.whiteOne)
+                                        .foregroundStyle(.whiteOne)
                                         .multilineTextAlignment(.center)
                                 }
                                 VStack(alignment: .leading, spacing: 4) {
@@ -40,7 +40,7 @@ struct ListView: View {
                                         .foregroundStyle(.whiteOne)
                                     Text("\(session.date?.formattedAsRelative() ?? "N/A")")
                                         .font(.system(size: 14))
-                                        .foregroundStyle(.gray)
+                                        .foregroundStyle(.whiteTwo.opacity(0.6))
                                 }
                                 .foregroundStyle(.whiteOne)
                                 .padding(.leading, 20)

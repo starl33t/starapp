@@ -69,7 +69,7 @@ struct CalendarView: View {
                             Text(appState.todayTitle)
                                 .font(.headline)
                                 .frame(maxWidth: .infinity)
-                                .foregroundColor(.whiteOne)
+                                .foregroundStyle(.whiteOne)
                         }
                     }
                 }
@@ -177,7 +177,6 @@ struct CalendarView: View {
                 }
                 .pickerStyle(WheelPickerStyle())
                 .labelsHidden()
-                .environment(\.colorScheme, .dark)
             }
             .frame(maxWidth: .infinity)
         }
@@ -216,7 +215,7 @@ struct CalendarView: View {
                     HStack(spacing: 5) {
                         Image(systemName: tab.rawValue)
                             .font(.title3)
-                            .foregroundColor(.whiteOne)
+                            .foregroundStyle(.whiteOne)
                             .frame(height: 30)
                         
                         if appState.homeActiveTab == tab {
@@ -226,7 +225,7 @@ struct CalendarView: View {
                                 .lineLimit(1)
                         }
                     }
-                    .foregroundColor(appState.homeActiveTab == tab ? .whiteOne : .gray)
+                    .foregroundStyle(appState.homeActiveTab == tab ? .whiteOne : .whiteTwo.opacity(0.6))
                     .padding(.vertical, 2)
                     .padding(.leading, 10)
                     .padding(.trailing, 15)
@@ -293,7 +292,7 @@ struct CalendarView: View {
 
                         HomeCapsuleGraph(
                             index: index,
-                            color: selectedCapsuleIndex == index ? .starMain : .gray,
+                            color: selectedCapsuleIndex == index ? .starMain : .whiteTwo.opacity(0.6),
                             height: proxy.size.height,
                             range: range,
                             overallRange: overallRange,
@@ -334,7 +333,7 @@ struct CalendarView: View {
                                    .frame(width: 100, height: 48)
                                Text("\(session.duration ?? 0.0, specifier: "%.0f") min")
                                    .font(.system(size: 22, weight: .bold))
-                                   .foregroundColor(.whiteOne)
+                                   .foregroundStyle(.whiteOne)
                                    .multilineTextAlignment(.center)
                            }
                            VStack(alignment: .leading, spacing: 4) {
@@ -343,7 +342,7 @@ struct CalendarView: View {
                                    .foregroundStyle(.whiteOne)
                                Text("\(session.date?.formattedAsRelative() ?? "N/A")")
                                    .font(.system(size: 14))
-                                   .foregroundStyle(.gray)
+                                   .foregroundStyle(.whiteTwo.opacity(0.6))
                            }
                            .foregroundStyle(.whiteOne)
                            .padding(.leading, 20)

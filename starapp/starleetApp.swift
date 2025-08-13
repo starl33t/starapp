@@ -11,6 +11,7 @@ struct starappApp: App {
             ContentView()
                 .environmentObject(appState)
                 .environmentObject(messageManager)
+                .preferredColorScheme(.dark)
         }
         .modelContainer(for: [Session.self])
     }

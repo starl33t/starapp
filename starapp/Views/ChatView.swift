@@ -13,6 +13,7 @@ struct ChatView: View {
     
     var body: some View {
         ZStack {
+            Color.starBlack.ignoresSafeArea()
             VStack {
                 HStack (spacing: 12){
                     socialWhatsapp()
@@ -121,7 +122,7 @@ struct ChatView: View {
         }) {
             Image(systemName: "xmark.circle.fill")
                 .font(.system(size: 30))
-                .foregroundColor(newMessageContent.isEmpty ? .gray : .whiteOne)
+                .foregroundStyle(newMessageContent.isEmpty ? .whiteTwo.opacity(0.6) : .whiteOne)
                 .padding(.trailing, 5)
         }
     }
@@ -130,7 +131,7 @@ struct ChatView: View {
         ZStack(alignment: .leading) {
             if newMessageContent.isEmpty {
                 Text(placeholderText)
-                    .foregroundStyle(.gray)
+                    .foregroundStyle(.whiteTwo.opacity(0.6))
                     .padding(.horizontal)
             }
             TextField("", text: $newMessageContent, axis: .vertical)
@@ -169,11 +170,11 @@ struct ChatView: View {
             if isWaitingForResponse {
                 Image(systemName: "stop.circle.fill")
                     .symbolEffect(.pulse.wholeSymbol)
-                    .foregroundColor(.gray)
+                    .foregroundStyle(.whiteTwo.opacity(0.6))
                     .font(.system(size: 30))
             } else {
                 Image(systemName: "arrow.up.circle.fill")
-                    .foregroundColor(newMessageContent.isEmpty ? .gray : .starMain)
+                    .foregroundStyle(newMessageContent.isEmpty ? .whiteTwo.opacity(0.6) : .starMain)
                     .font(.system(size: 30))
             }
         }
@@ -196,7 +197,7 @@ struct MessageRowView: View {
                 Spacer()
                 VStack(alignment: .trailing) {
                     Text(message.content)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.whiteOne)
                         .padding(10)
                         .background(.starMain)
                         .cornerRadius(10)
@@ -205,7 +206,7 @@ struct MessageRowView: View {
             } else {
                 VStack(alignment: .leading) {
                     Text(message.content)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.whiteOne)
                         .padding(10)
                         .background(.darkTwo)
                         .cornerRadius(10)

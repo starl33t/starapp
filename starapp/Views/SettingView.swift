@@ -25,7 +25,6 @@ struct SettingView: View {
                         }
                         .pickerStyle(.wheel)
                         .frame(maxWidth: .infinity)
-                        .environment(\.colorScheme, .dark)
                         
                         Button(action: {
                             withAnimation(.easeOut(duration: 0.4)) {
@@ -35,7 +34,7 @@ struct SettingView: View {
                         }) {
                             Image(systemName: "arrow.counterclockwise")
                                 .font(.system(size: 24))
-                                .foregroundColor(.darkOne)
+                                .foregroundStyle(.whiteOne.opacity(0.6))
                                 .padding(.leading, 8)
                         }
                         .frame(width: 60, alignment: .trailing)
@@ -45,7 +44,7 @@ struct SettingView: View {
                     if appState.research {
                         HStack {
                             Text("Time")
-                                .foregroundColor(.whiteOne)
+                                .foregroundStyle(.whiteOne)
                                 .frame(width: 120, alignment: .leading)
                             
                             Picker("Time", selection: $timeIndex) {
@@ -55,7 +54,7 @@ struct SettingView: View {
                             }
                             .pickerStyle(.wheel)
                             .frame(maxWidth: .infinity)
-                            .environment(\.colorScheme, .dark)
+                            
                             
                             Button(action: {
                                 withAnimation(.easeOut(duration: 0.4)) {
@@ -64,7 +63,7 @@ struct SettingView: View {
                             }) {
                                 Image(systemName: "arrow.counterclockwise")
                                     .font(.system(size: 24))
-                                    .foregroundColor(.darkOne)
+                                    .foregroundStyle(.whiteOne.opacity(0.6)) 
                                     .padding(.leading, 8)
                             }
                             .frame(width: 60, alignment: .trailing)
@@ -73,7 +72,7 @@ struct SettingView: View {
                     } else {
                         HStack {
                             Text("Calibration")
-                                .foregroundColor(.whiteOne)
+                                .foregroundStyle(.whiteOne)
                                 .frame(width: 120, alignment: .leading)
                             
                             Picker("Calibration", selection: $calibrationIndex) {
@@ -83,7 +82,6 @@ struct SettingView: View {
                             }
                             .pickerStyle(.wheel)
                             .frame(maxWidth: .infinity)
-                            .environment(\.colorScheme, .dark)
                             
                             Button(action: {
                                 withAnimation(.easeOut(duration: 0.4)) {
@@ -102,8 +100,6 @@ struct SettingView: View {
                 }
             }
             .padding()
-            .background(Color.starBlack)
-            .cornerRadius(16)
             .onAppear {
                 calibrationIndex = Int(appState.calibrationFactor * 100)
                 voltageIndex = appState.workingElectrodeVoltage
@@ -118,7 +114,7 @@ struct SettingView: View {
             .onChange(of: timeIndex) { _, newValue in
                 appState.scanTime = newValue
             }
-            .onChange(of: appState.research) { _, isResearch in
+            .onChange(of: appState.research) {
                 if appState.research{
                     calibrationIndex = 100
                 }

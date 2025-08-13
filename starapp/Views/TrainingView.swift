@@ -35,17 +35,17 @@ struct TrainingView: View {
                 Section {
                     HStack {
                         Text("Lactate:")
-                            .foregroundColor(.whiteOne)
+                            .foregroundStyle(.whiteOne)
                         TextField("mM", value: $lactate, formatter: NumberHelper.customFormatter())
-                            .foregroundColor(.whiteOne)
+                            .foregroundStyle(.whiteOne)
                             .keyboardType(.decimalPad)
                     }
                     if showHeartRate {
                         HStack {
                             Text("Heart rate:")
-                                .foregroundColor(.whiteOne)
+                                .foregroundStyle(.whiteOne)
                             TextField("BPM", value: $heartRate, formatter: NumberHelper.customFormatter())
-                                .foregroundColor(.whiteOne)
+                                .foregroundStyle(.whiteOne)
                                 .keyboardType(.numberPad)
                         }
                         
@@ -54,9 +54,9 @@ struct TrainingView: View {
                         if showDistance {
                             HStack {
                                 Text("Distance:")
-                                    .foregroundColor(.whiteOne)
+                                    .foregroundStyle(.whiteOne)
                                 Text(formatDistance())
-                                    .foregroundColor(.whiteOne)
+                                    .foregroundStyle(.whiteOne)
                                     .onChange(of: distance) { calculatePace() }
                                     .onTapGesture {
                                         showDistancePicker = true
@@ -68,9 +68,9 @@ struct TrainingView: View {
                         if showDuration {
                             HStack {
                                 Text("Duration:")
-                                    .foregroundColor(.whiteOne)
+                                    .foregroundStyle(.whiteOne)
                                 Text(String(format: "%02d:%02d", durationMinutes, durationSeconds))
-                                    .foregroundColor(.whiteOne)
+                                    .foregroundStyle(.whiteOne)
                                     .onChange(of: duration) { calculatePace() }
                                     .onTapGesture {
                                         showDurationPicker = true
@@ -83,9 +83,9 @@ struct TrainingView: View {
                         if showPace {
                             HStack {
                                 Text("Pace:")
-                                    .foregroundColor(.whiteOne)
+                                    .foregroundStyle(.whiteOne)
                                 Text(String(format: "%02d:%02d", paceMinutes, paceSeconds))
-                                    .foregroundColor(.whiteOne)
+                                    .foregroundStyle(.whiteOne)
                                     .onTapGesture {
                                         showPacePicker = true
                                     }
@@ -95,9 +95,9 @@ struct TrainingView: View {
                         if showPower {
                             HStack {
                                 Text("Power:")
-                                    .foregroundColor(.whiteOne)
+                                    .foregroundStyle(.whiteOne)
                                 TextField("W", value: $power, formatter: NumberHelper.customFormatter())
-                                    .foregroundColor(.whiteOne)
+                                    .foregroundStyle(.whiteOne)
                                     .keyboardType(.decimalPad)
                             }
                             
@@ -107,12 +107,12 @@ struct TrainingView: View {
                     ZStack {
                         if title.isEmpty {
                             Text("Title")
-                                .foregroundColor(.whiteTwo)
+                                .foregroundStyle(.whiteTwo)
                                 .frame(maxWidth: .infinity)
                                 .multilineTextAlignment(.center)
                         }
                         TextField("", text: $title)
-                            .foregroundColor(.whiteTwo)
+                            .foregroundStyle(.whiteTwo)
                             .multilineTextAlignment(.center)
                     }
                     .frame(maxWidth: .infinity)
@@ -170,7 +170,6 @@ struct TrainingView: View {
                 DatePicker("Date", selection: $date, displayedComponents: .date)
                     .environment(\.calendar, .current)   // local
                     .environment(\.timeZone, .current)   // local
-                    .environment(\.colorScheme, .dark)
                     .labelsHidden()
             }
 
@@ -197,7 +196,7 @@ struct TrainingView: View {
                     // try? context.save() // optional explicit save
                     dismiss()
                 }
-                .foregroundColor(.starMain)
+                .foregroundStyle(.starMain)
             }
         }
     }
@@ -260,7 +259,6 @@ struct TrainingView: View {
                     .pickerStyle(WheelPickerStyle())
                     .frame(maxWidth: .infinity)
                 }
-                .environment(\.colorScheme, .dark)
                 .onChange(of: kilometers) { updateDistance() }
                 .onChange(of: hundredMeters) { updateDistance() }
                 .labelsHidden()
@@ -289,7 +287,6 @@ struct TrainingView: View {
                     .pickerStyle(WheelPickerStyle())
                     .frame(maxWidth: .infinity)
                 }
-                .environment(\.colorScheme, .dark)
                 .onChange(of: durationMinutes) { updateDuration() }
                 .onChange(of: durationSeconds) { updateDuration() }
                 .labelsHidden()
@@ -319,7 +316,6 @@ struct TrainingView: View {
                     .pickerStyle(WheelPickerStyle())
                     .frame(maxWidth: .infinity)
                 }
-                .environment(\.colorScheme, .dark)
                 .onChange(of: paceMinutes) { updatePace() }
                 .onChange(of: paceSeconds) {  updatePace() }
                 .labelsHidden()

@@ -6,7 +6,7 @@ struct HomeView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var viewModel: MessageHelper
     @Environment(\.modelContext) private var context
-    
+    @AppStorage("isChatSelected") private var isChatSelected = false
     @AppStorage("isprofileSelected") private var isprofileSelected = false
     @AppStorage("Adc") private var adc: Int = 0
     @AppStorage("Current") private var current: Double = 0.0
@@ -36,6 +36,9 @@ struct HomeView: View {
                 if !appState.research {
                     createNewTrainingSession()
                 }
+            }
+            .onAppear {
+                isChatSelected = false
             }
             if isprofileSelected {
                 VStack {
@@ -155,19 +158,20 @@ struct HomeView: View {
                    let point = closestDataPoint(to: selected) {
                     
                     RuleMark(x: .value("Selected", selected))
-                        .foregroundStyle(.white.opacity(0.4))
+                        .foregroundStyle(.whiteOne.opacity(0.4))
                     
                     PointMark(
                         x: .value("Time", point.time),
                         y: .value("Current", point.current)
                     )
                     .symbolSize(30)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(.whiteOne)
                     .annotation(position: .top) {
                         Text("\(point.time.formatted(.number.precision(.fractionLength(1)))) s")
+                            .foregroundStyle(.whiteOne)
                             .font(.caption2)
                             .padding(4)
-                            .background(Color.black.opacity(0.75))
+                            .background(Color.starBlack.opacity(0.75))
                             .clipShape(RoundedRectangle(cornerRadius: 6))
                     }
                 }
@@ -214,21 +218,22 @@ struct HomeView: View {
                 if let sel = selectedLactateIndex,
                    let point = closestLactatePoint(index: sel) {
                     RuleMark(x: .value("Selected", sel))
-                        .foregroundStyle(.white.opacity(0.4))
+                        .foregroundStyle(.whiteOne.opacity(0.4))
 
                     PointMark(
                         x: .value("Index", Double(point.i)),
                         y: .value("Lactate", point.lactate)
                     )
                     .symbolSize(30)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(.whiteOne)
                     .annotation(position: .top) {
                         VStack(spacing: 2) {
                             Text(point.date.formatAsHourMinute())
                         }
+                        .foregroundStyle(.whiteOne)
                         .font(.caption2)
                         .padding(4)
-                        .background(Color.black.opacity(0.75))
+                        .background(Color.starBlack.opacity(0.75))
                         .clipShape(RoundedRectangle(cornerRadius: 6))
                     }
                 }

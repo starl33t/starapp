@@ -2,6 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct AccountView: View {
+    @EnvironmentObject var appState: AppState
     @State private var deleteOffset: CGFloat = 0
     @State private var showDeleteAlert = false
     @State private var startPositionPercentage: CGFloat = 0.025
@@ -23,39 +24,45 @@ struct AccountView: View {
             VStack {
                 VStack {
                     HStack {
-                        Toggle("Duration", isOn: $durationToggle)
-                    }
-                    .padding()
-                  
-                    HStack {
-                        Toggle("Distance", isOn: $distanceToggle)
-                    }
-                    .padding()
-                    
-                    HStack {
-                        Toggle("Heartrate", isOn: $heartRateToggle)
-                    }
-                    .padding()
-                    
-                    HStack {
-                        Toggle("Pace", isOn: $paceToggle)
-                    }
-                    .padding()
-                    
-                    HStack {
-                        Toggle("Power", isOn: $powerToggle)
-                    }
-                    .padding()
-                   
-                    HStack {
                         Toggle("Research Mode", isOn: $researchToggle)
+                            .foregroundColor(.whiteOne)
                     }
                     .padding()
-                    
+                    if !appState.research {
+                        HStack {
+                            Toggle("Duration", isOn: $durationToggle)
+                                .foregroundColor(.whiteOne)
+                        }
+                        .padding()
+                        
+                        HStack {
+                            Toggle("Distance", isOn: $distanceToggle)
+                                .foregroundColor(.whiteOne)
+                        }
+                        .padding()
+                        
+                        HStack {
+                            Toggle("Heartrate", isOn: $heartRateToggle)
+                                .foregroundColor(.whiteOne)
+                        }
+                        .padding()
+                        
+                        HStack {
+                            Toggle("Pace", isOn: $paceToggle)
+                                .foregroundColor(.whiteOne)
+                        }
+                        .padding()
+                        
+                        HStack {
+                            Toggle("Power", isOn: $powerToggle)
+                                .foregroundColor(.whiteOne)
+                        }
+                        .padding()
+                    }
                 }
                 .padding()
-                .background(Color.starBlack)
-                .cornerRadius(16)
+                
+                Spacer()
                 
                 GeometryReader { geometry in
                     let width = geometry.size.width
@@ -106,14 +113,10 @@ struct AccountView: View {
                         .padding(.horizontal, 20)
                     }
                     .padding()
-                    .background(Color.starBlack)
-                    .cornerRadius(16)
                 }
                 .frame(height: 100)
             }
             .padding()
-            .background(Color.starBlack)
-            .cornerRadius(16)
             .alert(isPresented: $showDeleteAlert) {
                 Alert(
                     title: Text("Delete All Data"),
