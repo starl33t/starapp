@@ -74,14 +74,15 @@ extension CSVDocument {
 }
 
 struct ScanCSVDocument {
-    let dataPoints: [(time: TimeInterval, current: Double)]
+    let dataPoints: [AppState.ScanValue]
 
     var csvString: String {
-        let header = "Time (s),Current (µA)\n"
-        let rows = dataPoints.map { point in
-            let timeStr = String(format: "%.3f", point.time)
-            let currentStr = String(format: "%.3f", point.current)
-            return "\(timeStr),\(currentStr)"
+        let header = "Time (s),Current (µA),mV\n"
+        let rows = dataPoints.map { p in
+            let t  = String(format: "%.3f", p.time)
+            let i  = String(format: "%.3f", p.current)
+            let mv = String(p.mV)
+            return "\(t),\(i),\(mv)"
         }
         .joined(separator: "\n")
 
@@ -92,3 +93,5 @@ struct ScanCSVDocument {
         csvString.data(using: .utf8) ?? Data()
     }
 }
+
+

@@ -71,7 +71,7 @@ struct HomeToolBarTrail: View {
                   """)
         }
         .sheet(isPresented: $sendResearch) {
-            let csv = ScanCSVDocument(dataPoints: appState.currentScanValues)
+            let csv = ScanCSVDocument(dataPoints: appState.scanValues)
             MailView(
                 recipient: "",
                 subject: "",

@@ -13,14 +13,14 @@ public class CalibrationService {
         // 1️⃣ Read out your five (adc → µA) points
         let aM16 = Int(parseInt16(from: page28, start: 0))
         let aM8  = Int(parseInt16(from: page28, start: 2))
-        let a0   = Int(parseInt16(from: page28, start: 4))
+        let a2   = Int(parseInt16(from: page28, start: 4))
         let a8   = Int(parseInt16(from: page28, start: 6))
         let a16  = Int(parseInt16(from: page28, start: 8))
         
         let adcRef: [Int: Int] = [
             aM16: -16,
             aM8:  -8,
-            a0:    -2,
+            a2:    -2,
             a8:    8,
             a16:  16
         ]
@@ -38,6 +38,12 @@ public class CalibrationService {
         return CalibrationResult(coeffs: coeffs,
                                  current: current,
                                  lactate: lactate)
+    }
+    
+    
+    public enum Electrode {
+        case we
+        case re
     }
     
     /// Solves the 3rd-order polynomial I(ADC)=b0+b1·ADC+b2·ADC²+b3·ADC³
@@ -127,4 +133,34 @@ public class CalibrationService {
         let raw16 = UInt16(response[1]) << 8 | UInt16(response[2])
         return Int(Int16(bitPattern: raw16))  // Signed 16-bit
     }
+    
+    public static func mVToDACInt(_ mV: Double, offset_mV: Double) -> Int {
+        Int(((mV - offset_mV) / 5.0).rounded())
+    }
+    
+    public static func dacToElectrode_mV(_ code: Int, offset_mV: Double) -> Int {
+        Int((Double(code) * 5.0 + offset_mV).rounded())
+    }
+    
+    public static func offsets(fromPage30 page: Data) -> (reOffset_mV: Double, weOffset_mV: Double) {
+        let reCounts = parseInt16(from: page, start: 0)
+        let weCounts = parseInt16(from: page, start: 2)
+        return (Double(reCounts) / 100.0, Double(weCounts) / 100.0)
+    }
+    
+    public static func appliedMillivolts(
+            activeElectrode: Electrode,
+            vreHex: UInt8,
+            vweHex: UInt8,
+            reOffset_mV: Double,
+            weOffset_mV: Double
+        ) -> Int {
+            switch activeElectrode {
+            case .we:
+                return dacToElectrode_mV(Int(vweHex), offset_mV: weOffset_mV)
+            case .re:
+                return dacToElectrode_mV(Int(vreHex), offset_mV: reOffset_mV)
+            }
+        }
 }
+

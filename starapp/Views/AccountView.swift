@@ -25,37 +25,37 @@ struct AccountView: View {
                 VStack {
                     HStack {
                         Toggle("Research Mode", isOn: $researchToggle)
-                            .foregroundColor(.whiteOne)
+                            .foregroundStyle(.whiteOne)
                     }
                     .padding()
                     if !appState.research {
                         HStack {
                             Toggle("Duration", isOn: $durationToggle)
-                                .foregroundColor(.whiteOne)
+                                .foregroundStyle(.whiteOne)
                         }
                         .padding()
                         
                         HStack {
                             Toggle("Distance", isOn: $distanceToggle)
-                                .foregroundColor(.whiteOne)
+                                .foregroundStyle(.whiteOne)
                         }
                         .padding()
                         
                         HStack {
                             Toggle("Heartrate", isOn: $heartRateToggle)
-                                .foregroundColor(.whiteOne)
+                                .foregroundStyle(.whiteOne)
                         }
                         .padding()
                         
                         HStack {
                             Toggle("Pace", isOn: $paceToggle)
-                                .foregroundColor(.whiteOne)
+                                .foregroundStyle(.whiteOne)
                         }
                         .padding()
                         
                         HStack {
                             Toggle("Power", isOn: $powerToggle)
-                                .foregroundColor(.whiteOne)
+                                .foregroundStyle(.whiteOne)
                         }
                         .padding()
                     }
@@ -79,7 +79,7 @@ struct AccountView: View {
                                 .frame(height: 60)
                             
                             Text("Slide to delete all data")
-                                .foregroundColor(.white)
+                                .foregroundStyle(.white)
                                 .frame(maxWidth: .infinity)
                                 .multilineTextAlignment(.center)
                                 .padding(.horizontal, 20)
@@ -142,6 +142,7 @@ struct AccountView: View {
         for session in allSessions {
             modelContext.delete(session)
         }
+        appState.scanValues.removeAll()
         do {
             paceToggle = true
             powerToggle = true

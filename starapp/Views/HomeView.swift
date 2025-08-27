@@ -8,10 +8,6 @@ struct HomeView: View {
     @Environment(\.modelContext) private var context
     @AppStorage("isChatSelected") private var isChatSelected = false
     @AppStorage("isprofileSelected") private var isprofileSelected = false
-    @AppStorage("Adc") private var adc: Int = 0
-    @AppStorage("Current") private var current: Double = 0.0
-    @AppStorage("Lactate") private var lactate: Double = 0.0
-    @AppStorage("uidString") private var uidString: String = ""
     
     // Research (current/time) selection
     @State private var selectedTime: Double?
@@ -19,6 +15,8 @@ struct HomeView: View {
     // Lactate selection on numeric time axis
     @State private var selectedLactateIndex: Double?
     
+    private let displayOffset: Double = 0.33
+    private func tDisp(_ t: Double) -> Double { max(0.0, t - displayOffset) }
     
     // Latest-first sessions from SwiftData
     @Query(sort: \Session.date, order: .reverse)
@@ -32,13 +30,9 @@ struct HomeView: View {
                 scanGuide()
                 dataDisplay()
             }
-            .onChange(of: uidString) {
-                if !appState.research {
-                    createNewTrainingSession()
-                }
-            }
             .onAppear {
                 isChatSelected = false
+                appState.setModelContext(context)
             }
             if isprofileSelected {
                 VStack {
@@ -66,16 +60,18 @@ struct HomeView: View {
     
     //New training session whenever a new lactate values
     private func createNewTrainingSession() {
+        guard let s = appState.scanValues.last else { return }
         let newSession = Session(
-            lactate: lactate,
+            lactate: s.lactate,
             date: Date(),
-            uidString: uidString,
-            adc: adc,
-            current: current
+            uidString: s.uidString,
+            adc: s.adc,
+            current: s.current
         )
         context.insert(newSession)
         try? context.save()
     }
+    
     
     // MARK: - Lactate series: latest 20 sessions → chronological → seconds since first
     private var lactateSeries20Indexed: [(i: Int, date: Date, lactate: Double)] {
@@ -86,7 +82,7 @@ struct HomeView: View {
                 return (d, l)
             }
             .reversed() // chronological
-
+        
         return latest20Chrono.enumerated().map { (idx, pair) in
             (i: idx, date: pair.0, lactate: pair.1)
         }
@@ -101,7 +97,7 @@ struct HomeView: View {
             }
             return nil
         }()
-
+        
         let tooltipLactate: Double? = {
             if let sel = selectedLactateIndex,
                let p = closestLactatePoint(index: sel) {
@@ -109,65 +105,94 @@ struct HomeView: View {
             }
             return nil
         }()
-
-        let latestLactateFromSessions = lactateSeries20Indexed.last?.lactate
-        let displayLactate = tooltipLactate ?? latestLactateFromSessions ?? 0
-
-        // NEW: last research current from the persisted trace
-        let lastResearchCurrent = appState.currentScanValues.last?.current
-
-        // Peak current (research trace) — use abs() if you want absolute peak instead
-        let peakResearchCurrent: Double = appState.currentScanValues.map(\.current).max() ?? 0
         
-        // Header
+        let peakPoint = appState.scanValues.max(by: { abs($0.current) < abs($1.current) })
+        
         if appState.research {
-            let displayCurrent = tooltipCurrent ?? lastResearchCurrent ?? 0
-            Text("Current: \(displayCurrent, specifier: "%.1f") µA")
+            let liveCurrent = tooltipCurrent ?? (appState.scanValues.last?.current ?? 0)
+            Text(verbatim: String(format: "Current: %.2f µA", liveCurrent))
                 .font(.system(size: 42, weight: .bold))
-                .foregroundColor(.whiteOne)
-                .padding(.top, 52)
+                .foregroundStyle(.whiteOne)
+                .padding(.top, 32)
+            
+            if appState.isScanning,
+               let lastTime = appState.scanValues.last?.time {
+                let elapsed = tDisp(lastTime)
+                let total   = appState.scanTime
 
-            Text("Peak: \(peakResearchCurrent, specifier: "%.1f") µA")
-                .font(.system(size: 28, weight: .bold))
-                .foregroundColor(.darkTwo)
-        } else {
+                Text(verbatim: "\(TimeHelper.format(elapsed)) / \(TimeHelper.format(total))")
+                    .font(.system(size: 28, weight: .bold))
+                    .foregroundStyle(.darkTwo)
+            }
+          
+            if let selected = selectedTime,
+               let p = closestDataPoint(to: selected) {
+                switch appState.scanMode {
+                case .cv:
+                    Text(verbatim: String(format: "mV: %+d mV", p.mV))
+                        .font(.system(size: 28, weight: .bold))
+                        .foregroundStyle(.darkTwo)
+                case .ca:
+                    Text(verbatim: "Time: \(TimeHelper.format(tDisp(p.time)))")
+                        .font(.system(size: 28, weight: .bold))
+                        .foregroundStyle(.darkTwo)
+                }
+            } else if let p = peakPoint, !appState.isScanning {
+                switch appState.scanMode {
+                case .cv:
+                    Text(verbatim: String(format: "Peak: %+.1f µA @ %+d mV", p.current, p.mV))
+                        .font(.system(size: 28, weight: .bold))
+                        .foregroundStyle(.darkTwo)
+                case .ca:
+                    let t = tDisp(p.time)
+                    Text(verbatim: String(format: "Peak: %+.1f µA @ %@", p.current, TimeHelper.format(t)))
+                        .font(.system(size: 28, weight: .bold))
+                        .foregroundStyle(.darkTwo)
+                }
+            }
+        }
+        else {
+            let latestLactateFromSessions = lactateSeries20Indexed.last?.lactate
+            let displayLactate = tooltipLactate ?? latestLactateFromSessions ?? 0
+            
             Text("Lactate: \(displayLactate, specifier: "%.1f") mM")
                 .font(.system(size: 42, weight: .bold))
-                .foregroundColor(.whiteOne)
+                .foregroundStyle(.whiteOne)
                 .padding(.top, 52)
-
+            
             Text(LactateHelper.intensity(for: displayLactate).rawValue)
                 .font(.system(size: 28, weight: .bold))
-                .foregroundColor(.darkTwo)
+                .foregroundStyle(.darkTwo)
         }
-
-        // Research mode: Current vs Time
-        if appState.research && !appState.currentScanValues.isEmpty {
+        
+        let rawLast = appState.scanValues.last?.time ?? 1
+        let displayedEnd = max(1, tDisp(rawLast) + 2)
+        
+        if appState.research && !appState.scanValues.isEmpty {
             Chart {
-                ForEach(appState.currentScanValues, id: \.time) { dataPoint in
+                ForEach(appState.scanValues, id: \.time) { dataPoint in
                     LineMark(
-                        x: .value("Time (s)", dataPoint.time),
+                        x: .value("Time (s)", tDisp(dataPoint.time)),
                         y: .value("Current (µA)", dataPoint.current)
                     )
                     .interpolationMethod(.catmullRom)
                     .foregroundStyle(.starMain)
                 }
                 
-                // ✅ Tooltip marker + label
                 if let selected = selectedTime,
                    let point = closestDataPoint(to: selected) {
                     
-                    RuleMark(x: .value("Selected", selected))
+                    RuleMark(x: .value("Selected", tDisp(point.time)))
                         .foregroundStyle(.whiteOne.opacity(0.4))
                     
                     PointMark(
-                        x: .value("Time", point.time),
+                        x: .value("Time", tDisp(point.time)),
                         y: .value("Current", point.current)
                     )
                     .symbolSize(30)
                     .foregroundStyle(.whiteOne)
                     .annotation(position: .top) {
-                        Text("\(point.time.formatted(.number.precision(.fractionLength(1)))) s")
+                        Text(verbatim: TimeHelper.format(tDisp(point.time)))
                             .foregroundStyle(.whiteOne)
                             .font(.caption2)
                             .padding(4)
@@ -181,7 +206,7 @@ struct HomeView: View {
                     AxisTick()
                     AxisValueLabel() {
                         if let seconds = value.as(Double.self) {
-                            Text("\(seconds, specifier: "%.1f") s")
+                            Text("\(seconds, specifier: "%.2f") s")
                         }
                     }
                 }
@@ -191,17 +216,15 @@ struct HomeView: View {
                     AxisGridLine()
                     AxisTick()
                     AxisValueLabel {
-                        if let current = value.as(Double.self) {
-                            Text("\(Int(current)) µA")
+                        if let y = value.as(Double.self) {
+                            Text("\(y, specifier: "%.1f") µA")
                         }
                     }
                 }
             }
             .chartXSelection(value: $selectedTime) // ✅ track finger
-            .chartXScale(
-                domain: 0.0...((appState.currentScanValues.last?.time ?? 1) + 2)
-            )
-            .chartYScale(domain: paddedYRangeResearch(for: appState.currentScanValues.map(\.current)))
+            .chartXScale(domain: 0.0...displayedEnd)
+            .chartYScale(domain: paddedYRangeResearch(for: appState.scanValues.map(\.current)))
             .frame(height: 180)
         }
         else if !appState.research && !lactateSeries20Indexed.isEmpty {
@@ -214,12 +237,12 @@ struct HomeView: View {
                     .interpolationMethod(.catmullRom)
                     .foregroundStyle(.starMain)
                 }
-
+                
                 if let sel = selectedLactateIndex,
                    let point = closestLactatePoint(index: sel) {
                     RuleMark(x: .value("Selected", sel))
                         .foregroundStyle(.whiteOne.opacity(0.4))
-
+                    
                     PointMark(
                         x: .value("Index", Double(point.i)),
                         y: .value("Lactate", point.lactate)
@@ -269,7 +292,7 @@ struct HomeView: View {
             .chartYScale(domain: paddedYRangeLactate(for: lactateSeries20Indexed.map(\.lactate)))
             .frame(height: 180)
         }
-
+        
         
         Spacer()
     }
@@ -277,11 +300,15 @@ struct HomeView: View {
     // MARK: - Helpers
     
     // Research closest (time/current)
-    func closestDataPoint(to time: Double) -> (time: Double, current: Double)? {
-        appState.currentScanValues.min {
-            abs($0.time - time) < abs($1.time - time)
+    func closestDataPoint(to displayedTime: Double) -> (time: Double, current: Double, mV: Int)? {
+        guard let s = appState.scanValues.min(by: {
+            abs(tDisp($0.time) - displayedTime) < abs(tDisp($1.time) - displayedTime)
+        }) else {
+            return nil
         }
+        return (time: s.time, current: s.current, mV: s.mV)
     }
+    
     
     // Lactate closest (seconds axis)
     private func closestLactatePoint(index: Double) -> (i: Int, date: Date, lactate: Double)? {
@@ -301,11 +328,4 @@ struct HomeView: View {
         }
     }
 }
-
-#Preview {
-    HomeView()
-        .environmentObject(AppState())
-        .environmentObject(MessageHelper())
-}
-
 
