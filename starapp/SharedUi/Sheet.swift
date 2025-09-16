@@ -23,3 +23,8 @@ struct CloseButtonModifier: ViewModifier {
         }
     }
 }
+extension View {
+    func closeButton(_ action: @escaping () -> Void) -> some View {
+        self.modifier(CloseButtonModifier(onClose: action))
+    }
+}

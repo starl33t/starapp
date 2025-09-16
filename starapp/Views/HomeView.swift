@@ -8,6 +8,10 @@ struct HomeView: View {
     @Environment(\.modelContext) private var context
     @AppStorage("isChatSelected") private var isChatSelected = false
     @AppStorage("isprofileSelected") private var isprofileSelected = false
+    @State private var showTutorial = false
+    @State private var tutorialKey = UUID()
+    @AppStorage("hasSeenTutorialPrompt") private var hasSeenTutorialPrompt = false
+    @State private var showTutorialAlert = false
     
     // Research (current/time) selection
     @State private var selectedTime: Double?
@@ -33,6 +37,12 @@ struct HomeView: View {
             .onAppear {
                 isChatSelected = false
                 appState.setModelContext(context)
+                if !hasSeenTutorialPrompt {
+                       DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                           showTutorialAlert = true
+                       }
+                       hasSeenTutorialPrompt = true
+                   }
             }
             if isprofileSelected {
                 VStack {
@@ -46,6 +56,28 @@ struct HomeView: View {
                 .animation(.easeInOut(duration: 0.3), value: isprofileSelected)
                 
             }
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Button {
+                        tutorialKey = UUID()
+                        showTutorial = true
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "play.rectangle.on.rectangle")
+                            Text("Tutorial")
+                        }
+                        .font(.system(size: 14, weight: .semibold))
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 8)
+                        .background(.ultraThinMaterial, in: Capsule())
+                    }
+                    .padding(.top, 8)
+                    .padding(.trailing, 12)
+                }
+            }
+            .allowsHitTesting(true) // ensures taps on the button don't fall through
         }
         .onTapGesture {
             isprofileSelected = false
@@ -56,6 +88,24 @@ struct HomeView: View {
                 selectedLactateIndex = nil
             }
         }
+        .sheet(isPresented: $showTutorial) {
+            VideoCarouselView(steps: [
+                .init(title: "Step 1: Attach Wearable",    subtitle: "Find a hairless spot like the shoulder", videoName: "tutorial1"),
+                .init(title: "Step 2: Medical Tape", subtitle: "Cover the wearable completely", videoName: "tutorial2"),
+                .init(title: "Step 3: Scan",       subtitle: "On the top of iPhone", videoName: "tutorial3")
+            ])
+            .closeButton { showTutorial = false }
+        }
+        .alert("Welcome to Starapp", isPresented: $showTutorialAlert) {
+            Button("Watch tutorial") {
+                tutorialKey = UUID()        // ensure fresh sheet
+                showTutorial = true
+            }
+            Button("Skip", role: .cancel) { }
+        } message: {
+            Text("Would you like to watch a quick tutorial on how to use the app?")
+        }
+
     }
     
     //New training session whenever a new lactate values
@@ -119,12 +169,12 @@ struct HomeView: View {
                let lastTime = appState.scanValues.last?.time {
                 let elapsed = tDisp(lastTime)
                 let total   = appState.scanTime
-
+                
                 Text(verbatim: "\(TimeHelper.format(elapsed)) / \(TimeHelper.format(total))")
                     .font(.system(size: 28, weight: .bold))
                     .foregroundStyle(.darkTwo)
             }
-          
+            
             if let selected = selectedTime,
                let p = closestDataPoint(to: selected) {
                 switch appState.scanMode {

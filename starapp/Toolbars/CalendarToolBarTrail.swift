@@ -69,7 +69,7 @@ struct CalendarToolBarTrail: View {
         }
         .sheet(isPresented: $isShowingMailView) {
             MailView(
-                recipient: "pt@starleet.com",
+                recipient: "katrine@starleet.com",
                 subject: "Sessions CSV",
                 csvData: CSVDocument(sessions: sessions).csvString.data(using: .utf8) ?? Data()
             )
