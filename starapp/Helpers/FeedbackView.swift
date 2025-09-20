@@ -31,25 +31,25 @@ struct FeedbackView: View {
                     Text("Indoors at 20–25°C on treadmill/bike")
                 }
                 .foregroundColor(.whiteOne)
-                .font(.title3)
+            
                 
                 // 2. Target range
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("B. Target range:")
+                    Text("B. Target lactate:")
                         .bold()
-                    Text("2–3 mM lactate — no lactate meter is ok")
+                    Text("2–3 mM measured on your handheld lactate meter. Feeling-based is ok.")
                 }
                 .foregroundColor(.whiteOne)
-                .font(.title3)
+           
                 
                 // 3. Session
                 VStack(alignment: .leading, spacing: 4) {
                     Text("C. Session:")
                         .bold()
-                    Text("Repetitions lasting > 4 minutes")
+                    Text("Repetitions lasting > 4 minutes. Note the session (e.g. intervals, tempo, etc.)")
                 }
                 .foregroundColor(.whiteOne)
-                .font(.title3)
+            
                 
                 // 4. Tell us about your session
                 VStack(alignment: .leading, spacing: 8) {
@@ -61,22 +61,20 @@ struct FeedbackView: View {
                     Text("• Features: What features would you like to see next? Anything specific that would make it extra valuable?")
                 }
                 .foregroundColor(.whiteOne)
-                .font(.title3)
+             
                 
                 // 5. Sending data
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(spacing: 4) {
                     Button {
                         isShowingMailView = true
                     } label: {
-                        Text("Send feedback")
-                            .font(.headline)
+                        Label("Send Feedback", systemImage: "envelope")
                             .foregroundColor(.starBlack)
                             .padding()
-                            .frame(maxWidth: .infinity)
                             .background(Color.starMain)
-                            .cornerRadius(12)
+                            .cornerRadius(10)
                     }
-                    .padding(.top, 8)
+                    .padding()
                     .sheet(isPresented: $isShowingMailView) {
                         MailView(
                             recipient: "katrine@starleet.com",
@@ -89,7 +87,7 @@ struct FeedbackView: View {
                         .foregroundStyle(.whiteTwo.opacity(0.6))
                 }
                 .foregroundColor(.whiteOne)
-                .font(.title3)
+
             }
             .padding(.horizontal)
             
