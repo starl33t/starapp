@@ -28,7 +28,7 @@ struct SupportView: View {
                         Label("Email", systemImage: "envelope")
                             .padding()
                             .background(.starMain)
-                            .foregroundStyle(.whiteOne)
+                            .foregroundStyle(.starBlack)
                             .cornerRadius(10)
                     }
                     .padding()

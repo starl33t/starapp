@@ -9,7 +9,7 @@ struct HomeView: View {
     @AppStorage("isChatSelected") private var isChatSelected = false
     @AppStorage("isprofileSelected") private var isprofileSelected = false
     @State private var showTutorial = false
-    @State private var tutorialKey = UUID()
+    @State private var showFeedback = false
     @AppStorage("hasSeenTutorialPrompt") private var hasSeenTutorialPrompt = false
     @State private var showTutorialAlert = false
     
@@ -59,9 +59,24 @@ struct HomeView: View {
             VStack {
                 Spacer()
                 HStack {
-                    Spacer()
                     Button {
-                        tutorialKey = UUID()
+                        showFeedback = true
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "star.bubble")
+                            Text("Feedback")
+                        }
+                        .font(.system(size: 14, weight: .semibold))
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 8)
+                        .background(.ultraThinMaterial, in: Capsule())
+                    }
+                    .padding(.top, 8)
+                    .padding(.trailing, 12)
+                    
+                    Spacer()
+                    
+                    Button {
                         showTutorial = true
                     } label: {
                         HStack(spacing: 6) {
@@ -96,9 +111,12 @@ struct HomeView: View {
             ])
             .closeButton { showTutorial = false }
         }
+        .sheet(isPresented: $showFeedback) {
+           FeedbackView()
+            .closeButton { showFeedback = false }
+        }
         .alert("Welcome to Starapp", isPresented: $showTutorialAlert) {
             Button("Watch tutorial") {
-                tutorialKey = UUID()        // ensure fresh sheet
                 showTutorial = true
             }
             Button("Skip", role: .cancel) { }
