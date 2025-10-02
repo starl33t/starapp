@@ -14,6 +14,8 @@ struct MailView: UIViewControllerRepresentable {
     var csvData: Data
     var csvFilename: String = "sessions.csv"
     
+    typealias UIViewControllerType = UIViewController
+    
     class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
         var parent: MailView
         
@@ -32,14 +34,24 @@ struct MailView: UIViewControllerRepresentable {
         Coordinator(parent: self)
     }
     
-    func makeUIViewController(context: Context) -> MFMailComposeViewController {
-        let mailVC = MFMailComposeViewController()
-        mailVC.mailComposeDelegate = context.coordinator
-        mailVC.setToRecipients([recipient])
-        mailVC.setSubject(subject)
-        mailVC.addAttachmentData(csvData, mimeType: "text/csv", fileName: csvFilename)
-        return mailVC
+    func makeUIViewController(context: Context) -> UIViewController {
+        if MFMailComposeViewController.canSendMail() {
+            // ✅ Mail available → use MFMailCompose
+            let mailVC = MFMailComposeViewController()
+            mailVC.mailComposeDelegate = context.coordinator
+            mailVC.setToRecipients([recipient])
+            mailVC.setSubject(subject)
+            mailVC.addAttachmentData(csvData, mimeType: "text/csv", fileName: csvFilename)
+            return mailVC
+        } else {
+            // ❌ Mail not available → fallback to Share Sheet
+            let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(csvFilename)
+            try? csvData.write(to: tempURL)
+            
+            let activityVC = UIActivityViewController(activityItems: [tempURL], applicationActivities: nil)
+            return activityVC
+        }
     }
     
-    func updateUIViewController(_ uiViewController: MFMailComposeViewController, context: Context) { }
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) { }
 }
