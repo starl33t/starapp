@@ -324,7 +324,7 @@ struct CalendarView: View {
     
     private func listTrainingView() -> some View {
            List {
-               ForEach(sessions) { session in
+               ForEach(sessions.reversed()) { session in
                    NavigationLink(destination: TrainingView(session: session)) {
                        HStack {
                            ZStack {
@@ -340,7 +340,7 @@ struct CalendarView: View {
                                Text("\(session.lactate ?? 0.0, specifier: "%.1f") mM")
                                    .font(.system(size: 22, weight: .bold))
                                    .foregroundStyle(.whiteOne)
-                               Text("\(session.date?.formattedAsRelative() ?? "N/A")")
+                               Text("\(session.date?.formattedAsLocalTime() ?? "N/A")")
                                    .font(.system(size: 14))
                                    .foregroundStyle(.whiteTwo.opacity(0.6))
                            }

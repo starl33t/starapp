@@ -193,7 +193,6 @@ struct TrainingView: View {
                     session.power = power
                     session.lactate = lactate
                     session.heartRate = heartRate
-                    // try? context.save() // optional explicit save
                     dismiss()
                 }
                 .foregroundStyle(.starMain)

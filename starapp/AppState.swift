@@ -160,9 +160,26 @@ class AppState: ObservableObject, NFCManagerDelegate {
     
     private func saveSession(from scan: ScanValue) {
         guard let ctx = modelContext else { return }
+        
+        let descriptor = FetchDescriptor<Session>(
+            sortBy: [SortDescriptor(\.date, order: .reverse)]
+        )
+        let sessions = (try? ctx.fetch(descriptor)) ?? []
+        let lastSession = sessions.first
+        
+        let now = Date()
+        var duration: Double = 0
+        
+        if let previous = lastSession,
+           let prevDate = previous.date,
+           now.timeIntervalSince(prevDate) < 5 * 3600 {
+            duration = now.timeIntervalSince(prevDate) / 60.0
+        }
+        
         let newSession = Session(
+            duration: duration,
             lactate: scan.lactate,
-            date: Date(),
+            date: now,
             uidString: scan.uidString,
             adc: scan.adc,
             current: scan.current
@@ -170,6 +187,7 @@ class AppState: ObservableObject, NFCManagerDelegate {
         ctx.insert(newSession)
         try? ctx.save()
     }
+
 }
 
 enum ScanMode: String, CaseIterable {

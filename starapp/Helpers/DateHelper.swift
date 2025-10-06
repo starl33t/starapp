@@ -72,26 +72,13 @@ extension Date {
         return "\(day).square"
     }
     
-    //LactateView
-    // LactateView
-    func formattedAsRelative() -> String {
-        let calendar = Calendar.iso8601UTC
-        let now = Date()
-        if calendar.isDate(self, inSameDayAs: now) {
-            return "Today"
-        } else if calendar.isDate(self, inSameDayAs: calendar.date(byAdding: .day, value: -1, to: now)!) {
-            return "Yesterday"
-        } else if let daysAgo = calendar.dateComponents([.day], from: self, to: now).day {
-            if daysAgo < 31 {
-                return "\(daysAgo) days ago"
-            } else if daysAgo >= 365 {
-                return ">1 year ago"
-            } else {
-                return "\(daysAgo) days ago"
-            }
-        } else {
-            return "N/A"
-        }
+    //listview
+    func formattedAsLocalTime() -> String {
+        let f = DateFormatter()
+        f.timeZone = .current       // Use the user’s local time zone
+        f.locale = .current
+        f.dateFormat = "d MMM HH:mm"
+        return f.string(from: self)
     }
     
     //CalendarView

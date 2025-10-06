@@ -126,21 +126,6 @@ struct HomeView: View {
 
     }
     
-    //New training session whenever a new lactate values
-    private func createNewTrainingSession() {
-        guard let s = appState.scanValues.last else { return }
-        let newSession = Session(
-            lactate: s.lactate,
-            date: Date(),
-            uidString: s.uidString,
-            adc: s.adc,
-            current: s.current
-        )
-        context.insert(newSession)
-        try? context.save()
-    }
-    
-    
     // MARK: - Lactate series: latest 20 sessions → chronological → seconds since first
     private var lactateSeries20Indexed: [(i: Int, date: Date, lactate: Double)] {
         let latest20Chrono = sessions

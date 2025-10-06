@@ -50,7 +50,6 @@
 		BF95C5A32D54EDA600960EB4 /* CoreNFC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF95C59E2D54ECB900960EB4 /* CoreNFC.framework */; };
 		BFB6603F2C99717F005E0C29 /* CalendarToolBarLead.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB6603E2C997178005E0C29 /* CalendarToolBarLead.swift */; };
 		BFBBD9582C55869200671197 /* MessageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBBD9572C55868F00671197 /* MessageHelper.swift */; };
-		BFBF2C9D2CABDB1A004EC7A2 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBF2C9C2CABDB18004EC7A2 /* ListView.swift */; };
 		BFC7951A2D4B6FB800098B2B /* NFCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC795192D4B6FAF00098B2B /* NFCManager.swift */; };
 		BFDE40512C591A1200733888 /* CSVDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE40502C591A0900733888 /* CSVDocument.swift */; };
 		BFDE40532C591F8200733888 /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE40522C591F7B00733888 /* CalendarHelper.swift */; };
@@ -143,7 +142,6 @@
 		BFB58B942CB1342A00094BBE /* starappDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = starappDebug.entitlements; sourceTree = "<group>"; };
 		BFB6603E2C997178005E0C29 /* CalendarToolBarLead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarToolBarLead.swift; sourceTree = "<group>"; };
 		BFBBD9572C55868F00671197 /* MessageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHelper.swift; sourceTree = "<group>"; };
-		BFBF2C9C2CABDB18004EC7A2 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		BFC795192D4B6FAF00098B2B /* NFCManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFCManager.swift; sourceTree = "<group>"; };
 		BFDE40502C591A0900733888 /* CSVDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVDocument.swift; sourceTree = "<group>"; };
 		BFDE40522C591F7B00733888 /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
@@ -207,7 +205,6 @@
 				BF53936E2E20EA3C00C4141A /* SettingView.swift */,
 				BF4A81342C3AEC4D00D4CAF1 /* CalendarView.swift */,
 				BF8D6ADB2C41A9DF000269F1 /* TrainingView.swift */,
-				BFBF2C9C2CABDB18004EC7A2 /* ListView.swift */,
 				BF4A81482C3AEFCE00D4CAF1 /* ChatView.swift */,
 			);
 			path = Views;
@@ -519,7 +516,6 @@
 				BF03F0912E5EF203007F1E46 /* TimeHelper.swift in Sources */,
 				BF4A81352C3AEC4D00D4CAF1 /* CalendarView.swift in Sources */,
 				BF0ED3B92C8234E100ADB94C /* HomeCapsuleGraph.swift in Sources */,
-				BFBF2C9D2CABDB1A004EC7A2 /* ListView.swift in Sources */,
 				BFDE40512C591A1200733888 /* CSVDocument.swift in Sources */,
 				BF7342072C3AE74A00911375 /* starleetApp.swift in Sources */,
 				BF6C840E2C3C5E8100032E93 /* AccountView.swift in Sources */,

@@ -226,12 +226,24 @@ public final class NFCManager: NSObject, NFCTagReaderSessionDelegate {
                         weOffset_mV: self.weOffset_mV
                     )
                     
-                    self.delegate?.nfcManager(
-                        self,didReadCalibrationPages: self.rawCalibPages,
-                        rawAdcResponse: response,
-                        applied_mV: applied_mV)
-                    
-                    completion()
+                    if self.appState.research {
+                        // 🔬 Research mode → send every ADC as normal
+                        self.delegate?.nfcManager(
+                            self, didReadCalibrationPages: self.rawCalibPages,
+                            rawAdcResponse: response,
+                            applied_mV: applied_mV)
+                        completion()
+                    } else {
+                        // ⚙️ Non-research mode → only send the very last ADC
+                        if ProcessInfo.processInfo.systemUptime >= self.deadline {
+                            self.delegate?.nfcManager(
+                                self, didReadCalibrationPages: self.rawCalibPages,
+                                rawAdcResponse: response,
+                                applied_mV: applied_mV)
+                        }
+                        completion()
+                    }
+
                 default:
                     attempt = 0
                     run(index + 1)
