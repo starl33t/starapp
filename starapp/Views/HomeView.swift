@@ -105,9 +105,9 @@ struct HomeView: View {
         }
         .sheet(isPresented: $showTutorial) {
             VideoCarouselView(steps: [
-                .init(title: "Step 1: Attach Wearable",    subtitle: "Find a hairless spot like the shoulder", videoName: "tutorial1"),
-                .init(title: "Step 2: Medical Tape", subtitle: "Cover the wearable completely", videoName: "tutorial2"),
-                .init(title: "Step 3: Scan",       subtitle: "On the top of iPhone", videoName: "tutorial3")
+                .init(title: "Step 1: Apply tape on top",    subtitle: "Peel off the paper from the tape's inner ring and aligned it on top of the wearable's edges. The central part of the wearable should be left uncovered to not interfere with its microfluidic system for optimal sweat wicking. ", videoName: "tutorial1"),
+                .init(title: "Step 2: Attach wearable", subtitle: "Peel off the paper from the tape's outer ring to attach the wearable on your shoulder. There is no optimal place on the shoulder as long as it's a hairless spot and you can reach the wearable with your iPhone to scan.", videoName: "tutorial2"),
+                .init(title: "Step 3: Scan with iPhone",       subtitle: "Scan with the back of your iPhone by following the scanlines. Remove your mobile case for a better connection. After the session, take off the wearable and rinse the electrodes under water. Do not peel off the tape on top. Apply a new tape on the bottom.", videoName: "tutorial3")
             ])
             .closeButton { showTutorial = false }
         }

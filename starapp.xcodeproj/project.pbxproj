@@ -10,9 +10,6 @@
 		BF03F0912E5EF203007F1E46 /* TimeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF03F0902E5EF200007F1E46 /* TimeHelper.swift */; };
 		BF04740D2E79E16D00A96A09 /* LoopingVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF04740C2E79E16800A96A09 /* LoopingVideoView.swift */; };
 		BF04740F2E79E1B800A96A09 /* VideoCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF04740E2E79E1AC00A96A09 /* VideoCarouselView.swift */; };
-		BF0474132E79E32600A96A09 /* tutorial1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = BF0474122E79E32600A96A09 /* tutorial1.mp4 */; };
-		BF0474142E79E32600A96A09 /* tutorial2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = BF0474102E79E32600A96A09 /* tutorial2.mp4 */; };
-		BF0474152E79E32600A96A09 /* tutorial3.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = BF0474112E79E32600A96A09 /* tutorial3.mp4 */; };
 		BF0ED3B92C8234E100ADB94C /* HomeCapsuleGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0ED3B82C8234E000ADB94C /* HomeCapsuleGraph.swift */; };
 		BF14E3402C863AB8007FE41D /* HomeTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF14E33F2C863AB5007FE41D /* HomeTab.swift */; };
 		BF19035C2C9ADB4E00B0E581 /* ChatToolBarLead.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF19035B2C9ADB4600B0E581 /* ChatToolBarLead.swift */; };
@@ -58,6 +55,9 @@
 		BFEAE85B2C92C538006F6285 /* ChatToolBarPrin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEAE85A2C92C52E006F6285 /* ChatToolBarPrin.swift */; };
 		BFECC9672C8EC8130081B617 /* HomeToolBarLead.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFECC9662C8EC7FF0081B617 /* HomeToolBarLead.swift */; };
 		BFECC9692C8ECE060081B617 /* HomeToolBarPrin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFECC9682C8ECDF30081B617 /* HomeToolBarPrin.swift */; };
+		BFEE75B42EB3E998007E8DAC /* tutorial1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = BFEE75B32EB3E998007E8DAC /* tutorial1.mp4 */; };
+		BFEE75B62EB3E99D007E8DAC /* tutorial2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = BFEE75B52EB3E99D007E8DAC /* tutorial2.mp4 */; };
+		BFEE75B82EB3EAD3007E8DAC /* tutorial3.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = BFEE75B72EB3EAD3007E8DAC /* tutorial3.mp4 */; };
 		BFF251622C9025EA00389A3D /* CalendarToolBarPrin.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF251612C9025E100389A3D /* CalendarToolBarPrin.swift */; };
 		BFF251662C90C59E00389A3D /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF251652C90C59800389A3D /* FloatingButton.swift */; };
 /* End PBXBuildFile section */
@@ -96,9 +96,6 @@
 		BF03F0902E5EF200007F1E46 /* TimeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeHelper.swift; sourceTree = "<group>"; };
 		BF04740C2E79E16800A96A09 /* LoopingVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopingVideoView.swift; sourceTree = "<group>"; };
 		BF04740E2E79E1AC00A96A09 /* VideoCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCarouselView.swift; sourceTree = "<group>"; };
-		BF0474102E79E32600A96A09 /* tutorial2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = tutorial2.mp4; sourceTree = "<group>"; };
-		BF0474112E79E32600A96A09 /* tutorial3.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = tutorial3.mp4; sourceTree = "<group>"; };
-		BF0474122E79E32600A96A09 /* tutorial1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = tutorial1.mp4; sourceTree = "<group>"; };
 		BF0ED3B82C8234E000ADB94C /* HomeCapsuleGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCapsuleGraph.swift; sourceTree = "<group>"; };
 		BF14E33F2C863AB5007FE41D /* HomeTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTab.swift; sourceTree = "<group>"; };
 		BF19035B2C9ADB4600B0E581 /* ChatToolBarLead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatToolBarLead.swift; sourceTree = "<group>"; };
@@ -150,6 +147,9 @@
 		BFEAE85A2C92C52E006F6285 /* ChatToolBarPrin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatToolBarPrin.swift; sourceTree = "<group>"; };
 		BFECC9662C8EC7FF0081B617 /* HomeToolBarLead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeToolBarLead.swift; sourceTree = "<group>"; };
 		BFECC9682C8ECDF30081B617 /* HomeToolBarPrin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeToolBarPrin.swift; sourceTree = "<group>"; };
+		BFEE75B32EB3E998007E8DAC /* tutorial1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = tutorial1.mp4; sourceTree = "<group>"; };
+		BFEE75B52EB3E99D007E8DAC /* tutorial2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = tutorial2.mp4; sourceTree = "<group>"; };
+		BFEE75B72EB3EAD3007E8DAC /* tutorial3.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = tutorial3.mp4; sourceTree = "<group>"; };
 		BFF251612C9025E100389A3D /* CalendarToolBarPrin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarToolBarPrin.swift; sourceTree = "<group>"; };
 		BFF251652C90C59800389A3D /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -292,9 +292,9 @@
 		BF7342052C3AE74A00911375 /* starapp */ = {
 			isa = PBXGroup;
 			children = (
-				BF0474122E79E32600A96A09 /* tutorial1.mp4 */,
-				BF0474102E79E32600A96A09 /* tutorial2.mp4 */,
-				BF0474112E79E32600A96A09 /* tutorial3.mp4 */,
+				BFEE75B32EB3E998007E8DAC /* tutorial1.mp4 */,
+				BFEE75B52EB3E99D007E8DAC /* tutorial2.mp4 */,
+				BFEE75B72EB3EAD3007E8DAC /* tutorial3.mp4 */,
 				BFB58B942CB1342A00094BBE /* starappDebug.entitlements */,
 				BF3F6CAD2C3F23280087DF5A /* Info.plist */,
 				BF4A81932C3B04D900D4CAF1 /* Views */,
@@ -456,12 +456,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFEE75B62EB3E99D007E8DAC /* tutorial2.mp4 in Resources */,
 				BF7342112C3AE74C00911375 /* Preview Assets.xcassets in Resources */,
 				BF73F4592C6BD8F600922B9B /* Starleet.storekit in Resources */,
-				BF0474132E79E32600A96A09 /* tutorial1.mp4 in Resources */,
-				BF0474142E79E32600A96A09 /* tutorial2.mp4 in Resources */,
-				BF0474152E79E32600A96A09 /* tutorial3.mp4 in Resources */,
+				BFEE75B82EB3EAD3007E8DAC /* tutorial3.mp4 in Resources */,
 				BF73420D2C3AE74C00911375 /* Assets.xcassets in Resources */,
+				BFEE75B42EB3E998007E8DAC /* tutorial1.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -692,7 +692,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = starapp/starappDebug.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 459;
+				CURRENT_PROJECT_VERSION = 460;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "starapp/Preview\\ Content starapp/starappDebug.entitlements";
 				DEVELOPMENT_TEAM = 7F33N9HZ63;
@@ -723,7 +723,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 2.6.6;
+				MARKETING_VERSION = 2.6.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starappv01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -742,7 +742,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = starapp/starapp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 459;
+				CURRENT_PROJECT_VERSION = 460;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "starapp/Preview\\ Content starapp/starappDebug.entitlements";
 				DEVELOPMENT_TEAM = 7F33N9HZ63;
@@ -773,7 +773,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 2.6.6;
+				MARKETING_VERSION = 2.6.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.starleet.starappv01;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
