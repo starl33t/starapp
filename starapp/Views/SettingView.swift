@@ -2,7 +2,7 @@ import SwiftUI
 
 struct SettingView: View {
     @EnvironmentObject var appState: AppState
-    @State private var calibrationIndex: Int = 100  // 100 → 1.0
+    @State private var calibrationIndex: Int = 50 //50% -> factor 1.0
     @FocusState private var textCalibrationFieldIsFocused: Bool
     
     private let biasOptions = Array(stride(from: -800.0, through: 800.0, by: 50.0))
@@ -115,7 +115,7 @@ struct SettingView: View {
                             
                             Picker("Calibration", selection: $calibrationIndex) {
                                 ForEach(1...100, id: \.self) { index in
-                                    Text("\(index)%").tag(index)
+                                    Text("\(index)%").tag(index)   // clean 1–100%
                                 }
                             }
                             .pickerStyle(.wheel)
@@ -123,7 +123,7 @@ struct SettingView: View {
                             
                             Button(action: {
                                 withAnimation(.easeOut(duration: 0.4)) {
-                                    calibrationIndex = 100        // Scroll to 1.0 smoothly
+                                    calibrationIndex = 50
                                 }
                             }) {
                                 Image(systemName: "arrow.counterclockwise")
@@ -139,17 +139,17 @@ struct SettingView: View {
             }
             .padding()
             .onAppear {
-                calibrationIndex = Int(appState.calibrationFactor * 100)
+                calibrationIndex = Int(appState.calibrationFactor * 50)
             }
             .onChange(of: appState.biasVoltage) { _, _ in
                 appState.updateElectrodesFromBias()
             }
             .onChange(of: calibrationIndex) { _,newValue in
-                appState.calibrationFactor = Double(newValue) / 100.0
+                appState.calibrationFactor = Double(newValue) / 50.0
             }
             .onChange(of: appState.research) {
                 if appState.research{
-                    calibrationIndex = 100
+                    calibrationIndex = 50
                 }
             }
         }
