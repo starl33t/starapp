@@ -369,7 +369,7 @@ struct CalendarView: View {
                }
                .onDelete { indexSet in
                    indexSet.forEach { index in
-                       let session = sessions[index]
+                       let session = sessions.reversed()[index]
                        context.delete(session)
                    }
                }
